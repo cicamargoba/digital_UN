@@ -34,6 +34,7 @@ from litex.soc.cores.uart import UARTPHY, UART
 
 from mult import mult_32
 from ws2812 import ws2812_streamer
+from uart_frame_filter import UartFrameFilter
 
 import os
 
@@ -173,9 +174,6 @@ class BaseSoC(SoCCore):
         )
         self.submodules.uart_frame = UART(self.uart_frame_phy)
         self.csr.add("uart_frame")
-
-
-
         #MULTIPLIER
         self.csr.add("mult0")
         self.submodules.mult0 = mult_32.Mult32(platform)
