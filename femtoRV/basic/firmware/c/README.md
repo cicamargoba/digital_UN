@@ -135,4 +135,13 @@ Flags comunes: `-march=rv32i -mabi=ilp32 -fno-pic --no-relax`
 
 ## Diagrama de flujo de compilación
 
-Ver `compilation_flow.html` en este directorio.
+Abrir `compilation_flow.html` en un navegador para ver el diagrama interactivo.
+
+<details>
+<summary>Diagrama (click para expandir)</summary>
+
+```html
+<iframe src="compilation_flow.html" width="1020" height="490" style="border:none;"></iframe>
+```
+
+</details>
