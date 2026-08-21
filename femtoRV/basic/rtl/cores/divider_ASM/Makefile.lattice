@@ -1,0 +1,31 @@
+TARGET          = peripheral_div
+IVERILOG        = iverilog
+DIV_16		= div_16
+
+SRC             = $(TARGET).v $(DIV_16)/control_div.v $(DIV_16)/counter_div.v $(DIV_16)/div_16.v $(DIV_16)/final_result.v $(DIV_16)/lsr_div.v $(DIV_16)/subtractor.v
+
+SIM_SRC = $(DESIGN)_TB.v          \
+
+ 
+all:            bits
+
+remake:         clean-build all
+
+clean:
+	rm -f *~ */*~ a.out *.log *.key *.edf *.ps trace.dat 
+	rm -f *.bit
+
+cleanall: clean
+	rm -rf build simulation/work simulation/transcript  simulation/vsim.wlf simulation/$(DESIGN)_TB.vvp simulation/*
+
+bits:           $(DESIGN).bit
+
+
+
+sim:
+
+	$(IVERILOG) -gno-io-range-error -o $(TARGET)_TB.vvp $(VINCDIR) $(SRC) $(SIM_SRC) -s $(TARGET)_TB
+	vvp $(TARGET)_TB.vvp; 
+	gtkwave $(TARGET)_TB.vcd&
+	
+

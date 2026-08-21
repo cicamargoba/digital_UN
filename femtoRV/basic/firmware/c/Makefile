@@ -1,4 +1,5 @@
-OBJECTS =  test_printf.o 
+OBJECTS =  test_printf.o
+TEST     = test_printf
 #CROSS   = riscv64-unknown-elf
 CROSS   = riscv64-unknown-elf
 CC      = $(CROSS)-gcc
@@ -12,15 +13,19 @@ AFLAGS  = -march=rv32i -mabi=ilp32
 CFLAGS  =  -Ilibfemtorv/include -fno-pic -march=rv32i -mabi=ilp32 -fno-stack-protector -w -Wl,--no-relax
 OBJCOPY = $(CROSS)-objcopy
 all: firmware.hex
-#vpath %S libfemtorv 
+#vpath %S libfemtorv
+
+# Cambiar TEST para compilar otro programa:
+#   make TEST=test_hwmath
+#   make TEST=test_printf
 
 %.bin: %.elf
 #	$(OBJCOPY) -O verilog $< $@
 	$(OBJCOPY) -O binary $< $@
 	chmod -x $@
 
-firmware.elf: $(OBJECTS) 
-	$(LD) $(LDFLAGS)  -Map firmware.map $(OBJECTS) -o $@  ${LIB_DIR}  ${LIBS}  
+firmware.elf: $(TEST).o
+	$(LD) $(LDFLAGS)  -Map firmware.map $(TEST).o -o $@  ${LIB_DIR}  ${LIBS}
 	chmod -x $@
 	
 firmware.hex: firmware.elf firmware.lst
@@ -35,5 +40,5 @@ firmware.lst: firmware.elf
 %.o: %.S
 	$(AS) $(AFLAGS) -c $< -o $@
 clean:
-	rm -rf  $(OBJECTS) *.elf *.bin .*~ *~ *.map *.d *.hex *.lst
+	rm -rf  *.o *.elf *.bin .*~ *~ *.map *.d *.hex *.lst
 .PHONY: clean

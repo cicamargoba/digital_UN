@@ -1,0 +1,39 @@
+[*]
+[*] GTKWave Analyzer v3.3.54 (w)1999-2014 BSI
+[*] Wed Oct  8 16:26:54 2014
+[*]
+[dumpfile] "/home/oscar/Repos/j1/hdl/divider/simulation/peripheral_div_TB.vcd"
+[dumpfile_mtime] "Wed Oct  8 16:15:56 2014"
+[dumpfile_size] 5221
+[savefile] "/home/oscar/Repos/j1/hdl/divider/per_div_sim.gtkw"
+[timestart] 0
+[size] 1366 716
+[pos] -1 -29
+*-17.000000 330000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] peripheral_div_TB.
+[sst_width] 223
+[signals_width] 110
+[sst_expanded] 1
+[sst_vpaned_height] 193
+@24
+peripheral_div_TB.uut.A[15:0]
+peripheral_div_TB.uut.B[15:0]
+@22
+peripheral_div_TB.uut.C[15:0]
+@29
+peripheral_div_TB.uut.done
+@28
+peripheral_div_TB.uut.clk
+peripheral_div_TB.uut.wr
+peripheral_div_TB.uut.cs
+@22
+peripheral_div_TB.uut.addr[3:0]
+@28
+peripheral_div_TB.uut.s[2:0]
+peripheral_div_TB.uut.wen0
+peripheral_div_TB.uut.wen1
+peripheral_div_TB.uut.wen2
+@22
+peripheral_div_TB.uut.d_in[15:0]
+[pattern_trace] 1
+[pattern_trace] 0

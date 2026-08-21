@@ -1,0 +1,68 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Fri Apr 25 01:15:05 2025
+[*]
+[dumpfile] "(null)"
+[savefile] "/Work/Proyects/ecb_T8_T113/femtoRV/basic/rtl/cores/divider_ASM/div_16/div_16.gtkw"
+[timestart] 0
+[size] 2560 1531
+[pos] -1 -1
+*-18.000000 106000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] div_16_TB.
+[treeopen] div_16_TB.uut.ctl_dv.
+[sst_width] 331
+[signals_width] 266
+[sst_expanded] 1
+[sst_vpaned_height] 937
+@28
+div_16_TB.uut.clk
+div_16_TB.uut.init_in
+div_16_TB.uut.rst
+@c00022
+div_16_TB.uut.A[15:0]
+@28
+(0)div_16_TB.uut.A[15:0]
+(1)div_16_TB.uut.A[15:0]
+(2)div_16_TB.uut.A[15:0]
+(3)div_16_TB.uut.A[15:0]
+(4)div_16_TB.uut.A[15:0]
+(5)div_16_TB.uut.A[15:0]
+(6)div_16_TB.uut.A[15:0]
+(7)div_16_TB.uut.A[15:0]
+(8)div_16_TB.uut.A[15:0]
+(9)div_16_TB.uut.A[15:0]
+(10)div_16_TB.uut.A[15:0]
+(11)div_16_TB.uut.A[15:0]
+(12)div_16_TB.uut.A[15:0]
+(13)div_16_TB.uut.A[15:0]
+(14)div_16_TB.uut.A[15:0]
+(15)div_16_TB.uut.A[15:0]
+@1401200
+-group_end
+@22
+div_16_TB.uut.B[15:0]
+div_16_TB.uut.Result[15:0]
+@28
+[color] 7
+div_16_TB.uut.done
+[color] 2
+div_16_TB.uut.MSB
+[color] 5
+div_16_TB.uut.SH
+div_16_TB.uut.\ctl_dv.SH
+div_16_TB.uut.DEC
+div_16_TB.uut.LDA
+@29
+div_16_TB.uut.INIT
+@800022
+div_16_TB.uut.\ctl_dv.state[4:0]
+@28
+(0)div_16_TB.uut.\ctl_dv.state[4:0]
+(1)div_16_TB.uut.\ctl_dv.state[4:0]
+(2)div_16_TB.uut.\ctl_dv.state[4:0]
+(3)div_16_TB.uut.\ctl_dv.state[4:0]
+(4)div_16_TB.uut.\ctl_dv.state[4:0]
+@1001200
+-group_end
+[pattern_trace] 1
+[pattern_trace] 0

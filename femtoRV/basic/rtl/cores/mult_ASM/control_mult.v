@@ -29,7 +29,7 @@ module control_mult( clk , rst , lsb_B , init , z , done , sh , reset , add );
   state = 0;
  end
 
-reg [3:0] count;
+reg [4:0] count;
 
 always @(posedge clk) begin
     if (rst) begin
@@ -82,7 +82,7 @@ always @(posedge clk) begin
         reset = 0;
         add = 0;
         count = count + 1;
-        state = (count>14) ? START : END ; // hace falta de 10 ciclos de reloj, para que lea el done y luego cargue el resultado
+        state = (count>30) ? START : END ; // hace falta de 10 ciclos de reloj, para que lea el done y luego cargue el resultado
      end
 
      default: state = START;
