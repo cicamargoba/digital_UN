@@ -22,11 +22,16 @@ putchar:
 .global	getchar
 .type	getchar, @function
 getchar:
-        lw a0,IO_UART_DAT(gp)
-	andi t0,a0,256 # bit 8 = data ready
-        beqz t0,getchar
-	andi a0, a0, 255
-	li t0, 10                  # <enter> generates CR/LF, we ignore LF.
-	beq a0, t0, getchar
-        ret 
+        lw   a0, IO_UART_CNTL(gp)   # read status register
+        andi t0, a0, 256            # bit 8 = rx_avail
+        beqz t0, getchar            # no data, keep polling
+        lw   a0, IO_UART_DAT(gp)   # read data register
+        andi a0, a0, 255           # extract byte
+        li   t0, 0x02              # rx_ack (bit 1)
+        sw   t0, IO_UART_CNTL(gp)  # assert rx_ack (clears rx_avail)
+        li   t0, 0x00
+        sw   t0, IO_UART_CNTL(gp)  # deassert rx_ack
+        li   t0, 10                 # <enter> generates CR/LF, we ignore LF.
+        beq  a0, t0, getchar
+        ret
 

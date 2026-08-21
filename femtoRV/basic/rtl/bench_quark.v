@@ -1,46 +1,22 @@
-`timescale 1ns/1ps    // ← primera línea del archivo
+`timescale 1ns/1ps
 module bench();
 // Testbench uses a 25 MHz clock
-// Want to interface to 115200 baud UART
-// 25000000 / 115200 = 217 Clocks Per Bit.
+// UART configured for 12 MHz / 57600 baud
+// divisor = 12000000/57600/16 = 13
+// Bit period at 25 MHz = 16 * 13 * 40ns = 8320ns
 parameter tck              = 40;
-parameter c_BIT_PERIOD     = 17361;
+parameter c_BIT_PERIOD     = 8320;
 
    reg CLK;
-   reg i;
    reg RESET;
    wire LEDS;
-   reg  RXD = 1'b0;
+   reg  RXD = 1'b1;
    wire TXD;
 
+   // UART input buffer (max 256 bytes)
+   reg [7:0] uart_input_mem [0:255];
+   integer uart_idx;
 
-
-  // Takes in input byte and serializes it 
-  task UART_WRITE_BYTE;
-    input [7:0] i_Data;
-    integer     ii;
-    begin
-       
-      // Send Start Bit
-      RXD <= 1'b0;
-      #(c_BIT_PERIOD);
-      #1000;
-       
-       
-      // Send Data Byte
-      for (ii=0; ii<8; ii=ii+1)
-        begin
-          RXD <= i_Data[ii];
-          #(c_BIT_PERIOD);
-        end
-       
-      // Send Stop Bit
-      RXD <= 1'b1;
-      #(c_BIT_PERIOD);
-     end
-  endtask // UART_WRITE_BYTE
-  
-  
    SOC uut(
      .clk(CLK),
      .resetn(RESET),
@@ -49,22 +25,35 @@ parameter c_BIT_PERIOD     = 17361;
      .TXD(TXD)
    );
 
+   initial CLK <= 0;
+   always #(tck/2) CLK <= ~CLK;
 
-initial         CLK <= 0;
-always #(tck/2) CLK <= ~CLK;
-
-
-   reg[4:0] prev_LEDS = 0;
-   initial begin
-	 if(LEDS != prev_LEDS) begin
-	    $display("LEDS = %b",LEDS);
-	 end
-	 prev_LEDS <= LEDS;
-	
+   // LED monitor
+   reg [4:0] prev_LEDS = 0;
+   always @(posedge CLK) begin
+      if(LEDS != prev_LEDS) begin
+         $display("LEDS = %b", LEDS);
+      end
+      prev_LEDS <= LEDS;
    end
-   
-   
-       integer idx; 
+
+   // UART write task (send byte to CPU via RXD)
+   task UART_WRITE_BYTE;
+     input [7:0] i_Data;
+     integer ii;
+     begin
+       RXD <= 1'b0;              // Start bit
+       #(c_BIT_PERIOD);
+       for(ii=0; ii<8; ii=ii+1) begin
+         RXD <= i_Data[ii];
+         #(c_BIT_PERIOD);
+       end
+       RXD <= 1'b1;              // Stop bit
+       #(c_BIT_PERIOD);
+     end
+   endtask
+
+   integer idx;
    initial begin
 
     $dumpfile("bench.vcd");
@@ -72,44 +61,34 @@ always #(tck/2) CLK <= ~CLK;
   `ifndef SYNTH
     for(idx = 0; idx < 32; idx = idx +1)  $dumpvars(0, bench.uut.CPU.registerFile[idx]);
     for(idx = 1020; idx < 1025; idx = idx +1)  $dumpvars(0, bench.uut.RAM.MEM[idx]);
-  `endif  
+  `endif
 
-    //$dumpvars(0, bench.uut.CPU.registerFile[10],bench);
-
-   // for(idx = 0; idx < 50; idx = idx +1)  $dumpvars(0, bench.uut.dpram_p0.dpram0.ram[idx]);
-    //$dumpvars(0, bench.uut.CPU.registerFile[10],bench);
+    // Load UART input data from file (hex bytes, one per line)
+    $readmemh("uart_input.txt", uart_input_mem);
 
     #0   RXD   = 1;
     #0   RESET = 0;
     #80  RESET = 0;
     #160 RESET = 1;
-    // Send a command to the UART (exercise Rx)
-    @(posedge CLK);
-    #(tck*60000)
-    UART_WRITE_BYTE(8'h34);
-    #(tck*1500)
-    UART_WRITE_BYTE(8'h35);
-    #(tck*1500)
-    UART_WRITE_BYTE(8'h36);    // Operator *
-    #(tck*1500)  
-    UART_WRITE_BYTE(8'h37);
-    #(tck*1500)
-    UART_WRITE_BYTE(8'h0A);
-    #(tck*2500)
-    UART_WRITE_BYTE(8'h0D);
 
-    #(tck*90000)
-    UART_WRITE_BYTE(8'h39);
-    #(tck*1500)
-    UART_WRITE_BYTE(8'h0A);
-    #(tck*2500)
-    UART_WRITE_BYTE(8'h0D);
-
-    
+    // Wait for program to finish printf output and reach getchar
     @(posedge CLK);
-    #(tck*900000) $finish;
+    #(tck*800000)
+
+    // Send input bytes from file
+    for(uart_idx = 0; uart_idx < 256; uart_idx = uart_idx + 1) begin
+       if(uart_input_mem[uart_idx] === 8'hxx) begin
+          uart_idx = 256;              // end of input
+       end else begin
+          $display("UART TX: 0x%02h", uart_input_mem[uart_idx]);
+          UART_WRITE_BYTE(uart_input_mem[uart_idx]);
+          #(tck*5000);                 // wait for program to process
+       end
+    end
+
+    // Let the simulation run a bit more
+    #(tck*100000)
+    $finish;
  end
- 
- 
-endmodule   
- 
+
+endmodule

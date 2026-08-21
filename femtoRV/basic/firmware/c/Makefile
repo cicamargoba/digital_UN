@@ -1,16 +1,15 @@
-OBJECTS =  hello.o 
+OBJECTS =  test_printf.o 
 #CROSS   = riscv64-unknown-elf
-CROSS   = riscv32-unknown-elf
+CROSS   = riscv64-unknown-elf
 CC      = $(CROSS)-gcc
 AS      = $(CROSS)-as
 LD      = $(CROSS)-ld
 OBJDUMP = $(CROSS)-objdump
-LIB_DIR = -Llibfemtorv -L/home/$$USER/miniconda3/envs/fpga/riscv32-elf/lib/rv32i/ilp32/ \
-          -L/home/$$USER/miniconda3/envs/fpga/lib/gcc/riscv32-elf/10.1.0/rv32iac/ilp32/
-LIBS    = -lfemtorv -lm -lc -lgcc
+LIB_DIR = -Llibfemtorv -L/usr/lib/gcc/riscv64-unknown-elf/14.2.0/rv32i/ilp32/
+LIBS    = -lfemtorv -lgcc
 LDFLAGS = -m elf32lriscv -b elf32-littleriscv --no-relax --print-memory-usage -Tlinker.ld
 AFLAGS  = -march=rv32i -mabi=ilp32
-CFLAGS  =  -Ilibfemtorv/include -Ilibfemtoc/include -fno-pic -march=rv32i -mabi=ilp32 -fno-stack-protector -w -Wl,--no-relax
+CFLAGS  =  -Ilibfemtorv/include -fno-pic -march=rv32i -mabi=ilp32 -fno-stack-protector -w -Wl,--no-relax
 OBJCOPY = $(CROSS)-objcopy
 all: firmware.hex
 #vpath %S libfemtorv 

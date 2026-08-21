@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>FemtoRV32 - Flujo de compilacion</title>
+<style>
+  body { font-family: monospace; background: #f8f8f8; color: #222; margin: 20px; }
+  h1 { font-size: 16px; }
+  svg { display: block; }
+  .blk { fill: #ffffff; stroke: #333; stroke-width: 1.5; }
+  .lib { fill: #e8e8e8; stroke: #333; stroke-width: 1.5; }
+  .out { fill: #d8e8d8; stroke: #333; stroke-width: 1.5; }
+  .tool { fill: #e0e8f0; stroke: #333; stroke-width: 1.5; }
+  .lbl { font-size: 12px; fill: #222; text-anchor: middle; }
+  .sub { font-size: 10px; fill: #555; text-anchor: middle; }
+  .arrow { stroke: #333; stroke-width: 1.5; fill: none; marker-end: url(#arr); }
+  .title { font-size: 14px; font-weight: bold; fill: #222; text-anchor: middle; }
+  .foot { font-size: 10px; fill: #555; text-anchor: start; }
+</style>
+</head>
+<body>
+
+<h1>FemtoRV32 — Flujo de compilacion del firmware en C</h1>
+
+<svg width="980" height="780" viewBox="0 0 980 780">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#333"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="490" y="20" class="title">Flujo de compilacion: libfemtorv.a + firmware</text>
+
+  <!-- ======== COLUMN 1: libfemtorv sources ======== -->
+  <text x="130" y="50" class="lbl" style="font-weight:bold">libfemtorv/ (make)</text>
+
+  <!-- uart.S -->
+  <rect x="20" y="60" width="220" height="40" class="blk"/>
+  <text x="130" y="78" class="lbl">uart.S</text>
+  <text x="130" y="92" class="sub">putchar, getchar</text>
+
+  <!-- femtorv32.S -->
+  <rect x="20" y="110" width="220" height="40" class="blk"/>
+  <text x="130" y="128" class="lbl">femtorv32.S</text>
+  <text x="130" y="142" class="sub">exit, abort</text>
+
+  <!-- print.c -->
+  <rect x="20" y="160" width="220" height="40" class="blk"/>
+  <text x="130" y="178" class="lbl">print.c</text>
+  <text x="130" y="192" class="sub">print_string, print_dec, print_hex, puts</text>
+
+  <!-- printf.c -->
+  <rect x="20" y="210" width="220" height="40" class="blk"/>
+  <text x="130" y="228" class="lbl">printf.c</text>
+  <text x="130" y="242" class="sub">printf (%s %d %x %c)</text>
+
+  <!-- cycles_32.c -->
+  <rect x="20" y="260" width="220" height="40" class="blk"/>
+  <text x="130" y="278" class="lbl">cycles_32.c</text>
+  <text x="130" y="292" class="sub">cycles() — rdcycle</text>
+
+  <!-- wait_cycles.c -->
+  <rect x="20" y="310" width="220" height="40" class="blk"/>
+  <text x="130" y="328" class="lbl">wait_cycles.c</text>
+  <text x="130" y="342" class="sub">wait_cycles(n)</text>
+
+  <!-- milliwait.c -->
+  <rect x="20" y="360" width="220" height="40" class="blk"/>
+  <text x="130" y="378" class="lbl">milliwait.c</text>
+  <text x="130" y="392" class="sub">milliwait(ms) → delay()</text>
+
+  <!-- microwait.c -->
+  <rect x="20" y="410" width="220" height="40" class="blk"/>
+  <text x="130" y="428" class="lbl">microwait.c</text>
+  <text x="130" y="442" class="sub">microwait(us)</text>
+
+  <!-- crt0_baremetal.S (separate, not in .a) -->
+  <rect x="20" y="470" width="220" height="40" class="blk" style="stroke-dasharray:4,2"/>
+  <text x="130" y="488" class="lbl">crt0_baremetal.S</text>
+  <text x="130" y="502" class="sub">_start: gp=IO_BASE, sp=RAM, call main</text>
+
+  <!-- ======== COLUMN 2: compiler/assembler ======== -->
+  <text x="400" y="50" class="lbl" style="font-weight:bold">Toolchain</text>
+
+  <!-- gcc -->
+  <rect x="310" y="160" width="180" height="40" class="tool"/>
+  <text x="400" y="178" class="lbl">riscv64-unknown-elf-gcc</text>
+  <text x="400" y="192" class="sub">-march=rv32i -mabi=ilp32 -c</text>
+
+  <!-- as -->
+  <rect x="310" y="260" width="180" height="40" class="tool"/>
+  <text x="400" y="278" class="lbl">riscv64-unknown-elf-as</text>
+  <text x="400" y="292" class="sub">-march=rv32i -mabi=ilp32 -c</text>
+
+  <!-- ar -->
+  <rect x="310" y="360" width="180" height="40" class="tool"/>
+  <text x="400" y="378" class="lbl">riscv64-unknown-elf-ar</text>
+  <text x="400" y="392" class="sub">cq libfemtorv.a *.o</text>
+
+  <!-- ranlib -->
+  <rect x="310" y="410" width="180" height="40" class="tool"/>
+  <text x="400" y="428" class="lbl">riscv64-unknown-elf-ranlib</text>
+  <text x="400" y="442" class="sub">indexa el .a</text>
+
+  <!-- ======== COLUMN 3: outputs of libfemtorv ======== -->
+  <text x="680" y="50" class="lbl" style="font-weight:bold">Productos</text>
+
+  <!-- .o files -->
+  <rect x="570" y="210" width="220" height="40" class="blk"/>
+  <text x="680" y="228" class="lbl">*.o (8 modulos)</text>
+  <text x="680" y="242" class="sub">uart.o print.o printf.o cycles_32.o ...</text>
+
+  <!-- libfemtorv.a -->
+  <rect x="570" y="380" width="220" height="44" class="lib"/>
+  <text x="680" y="398" class="lbl" style="font-weight:bold">libfemtorv.a</text>
+  <text x="680" y="414" class="sub">archivo estatico (AR archive)</text>
+
+  <!-- crt0_baremetal.o -->
+  <rect x="570" y="470" width="220" height="40" class="blk" style="stroke-dasharray:4,2"/>
+  <text x="680" y="488" class="lbl">crt0_baremetal.o</text>
+  <text x="680" y="502" class="sub">se copia a firmware/c/</text>
+
+  <!-- ======== FIRMWARE SECTION ======== -->
+  <line x1="20" y1="540" x2="960" y2="540" stroke="#999" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="490" y="560" class="lbl" style="font-weight:bold">firmware/c/ (make)</text>
+
+  <!-- test_printf.c -->
+  <rect x="20" y="575" width="220" height="40" class="blk"/>
+  <text x="130" y="593" class="lbl">test_printf.c</text>
+  <text x="130" y="607" class="sub">#include &lt;femtorv32.h&gt; → main()</text>
+
+  <!-- gcc for test_printf -->
+  <rect x="310" y="575" width="180" height="40" class="tool"/>
+  <text x="400" y="593" class="lbl">riscv64-unknown-elf-gcc</text>
+  <text x="400" y="607" class="sub">-march=rv32i -mabi=ilp32 -c</text>
+
+  <!-- test_printf.o -->
+  <rect x="570" y="575" width="220" height="40" class="blk"/>
+  <text x="680" y="593" class="lbl">test_printf.o</text>
+  <text x="680" y="607" class="sub">codigo objeto del programa</text>
+
+  <!-- linker -->
+  <rect x="310" y="640" width="180" height="44" class="tool"/>
+  <text x="400" y="658" class="lbl">riscv64-unknown-elf-ld</text>
+  <text x="400" y="674" class="sub">-Tlinker.ld --no-relax</text>
+
+  <!-- firmware.elf -->
+  <rect x="570" y="640" width="220" height="44" class="out"/>
+  <text x="680" y="658" class="lbl" style="font-weight:bold">firmware.elf</text>
+  <text x="680" y="674" class="sub">ELF ejecutable (BRAM @0x0000)</text>
+
+  <!-- firmware_words + objdump -->
+  <rect x="310" y="705" width="180" height="44" class="tool"/>
+  <text x="400" y="720" class="lbl">firmware_words</text>
+  <text x="400" y="736" class="sub">+ objdump -h -S</text>
+
+  <!-- firmware.hex + .lst -->
+  <rect x="570" y="705" width="220" height="44" class="out"/>
+  <text x="680" y="720" class="lbl" style="font-weight:bold">firmware.hex → rtl/</text>
+  <text x="680" y="736" class="sub">firmware.lst (disassembly)</text>
+
+  <!-- ======== ARROWS: sources -> tools ======== -->
+  <!-- .S files -> as -->
+  <path class="arrow" d="M240,80 H280 V280 H310"/>
+  <path class="arrow" d="M240,130 H280 V280 H310"/>
+  <path class="arrow" d="M240,490 H280 V280 H310"/>
+
+  <!-- .c files -> gcc -->
+  <path class="arrow" d="M240,180 H280 V180 H310"/>
+  <path class="arrow" d="M240,230 H280 V180 H310"/>
+  <path class="arrow" d="M240,280 H280 V180 H310"/>
+  <path class="arrow" d="M240,330 H280 V180 H310"/>
+  <path class="arrow" d="M240,380 H280 V180 H310"/>
+  <path class="arrow" d="M240,430 H280 V180 H310"/>
+
+  <!-- gcc -> .o -->
+  <path class="arrow" d="M490,180 H530 V230 H570"/>
+  <!-- as -> .o -->
+  <path class="arrow" d="M490,280 H530 V230 H570"/>
+
+  <!-- .o -> ar -->
+  <path class="arrow" d="M680,250 V680 H490 V360"/>
+
+  <!-- ar -> libfemtorv.a -->
+  <path class="arrow" d="M490,380 H570"/>
+
+  <!-- ranlib -> libfemtorv.a (merge with ar output) -->
+  <path class="arrow" d="M490,430 H530 V402 H570"/>
+
+  <!-- crt0 -> as (dashed) -->
+  <path class="arrow" d="M240,490 H280 V280 H310" style="stroke-dasharray:4,2"/>
+  <!-- as -> crt0.o (dashed) -->
+  <path class="arrow" d="M490,280 H530 V490 H570" style="stroke-dasharray:4,2"/>
+
+  <!-- ======== ARROWS: firmware section ======== -->
+  <!-- test_printf.c -> gcc -->
+  <path class="arrow" d="M240,595 H310"/>
+
+  <!-- gcc -> test_printf.o -->
+  <path class="arrow" d="M490,595 H570"/>
+
+  <!-- crt0.o + test_printf.o + libfemtorv.a + libgcc -> ld -->
+  <path class="arrow" d="M680,510 V540 H400 V640"/>
+  <path class="arrow" d="M680,615 V640"/>
+  <path class="arrow" d="M680,424 V540 H490 V640"/>
+
+  <!-- ld -> firmware.elf -->
+  <path class="arrow" d="M490,662 H570"/>
+
+  <!-- firmware.elf -> firmware_words -->
+  <path class="arrow" d="M680,684 V705"/>
+
+  <!-- firmware_words -> firmware.hex -->
+  <path class="arrow" d="M490,727 H570"/>
+
+  <!-- ======== FOOTER NOTES ======== -->
+  <text x="20" y="765" class="foot">libgcc.a: funciones de division/modulo (el CPU no tiene mul/div hardware)</text>
+  <text x="20" y="778" class="foot">linker.ld: BRAM ORIGIN=0x0000, crt0_baremetal.o primero en .text</text>
+
+</svg>
+
+</body>
+</html>

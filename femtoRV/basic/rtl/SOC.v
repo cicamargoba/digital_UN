@@ -85,7 +85,7 @@ module SOC (
 
    peripheral_div div1 (
       .clk (clk),
-      .reset (!resetn),
+      .rst (!resetn),
       .d_in (mem_wdata[15:0]),
       .cs (cs[2]), 
       .addr (mem_addr[4:0]),
