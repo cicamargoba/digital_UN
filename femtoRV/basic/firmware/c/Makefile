@@ -1,5 +1,5 @@
 OBJECTS =  test_printf.o
-TEST     = test_printf
+TARGET     = test_printf
 #CROSS   = riscv64-unknown-elf
 CROSS   = riscv64-unknown-elf
 CC      = $(CROSS)-gcc
@@ -15,17 +15,17 @@ OBJCOPY = $(CROSS)-objcopy
 all: firmware.hex
 #vpath %S libfemtorv
 
-# Cambiar TEST para compilar otro programa:
-#   make TEST=test_hwmath
-#   make TEST=test_printf
+# Cambiar TARGET para compilar otro programa:
+#   make TARGET=test_hwmath
+#   make TARGET=test_printf
 
 %.bin: %.elf
 #	$(OBJCOPY) -O verilog $< $@
 	$(OBJCOPY) -O binary $< $@
 	chmod -x $@
 
-firmware.elf: $(TEST).o
-	$(LD) $(LDFLAGS)  -Map firmware.map $(TEST).o -o $@  ${LIB_DIR}  ${LIBS}
+firmware.elf: $(TARGET).o
+	$(LD) $(LDFLAGS)  -Map firmware.map $(TARGET).o -o $@  ${LIB_DIR}  ${LIBS}
 	chmod -x $@
 	
 firmware.hex: firmware.elf firmware.lst

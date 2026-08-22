@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cómo agregar un periférico a libfemtorv</title>
+<style>
+  body { margin: 0; background: #ffffff; color: #202124; font-family: Arial, Helvetica, sans-serif; line-height: 1.55; }
+  main { max-width: 1100px; margin: 0 auto; padding: 32px 48px 64px; }
+  h1, h2, h3 { color: #17233b; line-height: 1.25; }
+  h1 { border-bottom: 2px solid #405b78; padding-bottom: 12px; }
+  h2 { margin-top: 40px; border-bottom: 1px solid #b9c4cf; padding-bottom: 6px; }
+  img { display: block; width: 100%; height: auto; margin: 18px auto 6px; border: 1px solid #9aa5b1; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  th, td { border: 1px solid #9aa5b1; padding: 7px 10px; text-align: left; }
+  th { background: #e8edf2; }
+  pre { overflow-x: auto; background: #f4f6f8; border: 1px solid #c8d0d8; padding: 14px; }
+  code { background: #f1f3f5; padding: 1px 4px; }
+  pre code { background: transparent; padding: 0; }
+  blockquote { border-left: 4px solid #607d9b; margin-left: 0; padding-left: 16px; color: #404b57; }
+  hr { border: 0; border-top: 1px solid #b9c4cf; margin: 32px 0; }
+  @media (max-width: 720px) { main { padding: 20px 16px 48px; } }
+</style>
+</head>
+<body>
+<main>
+<h1>Cómo agregar a <code>libfemtorv</code> una función para manejar un periférico</h1>
+<p>Este documento describe el procedimiento completo para exponer un periférico del SoC femtoRV32 mediante una función C de <code>libfemtorv.a</code>.</p>
+<p>El trabajo tiene cuatro partes:</p>
+<ol>
+<li>entender la interfaz MMIO del periférico en RTL;</li>
+<li>implementar el controlador en <code>libfemtorv/</code>;</li>
+<li>publicar la función en el encabezado de la librería;</li>
+<li>compilar y comprobar la función con un programa de prueba.</li>
+</ol>
+<p>El ejemplo existente <code>libfemtorv/hwmath.c</code> puede usarse como referencia para los periféricos multiplicador, divisor y raíz cuadrada.</p>
+<p>La Figura 1 presenta la arquitectura completa: en la parte superior aparece el flujo de compilación del software, desde los archivos fuente y la librería hasta <code>firmware.hex</code>; en la parte inferior aparece la conexión del procesador RV32I con la BRAM y los periféricos del SoC.</p>
+<p><img src="hw_sw_flow.png" alt="Figura 1. Arquitectura del procesador y flujo de generación del firmware." /></p>
+<p><strong>Figura 1. Arquitectura del procesador y flujo de generación del firmware.</strong></p>
+<hr />
+<h2>1. Arquitectura de acceso a periféricos</h2>
+<p>El procesador se comunica con los periféricos mediante <strong>entrada/salida mapeada en memoria</strong> (MMIO, <em>Memory-Mapped I/O</em>). Para el programa C, un registro del periférico parece una dirección de memoria. Una escritura o lectura sobre esa dirección produce una transacción en el bus del SoC.</p>
+<p>Por ejemplo, los periféricos matemáticos actuales usan estas direcciones base:</p>
+<p>| Periférico | Dirección base |
+|---|---:|
+| Raíz cuadrada | <code>0x00410000</code> |
+| Multiplicador | <code>0x00420000</code> |
+| Divisor | <code>0x00430000</code> |</p>
+<p>En <code>rtl/SOC.v</code>, los bits <code>mem_addr[31:16]</code> seleccionan el periférico:</p>
+<pre><code class="language-verilog">case (mem_addr[31:16])
+    16'h0041: cs = 9'b000010000; // sqrt
+    16'h0042: cs = 9'b000001000; // mult
+    16'h0043: cs = 9'b000000100; // div
+    // ...
+endcase
+</code></pre>
+<p>Los bits bajos de la dirección llegan al periférico como dirección interna de registro:</p>
+<pre><code class="language-verilog">.addr(mem_addr[4:0])
+</code></pre>
+<p>Por tanto, una dirección completa se forma así:</p>
+<pre><code class="language-text">dirección del registro = dirección base del periférico + offset del registro
+</code></pre>
+<p>Ejemplo:</p>
+<pre><code class="language-text">DIV_BASE   = 0x00430000
+DIV_RESULT = 0x00000010
+
+Dirección de DIV_RESULT = 0x00430010
+</code></pre>
+<p>La Figura 2 muestra cómo se materializa esta arquitectura en <code>SOC.v</code>. El procesador genera <code>mem_addr</code>, <code>mem_wdata</code>, <code>mem_rstrb</code> y <code>mem_wmask</code>; el decodificador convierte la dirección en una señal <code>cs</code>; y el multiplexor devuelve por <code>mem_rdata</code> la salida del periférico seleccionado.</p>
+<p><img src="SOC_block_diagram.png" alt="Figura 2. Instanciación del procesador, la memoria y los periféricos en SOC.v." /></p>
+<p><strong>Figura 2. Instanciación del procesador, la memoria y los periféricos en <code>SOC.v</code>.</strong></p>
+<hr />
+<h2>2. Verificar primero la interfaz RTL</h2>
+<p>No se debe escribir el controlador C suponiendo el mapa de registros. Antes de programarlo, revise el módulo RTL del periférico y anote:</p>
+<ul>
+<li>dirección base asignada en <code>rtl/SOC.v</code>;</li>
+<li>señal <code>cs</code> conectada al periférico;</li>
+<li>offsets de todos los registros;</li>
+<li>tamaño de cada registro;</li>
+<li>registros de lectura y de escritura;</li>
+<li>secuencia necesaria para iniciar una operación;</li>
+<li>significado y polaridad de la señal <code>done</code>, <code>busy</code> o equivalente;</li>
+<li>momento en el que el resultado es válido;</li>
+<li>comportamiento durante reset;</li>
+<li>condiciones especiales, como división por cero o datos fuera de rango.</li>
+</ul>
+<p>Una tabla de interfaz evita errores al implementar el controlador:</p>
+<p>| Offset | Nombre | Acceso | Descripción |
+|---:|---|---|---|
+| <code>0x04</code> | <code>OPERAND_A</code> | Escritura | Primer operando |
+| <code>0x08</code> | <code>OPERAND_B</code> | Escritura | Segundo operando |
+| <code>0x0C</code> | <code>INIT</code> | Escritura | Inicia la operación |
+| <code>0x10</code> | <code>RESULT</code> | Lectura | Resultado |
+| <code>0x14</code> | <code>DONE</code> | Lectura | Bit 0 indica fin de operación |</p>
+<p>Esta tabla es solamente una plantilla. Los nombres, offsets y protocolos reales deben salir del RTL del periférico que se va a manejar.</p>
+<p>La Figura 3 muestra el multiplicador como ejemplo concreto. Los offsets <code>0x04</code>, <code>0x08</code> y <code>0x0C</code> seleccionan los registros de escritura <code>A</code>, <code>B</code> e <code>init</code>; los offsets <code>0x10</code> y <code>0x14</code> seleccionan las salidas <code>RESULT</code> y <code>done</code>. El código de software de la izquierda usa exactamente ese mapa de registros.</p>
+<p><img src="periph_block_diagram.png" alt="Figura 3. Diagrama interno del periférico multiplicador y mapa de registros MMIO." /></p>
+<p><strong>Figura 3. Diagrama interno del periférico multiplicador y mapa de registros MMIO.</strong></p>
+<h3>Comprobar la dirección base</h3>
+<p>La dirección base no puede repetirse. En este SoC se debe revisar el <code>case (mem_addr[31:16])</code> de <code>rtl/SOC.v</code> y confirmar que:</p>
+<ol>
+<li>el valor de dirección está reservado para el periférico nuevo;</li>
+<li>el <code>chip select</code> activa únicamente ese periférico;</li>
+<li>la salida <code>d_out</code> del periférico está incluida en el multiplexor de lectura <code>mem_rdata</code>.</li>
+</ol>
+<p>Si cualquiera de esos tres elementos falta, el controlador C no podrá comunicarse correctamente con el periférico.</p>
+<hr />
+<h2>3. Crear el archivo fuente del controlador</h2>
+<p>Dentro de <code>libfemtorv/</code>, cree un archivo <code>.c</code> con un nombre relacionado con el periférico. Por ejemplo:</p>
+<pre><code class="language-text">libfemtorv/accelerator.c
+</code></pre>
+<p>Incluya el encabezado público de la plataforma:</p>
+<pre><code class="language-c">#include &lt;femtorv32.h&gt;
+</code></pre>
+<p>Defina la dirección base y los offsets observados en RTL:</p>
+<pre><code class="language-c">#define ACCEL_BASE    0x00480000u
+
+#define ACCEL_A       0x04u
+#define ACCEL_B       0x08u
+#define ACCEL_INIT    0x0Cu
+#define ACCEL_RESULT  0x10u
+#define ACCEL_DONE    0x14u
+</code></pre>
+<p>El sufijo <code>u</code> indica que las constantes son enteros sin signo.</p>
+<h3>Usar <code>volatile</code></h3>
+<p>Los registros MMIO deben accederse mediante un puntero <code>volatile</code>:</p>
+<pre><code class="language-c">volatile uint32_t *accel = (volatile uint32_t *)ACCEL_BASE;
+</code></pre>
+<p><code>volatile</code> informa al compilador que cada lectura y cada escritura tiene un efecto externo y no debe eliminarse ni combinarse como si fuera acceso a RAM normal.</p>
+<p>Sin <code>volatile</code>, el compilador podría:</p>
+<ul>
+<li>eliminar una escritura que considere redundante;</li>
+<li>leer <code>DONE</code> una sola vez y convertir el ciclo de espera en un ciclo infinito;</li>
+<li>cambiar el orden esperado de algunos accesos.</li>
+</ul>
+<h3>Convertir offsets a índices</h3>
+<p><code>accel</code> es un puntero a palabras de 32 bits. Por eso, al usar la forma <code>accel[indice]</code>, el índice debe expresarse en palabras y no en bytes:</p>
+<pre><code class="language-c">accel[ACCEL_A / 4] = a;
+</code></pre>
+<p>Con <code>ACCEL_A = 0x04</code>, la expresión anterior accede a:</p>
+<pre><code class="language-text">ACCEL_BASE + 1 palabra = ACCEL_BASE + 4 bytes
+</code></pre>
+<p>Olvidar la división entre cuatro es un error grave: <code>accel[0x04]</code> accedería a <code>ACCEL_BASE + 0x10</code>, no a <code>ACCEL_BASE + 0x04</code>.</p>
+<hr />
+<h2>4. Implementar la función pública</h2>
+<p>Suponga un periférico que recibe dos operandos de 16 bits, necesita un pulso <code>1</code> → <code>0</code> en <code>INIT</code>, entrega un resultado de 32 bits y coloca en uno el bit 0 de <code>DONE</code> al terminar.</p>
+<p>La función puede escribirse así:</p>
+<pre><code class="language-c">#include &lt;femtorv32.h&gt;
+
+#define ACCEL_BASE    0x00480000u
+#define ACCEL_A       0x04u
+#define ACCEL_B       0x08u
+#define ACCEL_INIT    0x0Cu
+#define ACCEL_RESULT  0x10u
+#define ACCEL_DONE    0x14u
+
+uint32_t hw_accel(uint16_t a, uint16_t b)
+{
+    volatile uint32_t *accel = (volatile uint32_t *)ACCEL_BASE;
+
+    accel[ACCEL_A / 4] = a;
+    accel[ACCEL_B / 4] = b;
+
+    /* Crear el pulso de inicio exigido por el RTL. */
+    accel[ACCEL_INIT / 4] = 1u;
+    accel[ACCEL_INIT / 4] = 0u;
+
+    /* Esperar hasta que el bit 0 indique fin de operación. */
+    while ((accel[ACCEL_DONE / 4] &amp; 1u) == 0u)
+        ;
+
+    return accel[ACCEL_RESULT / 4];
+}
+</code></pre>
+<p>El orden de estas operaciones corresponde al protocolo del ejemplo:</p>
+<ol>
+<li>escribir los operandos;</li>
+<li>generar el pulso de inicio;</li>
+<li>esperar la terminación;</li>
+<li>leer el resultado.</li>
+</ol>
+<p>No copie esta secuencia automáticamente para todos los periféricos. Si el RTL usa otro protocolo —por ejemplo, <code>start</code> auto-limpiable, una señal <code>busy</code> activa en uno, FIFO, interrupción o varios registros de resultado— la función debe respetar ese protocolo.</p>
+<h3>Máscara y conversión del resultado</h3>
+<p>Si solamente una parte de <code>d_out</code> contiene el resultado, aplique una máscara antes de retornar:</p>
+<pre><code class="language-c">return (uint16_t)(accel[ACCEL_RESULT / 4] &amp; 0xFFFFu);
+</code></pre>
+<p>La máscara debe corresponder al ancho real definido en RTL. No use <code>0xFFFF</code> para un resultado de 20, 24 o 32 bits.</p>
+<h3>Evitar un bloqueo permanente</h3>
+<p>El ejemplo usa espera por sondeo (<em>polling</em>) sin tiempo límite. Es simple, pero si el periférico no activa <code>DONE</code>, el procesador queda bloqueado para siempre.</p>
+<p>Para una función que deba detectar fallos puede usarse un límite de iteraciones y retornar un estado separado del resultado:</p>
+<pre><code class="language-c">int hw_accel_timeout(uint16_t a, uint16_t b, uint32_t *result)
+{
+    volatile uint32_t *accel = (volatile uint32_t *)ACCEL_BASE;
+    uint32_t timeout = 100000u;
+
+    if (result == 0)
+        return -1;
+
+    accel[ACCEL_A / 4] = a;
+    accel[ACCEL_B / 4] = b;
+    accel[ACCEL_INIT / 4] = 1u;
+    accel[ACCEL_INIT / 4] = 0u;
+
+    while ((accel[ACCEL_DONE / 4] &amp; 1u) == 0u) {
+        if (--timeout == 0u)
+            return -2;
+    }
+
+    *result = accel[ACCEL_RESULT / 4];
+    return 0;
+}
+</code></pre>
+<p>El valor de <code>timeout</code> debe calcularse a partir de la latencia máxima del periférico y de la frecuencia del procesador. No debe escogerse arbitrariamente para una versión final.</p>
+<hr />
+<h2>5. Publicar la función en el encabezado</h2>
+<p>Agregue el prototipo a:</p>
+<pre><code class="language-text">libfemtorv/include/femtorv32.h
+</code></pre>
+<p>Ejemplo:</p>
+<pre><code class="language-c">extern uint32_t hw_accel(uint16_t a, uint16_t b);
+</code></pre>
+<p>El prototipo y la implementación deben coincidir exactamente en:</p>
+<ul>
+<li>nombre de función;</li>
+<li>tipo de retorno;</li>
+<li>cantidad de parámetros;</li>
+<li>tipo y orden de los parámetros.</li>
+</ul>
+<p>Como <code>femtorv32.h</code> ya incluye <code>&lt;stdint.h&gt;</code>, pueden usarse tipos de ancho fijo como <code>uint8_t</code>, <code>uint16_t</code> y <code>uint32_t</code>.</p>
+<h3>Por qué usar tipos de ancho fijo</h3>
+<p>Los registros hardware tienen anchos definidos. Un tipo como <code>uint16_t</code> expresa que el dato tiene exactamente 16 bits, mientras que el tamaño de tipos como <code>int</code> puede depender de la arquitectura o del compilador.</p>
+<p>El tipo de la API debe representar el dato útil del periférico, aunque las transacciones MMIO del bus se hagan mediante palabras de 32 bits.</p>
+<hr />
+<h2>6. Agregar el módulo al archivo de la librería</h2>
+<p>Abra:</p>
+<pre><code class="language-text">libfemtorv/Makefile
+</code></pre>
+<p>Agregue el nuevo objeto a la variable <code>OBJECTS</code>. Por ejemplo:</p>
+<pre><code class="language-make">OBJECTS = microwait.o milliwait.o wait_cycles.o femtorv32.o uart.o \
+          cycles_32.o print.o printf.o hwmath.o accelerator.o
+</code></pre>
+<p>La regla genérica existente compilará automáticamente:</p>
+<pre><code class="language-text">accelerator.c -&gt; accelerator.o
+</code></pre>
+<p>Después, <code>ar</code> incorporará <code>accelerator.o</code> en <code>libfemtorv.a</code>.</p>
+<p>Si se crea el archivo <code>.c</code> pero no se agrega su <code>.o</code> a <code>OBJECTS</code>, el código compilará de manera aislada solamente si se solicita explícitamente, pero la función no quedará dentro de la librería. Al enlazar el programa aparecerá un error similar a:</p>
+<pre><code class="language-text">undefined reference to `hw_accel'
+</code></pre>
+<hr />
+<h2>7. Crear un programa de prueba</h2>
+<p>Cree el archivo junto al <code>Makefile</code> principal:</p>
+<pre><code class="language-text">test_accelerator.c
+</code></pre>
+<p>Ejemplo:</p>
+<pre><code class="language-c">#include &lt;femtorv32.h&gt;
+
+int main(void)
+{
+    uint16_t a = 12u;
+    uint16_t b = 34u;
+    uint32_t result = hw_accel(a, b);
+
+    printf(&quot;hw_accel(%d, %d) = %d\n&quot;, a, b, result);
+
+    if (result != 408u) {
+        printf(&quot;ERROR: resultado esperado = 408\n&quot;);
+        return 1;
+    }
+
+    printf(&quot;PRUEBA CORRECTA\n&quot;);
+    return 0;
+}
+</code></pre>
+<p>El valor esperado debe calcularse independientemente del periférico. No use como valor esperado otra llamada a la misma función que se está probando.</p>
+<p>Una prueba adecuada debe incluir:</p>
+<ul>
+<li>un caso sencillo cuyo resultado pueda comprobarse manualmente;</li>
+<li>cero como entrada, si está permitido;</li>
+<li>valores mínimos y máximos;</li>
+<li>casos que produzcan acarreo o usen todos los bits del resultado;</li>
+<li>entradas inválidas y comportamiento de error, si existen;</li>
+<li>varias operaciones consecutivas para verificar que <code>DONE</code> e <code>INIT</code> se rearman correctamente.</li>
+</ul>
+<hr />
+<h2>8. Compilar la librería y el firmware</h2>
+<p>Desde <code>firmware/c/</code>, reconstruya primero la librería:</p>
+<pre><code class="language-bash">make -C libfemtorv clean all
+</code></pre>
+<p>Compruebe que el nuevo módulo quedó dentro de <code>libfemtorv.a</code>:</p>
+<pre><code class="language-bash">riscv64-unknown-elf-ar t libfemtorv/libfemtorv.a
+</code></pre>
+<p>La lista debe contener:</p>
+<pre><code class="language-text">accelerator.o
+</code></pre>
+<p>También puede verificar que la función fue exportada:</p>
+<pre><code class="language-bash">riscv64-unknown-elf-nm libfemtorv/libfemtorv.a | grep hw_accel
+</code></pre>
+<p>Debe aparecer un símbolo global definido, normalmente marcado con <code>T</code>:</p>
+<pre><code class="language-text">00000000 T hw_accel
+</code></pre>
+<p>Para hacer una reconstrucción limpia del programa de prueba:</p>
+<pre><code class="language-bash">make clean
+cp libfemtorv/crt0_baremetal.o .
+make TARGET=test_accelerator
+</code></pre>
+<p>La copia de <code>crt0_baremetal.o</code> es necesaria después de <code>make clean</code>, porque el <code>linker.ld</code> principal espera ese objeto en <code>firmware/c/</code> y la regla <code>clean</code> lo elimina.</p>
+<p>El proceso debe producir:</p>
+<ul>
+<li><code>firmware.elf</code>: programa enlazado;</li>
+<li><code>firmware.lst</code>: encabezados y desensamblado;</li>
+<li><code>firmware.map</code>: mapa del enlazador;</li>
+<li><code>firmware.hex</code>: imagen para la BRAM;</li>
+<li>una copia de <code>firmware.hex</code> en <code>rtl/</code>.</li>
+</ul>
+<hr />
+<h2>9. Revisar el ejecutable antes de simular</h2>
+<p>Busque la función en el desensamblado:</p>
+<pre><code class="language-bash">grep -n -A25 -B5 '&lt;hw_accel&gt;' firmware.lst
+</code></pre>
+<p>Esta revisión permite comprobar que:</p>
+<ul>
+<li>la función quedó enlazada;</li>
+<li>el programa realmente la llama;</li>
+<li>las direcciones inmediatas corresponden a la dirección base esperada;</li>
+<li>existen cargas y escrituras MMIO;</li>
+<li>no se enlazó por error una versión vieja de la librería.</li>
+</ul>
+<p>También puede revisar el mapa:</p>
+<pre><code class="language-bash">grep -n 'hw_accel\|accelerator.o' firmware.map
+</code></pre>
+<hr />
+<h2>10. Simular y observar la interfaz</h2>
+<p>Después de generar <code>firmware.hex</code>, ejecute el banco de pruebas del SoC desde <code>rtl/</code> según el flujo de simulación del proyecto.</p>
+<p>La salida UART del programa confirma el resultado funcional, pero una depuración completa debe comprobar también las transacciones MMIO en el VCD:</p>
+<ol>
+<li>escritura del operando A en el offset correcto;</li>
+<li>escritura del operando B en el offset correcto;</li>
+<li>escritura de <code>1</code> en <code>INIT</code>;</li>
+<li>escritura de <code>0</code> en <code>INIT</code>, si el protocolo exige un pulso explícito;</li>
+<li>activación del <code>chip select</code> correcto;</li>
+<li>transición de <code>DONE</code> en la polaridad esperada;</li>
+<li>lectura de <code>RESULT</code> después de <code>DONE</code>;</li>
+<li>valor de <code>mem_rdata</code> retornado al procesador.</li>
+</ol>
+<p>Si el programa se queda esperando, determine primero si ocurre una de estas condiciones:</p>
+<ul>
+<li><code>DONE</code> nunca se activa;</li>
+<li>se está leyendo el offset equivocado;</li>
+<li>el <code>chip select</code> no corresponde a la dirección base;</li>
+<li>el periférico no fue agregado al multiplexor de <code>mem_rdata</code>;</li>
+<li><code>INIT</code> no recibió la secuencia exigida;</li>
+<li>el reset del periférico permanece activo;</li>
+<li>el software está usando una librería antigua que no fue recompilada.</li>
+</ul>
+<hr />
+<h2>11. Errores frecuentes</h2>
+<h3>Dirección base incorrecta</h3>
+<p><strong>Síntoma:</strong> no ocurre ninguna operación o responde otro periférico.</p>
+<p><strong>Revisión:</strong> compare la constante <code>*_BASE</code> con el <code>case (mem_addr[31:16])</code> de <code>rtl/SOC.v</code>.</p>
+<h3>Offsets intercambiados</h3>
+<p><strong>Síntoma:</strong> <code>DONE</code> se interpreta como resultado, el resultado siempre parece <code>0</code> o la función termina en un momento incorrecto.</p>
+<p><strong>Revisión:</strong> confirme cada offset directamente en el <code>case</code> interno del módulo RTL.</p>
+<h3>Índice sin dividir entre cuatro</h3>
+<p><strong>Síntoma:</strong> la función accede a otro registro.</p>
+<p>Código incorrecto:</p>
+<pre><code class="language-c">accel[ACCEL_A] = a;
+</code></pre>
+<p>Código correcto para un puntero <code>uint32_t *</code>:</p>
+<pre><code class="language-c">accel[ACCEL_A / 4] = a;
+</code></pre>
+<h3>Falta de <code>volatile</code></h3>
+<p><strong>Síntoma:</strong> el comportamiento cambia con la optimización o el ciclo de espera no vuelve a leer <code>DONE</code>.</p>
+<p><strong>Corrección:</strong> use un puntero <code>volatile</code> para todos los registros MMIO.</p>
+<h3>Protocolo de inicio incorrecto</h3>
+<p><strong>Síntoma:</strong> el periférico nunca empieza, se inicia varias veces o solamente funciona una vez.</p>
+<p><strong>Revisión:</strong> determine en RTL si <code>INIT</code> necesita nivel, pulso explícito, flanco o escritura auto-limpiable.</p>
+<h3>El archivo no está en <code>OBJECTS</code></h3>
+<p><strong>Síntoma:</strong> <code>undefined reference</code> durante el enlace.</p>
+<p><strong>Corrección:</strong> agregue el <code>.o</code> correspondiente a <code>libfemtorv/Makefile</code> y reconstruya la librería.</p>
+<h3>Encabezado e implementación no coinciden</h3>
+<p><strong>Síntoma:</strong> advertencias, argumentos interpretados incorrectamente o truncamiento del resultado.</p>
+<p><strong>Corrección:</strong> haga idénticos el prototipo de <code>femtorv32.h</code> y la definición del archivo <code>.c</code>.</p>
+<h3>Se está enlazando una librería anterior</h3>
+<p><strong>Síntoma:</strong> el código fuente parece correcto, pero el desensamblado no contiene los cambios.</p>
+<p><strong>Corrección:</strong> ejecute <code>make -C libfemtorv clean all</code> antes de reconstruir el firmware y compruebe el símbolo con <code>nm</code>.</p>
+<h3>El periférico escribe más bits de los que acepta el RTL</h3>
+<p><strong>Síntoma:</strong> los operandos aparecen truncados.</p>
+<p><strong>Revisión:</strong> compare el tipo de la API, el ancho de <code>mem_wdata</code> conectado en <code>SOC.v</code> y el ancho del registro dentro del periférico.</p>
+<hr />
+<h2>12. Lista de comprobación final</h2>
+<h3>RTL</h3>
+<ul>
+<li>[ ] La dirección base es única.</li>
+<li>[ ] El periférico recibe el <code>chip select</code> correcto.</li>
+<li>[ ] Los offsets están documentados y alineados.</li>
+<li>[ ] <code>d_out</code> está conectado al multiplexor de lectura.</li>
+<li>[ ] El protocolo de <code>INIT</code>, <code>DONE</code> y <code>RESULT</code> está verificado.</li>
+<li>[ ] Los anchos de entrada y salida están verificados.</li>
+</ul>
+<h3>Librería</h3>
+<ul>
+<li>[ ] Existe un archivo <code>.c</code> específico y legible.</li>
+<li>[ ] Los accesos MMIO usan <code>volatile</code>.</li>
+<li>[ ] Los offsets en bytes se convierten correctamente a índices de palabra.</li>
+<li>[ ] El prototipo público está en <code>libfemtorv/include/femtorv32.h</code>.</li>
+<li>[ ] El nuevo <code>.o</code> está incluido en <code>OBJECTS</code>.</li>
+<li>[ ] <code>ar t</code> muestra el objeto dentro de <code>libfemtorv.a</code>.</li>
+<li>[ ] <code>nm</code> muestra la función como símbolo definido.</li>
+</ul>
+<h3>Prueba</h3>
+<ul>
+<li>[ ] Existe un programa <code>test_*.c</code> con resultados esperados independientes.</li>
+<li>[ ] El firmware compila y enlaza sin referencias indefinidas.</li>
+<li>[ ] <code>firmware.lst</code> contiene la función nueva.</li>
+<li>[ ] La simulación termina y reporta los resultados esperados.</li>
+<li>[ ] El VCD confirma dirección, datos, orden y protocolo de los accesos MMIO.</li>
+<li>[ ] Se probaron varias operaciones consecutivas y casos límite.</li>
+</ul>
+<p>Cuando todos estos puntos se cumplen, la función ya forma parte de la API pública de <code>libfemtorv</code> y puede utilizarse desde cualquier firmware que incluya <code>&lt;femtorv32.h&gt;</code> y enlace con <code>-lfemtorv</code>.</p>
+</main>
+</body>
+</html>

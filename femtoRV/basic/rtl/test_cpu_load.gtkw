@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
-[*] Wed Nov  5 00:49:48 2025
+[*] Sat Aug 22 21:36:37 2026
 [*]
 [dumpfile] "/Work/Embedded/digital_UN/femtoRV/basic/rtl/bench.vcd"
-[dumpfile_mtime] "Wed Nov  5 00:49:27 2025"
-[dumpfile_size] 256379936
+[dumpfile_mtime] "Sat Aug 22 21:30:53 2026"
+[dumpfile_size] 354674676
 [savefile] "/Work/Embedded/digital_UN/femtoRV/basic/rtl/test_cpu_load.gtkw"
-[timestart] 0
+[timestart] 18813065000
 [size] 1648 951
-[pos] -325 -176
-*-59.770798 1079 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -1 -1
+*-18.770798 18813980000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] bench.
 [treeopen] bench.uut.
 [treeopen] bench.uut.bcd2bin0.
@@ -388,6 +388,66 @@ bench.uut.sqrt1.done
 bench.uut.sqrt1.result[15:0]
 @200
 -
+-DIV
+-
+@28
+bench.uut.div1.init
+bench.uut.div1.cs
+@22
+bench.uut.div1.s[4:0]
+bench.uut.div1.A[15:0]
+@c00022
+bench.uut.div1.B[15:0]
+@28
+(0)bench.uut.div1.B[15:0]
+(1)bench.uut.div1.B[15:0]
+(2)bench.uut.div1.B[15:0]
+(3)bench.uut.div1.B[15:0]
+(4)bench.uut.div1.B[15:0]
+(5)bench.uut.div1.B[15:0]
+(6)bench.uut.div1.B[15:0]
+(7)bench.uut.div1.B[15:0]
+(8)bench.uut.div1.B[15:0]
+(9)bench.uut.div1.B[15:0]
+(10)bench.uut.div1.B[15:0]
+(11)bench.uut.div1.B[15:0]
+(12)bench.uut.div1.B[15:0]
+(13)bench.uut.div1.B[15:0]
+(14)bench.uut.div1.B[15:0]
+(15)bench.uut.div1.B[15:0]
+@1401200
+-group_end
+@c00022
+bench.uut.div1.result[16:0]
+@28
+(0)bench.uut.div1.result[16:0]
+(1)bench.uut.div1.result[16:0]
+(2)bench.uut.div1.result[16:0]
+(3)bench.uut.div1.result[16:0]
+(4)bench.uut.div1.result[16:0]
+(5)bench.uut.div1.result[16:0]
+(6)bench.uut.div1.result[16:0]
+(7)bench.uut.div1.result[16:0]
+(8)bench.uut.div1.result[16:0]
+(9)bench.uut.div1.result[16:0]
+(10)bench.uut.div1.result[16:0]
+(11)bench.uut.div1.result[16:0]
+(12)bench.uut.div1.result[16:0]
+(13)bench.uut.div1.result[16:0]
+(14)bench.uut.div1.result[16:0]
+(15)bench.uut.div1.result[16:0]
+(16)bench.uut.div1.result[16:0]
+@1401200
+-group_end
+@22
+bench.uut.div1.addr[4:0]
+bench.uut.div1.d_out[31:0]
+@28
+bench.uut.div1.clk
+@29
+bench.uut.div1.done
+@200
+-
 -BCD2BIN
 @c00022
 bench.uut.bcd2bin0.A[19:0]
@@ -443,7 +503,7 @@ bench.uut.bcd2bin0.result[15:0]
 (15)bench.uut.bcd2bin0.result[15:0]
 @1401200
 -group_end
-@23
+@22
 bench.uut.bcd2bin0.bcd2bin0.rsr40.data[35:0]
 @200
 -
