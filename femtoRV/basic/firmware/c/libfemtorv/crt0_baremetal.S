@@ -1,4 +1,4 @@
-.include "femtorv32.inc"
+#include "include/soc_memory_map.h"
 
 .text
 .global _start
@@ -7,9 +7,8 @@
 _start:
 .option push
 .option norelax
-     li   gp,IO_BASE
-     li   sp,IO_HW_CONFIG_RAM
+     li   gp, UART_BASE
+     li   sp, SOC_RAM_SIZE_BYTES
      call main
      tail exit
-
 

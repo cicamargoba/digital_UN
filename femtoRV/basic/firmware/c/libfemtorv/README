@@ -1,0 +1,267 @@
+# libfemtorv
+
+`libfemtorv` es la librería bare-metal utilizada por los programas C que se
+ejecutan sobre el SoC femtoRV32 de este proyecto. Proporciona inicialización,
+UART, temporización, impresión y acceso a los periféricos matemáticos mediante
+MMIO.
+
+## Componentes incluidos en `libfemtorv.a`
+
+El `Makefile` construye el archivo estático con los siguientes objetos:
+
+```make
+OBJECTS = microwait.o milliwait.o wait_cycles.o femtorv32.o uart.o \
+          cycles_32.o print.o printf.o hwmath.o
+```
+
+| Objeto | Fuente | Papel |
+|---|---|---|
+| `microwait.o` | `microwait.c` | Espera aproximada en microsegundos. |
+| `milliwait.o` | `milliwait.c` | Espera aproximada en milisegundos. |
+| `wait_cycles.o` | `wait_cycles.c` | Espera basada en el contador de ciclos. |
+| `femtorv32.o` | `femtorv32.S` | Implementa `exit()` y `abort()`. |
+| `uart.o` | `uart.S` | Implementa `putchar()` y `getchar()` mediante polling de la UART. |
+| `cycles_32.o` | `cycles_32.c` | Lee `rdcycle` y mantiene un contador de 32 bits. |
+| `print.o` | `print.c` | Funciones `puts`, `print_string`, `print_dec` y `print_hex`. |
+| `printf.o` | `printf.c` | Implementación mínima de `printf` para `%s`, `%d`, `%x` y `%c`. |
+| `hwmath.o` | `hwmath.c` | API C para multiplicación, división y raíz cuadrada implementadas en RTL. |
+
+La librería se genera con:
+
+```bash
+make
+```
+
+El flujo ejecutado por el `Makefile` es:
+
+1. Los archivos `.c` se compilan con `riscv64-unknown-elf-gcc` para RV32I.
+2. Los archivos `.S` se procesan con el preprocesador C y luego se ensamblan:
+
+   ```bash
+   riscv64-unknown-elf-gcc \
+       -march=rv32i -mabi=ilp32 \
+       -Iinclude -I. \
+       -x assembler-with-cpp \
+       -c archivo.S -o archivo.o
+   ```
+
+3. Los nueve objetos se empaquetan con:
+
+   ```bash
+   riscv64-unknown-elf-ar cq libfemtorv.a $(OBJECTS)
+   riscv64-unknown-elf-ranlib libfemtorv.a
+   ```
+
+Los encabezados no se almacenan dentro del archivo `.a`; son entradas de
+compilación y forman la interfaz que utilizan las aplicaciones.
+
+## `crt0_baremetal.S`
+
+`crt0_baremetal.S` es código fuente escrito manualmente; no es generado a
+partir de otro archivo. Lo que genera el `Makefile` es
+`crt0_baremetal.o`, utilizando la misma regla de ensamblador con
+preprocesador empleada para los demás archivos `.S`.
+
+El objetivo predeterminado construye ambos productos:
+
+```make
+all: libfemtorv.a crt0_baremetal.o
+```
+
+El startup realiza estas operaciones antes de entrar al programa C:
+
+```asm
+#include "include/soc_memory_map.h"
+
+_start:
+    li   gp, UART_BASE
+    li   sp, SOC_RAM_SIZE_BYTES
+    call main
+    tail exit
+```
+
+Su papel es:
+
+1. Publicar el símbolo `_start`, punto inicial del firmware.
+2. Inicializar `gp` con `UART_BASE = 0x00400000`, utilizado por `uart.S`.
+3. Inicializar `sp` al final de la BRAM, `SOC_RAM_SIZE_BYTES = 0x2000`.
+4. Llamar a `main()`.
+5. Transferir el control a `exit()` si `main()` retorna.
+
+`crt0_baremetal.o` no se incluye en `libfemtorv.a`. El script
+`../linker.ld` solicita explícitamente este objeto al comienzo de `.text`:
+
+```ld
+.text :
+{
+    crt0_baremetal.o (.text)
+    *(.text)
+}
+```
+
+Por esta razón debe copiarse al directorio del firmware antes de enlazar:
+
+```bash
+make
+cp crt0_baremetal.o ..
+```
+
+Después, desde `firmware/c/`, se construye la aplicación:
+
+```bash
+make TARGET=test_hwmath
+```
+
+## Encabezados
+
+### `include/soc_memory_map.h`
+
+Es la fuente común del mapa de memoria para C y ensamblador. Reemplaza los
+archivos duplicados y no coherentes:
+
+```text
+HardwareConfig_bits.h
+HardwareConfig_bits.inc
+```
+
+Contiene:
+
+- tamaño de BRAM y ancho del contador de ciclos;
+- bases MMIO de UART, raíz cuadrada, multiplicador, divisor y demás
+  periféricos;
+- offsets de los registros UART;
+- máscaras de control y estado UART.
+
+Las direcciones principales son:
+
+| Símbolo | Dirección |
+|---|---:|
+| `UART_BASE` | `0x00400000` |
+| `SQRT_BASE` | `0x00410000` |
+| `MULT_BASE` | `0x00420000` |
+| `DIV_BASE` | `0x00430000` |
+| `BIN2BCD_BASE` | `0x00440000` |
+| `DPRAM_BASE` | `0x00450000` |
+| `BCD2BIN_BASE` | `0x00460000` |
+| `WS2812_BASE` | `0x00470000` |
+
+El uso de un único archivo evita mantener una versión `.h` para C y una
+versión `.inc` para ensamblador. La extensión `.S` permite que GCC procese
+`#include` antes de invocar al ensamblador.
+
+### `include/femtorv32.h`
+
+Es la API pública de la librería. Declara las funciones de UART, impresión,
+temporización y matemáticas, e incluye `soc_memory_map.h`. También define las
+macros `IO_IN`, `IO_OUT`, `LEDS` y `delay`.
+
+`LEDS(valor)` escribe en `UART_CONTROL`, porque el LED del SoC corresponde al
+bit 2 del registro de control UART; no existe un registro independiente
+`IO_LEDS` en el `SOC.v` actual.
+
+### `include/femtostdlib.h`
+
+Contiene declaraciones utilizadas por `print.c` y `printf.c`. Incluye
+`femtorv32.h`. Actualmente es una interfaz auxiliar interna y varias de sus
+declaraciones también aparecen en `femtorv32.h`.
+
+### `include/femto_elf.h`
+
+Pertenece al cargador ELF opcional implementado por `femto_elf.c`.
+`femto_elf.o` no aparece en `OBJECTS`; por tanto, esta funcionalidad no forma
+parte de la versión actual de `libfemtorv.a`.
+
+## Papel de los demás archivos
+
+### `uart.S`
+
+Incluye `soc_memory_map.h` y accede a los registros UART como offsets desde
+`gp`:
+
+```text
+UART_DATA_OFFSET    = 0x08
+UART_CONTROL_OFFSET = 0x10
+```
+
+`putchar()` escribe el dato, genera un pulso `tx_wr` y espera que
+`tx_busy` se desactive. `getchar()` espera `rx_avail`, lee el byte y genera el
+pulso `rx_ack`.
+
+### `hwmath.c`
+
+Implementa:
+
+```c
+uint32_t hw_mult(uint16_t a, uint16_t b);
+uint16_t hw_div(uint16_t a, uint16_t b);
+uint16_t hw_sqrt(uint16_t a);
+```
+
+Cada función escribe operandos por MMIO, genera un pulso de inicio, espera
+`done` y lee el resultado. Las bases provienen de `soc_memory_map.h`; ya no se
+repiten direcciones locales dentro de `hwmath.c`.
+
+### `cycles_32.c`, `wait_cycles.c`, `milliwait.c` y `microwait.c`
+
+Forman la capa de temporización. `cycles_32.c` utiliza `rdcycle`; el ancho del
+contador se define como 32 bits en `soc_memory_map.h`, sin consultar los
+antiguos registros `IO_HW_CONFIG_*`, que no están implementados en el SoC
+actual.
+
+### `femtorv32.S`
+
+Implementa la terminación bare-metal. `exit()` transfiere el control a la
+secuencia de `abort()`, que ejecuta `ebreak`.
+
+### `cycles_64.S`
+
+Contiene una implementación alternativa para procesadores con contador de
+64 bits. No aparece en `OBJECTS` y no forma parte de la librería actual.
+
+### `femto_elf.c`
+
+Implementa un cargador ELF opcional. Tampoco aparece en `OBJECTS`.
+
+### Archivos `.o`, `libfemtorv.a` y `libfemtorv32.a`
+
+- Los `.o` son productos intermedios generados por `make`.
+- `libfemtorv.a` es el archivo estático generado por el `Makefile` actual.
+- `libfemtorv32.a` es un archivo heredado y no es generado ni utilizado por
+  el flujo actual descrito aquí.
+
+## Verificación en simulación
+
+La arquitectura con `soc_memory_map.h` fue compilada y probada con
+`test_hwmath.c`:
+
+| Prueba | Resultado |
+|---|---:|
+| `12 * 34` | `408` |
+| `255 * 255` | `65025` |
+| `1000 * 50` | `50000` |
+| `sqrt(144)` | `12` |
+| `sqrt(256)` | `16` |
+| `sqrt(10000)` | `100` |
+| `100 / 7` | `14` |
+| `255 / 16` | `14` — debería ser `15` |
+| `1000 / 10` | `100` |
+
+El mapa MMIO y las interfaces C funcionan para los tres periféricos. El caso
+`255 / 16` presenta un error reproducible en el divisor RTL. Icarus Verilog
+también advierte que `peripheral_div.v` conecta una señal de 17 bits al puerto
+`Result` de 16 bits de `div_16`; todavía no se ha confirmado que esta
+advertencia sea la causa del error aritmético.
+
+## Inspección y limpieza
+
+Para listar los módulos realmente contenidos en la librería:
+
+```bash
+riscv64-unknown-elf-ar t libfemtorv.a
+```
+
+Para eliminar los productos generados:
+
+```bash
+make clean
+```

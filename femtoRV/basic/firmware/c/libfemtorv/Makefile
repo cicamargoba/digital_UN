@@ -20,7 +20,7 @@ libfemtorv.a: $(OBJECTS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
 %.o: %.S
-	$(AS) $(AFLAGS) -c $< -o $@
+	$(CC) $(AFLAGS) -Iinclude -I. -x assembler-with-cpp -c $< -o $@
 clean:
 	rm -rf  $(OBJECTS) *.elf *.bin .*~ *~ *.map *.d *.hex *.o libfemtorv.a
 .PHONY: clean
@@ -30,4 +30,3 @@ clean:
 #riscv64-unknown-elf-as -march=rv32imafc -mabi=ilp32f -I. -I/home/carlos/Embedded/litex_work/learn-fpga/FemtoRV/FIRMWARE//LIBFEMTOC  femtorv32.S -o femtorv32.o 
 #riscv64-unknown-elf-ar cq libfemtorv32.a femtorv32.o  uart.o cycles_32.o cycles_64.o femto_elf.o  
 #riscv64-unknown-elf-ranlib libfemtorv32.a
-

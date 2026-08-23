@@ -1,5 +1,3 @@
-.include "femtorv32.inc"
-
 # This version for processors that have a 64-bits ticks counter.
 
 .ifdef CYCLES_64

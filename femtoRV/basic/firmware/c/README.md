@@ -17,8 +17,7 @@ firmware/c/
 ├── firmware.map              # Mapa de memoria del linker
 └── libfemtorv/               # Librería estática
     ├── Makefile              # Build de libfemtorv.a
-    ├── femtorv32.inc         # Constantes de IO mapeado en memoria (ASM)
-    ├── crt0_baremetal.S      # Startup: gp=IO_BASE, sp=RAM_SIZE, call main
+    ├── crt0_baremetal.S      # Startup: gp=UART_BASE, sp=RAM_SIZE, call main
     ├── femtorv32.S           # exit(), abort()
     ├── uart.S                # putchar(), getchar() — I/O UART por polling
     ├── print.c               # print_string, print_dec, print_hex, puts
@@ -32,15 +31,17 @@ firmware/c/
     └── include/
         ├── femtorv32.h           # API pública: IO, printf, getchar, timing
         ├── femtostdlib.h         # Wrappers de stdlib (printf, print_*)
-        ├── HardwareConfig_bits.h # Definiciones C de registros IO
-        └── HardwareConfig_bits.inc # Definiciones ASM de registros IO
+        └── soc_memory_map.h      # Mapa común para C y ensamblador
 ```
 
 ## libfemtorv.a
 
+Documentación detallada de la librería, sus componentes, el startup y el mapa
+de memoria: [`libfemtorv/README`](libfemtorv/README).
+
 ### Qué contiene
 
-`libfemtorv.a` es un archivo estático (AR archive) con 8 módulos objeto:
+`libfemtorv.a` es un archivo estático (AR archive) con 9 módulos objeto:
 
 | Módulo     | Fuente         | Funciones                          |
 |------------|---------------|-----------------------------------|
@@ -52,6 +53,7 @@ firmware/c/
 | milliwait.o   | milliwait.c   | `milliwait`                    |
 | microwait.o   | microwait.c   | `microwait`                    |
 | femtorv32.o   | femtorv32.S   | `exit`, `abort`                |
+| hwmath.o      | hwmath.c      | `hw_mult`, `hw_div`, `hw_sqrt`|
 
 `crt0_baremetal.o` **no** está dentro de `libfemtorv.a` — se compila por separado y se copia a `firmware/c/` porque el linker lo necesita como primer objeto (definido en `linker.ld`).
 
@@ -65,7 +67,7 @@ make
 El Makefile de `libfemtorv/` ejecuta:
 
 1. Compila cada `.c` con `riscv64-unknown-elf-gcc -march=rv32i -mabi=ilp32 -c`
-2. Ensambla cada `.S` con `riscv64-unknown-elf-as -march=rv32i -mabi=ilp32 -c`
+2. Compila cada `.S` con `riscv64-unknown-elf-gcc -x assembler-with-cpp`; así C y ensamblador incluyen el mismo `soc_memory_map.h`
 3. Empaqueta todos los `.o` con `riscv64-unknown-elf-ar cq libfemtorv.a $(OBJECTS)`
 4. Indexa con `riscv64-unknown-elf-ranlib libfemtorv.a`
 5. Compila `crt0_baremetal.S` → `crt0_baremetal.o` (fuera del .a)
@@ -102,19 +104,22 @@ El Makefile de `firmware/c/` ejecuta:
 
 ## Memoria mapeada (IO)
 
-| Registro       | Offset  | Lectura                          | Escritura         |
+| Registro       | Dirección | Lectura                        | Escritura         |
 |----------------|---------|----------------------------------|-------------------|
-| IO_LEDS        | 0x400004| —                                | LEDs              |
-| IO_UART_DAT    | 0x400008| `{24'b0, rx_data[7:0]}`         | tx_data (pulsa TX)|
-| IO_UART_CNTL   | 0x400010| `{tx_busy, rx_avail, rx_error}`  | ctrl bits (ver abajo) |
-| IO_HW_CONFIG_RAM | 0x402000| Tamaño de BRAM en bytes         | —                 |
+| `UART_DATA`    | `0x400008` | `{24'b0, rx_data[7:0]}`      | Dato para transmitir |
+| `UART_CONTROL` | `0x400010` | `tx_busy`, `rx_avail`, `rx_error` | Control UART y LED |
 
-Bits de IO_UART_CNTL (escritura):
+Las bases de los demás periféricos están declaradas directamente en
+`libfemtorv/include/soc_memory_map.h`: `SQRT_BASE=0x410000`,
+`MULT_BASE=0x420000`, `DIV_BASE=0x430000` y las restantes direcciones
+implementadas por el decodificador de `SOC.v`.
+
+Bits de `UART_CONTROL` (escritura):
 - bit 0: `tx_wr` — pulso para iniciar transmisión
 - bit 1: `rx_ack` — pulso para limpiar `rx_avail`
 - bit 2: `ledout` — LED de control
 
-Bits de IO_UART_CNTL (lectura):
+Bits de `UART_CONTROL` (lectura):
 - bit 9: `tx_busy`
 - bit 8: `rx_avail`
 - bit 7: `rx_error`

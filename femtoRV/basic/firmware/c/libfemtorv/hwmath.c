@@ -12,11 +12,6 @@
 
 #include <femtorv32.h>
 
-#define SQRT_BASE  0x410000
-#define MULT_BASE  0x420000
-#define DIV_BASE   0x430000
-
-
 /* Mult register offsets (word-aligned) */
 #define MULT_A       0x04
 #define MULT_B       0x08

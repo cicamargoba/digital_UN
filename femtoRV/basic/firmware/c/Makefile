@@ -38,7 +38,7 @@ firmware.lst: firmware.elf
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< 
 %.o: %.S
-	$(AS) $(AFLAGS) -c $< -o $@
+	$(CC) $(AFLAGS) -Ilibfemtorv/include -x assembler-with-cpp -c $< -o $@
 clean:
 	rm -rf  *.o *.elf *.bin .*~ *~ *.map *.d *.hex *.lst
 .PHONY: clean

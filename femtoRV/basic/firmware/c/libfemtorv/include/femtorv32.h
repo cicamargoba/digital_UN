@@ -1,7 +1,7 @@
 #ifndef H__FEMTORV32__H
 #define H__FEMTORV32__H
 
-#include "HardwareConfig_bits.h"
+#include "soc_memory_map.h"
 #include <stdint.h>
 
 
@@ -39,23 +39,12 @@ extern void print_hex(unsigned int val);
 
 
 /********************* Memory-mapped IO *******************************************************/
-#define IO_BASE      0x400000 /* Base address of memory-mapped IO */
-/* Converts a memory-mapped register bit into the corresponding offset to be added to IO_BASE */
-#define IO_BIT_TO_OFFSET(io_bit) (1 << (2+(io_bit)))  
-/* All the memory-mapped hardware registers */
-#define IO_LEDS              IO_BIT_TO_OFFSET(IO_LEDS_bit)
-#define IO_UART_CNTL         IO_BIT_TO_OFFSET(IO_UART_CNTL_bit)
-#define IO_UART_DAT          IO_BIT_TO_OFFSET(IO_UART_DAT_bit)
-#define IO_HW_CONFIG_RAM     IO_BIT_TO_OFFSET(IO_HW_CONFIG_RAM_bit)
-#define IO_HW_CONFIG_DEVICES IO_BIT_TO_OFFSET(IO_HW_CONFIG_DEVICES_bit)
-#define IO_HW_CONFIG_CPUINFO IO_BIT_TO_OFFSET(IO_HW_CONFIG_CPUINFO_bit)
-
-#define IO_IN(port)       *(volatile uint32_t*)(IO_BASE + port)
-#define IO_OUT(port,val)  *(volatile uint32_t*)(IO_BASE + port)=(val)
-#define LEDS(val)         IO_OUT(IO_LEDS,val)
+#define IO_IN(address)       (*(volatile uint32_t *)(address))
+#define IO_OUT(address,val)  (IO_IN(address) = (val))
+#define LEDS(val)            IO_OUT(UART_CONTROL, val)
 
 #define FEMTORV32_FREQ            27000000
-#define FEMTORV32_COUNTER_BITS    (IO_IN(IO_HW_CONFIG_CPUINFO) & 127)
+#define FEMTORV32_COUNTER_BITS    SOC_CPU_COUNTER_BITS
 
 /* Hardware math peripherals (unsigned, 16-bit) */
 extern uint32_t hw_mult(uint16_t a, uint16_t b);  /* 16x16 -> 32 */
