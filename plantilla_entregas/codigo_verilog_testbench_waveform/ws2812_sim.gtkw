@@ -1,0 +1,45 @@
+[*]
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*] Thu May 21 16:27:06 2026
+[*]
+[dumpfile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/cores/test/ws2812/ws2812_TB.vcd"
+[dumpfile_mtime] "Thu May 21 16:26:02 2026"
+[dumpfile_size] 186262
+[savefile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/cores/test/ws2812/ws2812_sim.gtkw"
+[timestart] 0
+[size] 1920 1001
+[pos] -461 -202
+*-19.000000 791000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] ws2812_TB.
+[treeopen] ws2812_TB.uut.
+[sst_width] 278
+[signals_width] 166
+[sst_expanded] 1
+[sst_vpaned_height] 527
+@28
+ws2812_TB.uut.clk
+ws2812_TB.uut.reset
+ws2812_TB.uut.init_t
+ws2812_TB.uut.sel[1:0]
+@29
+[color] 3
+ws2812_TB.uut.dout
+@28
+ws2812_TB.uut.done_t
+@820
+ws2812_TB.uut.ctrl0.state_name[320:1]
+@24
+[color] 2
+ws2812_TB.uut.count0.cnt_out[10:0]
+@22
+ws2812_TB.uut.comp0.in1[10:0]
+ws2812_TB.uut.comp0.in2[10:0]
+@28
+ws2812_TB.uut.comp0.z
+ws2812_TB.uut.sel_tim[1:0]
+@22
+ws2812_TB.uut.mux0.y[10:0]
+@28
+ws2812_TB.uut.mux0.sel[1:0]
+[pattern_trace] 1
+[pattern_trace] 0

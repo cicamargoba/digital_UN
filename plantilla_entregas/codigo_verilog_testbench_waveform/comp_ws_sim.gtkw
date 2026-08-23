@@ -1,0 +1,24 @@
+[*]
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*] Wed May 20 23:32:26 2026
+[*]
+[dumpfile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/cores/test/ws2812/comp_ws_TB.vcd"
+[dumpfile_mtime] "Wed May 20 23:31:58 2026"
+[dumpfile_size] 474
+[savefile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/cores/test/ws2812/comp_ws_sim.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-17.000000 188000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] comp_ws_TB.
+[sst_width] 278
+[signals_width] 102
+[sst_expanded] 1
+[sst_vpaned_height] 157
+@22
+comp_ws_TB.uut.in1[10:0]
+comp_ws_TB.uut.in2[10:0]
+@28
+comp_ws_TB.uut.z
+[pattern_trace] 1
+[pattern_trace] 0

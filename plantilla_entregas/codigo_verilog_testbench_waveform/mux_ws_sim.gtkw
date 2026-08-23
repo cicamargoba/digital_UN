@@ -1,0 +1,26 @@
+[*]
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*] Wed May 20 15:54:57 2026
+[*]
+[dumpfile] "(null)"
+[savefile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/cores/test/ws2812/mux_ws_sim.gtkw"
+[timestart] 96600
+[size] 1000 600
+[pos] -179 119
+*-17.000000 272200 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] mux_ws_TB.
+[sst_width] 278
+[signals_width] 102
+[sst_expanded] 1
+[sst_vpaned_height] 157
+@22
+mux_ws_TB.uut.in1[10:0]
+mux_ws_TB.uut.in2[10:0]
+mux_ws_TB.uut.in3[10:0]
+mux_ws_TB.uut.in4[10:0]
+@29
+mux_ws_TB.uut.sel[1:0]
+@22
+mux_ws_TB.uut.y[10:0]
+[pattern_trace] 1
+[pattern_trace] 0
