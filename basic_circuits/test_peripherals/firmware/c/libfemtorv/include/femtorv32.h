@@ -57,4 +57,9 @@ extern void print_hex(unsigned int val);
 #define FEMTORV32_FREQ            27000000
 #define FEMTORV32_COUNTER_BITS    (IO_IN(IO_HW_CONFIG_CPUINFO) & 127)
 
+/* Hardware math peripherals (unsigned, 16-bit) */
+extern uint32_t hw_mult(uint16_t a, uint16_t b);  /* 16x16 -> 32 */
+extern uint16_t hw_div(uint16_t a, uint16_t b);   /* 16/16 -> quotient */
+extern uint16_t hw_sqrt(uint16_t a);              /* sqrt(16) -> 16 */
+
 #endif

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="470" viewBox="0 0 1000 470">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#333"/>
+    </marker>
+  </defs>
+
+  <style>
+    .blk   { fill: #ffffff; stroke: #333; stroke-width: 1.5; }
+    .lib   { fill: #e8e8e8; stroke: #333; stroke-width: 1.5; }
+    .out   { fill: #d8e8d8; stroke: #333; stroke-width: 1.5; }
+    .tool  { fill: #e0e8f0; stroke: #333; stroke-width: 1.5; }
+    .sep   { fill: #f0f0f0; stroke: #333; stroke-width: 1.5; stroke-dasharray: 4,2; }
+    .lbl   { font-size: 11px; fill: #222; text-anchor: middle; font-family: monospace; }
+    .sub   { font-size: 9px;  fill: #555; text-anchor: middle; font-family: monospace; }
+    .left  { font-size: 9px;  fill: #555; text-anchor: start;  font-family: monospace; }
+    .arrow { stroke: #333; stroke-width: 1.5; fill: none; marker-end: url(#arr); }
+    .darrow{ stroke: #333; stroke-width: 1.5; fill: none; marker-end: url(#arr); stroke-dasharray: 4,2; }
+    .title { font-size: 13px; font-weight: bold; fill: #222; text-anchor: start; font-family: monospace; }
+    .foot  { font-size: 9px;  fill: #555; text-anchor: start; font-family: monospace; }
+  </style>
+
+  <!-- ===== Fase 1: Crear libfemtorv.a ===== -->
+  <text x="20" y="20" class="title">Fase 1: Crear libfemtorv.a</text>
+
+  <!-- Fuentes -->
+  <rect x="20" y="35" width="120" height="95" class="blk"/>
+  <text x="80" y="50" class="lbl" style="font-weight:bold">Fuentes</text>
+  <text x="80" y="64" class="sub">uart.S</text>
+  <text x="80" y="76" class="sub">femtorv32.S</text>
+  <text x="80" y="88" class="sub">print.c</text>
+  <text x="80" y="100" class="sub">printf.c</text>
+  <text x="80" y="112" class="sub">cycles_32.c</text>
+  <text x="80" y="124" class="sub">+ 3 mas</text>
+
+  <!-- gcc / as -->
+  <rect x="160" y="50" width="120" height="65" class="tool"/>
+  <text x="220" y="66" class="lbl" style="font-weight:bold">gcc / as</text>
+  <text x="220" y="80" class="sub">-march=rv32i</text>
+  <text x="220" y="92" class="sub">-mabi=ilp32</text>
+  <text x="220" y="104" class="sub">-fno-pic -c</text>
+
+  <!-- Objetos .o -->
+  <rect x="300" y="35" width="120" height="95" class="blk"/>
+  <text x="360" y="50" class="lbl" style="font-weight:bold">Objetos .o</text>
+  <text x="360" y="64" class="sub">uart.o</text>
+  <text x="360" y="76" class="sub">femtorv32.o</text>
+  <text x="360" y="88" class="sub">print.o</text>
+  <text x="360" y="100" class="sub">printf.o</text>
+  <text x="360" y="112" class="sub">cycles_32.o</text>
+  <text x="360" y="124" class="sub">+ 3 mas</text>
+
+  <!-- ar + ranlib -->
+  <rect x="440" y="50" width="120" height="65" class="tool"/>
+  <text x="500" y="66" class="lbl" style="font-weight:bold">ar + ranlib</text>
+  <text x="500" y="80" class="sub">ar cq</text>
+  <text x="500" y="92" class="sub">ranlib</text>
+  <text x="500" y="104" class="sub">indexa .a</text>
+
+  <!-- libfemtorv.a -->
+  <rect x="580" y="50" width="120" height="65" class="lib"/>
+  <text x="640" y="66" class="lbl" style="font-weight:bold">libfemtorv.a</text>
+  <text x="640" y="80" class="sub">8 modulos</text>
+  <text x="640" y="92" class="sub">(sin crt0)</text>
+  <text x="640" y="104" class="sub">AR archive</text>
+
+  <!-- Arrows row 1 -->
+  <path class="arrow" d="M140,82 H160"/>
+  <path class="arrow" d="M280,82 H300"/>
+  <path class="arrow" d="M420,82 H440"/>
+  <path class="arrow" d="M560,82 H580"/>
+
+  <!-- Row 2: crt0 (separate) -->
+  <rect x="20" y="150" width="120" height="45" class="sep"/>
+  <text x="80" y="166" class="lbl">crt0_baremetal.S</text>
+  <text x="80" y="180" class="sub">_start (separado)</text>
+
+  <rect x="160" y="150" width="120" height="45" class="tool"/>
+  <text x="220" y="166" class="lbl">as</text>
+  <text x="220" y="180" class="sub">-march=rv32i</text>
+
+  <rect x="300" y="150" width="120" height="45" class="sep"/>
+  <text x="360" y="166" class="lbl">crt0_baremetal.o</text>
+  <text x="360" y="180" class="sub">copia a firmware/c/</text>
+
+  <!-- Arrows row 2 -->
+  <path class="arrow" d="M140,172 H160"/>
+  <path class="arrow" d="M280,172 H300"/>
+
+  <!-- Separator line -->
+  <line x1="20" y1="215" x2="980" y2="215" stroke="#999" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- ===== Fase 2: Compilar firmware ===== -->
+  <text x="20" y="235" class="title">Fase 2: Compilar firmware</text>
+
+  <!-- test_printf.c -->
+  <rect x="20" y="250" width="120" height="50" class="blk"/>
+  <text x="80" y="268" class="lbl">test_printf.c</text>
+  <text x="80" y="282" class="sub">#include</text>
+  <text x="80" y="294" class="sub">&lt;femtorv32.h&gt;</text>
+
+  <!-- gcc -->
+  <rect x="160" y="255" width="120" height="40" class="tool"/>
+  <text x="220" y="273" class="lbl">gcc -c</text>
+  <text x="220" y="287" class="sub">-march=rv32i</text>
+
+  <!-- test_printf.o -->
+  <rect x="300" y="255" width="120" height="40" class="blk"/>
+  <text x="360" y="273" class="lbl">test_printf.o</text>
+  <text x="360" y="287" class="sub">codigo objeto</text>
+
+  <!-- ld -->
+  <rect x="440" y="245" width="120" height="115" class="tool"/>
+  <text x="500" y="261" class="lbl" style="font-weight:bold">ld</text>
+  <text x="500" y="275" class="sub">-Tlinker.ld</text>
+  <line x1="455" y1="282" x2="545" y2="282" stroke="#999" stroke-width="0.5"/>
+  <text x="450" y="294" class="left">entradas:</text>
+  <text x="450" y="306" class="left">crt0_baremetal.o</text>
+  <text x="450" y="318" class="left">test_printf.o</text>
+  <text x="450" y="330" class="left">libfemtorv.a</text>
+  <text x="450" y="342" class="left">libgcc.a</text>
+
+  <!-- firmware.elf -->
+  <rect x="580" y="255" width="120" height="50" class="out"/>
+  <text x="640" y="273" class="lbl" style="font-weight:bold">firmware.elf</text>
+  <text x="640" y="287" class="sub">ELF ejecutable</text>
+  <text x="640" y="299" class="sub">BRAM @0x0000</text>
+
+  <!-- firmware_words -->
+  <rect x="720" y="255" width="120" height="50" class="tool"/>
+  <text x="780" y="273" class="lbl">firmware_words</text>
+  <text x="780" y="287" class="sub">+ objdump</text>
+  <text x="780" y="299" class="sub">-h -S</text>
+
+  <!-- firmware.hex -->
+  <rect x="860" y="250" width="120" height="60" class="out"/>
+  <text x="920" y="268" class="lbl" style="font-weight:bold">firmware.hex</text>
+  <text x="920" y="282" class="sub">copiado a rtl/</text>
+  <text x="920" y="294" class="sub">$readmemh</text>
+  <text x="920" y="306" class="sub">firmware.lst</text>
+
+  <!-- Arrows Fase 2 -->
+  <path class="arrow" d="M140,275 H160"/>
+  <path class="arrow" d="M280,275 H300"/>
+  <path class="arrow" d="M420,275 H440"/>
+  <path class="arrow" d="M560,275 H580"/>
+  <path class="arrow" d="M700,275 H720"/>
+  <path class="arrow" d="M840,275 H860"/>
+
+  <!-- Dashed: libfemtorv.a -> ld -->
+  <path class="darrow" d="M640,115 V225 H500 V245"/>
+
+  <!-- Dashed: crt0_baremetal.o -> ld -->
+  <path class="darrow" d="M360,195 V225 H470 V245"/>
+
+  <!-- Footer -->
+  <text x="20" y="385" class="foot">libgcc.a: division/modulo (CPU sin mul/div hardware)</text>
+  <text x="20" y="398" class="foot">linker.ld: BRAM ORIGIN=0x0000, crt0_baremetal.o primero en .text</text>
+  <text x="20" y="411" class="foot">crt0_baremetal.o se compila aparte y se copia a firmware/c/ (no esta dentro de libfemtorv.a)</text>
+
+  <!-- Legend -->
+  <rect x="20"  y="430" width="14" height="14" class="blk"/>
+  <text x="42"  y="441" class="foot">fuente / objeto</text>
+  <rect x="150" y="430" width="14" height="14" class="tool"/>
+  <text x="172" y="441" class="foot">herramienta</text>
+  <rect x="280" y="430" width="14" height="14" class="lib"/>
+  <text x="302" y="441" class="foot">libreria</text>
+  <rect x="410" y="430" width="14" height="14" class="out"/>
+  <text x="432" y="441" class="foot">producto final</text>
+  <rect x="540" y="430" width="14" height="14" class="sep"/>
+  <text x="562" y="441" class="foot">separado / especial</text>
+  <line x1="680" y1="437" x2="700" y2="437" class="darrow"/>
+  <text x="706" y="441" class="foot">conexion entre fases</text>
+
+</svg>

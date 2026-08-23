@@ -59,7 +59,7 @@ always @(posedge clk) begin
             state = SHIFT_DEC;
 
         END1:begin
-          if(start)
+          if(init_in)
             state = START;
           else
             state = END1;

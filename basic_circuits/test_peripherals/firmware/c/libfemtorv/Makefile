@@ -1,6 +1,6 @@
-OBJECTS =  microwait.o  milliwait.o  wait_cycles.o  femtorv32.o  uart.o cycles_32.o print.o printf.o
+OBJECTS =  microwait.o  milliwait.o  wait_cycles.o  femtorv32.o  uart.o cycles_32.o print.o printf.o hwmath.o
 #CROSS   = riscv64-unknown-elf
-CROSS   = riscv32-unknown-elf
+CROSS   = riscv64-unknown-elf
 CC      = $(CROSS)-gcc
 AS      = $(CROSS)-as
 LD      = $(CROSS)-ld

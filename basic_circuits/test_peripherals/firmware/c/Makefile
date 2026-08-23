@@ -1,27 +1,31 @@
-OBJECTS =  hello.o 
+OBJECTS =  test_printf.o
+TARGET     = test_printf
 #CROSS   = riscv64-unknown-elf
-CROSS   = riscv32-unknown-elf
+CROSS   = riscv64-unknown-elf
 CC      = $(CROSS)-gcc
 AS      = $(CROSS)-as
 LD      = $(CROSS)-ld
 OBJDUMP = $(CROSS)-objdump
-LIB_DIR = -Llibfemtorv -L/home/$$USER/miniconda3/envs/fpga/riscv32-elf/lib/rv32i/ilp32/ \
-          -L/home/$$USER/miniconda3/envs/fpga/lib/gcc/riscv32-elf/10.1.0/rv32iac/ilp32/
-LIBS    = -lfemtorv -lm -lc -lgcc
+LIB_DIR = -Llibfemtorv -L/usr/lib/gcc/riscv64-unknown-elf/14.2.0/rv32i/ilp32/
+LIBS    = -lfemtorv -lgcc
 LDFLAGS = -m elf32lriscv -b elf32-littleriscv --no-relax --print-memory-usage -Tlinker.ld
 AFLAGS  = -march=rv32i -mabi=ilp32
-CFLAGS  =  -Ilibfemtorv/include -Ilibfemtoc/include -fno-pic -march=rv32i -mabi=ilp32 -fno-stack-protector -w -Wl,--no-relax
+CFLAGS  =  -Ilibfemtorv/include -fno-pic -march=rv32i -mabi=ilp32 -fno-stack-protector -w -Wl,--no-relax
 OBJCOPY = $(CROSS)-objcopy
 all: firmware.hex
-#vpath %S libfemtorv 
+#vpath %S libfemtorv
+
+# Cambiar TARGET para compilar otro programa:
+#   make TARGET=test_hwmath
+#   make TARGET=test_printf
 
 %.bin: %.elf
 #	$(OBJCOPY) -O verilog $< $@
 	$(OBJCOPY) -O binary $< $@
 	chmod -x $@
 
-firmware.elf: $(OBJECTS) 
-	$(LD) $(LDFLAGS)  -Map firmware.map $(OBJECTS) -o $@  ${LIB_DIR}  ${LIBS}  
+firmware.elf: $(TARGET).o
+	$(LD) $(LDFLAGS)  -Map firmware.map $(TARGET).o -o $@  ${LIB_DIR}  ${LIBS}
 	chmod -x $@
 	
 firmware.hex: firmware.elf firmware.lst
@@ -36,5 +40,5 @@ firmware.lst: firmware.elf
 %.o: %.S
 	$(AS) $(AFLAGS) -c $< -o $@
 clean:
-	rm -rf  $(OBJECTS) *.elf *.bin .*~ *~ *.map *.d *.hex *.lst
+	rm -rf  *.o *.elf *.bin .*~ *~ *.map *.d *.hex *.lst
 .PHONY: clean
