@@ -85,7 +85,7 @@ make sim_post_syn
 
 Este objetivo sintetiza el diseño con Yosys y simula la netlist resultante. Su ejecución permite comprobar que el código implementado es sintetizable y que el comportamiento posterior a síntesis corresponde con el comportamiento observado en la simulación RTL.
 
-> **IMPORTANTE: La entrega no se considera completa si `make sim_post_syn` presenta errores de síntesis, módulos faltantes o errores durante la simulación de la netlist.**
+> <span style="color: #0B2E59;"><strong>IMPORTANTE: La entrega no se considera completa si <code>make sim_post_syn</code> presenta errores de síntesis, módulos faltantes o errores durante la simulación de la netlist.</strong></span>
 
 El estudiante debe revisar el archivo `synth.log` y corregir los errores relevantes antes de entregar.
 
@@ -99,7 +99,7 @@ make svg
 
 Este objetivo utiliza Yosys y `netlistsvg` para generar una representación estructural del diseño.
 
-> **IMPORTANTE: Todos los archivos `.svg` producidos por este comando deben incluirse en `codigo_verilog_testbench_waveform/` como parte de la entrega. Los diagramas deben corresponder a la misma versión del código Verilog entregado.**
+> <span style="color: #0B2E59;"><strong>IMPORTANTE: Todos los archivos <code>.svg</code> producidos por este comando deben incluirse en <code>codigo_verilog_testbench_waveform/</code> como parte de la entrega. Los diagramas deben corresponder a la misma versión del código Verilog entregado.</strong></span>
 
 Antes de ejecutar `make svg`, se debe comprobar que `TARGET` identifica el módulo superior y que `OBJS` contiene todos los módulos requeridos.
 
@@ -112,7 +112,7 @@ En `diagramas_flujo_bloques_estados/` se debe incluir la documentación gráfica
 
 Los diagramas deben incluir, cuando correspondan al diseño, el diagrama de flujo, el diagrama de bloques y el diagrama de estados.
 
-> **IMPORTANTE: Los diagramas deben ser similares a los presentados en esta plantilla. No se aceptarán dibujos realizados a mano alzada ni diagramas generados por inteligencia artificial.**
+> <span style="color: #0B2E59;"><strong>IMPORTANTE: Los diagramas deben ser similares a los presentados en esta plantilla. No se aceptarán dibujos realizados a mano alzada ni diagramas generados por inteligencia artificial.</strong></span>
 
 ### 6.1. Diagrama de flujo
 
@@ -156,7 +156,7 @@ Cada bloque presentado en el diagrama de bloques debe corresponder a un módulo 
 
 Los diagramas `.png`, `.pdf` y `.svg` deben corresponder a la versión final entregada, no a versiones anteriores del diseño.
 
-> **IMPORTANTE: Si no existe correspondencia entre los diagramas y el código Verilog, el código no se tendrá en cuenta durante la evaluación y únicamente se revisarán los diagramas.**
+> <span style="color: #0B2E59;"><strong>IMPORTANTE: Si no existe correspondencia entre los diagramas y el código Verilog, el código no se tendrá en cuenta durante la evaluación y únicamente se revisarán los diagramas.</strong></span>
 
 ## 8. Porcentajes de evaluación
 
@@ -199,4 +199,4 @@ La entrega debe contener:
 - [ ] simulación RTL ejecutada correctamente con `make sim`;
 - [ ] síntesis y simulación posterior a síntesis ejecutadas correctamente con `make sim_post_syn`.
 
-> **IMPORTANTE: Una entrega con archivos fuente faltantes, módulos no encontrados, errores de síntesis o diagramas que no correspondan al código se considera incompleta.**
+> <span style="color: #0B2E59;"><strong>IMPORTANTE: Una entrega con archivos fuente faltantes, módulos no encontrados, errores de síntesis o diagramas que no correspondan al código se considera incompleta.</strong></span>
