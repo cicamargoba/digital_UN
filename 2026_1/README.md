@@ -101,7 +101,7 @@ El producto final, en el estado en que se encuentre al cierre del curso, competi
 
 La especificación, implementación, verificación, integración, documentación y contribución individual se calificarán mediante la [rúbrica de evaluación de proyecto](../rubrica_evaluacion_proyecto.md). Cada equipo debe revisar la rúbrica desde el inicio del proyecto y conservar en el repositorio la evidencia exigida.
 
-Las tres evaluaciones del semestre se registrarán en la [hoja de evaluación de los proyectos](../evaluacion/README.md).
+Las tres evaluaciones del semestre se registrarán en la [plantilla de evaluación en Google Sheets para Digital 1](https://docs.google.com/spreadsheets/d/1QWbBYUazCXhvciewZW0A5yMdfXv3iQrw/edit?usp=drive_link&ouid=115337260055509834611&rtpof=true&sd=true). La estructura y las instrucciones también se encuentran en la [hoja de evaluación del repositorio](../evaluacion/README.md).
 
 ## Estructura del repositorio que debe entregar cada grupo
 

@@ -2,6 +2,13 @@
 
 El archivo [`plantilla_evaluacion_proyectos.xlsx`](./plantilla_evaluacion_proyectos.xlsx) está preparado para registrar **tres evaluaciones durante el semestre** para **cinco grupos**.
 
+## Hojas de evaluación en línea
+
+- [Plantilla de evaluación — Digital 1](https://docs.google.com/spreadsheets/d/1QWbBYUazCXhvciewZW0A5yMdfXv3iQrw/edit?usp=drive_link&ouid=115337260055509834611&rtpof=true&sd=true)
+- [Plantilla de evaluación — Digital 2](https://docs.google.com/spreadsheets/d/1M1TDSt9TuJ_LhC_vS1PJDAIdIY-PHbxS/edit?usp=drive_link&ouid=115337260055509834611&rtpof=true&sd=true)
+
+Las hojas en Google Drive son las copias de trabajo para cada curso. El archivo `.xlsx` de este directorio se conserva como plantilla reutilizable y versionada.
+
 ## Contenido
 
 - `Evaluaciones`: 15 registros, uno por grupo y evaluación, para los criterios comunes C1–C7.

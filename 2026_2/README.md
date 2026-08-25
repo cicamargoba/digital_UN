@@ -141,7 +141,7 @@ El resultado debe presentarse en el estado alcanzado al cierre del curso, acompa
 
 La puntuación y los niveles de desempeño están definidos en la [rúbrica de evaluación de proyecto](../rubrica_evaluacion_proyecto.md). Cada equipo debe revisarla desde el inicio del proyecto y conservar en el repositorio la evidencia específica de Digital 2.
 
-Las tres evaluaciones del semestre se registrarán en la [hoja de evaluación de los proyectos](../evaluacion/README.md).
+Las tres evaluaciones del semestre se registrarán en la [plantilla de evaluación en Google Sheets para Digital 2](https://docs.google.com/spreadsheets/d/1M1TDSt9TuJ_LhC_vS1PJDAIdIY-PHbxS/edit?usp=drive_link&ouid=115337260055509834611&rtpof=true&sd=true). La estructura y las instrucciones también se encuentran en la [hoja de evaluación del repositorio](../evaluacion/README.md).
 
 ## Material de referencia
 
