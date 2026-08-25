@@ -1,0 +1,8 @@
+*.vcd
+*.fst
+*.out
+__pycache__/
+build/
+csr.csv
+analyzer.csv
+analyzer.bin

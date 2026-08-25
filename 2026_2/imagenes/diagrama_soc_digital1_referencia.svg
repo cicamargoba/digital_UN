@@ -1,0 +1,287 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1750" height="1750" viewBox="0 0 1750 1750" font-family="Consolas, Menlo, monospace">
+  <rect width="1750" height="1750" fill="#ffffff"/>
+
+  <defs>
+    <marker id="aB" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#1a3a6b"/>
+    </marker>
+  </defs>
+
+  <text x="30" y="30" font-size="16" font-weight="bold">Digital 1 — rtl/SOC.v (CPU caja negra + periféricos CSR)</text>
+
+  <!-- ===== CPU ===== -->
+  <rect x="20" y="760" width="200" height="200" fill="#FFF9C4" stroke="#000000" stroke-width="1.5"/>
+  <text x="120" y="785" text-anchor="middle" font-size="14" font-weight="bold">RV32I</text>
+  <text x="200" y="800" font-size="11" text-anchor="end">mem_rdata[31:0]</text>
+  <text x="200" y="825" font-size="11" text-anchor="end">mem_wdata[31:0]</text>
+  <text x="200" y="850" font-size="11" text-anchor="end">mem_addr[31:0]</text>
+  <text x="200" y="875" font-size="11" text-anchor="end">rd</text>
+  <text x="200" y="900" font-size="11" text-anchor="end">wr</text>
+  <text x="20" y="945" font-size="11">cores/cpu/femtorv32_quark.v</text>
+  <line x1="0" y1="795" x2="20" y2="795" stroke="#1a3a6b" stroke-width="2" marker-end="url(#aB)"/>
+
+  <!-- ===== BUSES: exit HORIZONTALLY from CPU right edge, then run as vertical spines ===== -->
+  <!-- addr (dark red) -->
+  <line x1="220" y1="845" x2="450" y2="845" stroke="#7a1f1f" stroke-width="1.8"/>
+  <line x1="450" y1="60" x2="450" y2="1640" stroke="#7a1f1f" stroke-width="1.8"/>
+  <text x="450" y="55" text-anchor="middle" font-size="9" fill="#7a1f1f">addr</text>
+  <!-- wdata (green) -->
+  <line x1="220" y1="820" x2="470" y2="820" stroke="#2f6b2f" stroke-width="1.8"/>
+  <line x1="470" y1="60" x2="470" y2="1640" stroke="#2f6b2f" stroke-width="1.8"/>
+  <text x="470" y="55" text-anchor="middle" font-size="9" fill="#2f6b2f">wdata</text>
+  <!-- rd (orange) -->
+  <line x1="220" y1="870" x2="490" y2="870" stroke="#c06a15" stroke-width="1.8"/>
+  <line x1="490" y1="60" x2="490" y2="1640" stroke="#c06a15" stroke-width="1.8"/>
+  <text x="490" y="55" text-anchor="middle" font-size="9" fill="#c06a15">rd</text>
+  <!-- wr (orange) -->
+  <line x1="220" y1="895" x2="510" y2="895" stroke="#c06a15" stroke-width="1.8"/>
+  <line x1="510" y1="60" x2="510" y2="1640" stroke="#c06a15" stroke-width="1.8"/>
+  <text x="510" y="55" text-anchor="middle" font-size="9" fill="#c06a15">wr</text>
+
+  <!-- ===== ADDRESS DECODER (tapped above the addr bus line, own box) ===== -->
+  <rect x="280" y="670" width="110" height="90" fill="#D4E6F1" stroke="#000000" stroke-width="1.5"/>
+  <text x="335" y="710" text-anchor="middle" font-size="12" font-weight="bold">Address</text>
+  <text x="335" y="727" text-anchor="middle" font-size="12" font-weight="bold">decoder</text>
+  <line x1="335" y1="760" x2="335" y2="845" stroke="#7a1f1f" stroke-width="1.5"/>
+
+  <!-- ===== cs0..cs9 individual lines from decoder ===== -->
+  <path d="M390,680 L395,680 L395,105 L560,105" fill="none" stroke="#7a1f1f" stroke-width="1.2"/>
+  <path d="M390,689 L398,689 L398,265 L560,265" fill="none" stroke="#7a1f1f" stroke-width="1.2"/>
+  <path d="M390,698 L401,698 L401,425 L560,425" fill="none" stroke="#7a1f1f" stroke-width="1.2"/>
+  <path d="M390,707 L404,707 L404,585 L560,585" fill="none" stroke="#7a1f1f" stroke-width="1.2"/>
+  <path d="M390,716 L407,716 L407,745 L560,745" fill="none" stroke="#7a1f1f" stroke-width="1.2"/>
+  <path d="M390,725 L410,725 L410,905 L560,905" fill="none" stroke="#7a1f1f" stroke-width="1.2"/>
+  <path d="M390,734 L413,734 L413,1065 L560,1065" fill="none" stroke="#7a1f1f" stroke-width="1.2"/>
+  <path d="M390,743 L416,743 L416,1225 L560,1225" fill="none" stroke="#7a1f1f" stroke-width="1.2"/>
+  <path d="M390,752 L419,752 L419,1385 L560,1385" fill="none" stroke="#7a1f1f" stroke-width="1.2"/>
+  <path d="M390,758 L422,758 L422,1545 L560,1545" fill="none" stroke="#7a1f1f" stroke-width="1.2"/>
+  <text x="395" y="677" font-size="8" fill="#7a1f1f">cs0</text>
+  <text x="398" y="686" font-size="8" fill="#7a1f1f">cs1</text>
+  <text x="401" y="695" font-size="8" fill="#7a1f1f">cs2</text>
+  <text x="404" y="704" font-size="8" fill="#7a1f1f">cs3</text>
+  <text x="407" y="713" font-size="8" fill="#7a1f1f">cs4</text>
+  <text x="410" y="722" font-size="8" fill="#7a1f1f">cs5</text>
+  <text x="413" y="731" font-size="8" fill="#7a1f1f">cs6</text>
+  <text x="416" y="740" font-size="8" fill="#7a1f1f">cs7</text>
+  <text x="419" y="749" font-size="8" fill="#7a1f1f">cs8</text>
+  <text x="422" y="756" font-size="8" fill="#7a1f1f">cs9</text>
+
+  <!-- ===== PERIPHERAL BLOCKS (single column, 10 rows) — orden = orden del mapa de memoria ===== -->
+
+  <!-- row 0: BRAM -->
+  <rect x="560" y="60" width="280" height="140" fill="#FFF9C4" stroke="#000000" stroke-width="1.5"/>
+  <text x="555" y="76" text-anchor="end" font-size="10" font-weight="bold">cs0</text>
+  <text x="575" y="80" font-size="11">d_in</text>
+  <text x="575" y="105" font-size="11" text-decoration="underline">cs</text>
+  <text x="575" y="130" font-size="11">addr</text>
+  <text x="575" y="155" font-size="11">rd</text>
+  <text x="575" y="180" font-size="11">wr</text>
+  <text x="825" y="105" text-anchor="end" font-size="11">d_out</text>
+  <text x="700" y="196" text-anchor="middle" font-size="11" font-weight="bold">bram.v</text>
+  <line x1="450" y1="130" x2="560" y2="130" stroke="#7a1f1f" stroke-width="1.5"/>
+  <line x1="470" y1="80" x2="560" y2="80" stroke="#2f6b2f" stroke-width="1.5"/>
+  <line x1="490" y1="155" x2="560" y2="155" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="510" y1="180" x2="560" y2="180" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="840" y1="130" x2="900" y2="130" stroke="#1a3a6b" stroke-width="1.5"/>
+
+  <!-- row 1: UART -->
+  <rect x="560" y="220" width="280" height="140" fill="#AED6E8" stroke="#000000" stroke-width="1.5"/>
+  <text x="555" y="236" text-anchor="end" font-size="10" font-weight="bold">cs1</text>
+  <text x="575" y="240" font-size="11">d_in</text>
+  <text x="575" y="265" font-size="11" text-decoration="underline">cs</text>
+  <text x="575" y="290" font-size="11">addr</text>
+  <text x="575" y="315" font-size="11">rd</text>
+  <text x="575" y="340" font-size="11">wr</text>
+  <text x="825" y="265" text-anchor="end" font-size="11">d_out</text>
+  <text x="700" y="356" text-anchor="middle" font-size="11" font-weight="bold">uart.v</text>
+  <line x1="450" y1="290" x2="560" y2="290" stroke="#7a1f1f" stroke-width="1.5"/>
+  <line x1="470" y1="240" x2="560" y2="240" stroke="#2f6b2f" stroke-width="1.5"/>
+  <line x1="490" y1="315" x2="560" y2="315" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="510" y1="340" x2="560" y2="340" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="840" y1="290" x2="900" y2="290" stroke="#1a3a6b" stroke-width="1.5"/>
+
+  <!-- row 2: SPI-RAM -->
+  <rect x="560" y="380" width="280" height="140" fill="#F9E79F" stroke="#000000" stroke-width="1.5"/>
+  <text x="555" y="396" text-anchor="end" font-size="10" font-weight="bold">cs2</text>
+  <text x="575" y="400" font-size="11">d_in</text>
+  <text x="575" y="425" font-size="11" text-decoration="underline">cs</text>
+  <text x="575" y="450" font-size="11">addr</text>
+  <text x="575" y="475" font-size="11">rd</text>
+  <text x="575" y="500" font-size="11">wr</text>
+  <text x="825" y="425" text-anchor="end" font-size="11">d_out</text>
+  <text x="700" y="516" text-anchor="middle" font-size="11" font-weight="bold">spiram_ctrl.v</text>
+  <line x1="450" y1="450" x2="560" y2="450" stroke="#7a1f1f" stroke-width="1.5"/>
+  <line x1="470" y1="400" x2="560" y2="400" stroke="#2f6b2f" stroke-width="1.5"/>
+  <line x1="490" y1="475" x2="560" y2="475" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="510" y1="500" x2="560" y2="500" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="840" y1="450" x2="900" y2="450" stroke="#1a3a6b" stroke-width="1.5"/>
+
+  <!-- row 3: SPI-FLASH -->
+  <rect x="560" y="540" width="280" height="140" fill="#F9E79F" stroke="#000000" stroke-width="1.5"/>
+  <text x="555" y="556" text-anchor="end" font-size="10" font-weight="bold">cs3</text>
+  <text x="575" y="560" font-size="11">d_in</text>
+  <text x="575" y="585" font-size="11" text-decoration="underline">cs</text>
+  <text x="575" y="610" font-size="11">addr</text>
+  <text x="575" y="635" font-size="11">rd</text>
+  <text x="575" y="660" font-size="11">wr</text>
+  <text x="825" y="585" text-anchor="end" font-size="11">d_out</text>
+  <text x="700" y="676" text-anchor="middle" font-size="11" font-weight="bold">spi_flash_ctrl.v</text>
+  <line x1="450" y1="610" x2="560" y2="610" stroke="#7a1f1f" stroke-width="1.5"/>
+  <line x1="470" y1="560" x2="560" y2="560" stroke="#2f6b2f" stroke-width="1.5"/>
+  <line x1="490" y1="635" x2="560" y2="635" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="510" y1="660" x2="560" y2="660" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="840" y1="610" x2="900" y2="610" stroke="#1a3a6b" stroke-width="1.5"/>
+
+  <!-- row 4: PS2 Keyboard -->
+  <rect x="560" y="700" width="280" height="140" fill="#E8DFF5" stroke="#000000" stroke-width="1.5"/>
+  <text x="555" y="716" text-anchor="end" font-size="10" font-weight="bold">cs4</text>
+  <text x="575" y="720" font-size="11">d_in</text>
+  <text x="575" y="745" font-size="11" text-decoration="underline">cs</text>
+  <text x="575" y="770" font-size="11">addr</text>
+  <text x="575" y="795" font-size="11">rd</text>
+  <text x="575" y="820" font-size="11">wr</text>
+  <text x="825" y="745" text-anchor="end" font-size="11">d_out</text>
+  <text x="700" y="836" text-anchor="middle" font-size="11" font-weight="bold">ps2_keyboard.v</text>
+  <line x1="450" y1="770" x2="560" y2="770" stroke="#7a1f1f" stroke-width="1.5"/>
+  <line x1="470" y1="720" x2="560" y2="720" stroke="#2f6b2f" stroke-width="1.5"/>
+  <line x1="490" y1="795" x2="560" y2="795" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="510" y1="820" x2="560" y2="820" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="840" y1="770" x2="900" y2="770" stroke="#1a3a6b" stroke-width="1.5"/>
+
+  <!-- row 5: PS2 Mouse -->
+  <rect x="560" y="860" width="280" height="140" fill="#E8DFF5" stroke="#000000" stroke-width="1.5"/>
+  <text x="555" y="876" text-anchor="end" font-size="10" font-weight="bold">cs5</text>
+  <text x="575" y="880" font-size="11">d_in</text>
+  <text x="575" y="905" font-size="11" text-decoration="underline">cs</text>
+  <text x="575" y="930" font-size="11">addr</text>
+  <text x="575" y="955" font-size="11">rd</text>
+  <text x="575" y="980" font-size="11">wr</text>
+  <text x="825" y="905" text-anchor="end" font-size="11">d_out</text>
+  <text x="700" y="996" text-anchor="middle" font-size="11" font-weight="bold">ps2_mouse.v</text>
+  <line x1="450" y1="930" x2="560" y2="930" stroke="#7a1f1f" stroke-width="1.5"/>
+  <line x1="470" y1="880" x2="560" y2="880" stroke="#2f6b2f" stroke-width="1.5"/>
+  <line x1="490" y1="955" x2="560" y2="955" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="510" y1="980" x2="560" y2="980" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="840" y1="930" x2="900" y2="930" stroke="#1a3a6b" stroke-width="1.5"/>
+
+  <!-- row 6: NES Controller -->
+  <rect x="560" y="1020" width="280" height="140" fill="#E8DFF5" stroke="#000000" stroke-width="1.5"/>
+  <text x="555" y="1036" text-anchor="end" font-size="10" font-weight="bold">cs6</text>
+  <text x="575" y="1040" font-size="11">d_in</text>
+  <text x="575" y="1065" font-size="11" text-decoration="underline">cs</text>
+  <text x="575" y="1090" font-size="11">addr</text>
+  <text x="575" y="1115" font-size="11">rd</text>
+  <text x="575" y="1140" font-size="11">wr</text>
+  <text x="825" y="1065" text-anchor="end" font-size="11">d_out</text>
+  <text x="700" y="1156" text-anchor="middle" font-size="11" font-weight="bold">nes_controller.v</text>
+  <line x1="450" y1="1090" x2="560" y2="1090" stroke="#7a1f1f" stroke-width="1.5"/>
+  <line x1="470" y1="1040" x2="560" y2="1040" stroke="#2f6b2f" stroke-width="1.5"/>
+  <line x1="490" y1="1115" x2="560" y2="1115" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="510" y1="1140" x2="560" y2="1140" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="840" y1="1090" x2="900" y2="1090" stroke="#1a3a6b" stroke-width="1.5"/>
+
+  <!-- row 7: I2C -->
+  <rect x="560" y="1180" width="280" height="140" fill="#E8DFF5" stroke="#000000" stroke-width="1.5"/>
+  <text x="555" y="1196" text-anchor="end" font-size="10" font-weight="bold">cs7</text>
+  <text x="575" y="1200" font-size="11">d_in</text>
+  <text x="575" y="1225" font-size="11" text-decoration="underline">cs</text>
+  <text x="575" y="1250" font-size="11">addr</text>
+  <text x="575" y="1275" font-size="11">rd</text>
+  <text x="575" y="1300" font-size="11">wr</text>
+  <text x="825" y="1225" text-anchor="end" font-size="11">d_out</text>
+  <text x="700" y="1316" text-anchor="middle" font-size="11" font-weight="bold">i2c_master.v</text>
+  <line x1="450" y1="1250" x2="560" y2="1250" stroke="#7a1f1f" stroke-width="1.5"/>
+  <line x1="470" y1="1200" x2="560" y2="1200" stroke="#2f6b2f" stroke-width="1.5"/>
+  <line x1="490" y1="1275" x2="560" y2="1275" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="510" y1="1300" x2="560" y2="1300" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="840" y1="1250" x2="900" y2="1250" stroke="#1a3a6b" stroke-width="1.5"/>
+
+  <!-- row 8: I2S -->
+  <rect x="560" y="1340" width="280" height="140" fill="#E8DFF5" stroke="#000000" stroke-width="1.5"/>
+  <text x="555" y="1356" text-anchor="end" font-size="10" font-weight="bold">cs8</text>
+  <text x="575" y="1360" font-size="11">d_in</text>
+  <text x="575" y="1385" font-size="11" text-decoration="underline">cs</text>
+  <text x="575" y="1410" font-size="11">addr</text>
+  <text x="575" y="1435" font-size="11">rd</text>
+  <text x="575" y="1460" font-size="11">wr</text>
+  <text x="825" y="1385" text-anchor="end" font-size="11">d_out</text>
+  <text x="700" y="1476" text-anchor="middle" font-size="11" font-weight="bold">i2s_tx.v</text>
+  <line x1="450" y1="1410" x2="560" y2="1410" stroke="#7a1f1f" stroke-width="1.5"/>
+  <line x1="470" y1="1360" x2="560" y2="1360" stroke="#2f6b2f" stroke-width="1.5"/>
+  <line x1="490" y1="1435" x2="560" y2="1435" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="510" y1="1460" x2="560" y2="1460" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="840" y1="1410" x2="900" y2="1410" stroke="#1a3a6b" stroke-width="1.5"/>
+
+  <!-- row 9: DISPLAY (video memory, ventana grande) -->
+  <rect x="560" y="1500" width="280" height="140" fill="#D5F5E3" stroke="#000000" stroke-width="1.5"/>
+  <text x="555" y="1516" text-anchor="end" font-size="10" font-weight="bold">cs9</text>
+  <text x="575" y="1520" font-size="11">d_in</text>
+  <text x="575" y="1545" font-size="11" text-decoration="underline">cs</text>
+  <text x="575" y="1570" font-size="11">addr</text>
+  <text x="575" y="1595" font-size="11">rd</text>
+  <text x="575" y="1620" font-size="11">wr</text>
+  <text x="825" y="1545" text-anchor="end" font-size="11">d_out</text>
+  <text x="700" y="1636" text-anchor="middle" font-size="11" font-weight="bold">display_driver.v (framebuffer)</text>
+  <line x1="450" y1="1570" x2="560" y2="1570" stroke="#7a1f1f" stroke-width="1.5"/>
+  <line x1="470" y1="1520" x2="560" y2="1520" stroke="#2f6b2f" stroke-width="1.5"/>
+  <line x1="490" y1="1595" x2="560" y2="1595" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="510" y1="1620" x2="560" y2="1620" stroke="#c06a15" stroke-width="1.5"/>
+  <line x1="840" y1="1570" x2="900" y2="1570" stroke="#1a3a6b" stroke-width="1.5"/>
+
+  <!-- ===== MUX ===== -->
+  <polygon points="900,60 960,110 960,1590 900,1640" fill="#AED6E8" stroke="#000000" stroke-width="1.5"/>
+  <text x="930" y="855" text-anchor="middle" font-size="12" font-weight="bold">MUX</text>
+
+  <!-- mux output back to CPU mem_rdata -->
+  <path d="M960,850 L1010,850 L1010,15 L5,15 L5,795 L20,795" fill="none" stroke="#1a3a6b" stroke-width="2" marker-end="url(#aB)"/>
+
+  <!-- ===== MEMORY MAP (según especificación del usuario, ventanas de 0x10000 salvo BRAM y DISPLAY) ===== -->
+  <g font-size="12">
+    <text x="1040" y="135" font-weight="bold">0x000000 - 0x3FFFFF  BRAM</text>
+    <text x="1040" y="152" font-size="10">cores/bram/bram.v</text>
+
+    <text x="1040" y="295" font-weight="bold">0x400000 - 0x40FFFF  UART</text>
+    <text x="1040" y="312" font-size="10">cores/uart/perip_uart.v</text>
+
+    <text x="1040" y="455" font-weight="bold">0x410000 - 0x41FFFF  SPI-RAM</text>
+    <text x="1040" y="472" font-size="10">cores/spiram/perip_spiram.v</text>
+
+    <text x="1040" y="615" font-weight="bold">0x420000 - 0x42FFFF  SPI-FLASH</text>
+    <text x="1040" y="632" font-size="10">cores/spi_flash/perip_spiflash.v</text>
+
+    <text x="1040" y="775" font-weight="bold">0x430000 - 0x43FFFF  PS2_KBD</text>
+    <text x="1040" y="792" font-size="10">cores/ps2_keyboard/perip_ps2kbd.v</text>
+
+    <text x="1040" y="935" font-weight="bold">0x440000 - 0x44FFFF  PS2_MOUSE</text>
+    <text x="1040" y="952" font-size="10">cores/ps2_mouse/perip_ps2mouse.v</text>
+
+    <text x="1040" y="1095" font-weight="bold">0x450000 - 0x45FFFF  NES_CTRL</text>
+    <text x="1040" y="1112" font-size="10">cores/nes_ctrl/perip_nes.v</text>
+
+    <text x="1040" y="1255" font-weight="bold">0x460000 - 0x46FFFF  I2C_EEPROM</text>
+    <text x="1040" y="1272" font-size="10">cores/i2c/perip_i2c.v</text>
+
+    <text x="1040" y="1415" font-weight="bold">0x470000 - 0x47FFFF  I2S_AUDIO</text>
+    <text x="1040" y="1432" font-size="10">cores/i2s/perip_i2s.v</text>
+
+    <text x="1040" y="1575" font-weight="bold">0x480000 - 0x4FFFFF  DISPLAY</text>
+    <text x="1040" y="1592" font-size="10">cores/display/perip_display.v (512KB, framebuffer)</text>
+  </g>
+
+  <!-- initial block -->
+  <text x="1040" y="1660" font-size="12">initial begin</text>
+  <text x="1060" y="1678" font-size="12">$readmemh("firmware.hex",MEM);</text>
+  <text x="1040" y="1696" font-size="12">end</text>
+
+  <!-- ===== LEGEND ===== -->
+  <g font-size="11">
+    <line x1="30" y1="1690" x2="60" y2="1690" stroke="#7a1f1f" stroke-width="2"/>
+    <text x="66" y="1694">addr / cs</text>
+    <line x1="170" y1="1690" x2="200" y2="1690" stroke="#2f6b2f" stroke-width="2"/>
+    <text x="206" y="1694">wdata / d_in</text>
+    <line x1="340" y1="1690" x2="370" y2="1690" stroke="#c06a15" stroke-width="2"/>
+    <text x="376" y="1694">rd / wr</text>
+    <line x1="470" y1="1690" x2="500" y2="1690" stroke="#1a3a6b" stroke-width="2"/>
+    <text x="506" y="1694">d_out / mem_rdata</text>
+  </g>
+</svg>
