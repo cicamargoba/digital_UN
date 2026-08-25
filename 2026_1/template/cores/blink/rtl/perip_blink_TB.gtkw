@@ -1,0 +1,26 @@
+[*]
+[*] GTKWave Analyzer save file
+[*]
+[dumpfile] "perip_blink_TB.vcd"
+[savefile] "perip_blink_TB.gtkw"
+[timestart] 0
+[size] 1200 700
+[treeopen] perip_blink_TB.
+[treeopen] perip_blink_TB.dut.
+@28
+perip_blink_TB.clk
+perip_blink_TB.rst
+perip_blink_TB.cs
+perip_blink_TB.rd
+perip_blink_TB.wr
+@22
+perip_blink_TB.addr[3:0]
+perip_blink_TB.d_in[31:0]
+perip_blink_TB.d_out[31:0]
+@28
+perip_blink_TB.led
+@22
+perip_blink_TB.dut.counter[31:0]
+perip_blink_TB.dut.period[31:0]
+@28
+perip_blink_TB.dut.enable
