@@ -72,10 +72,46 @@ LiteX se utilizará para construir e integrar el SoC. El proyecto debe mostrar c
 ## Organización del curso
 
 - Los estudiantes trabajarán en equipos responsables de componentes específicos del sistema.
+- Cada equipo será responsable de planificar, implementar, verificar, documentar e integrar las tareas que le hayan sido asignadas.
 - Cada equipo deberá entregar el RTL, firmware, simulaciones y documentación de su componente.
 - Todos los componentes se integrarán en un único SoC LiteX compartido.
 - Los cambios de cada equipo deberán respetar las interfaces y el mapa de memoria definidos para el sistema.
 - La integración final deberá demostrar el funcionamiento conjunto del procesador, el juego, los periféricos y la red.
+
+## Planificación y repositorios
+
+El proyecto debe mantener un **planificador o cronograma compartido**. Para cada actividad se debe registrar como mínimo:
+
+| Campo | Contenido |
+|---|---|
+| Tarea | Actividad concreta que debe realizarse |
+| Responsable | Equipo y estudiante encargado |
+| Fecha de inicio | Momento previsto para comenzar |
+| Fecha de entrega | Momento previsto para finalizar |
+| Dependencias | Tareas o módulos necesarios para comenzar |
+| Estado | Pendiente, en desarrollo, bloqueada o terminada |
+| Evidencia | Enlace al código, simulación, documento o prueba correspondiente |
+
+Debe existir un **repositorio general del curso** que contenga la arquitectura compartida, la construcción base del SoC LiteX, las interfaces, el mapa de memoria y los elementos de integración. Cada equipo trabajará en su propio repositorio. El repositorio general distribuirá las actualizaciones comunes hacia los repositorios de los equipos, y los resultados validados de cada equipo deberán regresar al repositorio general mediante el mecanismo de integración definido para el curso.
+
+Cada tarea debe tener un responsable explícito. La responsabilidad colectiva del equipo no reemplaza la asignación individual de actividades dentro del cronograma.
+
+### Planificador recomendado: GitHub Projects
+
+Se recomienda utilizar un **GitHub Project** asociado al repositorio general. Cada tarea debe crearse como un *issue* en el repositorio correspondiente y agregarse al proyecto general. El proyecto debe utilizar una vista de tabla para seguimiento y una vista de *roadmap* para el cronograma.
+
+Configurar los siguientes campos:
+
+- `Estado`: pendiente, en desarrollo, bloqueada o terminada;
+- `Equipo`;
+- `Responsable`;
+- `Fecha de inicio`;
+- `Fecha de entrega`;
+- `Dependencias`;
+- `Repositorio`;
+- `Evidencia / Pull request`.
+
+La plantilla de planificación y el formulario para crear tareas se encuentran en [`template/planificacion/`](./template/planificacion/) y [`template/.github/ISSUE_TEMPLATE/tarea.yml`](./template/.github/ISSUE_TEMPLATE/tarea.yml).
 
 ## Checkpoints sugeridos
 
@@ -102,6 +138,10 @@ El proyecto final será presentado ante un panel de **evaluadores externos**. La
 - capacidad del equipo para justificar sus decisiones de diseño.
 
 El resultado debe presentarse en el estado alcanzado al cierre del curso, acompañado por evidencia reproducible de simulación, integración y pruebas en hardware.
+
+La puntuación y los niveles de desempeño están definidos en la [rúbrica de evaluación de proyecto](../rubrica_evaluacion_proyecto.md). Cada equipo debe revisarla desde el inicio del proyecto y conservar en el repositorio la evidencia específica de Digital 2.
+
+Las tres evaluaciones del semestre se registrarán en la [hoja de evaluación de los proyectos](../evaluacion/README.md).
 
 ## Material de referencia
 

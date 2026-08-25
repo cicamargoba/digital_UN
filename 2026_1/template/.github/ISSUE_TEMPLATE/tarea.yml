@@ -1,0 +1,67 @@
+name: Tarea del proyecto Digital 1
+description: Crear una tarea con responsable, fechas, dependencias y evidencia
+title: "[Digital 1] "
+body:
+  - type: input
+    id: team
+    attributes:
+      label: Equipo
+      placeholder: Nombre o número del equipo
+    validations:
+      required: true
+
+  - type: textarea
+    id: task
+    attributes:
+      label: Tarea
+      description: Describa una actividad concreta y verificable.
+    validations:
+      required: true
+
+  - type: input
+    id: owner
+    attributes:
+      label: Responsable
+      placeholder: "@usuario"
+    validations:
+      required: true
+
+  - type: input
+    id: start
+    attributes:
+      label: Fecha de inicio
+      placeholder: AAAA-MM-DD
+    validations:
+      required: true
+
+  - type: input
+    id: due
+    attributes:
+      label: Fecha de entrega
+      placeholder: AAAA-MM-DD
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencias
+      description: Enlace otros issues o módulos necesarios. Escriba "Ninguna" cuando no existan.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Criterios de aceptación
+      description: Indique cómo se verificará que la tarea está terminada.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidencia esperada
+      description: Código, simulación, formas de onda, documento, prueba en hardware o pull request.
+    validations:
+      required: true

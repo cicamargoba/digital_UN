@@ -4,6 +4,9 @@ Cada grupo debe conservar esta organización y reemplazar el contenido de ejempl
 
 ```text
 template/
+├── .github/
+│   └── ISSUE_TEMPLATE/  # Formulario para crear tareas
+├── planificacion/       # Configuración y uso de GitHub Projects
 ├── docs/
 │   ├── diagramas/       # Diagramas de bloques, flujo y estados
 │   └── instrucciones/   # Análisis de instrucciones de femtoRV32

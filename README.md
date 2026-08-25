@@ -245,3 +245,12 @@ La estructura, los archivos obligatorios, los comandos de verificación y los cr
 [`plantilla_entregas/README.md`](plantilla_entregas/README.md)
 
 Revise ese documento antes de preparar una entrega.
+
+### Proyecto PBL de videojuego en FPGA
+
+- [Proyecto Digital 1](2026_1/README.md)
+- [Proyecto Digital 2](2026_2/README.md)
+- [Rúbrica de evaluación de proyecto](rubrica_evaluacion_proyecto.md)
+- [Hoja para registrar tres evaluaciones de cinco grupos](evaluacion/README.md)
+
+La rúbrica reutilizable define los criterios, niveles de desempeño, pesos, perfiles de evidencia técnica para cada curso y evaluación de la responsabilidad individual.

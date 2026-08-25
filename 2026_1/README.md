@@ -41,8 +41,44 @@ La ventana de `DISPLAY` se dejó amplia a propósito para dar espacio suficiente
 ## Organización del curso
 
 - El curso se dividirá en **equipos**, cada uno responsable de un módulo periférico (protocolo de comunicación) + su firmware C de prueba.
+- Cada equipo será responsable de planificar, implementar, verificar, documentar e integrar las tareas que le hayan sido asignadas.
 - El core del juego (FSM de estado, sprites, colisión) y el driver de panel/framebuffer se entregan como **andamiaje** — no los diseñan los equipos, para que el esfuerzo se concentre en el objetivo pedagógico: manejo de protocolos (SPI, I2C, PS/2, I2S) y memoria externa desde C.
 - La integración final conecta todos los módulos sobre el mismo bus CSR — un módulo que falla es visible en la demo de todo el curso, no solo del equipo responsable.
+
+## Planificación y repositorios
+
+El proyecto debe mantener un **planificador o cronograma compartido**. Para cada actividad se debe registrar como mínimo:
+
+| Campo | Contenido |
+|---|---|
+| Tarea | Actividad concreta que debe realizarse |
+| Responsable | Equipo y estudiante encargado |
+| Fecha de inicio | Momento previsto para comenzar |
+| Fecha de entrega | Momento previsto para finalizar |
+| Dependencias | Tareas o módulos necesarios para comenzar |
+| Estado | Pendiente, en desarrollo, bloqueada o terminada |
+| Evidencia | Enlace al código, simulación, documento o prueba correspondiente |
+
+Debe existir un **repositorio general del curso** que contenga la arquitectura compartida, las interfaces, el mapa de memoria, la plantilla y los elementos de integración. Cada equipo trabajará en su propio repositorio. El repositorio general distribuirá las actualizaciones comunes hacia los repositorios de los equipos, y los resultados validados de cada equipo deberán regresar al repositorio general mediante el mecanismo de integración definido para el curso.
+
+Cada tarea debe tener un responsable explícito. La responsabilidad colectiva del equipo no reemplaza la asignación individual de actividades dentro del cronograma.
+
+### Planificador recomendado: GitHub Projects
+
+Se recomienda utilizar un **GitHub Project** asociado al repositorio general. Cada tarea debe crearse como un *issue* en el repositorio correspondiente y agregarse al proyecto general. El proyecto debe utilizar una vista de tabla para seguimiento y una vista de *roadmap* para el cronograma.
+
+Configurar los siguientes campos:
+
+- `Estado`: pendiente, en desarrollo, bloqueada o terminada;
+- `Equipo`;
+- `Responsable`;
+- `Fecha de inicio`;
+- `Fecha de entrega`;
+- `Dependencias`;
+- `Repositorio`;
+- `Evidencia / Pull request`.
+
+La plantilla de planificación y el formulario para crear tareas se encuentran en [`template/planificacion/`](./template/planificacion/) y [`template/.github/ISSUE_TEMPLATE/tarea.yml`](./template/.github/ISSUE_TEMPLATE/tarea.yml).
 
 ## Checkpoints sugeridos
 
@@ -63,10 +99,16 @@ La ventana de `DISPLAY` se dejó amplia a propósito para dar espacio suficiente
 
 El producto final, en el estado en que se encuentre al cierre del curso, competirá con el trabajo del otro grupo de la asignatura. Un panel de **jurados externos** evaluará ambas entregas y decidirá cuál es el mejor resultado.
 
+La especificación, implementación, verificación, integración, documentación y contribución individual se calificarán mediante la [rúbrica de evaluación de proyecto](../rubrica_evaluacion_proyecto.md). Cada equipo debe revisar la rúbrica desde el inicio del proyecto y conservar en el repositorio la evidencia exigida.
+
+Las tres evaluaciones del semestre se registrarán en la [hoja de evaluación de los proyectos](../evaluacion/README.md).
+
 ## Estructura del repositorio que debe entregar cada grupo
 
 ```
 template/
+    .github/ISSUE_TEMPLATE/     # Formulario de tareas para GitHub
+    planificacion/              # Configuración y uso de GitHub Projects
     diagramas/                    # Diagramas generales de flujo y de bloques del sistema
     cores/                        # Un directorio por periférico
         <periferico>/
