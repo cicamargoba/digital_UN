@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 620" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" font-family="Helvetica, Arial, sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#555555"/>
@@ -8,150 +8,154 @@
     </marker>
   </defs>
 
-  <rect x="0" y="0" width="860" height="620" fill="#ffffff"/>
-  <text x="430" y="25" font-size="14" font-weight="bold" text-anchor="middle" fill="#1a1a1a">Sprite Engine — 1 sprite (escalable a N)</text>
+  <rect x="0" y="0" width="800" height="560" fill="#ffffff"/>
+  <text x="400" y="25" font-size="14" font-weight="bold" text-anchor="middle" fill="#1a1a1a">Sprite Engine — 1 sprite (escalable a N)</text>
 
   <!-- Scalability box -->
-  <rect x="258" y="55" width="492" height="320" fill="none" stroke="#999999" stroke-width="1.5" stroke-dasharray="6,4"/>
-  <text x="745" y="50" font-size="10" font-weight="bold" text-anchor="end" fill="#999999">Sprite Slot &#215;N</text>
+  <rect x="258" y="45" width="512" height="310" fill="none" stroke="#999999" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="762" y="40" font-size="10" font-weight="bold" text-anchor="end" fill="#999999">Sprite Slot &#215;N</text>
 
   <!-- ================= OAM RAM ================= -->
-  <rect x="30" y="70" width="180" height="130" fill="#f0f0f0" stroke="#333333" stroke-width="1.5"/>
-  <text x="120" y="88" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a1a1a">OAM RAM</text>
-  <text x="42" y="108" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">reg [18:0] sprite;</text>
-  <text x="42" y="120" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">always @(posedge clk)</text>
-  <text x="42" y="132" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">  if (cs &amp;&amp; wr)</text>
-  <text x="42" y="144" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">    sprite &lt;= d_in;</text>
-  <text x="42" y="165" font-size="7" font-family="Courier New, monospace" fill="#0066cc">// [18:17]=tile_id [16:9]=y</text>
-  <text x="42" y="176" font-size="7" font-family="Courier New, monospace" fill="#0066cc">// [8:1]=x       [0]=active</text>
-  <text x="42" y="192" font-size="7" fill="#888888">N=1: registro &#8594; N: RAM indexada</text>
+  <rect x="20" y="60" width="210" height="130" fill="#f0f0f0" stroke="#333333" stroke-width="1.5"/>
+  <text x="125" y="80" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a1a1a">OAM RAM</text>
+  <text x="125" y="94" font-size="8" text-anchor="middle" fill="#666666">19-bit reg</text>
+  <line x1="30" y1="100" x2="220" y2="100" stroke="#cccccc" stroke-width="0.5"/>
+  <text x="30" y="114" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">sprite[18:0] = d_in</text>
+  <text x="30" y="128" font-size="7.5" font-family="Courier New, monospace" fill="#0066cc">[18:17]=tile_id  [16:9]=y</text>
+  <text x="30" y="140" font-size="7.5" font-family="Courier New, monospace" fill="#0066cc">[8:1]=x        [0]=active</text>
+  <text x="30" y="160" font-size="7" fill="#888888">N=1: registro &#8594; N: RAM indexada</text>
+  <text x="30" y="175" font-size="7" fill="#888888">(posedge clk, cs&amp;wr)</text>
 
   <!-- ================= Addr Gen ================= -->
-  <rect x="270" y="70" width="210" height="150" fill="#f0f0f0" stroke="#333333" stroke-width="1.5"/>
-  <text x="375" y="88" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a1a1a">Addr Gen</text>
-  <text x="280" y="106" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">x    = sprite[8:1];</text>
-  <text x="280" y="118" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">y    = sprite[16:9];</text>
-  <text x="280" y="130" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">tile = sprite[18:17];</text>
-  <text x="280" y="142" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">dx_full = col - x[5:0];</text>
-  <text x="280" y="154" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">dy_full = row - y[5:0];</text>
-  <text x="280" y="166" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">in_range = (0&lt;=dx&lt;8) &amp;&amp;</text>
-  <text x="280" y="178" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">           (0&lt;=dy&lt;8);</text>
-  <text x="280" y="194" font-size="7.5" font-family="Courier New, monospace" fill="#cc0000">rom_addr = {tile, dy[2:0],</text>
-  <text x="280" y="206" font-size="7.5" font-family="Courier New, monospace" fill="#cc0000">            dx[2:0]};</text>
+  <rect x="290" y="60" width="230" height="150" fill="#f0f0f0" stroke="#333333" stroke-width="1.5"/>
+  <text x="405" y="80" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a1a1a">Addr Gen</text>
+  <text x="405" y="94" font-size="8" text-anchor="middle" fill="#666666">combinacional</text>
+  <line x1="300" y1="100" x2="510" y2="100" stroke="#cccccc" stroke-width="0.5"/>
+  <text x="300" y="116" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">dx_full = col - x[5:0]</text>
+  <text x="300" y="128" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">dy_full = row - y[5:0]</text>
+  <text x="300" y="140" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">in_range = (0&lt;=dx&lt;8)&amp;&amp;(0&lt;=dy&lt;8)</text>
+  <line x1="300" y1="148" x2="510" y2="148" stroke="#cccccc" stroke-width="0.5"/>
+  <text x="300" y="162" font-size="7.5" font-family="Courier New, monospace" fill="#0066cc">salidas:</text>
+  <text x="300" y="176" font-size="7.5" font-family="Courier New, monospace" fill="#cc0000">rom_addr = {tile, dy[2:0], dx[2:0]}</text>
+  <text x="300" y="190" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">in_range</text>
 
   <!-- ================= Tile ROM ================= -->
-  <rect x="540" y="70" width="200" height="130" fill="#fff8e1" stroke="#333333" stroke-width="1.5"/>
-  <text x="640" y="88" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a1a1a">Tile ROM</text>
-  <text x="550" y="106" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">always @(posedge clk)</text>
-  <text x="550" y="118" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">  color &lt;= tile_pixel(</text>
-  <text x="550" y="130" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">    addr[7:6], // tile_id</text>
-  <text x="550" y="142" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">    addr[5:3], // dy</text>
-  <text x="550" y="154" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">    addr[2:0]);// dx</text>
-  <text x="550" y="172" font-size="7" font-family="Courier New, monospace" fill="#0066cc">// 4'hF = transparente</text>
-  <text x="550" y="190" font-size="7" fill="#888888">(registered, 1 ciclo)</text>
+  <rect x="570" y="60" width="210" height="130" fill="#fff8e1" stroke="#333333" stroke-width="1.5"/>
+  <text x="675" y="80" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a1a1a">Tile ROM</text>
+  <text x="675" y="94" font-size="8" text-anchor="middle" fill="#666666">registered (1 ciclo)</text>
+  <line x1="580" y1="100" x2="770" y2="100" stroke="#cccccc" stroke-width="0.5"/>
+  <text x="580" y="116" font-size="7.5" font-family="Courier New, monospace" fill="#0066cc">salida:</text>
+  <text x="580" y="130" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">color &lt;= tile_pixel(</text>
+  <text x="580" y="142" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">  addr[7:6], // tile_id</text>
+  <text x="580" y="154" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">  addr[5:3], // dy</text>
+  <text x="580" y="166" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">  addr[2:0]) // dx</text>
+  <text x="580" y="182" font-size="7" fill="#888888">4'hF = transparente</text>
 
   <!-- ================= Hit Detect ================= -->
-  <rect x="340" y="270" width="180" height="90" fill="#f0f0f0" stroke="#333333" stroke-width="1.5"/>
-  <text x="430" y="288" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a1a1a">Hit Detect</text>
-  <text x="350" y="308" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">assign hit = active &amp;&amp;</text>
-  <text x="350" y="320" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">    in_range &amp;&amp;</text>
-  <text x="350" y="332" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">    (rom_color != 4'hF);</text>
-  <text x="350" y="350" font-size="7" fill="#888888">(paralelo, no en el datapath)</text>
+  <rect x="340" y="260" width="180" height="80" fill="#f0f0f0" stroke="#333333" stroke-width="1.5"/>
+  <text x="430" y="278" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a1a1a">Hit Detect</text>
+  <text x="430" y="292" font-size="8" text-anchor="middle" fill="#666666">combinacional, paralelo</text>
+  <line x1="350" y1="298" x2="510" y2="298" stroke="#cccccc" stroke-width="0.5"/>
+  <text x="350" y="312" font-size="7.5" font-family="Courier New, monospace" fill="#0066cc">salida:</text>
+  <text x="350" y="326" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">hit = active &amp;&amp; in_range</text>
+  <text x="350" y="336" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">      &amp;&amp; (rom_color != 4'hF)</text>
 
   <!-- ================= Memory BG ================= -->
-  <rect x="30" y="430" width="210" height="130" fill="#fff8e1" stroke="#333333" stroke-width="1.5"/>
-  <text x="135" y="448" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a1a1a">Memory BG</text>
-  <text x="40" y="466" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">reg [3:0] fb [0:4095];</text>
-  <text x="40" y="478" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">always @(posedge clk) begin</text>
-  <text x="40" y="490" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">  if (cs &amp;&amp; wr)</text>
-  <text x="40" y="502" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">    fb[addr] &lt;= d_in;</text>
-  <text x="40" y="514" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">  bg_color &lt;= fb[{row,col}];</text>
-  <text x="40" y="526" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">end</text>
-  <text x="40" y="546" font-size="7" fill="#888888">(registered, 1 ciclo)</text>
+  <rect x="20" y="380" width="220" height="130" fill="#fff8e1" stroke="#333333" stroke-width="1.5"/>
+  <text x="130" y="398" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a1a1a">Memory BG</text>
+  <text x="130" y="412" font-size="8" text-anchor="middle" fill="#666666">64&#215;64&#215;4-bit, registered (1 ciclo)</text>
+  <line x1="30" y1="418" x2="230" y2="418" stroke="#cccccc" stroke-width="0.5"/>
+  <text x="30" y="434" font-size="7.5" font-family="Courier New, monospace" fill="#0066cc">salida:</text>
+  <text x="30" y="448" font-size="7.5" font-family="Courier New, monospace" fill="#1a1a1a">bg_color &lt;= fb[{row, col}]</text>
+  <text x="30" y="465" font-size="7.5" font-family="Courier New, monospace" fill="#666666">escritura:</text>
+  <text x="30" y="478" font-size="7.5" font-family="Courier New, monospace" fill="#666666">if (cs&amp;&amp;wr) fb[addr] &lt;= d_in</text>
+  <text x="30" y="498" font-size="7" fill="#888888">&#8594; Mux directo (NO pasa por Hit Detect)</text>
 
   <!-- ================= Mux Prioridad (trapezoid) ================= -->
-  <polygon points="310,430 470,430 410,510 370,510" fill="#f0f0f0" stroke="#333333" stroke-width="1.5"/>
-  <text x="340" y="442" font-size="7" text-anchor="middle" fill="#555555">I0</text>
-  <text x="445" y="442" font-size="7" text-anchor="middle" fill="#555555">I1</text>
-  <text x="390" y="452" font-size="10" font-weight="bold" text-anchor="middle" fill="#1a1a1a">Mux</text>
-  <text x="390" y="466" font-size="7" font-family="Courier New, monospace" text-anchor="middle" fill="#1a1a1a">hit?rom:bg</text>
-  <text x="312" y="458" font-size="7" text-anchor="end" fill="#555555">SEL</text>
-  <text x="390" y="503" font-size="7" text-anchor="middle" fill="#555555">OUT</text>
+  <polygon points="280,380 500,380 440,480 340,480" fill="#f0f0f0" stroke="#333333" stroke-width="1.5"/>
+  <text x="330" y="394" font-size="7" text-anchor="middle" fill="#555555">I0</text>
+  <text x="460" y="394" font-size="7" text-anchor="middle" fill="#555555">I1</text>
+  <text x="390" y="406" font-size="11" font-weight="bold" text-anchor="middle" fill="#1a1a1a">Mux Prioridad</text>
+  <line x1="340" y1="412" x2="440" y2="412" stroke="#cccccc" stroke-width="0.5"/>
+  <text x="390" y="426" font-size="7.5" font-family="Courier New, monospace" text-anchor="middle" fill="#1a1a1a">pixel = hit ?</text>
+  <text x="390" y="438" font-size="7.5" font-family="Courier New, monospace" text-anchor="middle" fill="#1a1a1a">rom_color :</text>
+  <text x="390" y="450" font-size="7.5" font-family="Courier New, monospace" text-anchor="middle" fill="#1a1a1a">bg_color</text>
+  <text x="295" y="430" font-size="7" text-anchor="end" fill="#555555">SEL</text>
+  <text x="390" y="473" font-size="7" text-anchor="middle" fill="#555555">OUT</text>
 
   <!-- ============ SIGNAL LINES ============ -->
 
   <!-- CSR -> OAM -->
-  <line x1="8" y1="105" x2="28" y2="105" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
-  <text x="4" y="97" font-size="7" fill="#0066cc">d_in[18:0],cs,wr</text>
+  <line x1="4" y1="95" x2="18" y2="95" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="2" y="88" font-size="7" fill="#0066cc">d_in[18:0]</text>
 
   <!-- row,col -> Addr Gen (from top) -->
-  <line x1="375" y1="40" x2="375" y2="68" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
-  <text x="390" y="35" font-size="8" fill="#0066cc">row[5:0], col[5:0]</text>
+  <line x1="405" y1="30" x2="405" y2="58" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="418" y="28" font-size="8" fill="#0066cc">row[5:0], col[5:0]</text>
 
   <!-- sprite[18:0]: OAM -> Addr Gen -->
-  <line x1="210" y1="105" x2="268" y2="105" stroke="#555555" stroke-width="1.5" marker-end="url(#arrow)"/>
-  <text x="214" y="98" font-size="9" fill="#0066cc">sprite[18:0]</text>
+  <line x1="230" y1="95" x2="288" y2="95" stroke="#555555" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="236" y="88" font-size="9" fill="#0066cc">sprite[18:0]</text>
 
   <!-- active: tap from sprite bus -> down -> right -> Hit Detect left -->
-  <circle cx="240" cy="105" r="3" fill="#555555"/>
-  <line x1="240" y1="105" x2="240" y2="315" stroke="#555555" stroke-width="1.2"/>
-  <line x1="240" y1="315" x2="338" y2="315" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
-  <text x="248" y="250" font-size="8" fill="#0066cc">active</text>
-  <text x="248" y="261" font-size="7" fill="#0066cc">(sprite[0])</text>
+  <circle cx="260" cy="95" r="3" fill="#555555"/>
+  <line x1="260" y1="95" x2="260" y2="300" stroke="#555555" stroke-width="1.2"/>
+  <line x1="260" y1="300" x2="338" y2="300" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="266" y="240" font-size="8" fill="#0066cc">active</text>
+  <text x="266" y="251" font-size="7" fill="#0066cc">(sprite[0])</text>
 
   <!-- rom_addr[7:0]: Addr Gen -> Tile ROM (RED) -->
-  <line x1="480" y1="105" x2="538" y2="105" stroke="#cc0000" stroke-width="1.5" marker-end="url(#arrowR)"/>
-  <text x="509" y="95" font-size="9" fill="#cc0000" text-anchor="middle">rom_addr[7:0]</text>
+  <line x1="520" y1="95" x2="568" y2="95" stroke="#cc0000" stroke-width="1.5" marker-end="url(#arrowR)"/>
+  <text x="544" y="85" font-size="9" fill="#cc0000" text-anchor="middle">rom_addr[7:0]</text>
 
   <!-- in_range: Addr Gen -> Hit Detect (down) -->
-  <line x1="375" y1="220" x2="375" y2="268" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
-  <text x="380" y="248" font-size="8" fill="#0066cc">in_range</text>
+  <line x1="405" y1="210" x2="405" y2="258" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="410" y="238" font-size="8" fill="#0066cc">in_range</text>
 
   <!-- rom_color: Tile ROM -> junction -->
-  <line x1="640" y1="200" x2="640" y2="245" stroke="#555555" stroke-width="1.5"/>
-  <circle cx="640" cy="245" r="3" fill="#555555"/>
+  <line x1="675" y1="190" x2="675" y2="235" stroke="#555555" stroke-width="1.5"/>
+  <circle cx="675" cy="235" r="3" fill="#555555"/>
 
   <!-- rom_color branch A: junction -> left -> Hit Detect right (parallel) -->
-  <line x1="640" y1="245" x2="520" y2="245" stroke="#555555" stroke-width="1.2"/>
-  <line x1="520" y1="245" x2="520" y2="313" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
-  <text x="545" y="238" font-size="8" fill="#0066cc">rom_color[3:0]</text>
-  <text x="545" y="249" font-size="7" fill="#0066cc">(parallel)</text>
+  <line x1="675" y1="235" x2="520" y2="235" stroke="#555555" stroke-width="1.2"/>
+  <line x1="520" y1="235" x2="520" y2="298" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="600" y="228" font-size="8" fill="#0066cc" text-anchor="middle">rom_color[3:0]</text>
+  <text x="600" y="239" font-size="7" fill="#0066cc" text-anchor="middle">(parallel)</text>
 
   <!-- rom_color branch B: junction -> down -> left -> down -> MUX top-right I1 (DATA PATH) -->
-  <line x1="640" y1="245" x2="640" y2="415" stroke="#555555" stroke-width="1.2"/>
-  <line x1="640" y1="415" x2="440" y2="415" stroke="#555555" stroke-width="1.2"/>
-  <line x1="440" y1="415" x2="440" y2="428" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
-  <text x="540" y="408" font-size="8" fill="#0066cc" text-anchor="middle">rom_color[3:0]</text>
+  <line x1="675" y1="235" x2="675" y2="365" stroke="#555555" stroke-width="1.2"/>
+  <line x1="675" y1="365" x2="460" y2="365" stroke="#555555" stroke-width="1.2"/>
+  <line x1="460" y1="365" x2="460" y2="378" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="560" y="358" font-size="8" fill="#0066cc" text-anchor="middle">rom_color[3:0] (data path)</text>
 
   <!-- hit: Hit Detect -> down -> left -> MUX left side (SEL) -->
-  <line x1="400" y1="360" x2="400" y2="460" stroke="#555555" stroke-width="1.2"/>
-  <line x1="400" y1="460" x2="336" y2="460" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
-  <text x="368" y="478" font-size="8" fill="#0066cc" text-anchor="middle">hit (SEL)</text>
+  <line x1="430" y1="340" x2="430" y2="430" stroke="#555555" stroke-width="1.2"/>
+  <line x1="430" y1="430" x2="302" y2="430" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="270" y="445" font-size="8" fill="#0066cc">hit (SEL)</text>
 
   <!-- row,col -> Memory BG (from left) -->
-  <line x1="8" y1="450" x2="28" y2="450" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
-  <text x="4" y="442" font-size="7" fill="#0066cc">row,col</text>
+  <line x1="4" y1="410" x2="18" y2="410" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="2" y="403" font-size="7" fill="#0066cc">row,col</text>
 
   <!-- CSR bg -> Memory BG -->
-  <line x1="8" y1="480" x2="28" y2="480" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
-  <text x="4" y="472" font-size="7" fill="#0066cc">addr,d_in,cs,wr</text>
+  <line x1="4" y1="440" x2="18" y2="440" stroke="#555555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="2" y="433" font-size="7" fill="#0066cc">addr,d_in</text>
 
   <!-- bg_color: Memory BG -> right -> up -> right -> down -> MUX top-left I0 (DIRECT) -->
-  <line x1="240" y1="450" x2="258" y2="450" stroke="#555555" stroke-width="1.5"/>
-  <line x1="258" y1="450" x2="258" y2="410" stroke="#555555" stroke-width="1.5"/>
-  <line x1="258" y1="410" x2="340" y2="410" stroke="#555555" stroke-width="1.5"/>
-  <line x1="340" y1="410" x2="340" y2="428" stroke="#555555" stroke-width="1.5" marker-end="url(#arrow)"/>
-  <text x="298" y="402" font-size="9" fill="#0066cc" text-anchor="middle">bg_color[3:0]</text>
+  <line x1="240" y1="410" x2="252" y2="410" stroke="#555555" stroke-width="1.5"/>
+  <line x1="252" y1="410" x2="252" y2="360" stroke="#555555" stroke-width="1.5"/>
+  <line x1="252" y1="360" x2="330" y2="360" stroke="#555555" stroke-width="1.5"/>
+  <line x1="330" y1="360" x2="330" y2="378" stroke="#555555" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="290" y="353" font-size="9" fill="#0066cc" text-anchor="middle">bg_color[3:0]</text>
 
   <!-- pixel: MUX bottom -> down -> right -> output -->
-  <line x1="390" y1="510" x2="390" y2="535" stroke="#555555" stroke-width="1.5"/>
-  <line x1="390" y1="535" x2="600" y2="535" stroke="#555555" stroke-width="1.5" marker-end="url(#arrow)"/>
-  <text x="405" y="528" font-size="9" fill="#0066cc">pixel[3:0]</text>
+  <line x1="390" y1="480" x2="390" y2="496" stroke="#555555" stroke-width="1.5"/>
+  <line x1="390" y1="496" x2="600" y2="496" stroke="#555555" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="495" y="489" font-size="9" fill="#0066cc">pixel[3:0]</text>
 
   <!-- Footer -->
-  <rect x="0" y="550" width="860" height="70" fill="#f8f8f8" stroke="#cccccc" stroke-width="0.5"/>
-  <text x="15" y="568" font-size="8" fill="#666666">OAM: [18:17]=tile_id, [16:9]=y, [8:1]=x, [0]=active &#8212; 19 bits/sprite</text>
-  <text x="15" y="581" font-size="8" fill="#cc0000">rom_addr: [7:6]=tile_id, [5:3]=dy, [2:0]=dx &#8212; tile_id fluye OAM&#8594;Addr Gen&#8594;Tile ROM</text>
-  <text x="15" y="594" font-size="8" fill="#666666">Mux: I0=bg_color, I1=rom_color, SEL=hit. N=1: 2:1 &#8594; N sprites: (N+1):1 prioridad, OAM&#8594;RAM N-entradas</text>
-  <text x="15" y="607" font-size="8" fill="#666666">Memory BG &#8594; Mux directo (NO por Hit Detect). Hit Detect lee rom_color en paralelo.</text>
+  <rect x="0" y="510" width="800" height="50" fill="#f8f8f8" stroke="#cccccc" stroke-width="0.5"/>
+  <text x="15" y="525" font-size="8" fill="#666666">OAM: [18:17]=tile_id, [16:9]=y, [8:1]=x, [0]=active &#8212; 19 bits/sprite</text>
+  <text x="15" y="537" font-size="8" fill="#cc0000">rom_addr: [7:6]=tile_id, [5:3]=dy, [2:0]=dx &#8212; tile_id fluye OAM&#8594;Addr Gen&#8594;Tile ROM</text>
+  <text x="15" y="549" font-size="8" fill="#666666">Mux: I0=bg_color, I1=rom_color, SEL=hit. N=1: 2:1 &#8594; N sprites: (N+1):1 prioridad, OAM&#8594;RAM N-entradas</text>
 </svg>
