@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FPGBC — Plataforma: cartucho + procesador propio</title>
+  <style>
+    :root {
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --ink: #17202a;
+      --muted: #52606d;
+      --line: #34495e;
+      --blue: #dbeafe;
+      --green: #dcfce7;
+      --amber: #fef3c7;
+      --gray: #e9eef3;
+      --red: #b42318;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+    }
+
+    main {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .diagram-frame {
+      overflow-x: auto;
+      background: var(--panel);
+      border: 1px solid #cbd5e1;
+      padding: 12px;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      min-width: 1280px;
+      height: auto;
+      background: #ffffff;
+    }
+
+    .block { stroke: #263746; stroke-width: 2; }
+    .block-title { font-size: 19px; font-weight: 700; fill: var(--ink); }
+    .block-detail { font-size: 14px; fill: #334155; }
+    .footer { fill: #f8fafc; stroke: #263746; stroke-width: 1.5; }
+    .footer-text { font-size: 12px; font-weight: 600; fill: #334155; }
+    .wire { fill: none; stroke: var(--line); stroke-width: 2.5; marker-end: url(#arrow); }
+    .wire-bidir { fill: none; stroke: var(--line); stroke-width: 2.5; marker-start: url(#arrow-reverse); marker-end: url(#arrow); }
+    .wire-unconfirmed { fill: none; stroke: var(--red); stroke-width: 2.5; stroke-dasharray: 9 7; marker-end: url(#arrow-red); }
+    .wire-label { font-size: 13px; font-weight: 600; fill: #334155; paint-order: stroke; stroke: #ffffff; stroke-width: 5px; stroke-linejoin: miter; }
+    .wire-label-red { font-size: 13px; font-weight: 700; fill: var(--red); paint-order: stroke; stroke: #ffffff; stroke-width: 5px; }
+    .section-label { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; fill: #64748b; }
+
+    .notes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .note {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 14px 16px;
+    }
+
+    .note h2 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .note ul {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .question {
+      color: var(--red);
+      background: #ffffff;
+      font-weight: 700;
+    }
+
+    .pinout {
+      margin-top: 18px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 16px;
+    }
+
+    .pinout h2 {
+      margin: 0 0 6px;
+      font-size: 18px;
+    }
+
+    .pinout p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 7px 9px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th { background: #e9eef3; }
+    td:first-child { width: 110px; font-weight: 700; }
+    td:nth-child(2) { width: 130px; font-family: "SFMono-Regular", Consolas, monospace; font-weight: 700; }
+    td:nth-child(3) { width: 90px; }
+
+    code { font-family: "SFMono-Regular", Consolas, monospace; }
+
+    @media (max-width: 800px) {
+      main { padding: 14px; }
+      .notes { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>FPGBC — Plataforma de la aplicación: cartucho + procesador propio</h1>
+  <p class="subtitle">El programa del juego reside en el cartucho; el procesador que lo ejecuta reside en la FPGA de la tarjeta.</p>
+
+  <div class="diagram-frame">
+    <svg viewBox="0 0 1420 650" role="img" aria-labelledby="diagram-title diagram-desc">
+      <title id="diagram-title">Plataforma FPGBC: cartucho EverSave y procesador propio en la FPGA</title>
+      <desc id="diagram-desc">La FPGA GW2AR de la tarjeta se conecta mediante los buffers LJ245A y YF04E al conector de borde y de ahí al GW1NZ del cartucho, que controla la NOR de 8 MiB y la FRAM de 32 KiB.</desc>
+
+      <defs>
+        <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L9,4.5 L0,9 Z" fill="#34495e"/>
+        </marker>
+        <marker id="arrow-reverse" markerWidth="9" markerHeight="9" refX="1" refY="4.5" orient="auto" markerUnits="strokeWidth">
+          <path d="M9,0 L0,4.5 L9,9 Z" fill="#34495e"/>
+        </marker>
+        <marker id="arrow-red" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L9,4.5 L0,9 Z" fill="#b42318"/>
+        </marker>
+      </defs>
+
+      <text x="35" y="230" class="section-label">TARJETA FPGBC</text>
+      <text x="1100" y="40" class="section-label">CARTUCHO EVERSAVE (MBC5)</text>
+
+      <!-- FPGA -->
+      <g>
+        <rect x="60" y="250" width="340" height="330" fill="var(--green)" class="block"/>
+        <text x="230" y="295" text-anchor="middle" class="block-title">Gowin GW2AR-18</text>
+        <text x="230" y="330" text-anchor="middle" class="block-detail">FPGA de la tarjeta FPGBC</text>
+        <text x="230" y="355" text-anchor="middle" class="block-detail">Ejecuta el procesador propio</text>
+        <text x="230" y="380" text-anchor="middle" class="block-detail">Sin core de Game Boy</text>
+        <rect x="60" y="540" width="340" height="40" class="footer"/>
+        <text x="230" y="565" text-anchor="middle" class="footer-text">Bus de cartridge · JTAG · audio</text>
+      </g>
+
+      <!-- Buffer de control -->
+      <g>
+        <rect x="520" y="315" width="200" height="105" fill="var(--gray)" class="block"/>
+        <text x="620" y="355" text-anchor="middle" class="block-title">YF04E</text>
+        <text x="620" y="380" text-anchor="middle" class="block-detail">Buffer de control · ≈TXS0104E</text>
+        <rect x="520" y="395" width="200" height="25" class="footer"/>
+        <text x="620" y="412" text-anchor="middle" class="footer-text">CLK 60 · /WR 61 · /RD 62 · /CS 63</text>
+      </g>
+
+      <!-- Buffer de datos -->
+      <g>
+        <rect x="520" y="455" width="200" height="105" fill="var(--gray)" class="block"/>
+        <text x="620" y="495" text-anchor="middle" class="block-title">LJ245A</text>
+        <text x="620" y="520" text-anchor="middle" class="block-detail">Buffer de datos · ≈74LVC8T245</text>
+        <rect x="520" y="535" width="200" height="25" class="footer"/>
+        <text x="620" y="552" text-anchor="middle" class="footer-text">D0 45 · D7 38 · OE/DIR 37</text>
+      </g>
+
+      <!-- Conector de borde -->
+      <g>
+        <rect x="790" y="215" width="180" height="385" fill="var(--blue)" class="block"/>
+        <text x="880" y="255" text-anchor="middle" class="block-title">Conector de borde</text>
+        <text x="880" y="285" text-anchor="middle" class="block-detail">32 pines</text>
+        <text x="880" y="310" text-anchor="middle" class="block-detail">A[15:0] · D[7:0]</text>
+        <text x="880" y="335" text-anchor="middle" class="block-detail">/RD · /WR · /CS</text>
+        <rect x="790" y="550" width="180" height="50" class="footer"/>
+        <text x="880" y="568" text-anchor="middle" class="footer-text">Ventana de 64 KiB</text>
+        <text x="880" y="588" text-anchor="middle" class="footer-text">Banca → 8 MiB</text>
+      </g>
+
+      <!-- Contenedor del cartucho (incluye conector JTAG) -->
+      <rect x="1100" y="55" width="300" height="535" fill="#ffffff" class="block"/>
+
+      <!-- Conector JTAG del GW1NZ -->
+      <g>
+        <rect x="1120" y="60" width="265" height="170" fill="var(--gray)" class="block"/>
+        <text x="1252" y="82" text-anchor="middle" class="block-title">Conector JTAG 6 pines</text>
+        <text x="1135" y="108" class="block-detail">1: V · VCCIO0 1,14–3,6 V</text>
+        <text x="1135" y="130" class="block-detail">2: C · TCK</text>
+        <text x="1135" y="152" class="block-detail">3: M · TMS</text>
+        <text x="1135" y="174" class="block-detail">4: I · TDI</text>
+        <text x="1135" y="196" class="block-detail">5: O · TDO</text>
+        <text x="1135" y="218" class="block-detail">6: G · GND</text>
+      </g>
+
+      <!-- GW1NZ -->
+      <g>
+        <rect x="1125" y="250" width="250" height="105" fill="var(--blue)" class="block"/>
+        <text x="1250" y="290" text-anchor="middle" class="block-title">Gowin GW1NZ</text>
+        <text x="1250" y="315" text-anchor="middle" class="block-detail">Controlador de memoria</text>
+        <rect x="1125" y="330" width="250" height="25" class="footer"/>
+        <text x="1250" y="347" text-anchor="middle" class="footer-text">Reprogramado: decode + bancos</text>
+      </g>
+
+      <!-- NOR -->
+      <g>
+        <rect x="1120" y="420" width="130" height="110" fill="var(--amber)" class="block"/>
+        <text x="1185" y="458" text-anchor="middle" class="block-title">S29GL064N</text>
+        <text x="1185" y="483" text-anchor="middle" class="block-detail">Flash NOR</text>
+        <rect x="1120" y="505" width="130" height="25" class="footer"/>
+        <text x="1185" y="522" text-anchor="middle" class="footer-text">8 MiB · 90 ns</text>
+      </g>
+
+      <!-- FRAM -->
+      <g>
+        <rect x="1255" y="420" width="130" height="110" fill="var(--amber)" class="block"/>
+        <text x="1320" y="458" text-anchor="middle" class="block-title">FM28V020</text>
+        <text x="1320" y="483" text-anchor="middle" class="block-detail">FRAM</text>
+        <rect x="1255" y="505" width="130" height="25" class="footer"/>
+        <text x="1320" y="522" text-anchor="middle" class="footer-text">32 KiB</text>
+      </g>
+
+      <!-- Franja inferior del cartucho -->
+      <rect x="1120" y="550" width="265" height="30" class="footer"/>
+      <text x="1252" y="570" text-anchor="middle" class="footer-text">El programa del juego reside aquí</text>
+
+      <!-- Interconexiones: segmentos rectos, perpendiculares a los bordes -->
+      <path d="M400 270 H790" class="wire"/>
+      <text x="595" y="258" text-anchor="middle" class="wire-label">A[15:0] · directo · pines 64–84</text>
+
+      <path d="M400 360 H520" class="wire"/>
+      <text x="460" y="345" text-anchor="middle" class="wire-label">CLK · WR · RD · CS</text>
+      <path d="M720 360 H790" class="wire"/>
+
+      <path d="M400 500 H520" class="wire-bidir"/>
+      <text x="460" y="485" text-anchor="middle" class="wire-label">D[7:0]</text>
+      <path d="M720 500 H790" class="wire-bidir"/>
+
+      <path d="M970 290 H1050 V285 H1125" class="wire-bidir"/>
+      <text x="1035" y="275" text-anchor="middle" class="wire-label">A[15:0] D[7:0]</text>
+      <text x="1035" y="292" text-anchor="middle" class="wire-label">/RD /WR /CS</text>
+
+      <path d="M1160 355 V420" class="wire-bidir"/>
+      <path d="M1300 355 V420" class="wire-bidir"/>
+
+      <path d="M1250 230 V250" class="wire"/>
+      <text x="1262" y="245" class="wire-label">JTAG</text>
+
+      <!-- Leyenda -->
+      <line x1="1100" y1="632" x2="1170" y2="632" stroke="#34495e" stroke-width="2.5"/>
+      <text x="1185" y="637" class="block-detail">Conexión identificada</text>
+    </svg>
+  </div>
+
+  <section class="notes">
+    <div class="note">
+      <h2>Arquitectura de la aplicación</h2>
+      <ul>
+        <li>El programa del juego reside en el cartucho; la FPGA de la tarjeta contiene el procesador que lo ejecuta.</li>
+        <li>Protocolo de memoria propio; no es emulación de Game Boy.</li>
+        <li>Ventana de 64 KiB (<code>A[15:0]</code>) en el espacio de direcciones del procesador; la banca da acceso a los 8 MiB de la NOR.</li>
+        <li>La NOR <code>S29GL064N</code> es de 90 ns: el controlador debe insertar wait states.</li>
+        <li>La FRAM <code>FM28V020</code> de 32 KiB sirve como memoria de guardado.</li>
+        <li>Las direcciones A[15:0] van directas de la FPGA al cartucho; los datos pasan por el LJ245A y el control (CLK, /WR, /RD, /CS) por el YF04E.</li>
+        <li>El <code>GW1NZ</code> se reprograma como controlador de memoria propio: decode de direcciones y registros de banco.</li>
+      </ul>
+    </div>
+    <div class="note">
+      <h2>Verificaciones pendientes</h2>
+      <ul>
+        <li class="question">¿Cuáles son los pines de la FPGA para D1–D6 a través del LJ245A?</li>
+        <li class="question">¿A qué señal corresponde el pin adicional del rango 64–72, 76, 78–84 (17 pines para A0–A15)? ¿/RESET?</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="pinout">
+    <h2>Memorias del cartucho</h2>
+    <p>Componentes identificados dentro del cartucho FunnyPlaying EverSave (MBC5) y su función en la plataforma.</p>
+    <table>
+      <thead>
+        <tr><th>Componente</th><th>Referencia</th><th>Tecnología</th><th>Función en la plataforma</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Flash NOR</td>
+          <td>S29GL064N90TFI04</td>
+          <td>NOR · 8 MiB</td>
+          <td>Almacena el programa del juego. 90 ns de acceso: requiere wait states en el controlador.</td>
+        </tr>
+        <tr>
+          <td>FRAM</td>
+          <td>FM28V020-SG</td>
+          <td>FRAM · 32 KiB</td>
+          <td>Memoria de guardado: escritura rápida y sin desgaste.</td>
+        </tr>
+        <tr>
+          <td>Controlador</td>
+          <td>GW1NZ-LV1</td>
+          <td>FPGA Gowin</td>
+          <td>Se reprograma como controlador de memoria propio: decode de direcciones y registros de banco.</td>
+        </tr>
+        <tr>
+          <td>Conector JTAG</td>
+          <td>6 pines · V C M I O G</td>
+          <td>Header</td>
+          <td>Acceso JTAG al GW1NZ. Pines 1/3/4/5/7 del QN48: V = VCCIO0 (1,14–3,6 V, alimentación del I/O Bank 0, no VCC del core de 1,2 V), C = TCK, M = TMS, I = TDI, O = TDO, G = GND. El nivel de V indica la tensión de I/O y sirve como VTREF para un programador externo.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section class="pinout">
+    <h2>Pines de la FPGA hacia el bus del cartucho</h2>
+    <p>Asignación identificada por continuidad (diagrama de flujo interno). La dirección va directa; datos y control pasan por buffers.</p>
+    <table>
+      <thead>
+        <tr><th>Bus</th><th>Señal</th><th>Pin(es) FPGA</th><th>Ruta / buffer</th><th>Estado</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Dirección</td><td>A0–A15</td><td>64–72, 76, 78–84</td><td>Directo FPGA → cartucho (sin buffer)</td><td>Identificado (17 pines listados: 1 pendiente de asignar)</td></tr>
+        <tr><td>Datos</td><td>D0</td><td>45</td><td>LJ245A (≈74LVC8T245) · pin 10</td><td>Identificado</td></tr>
+        <tr><td>Datos</td><td>D1–D6</td><td>—</td><td>LJ245A</td><td>Pendiente de medir</td></tr>
+        <tr><td>Datos</td><td>D7</td><td>38</td><td>LJ245A · pin 3</td><td>Identificado</td></tr>
+        <tr><td>Control buffer</td><td>OE/DIR</td><td>37</td><td>LJ245A · pines 23/24</td><td>Identificado</td></tr>
+        <tr><td>Control</td><td>CLK</td><td>60</td><td>YF04E (≈TXS0104E)</td><td>Identificado</td></tr>
+        <tr><td>Control</td><td>/WR</td><td>61</td><td>YF04E</td><td>Identificado</td></tr>
+        <tr><td>Control</td><td>/RD</td><td>62</td><td>YF04E</td><td>Identificado</td></tr>
+        <tr><td>Control</td><td>/CS</td><td>63</td><td>YF04E</td><td>Identificado</td></tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+</body>
+</html>

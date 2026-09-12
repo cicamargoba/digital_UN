@@ -60,7 +60,7 @@ COMM_OBJS+= cores/test/mult/mult_32.v
 COMM_OBJS+= cores/test/mult/acc.v
 COMM_OBJS+= cores/test/mult/comp.v
 COMM_OBJS+= cores/test/mult/lsr_mult.v
-COMM_OBJS+= cores/test/mult/control_mult.v
+COMM_OBJS+= cores/test/mult/control_mult2.v
 COMM_OBJS+= cores/test/mult/rsr.v
 
 COMM_OBJS +=  SOC.v

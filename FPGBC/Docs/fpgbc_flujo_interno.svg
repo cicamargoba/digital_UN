@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1220" height="725" viewBox="0 0 1220 725" font-family="Helvetica, Arial, sans-serif">
+  <rect x="0" y="0" width="1220" height="725" fill="#ffffff"/>
+
+  <text x="20" y="26" font-size="16" font-weight="bold" fill="#000000">FPGBC &#8212; Diagrama de flujo interno (hip&#243;tesis a validar)</text>
+
+  <!-- Cuadro delimitador: todo lo que está dentro de la PCB del FPGBC -->
+  <!-- El borde corta por la mitad los conectores que cruzan al exterior: USB-C, pulsadores, cartucho (izq.) y MIPI (der.) -->
+  <rect x="95" y="32" width="800" height="650" fill="none" stroke="#000000" stroke-width="1.5" stroke-dasharray="8,5"/>
+  <text x="110" y="50" font-size="11" font-weight="bold" fill="#444444">PCB FPGBC (dentro de la carcasa)</text>
+
+  <!-- USB-C -->
+  <rect x="20" y="260" width="150" height="70" fill="#f5f5f5" stroke="#000000" stroke-width="1.5"/>
+  <text x="95" y="290" font-size="12" font-weight="bold" text-anchor="middle" fill="#000000">USB-C</text>
+  <text x="95" y="306" font-size="10" text-anchor="middle" fill="#666666">Alimentaci&#243;n + firmware</text>
+
+  <!-- Pulsadores -->
+  <rect x="20" y="380" width="150" height="70" fill="#f5f5f5" stroke="#000000" stroke-width="1.5"/>
+  <text x="95" y="405" font-size="12" font-weight="bold" text-anchor="middle" fill="#000000">Pulsadores</text>
+  <text x="95" y="419" font-size="9" text-anchor="middle" fill="#666666">D-pad, A/B, men&#250;</text>
+  <text x="95" y="433" font-size="8" text-anchor="middle" fill="#2c6e2c">1 cont.&#8594;GND, 1 cont.&#8594;FPGA</text>
+  <text x="95" y="443" font-size="8" text-anchor="middle" fill="#8a2c2c">(activo bajo, pull-up interno?)</text>
+
+  <!-- Cartucho -->
+  <rect x="20" y="480" width="150" height="110" fill="#f5f5f5" stroke="#000000" stroke-width="1.5"/>
+  <text x="95" y="502" font-size="12" font-weight="bold" text-anchor="middle" fill="#000000">Cartucho GB/GBC</text>
+  <text x="95" y="518" font-size="9" text-anchor="middle" fill="#333333">D0 D1 D2 D3 D4 D5 D6 D7</text>
+  <text x="95" y="531" font-size="9" text-anchor="middle" fill="#333333">A0 A1 &#8230; A14 A15</text>
+  <text x="95" y="544" font-size="9" text-anchor="middle" fill="#333333">/RD  /WR  /CS  CLK</text>
+  <text x="95" y="560" font-size="9" text-anchor="middle" fill="#666666">(bus asincrono, 4.19 MHz)</text>
+
+  <!-- Buffer 74245 (bus de datos D0-D7) -->
+  <rect x="280" y="510" width="120" height="78" fill="#f5f5f5" stroke="#000000" stroke-width="1.5"/>
+  <text x="340" y="527" font-size="11" font-weight="bold" text-anchor="middle" fill="#000000">LJ245A</text>
+  <text x="340" y="539" font-size="8" text-anchor="middle" fill="#8a2c2c">&#8776;74LVC8T245 (24 pines?)</text>
+  <text x="340" y="551" font-size="8" text-anchor="middle" fill="#2c6e2c">D7&#8594;LJ3&#8594;FPGA38</text>
+  <text x="340" y="563" font-size="8" text-anchor="middle" fill="#2c6e2c">D0&#8594;LJ10&#8594;FPGA45</text>
+  <text x="340" y="575" font-size="8" text-anchor="middle" fill="#8a2c2c">OE/DIR (23,24) &#8592; FPGA 37</text>
+  <text x="340" y="585" font-size="8" text-anchor="middle" fill="#8a2c2c">(faltan D1-D6 por medir)</text>
+
+  <!-- MCU -->
+  <rect x="230" y="260" width="170" height="90" fill="#f5f5f5" stroke="#000000" stroke-width="1.5"/>
+  <text x="315" y="286" font-size="13" font-weight="bold" text-anchor="middle" fill="#000000">MCU CH32V</text>
+  <text x="315" y="302" font-size="10" text-anchor="middle" fill="#666666">Puente USB&#8594;JTAG,</text>
+  <text x="315" y="316" font-size="10" text-anchor="middle" fill="#666666">OSD, botones</text>
+
+  <!-- EEPROM -->
+  <rect x="230" y="150" width="170" height="80" fill="#f5f5f5" stroke="#000000" stroke-width="1.5"/>
+  <text x="315" y="180" font-size="12" font-weight="bold" text-anchor="middle" fill="#000000">EEPROM I2C</text>
+  <text x="315" y="196" font-size="10" text-anchor="middle" fill="#666666">Info. segura de juegos</text>
+
+  <!-- SPI Flash -->
+  <rect x="720" y="385" width="170" height="70" fill="#f5f5f5" stroke="#000000" stroke-width="1.5"/>
+  <text x="805" y="413" font-size="12" font-weight="bold" text-anchor="middle" fill="#000000">Flash SPI (MSPI)</text>
+  <text x="805" y="429" font-size="10" text-anchor="middle" fill="#666666">MI96 MO95 MCS_N94 MCLK93</text>
+
+  <!-- FPGA -->
+  <rect x="480" y="140" width="220" height="420" fill="#eef2f6" stroke="#000000" stroke-width="1.5"/>
+  <text x="590" y="170" font-size="13" font-weight="bold" text-anchor="middle" fill="#000000">FPGA Gowin GW2AR-18</text>
+  <text x="590" y="188" font-size="10" text-anchor="middle" fill="#666666">Core GB/GBC + bus cartucho</text>
+  <text x="590" y="202" font-size="10" text-anchor="middle" fill="#666666">+ generaci&#243;n de video</text>
+
+  <!-- PSRAM -->
+  <rect x="480" y="590" width="220" height="70" fill="#f5f5f5" stroke="#000000" stroke-width="1.5"/>
+  <text x="590" y="618" font-size="12" font-weight="bold" text-anchor="middle" fill="#000000">PSRAM (QN88P/PF)</text>
+  <text x="590" y="634" font-size="10" text-anchor="middle" fill="#666666">Memoria de trabajo</text>
+
+  <!-- Red resistiva + conector MIPI (D-PHY TX, asignación confirmada) -->
+  <rect x="820" y="185" width="150" height="195" fill="#f5f5f5" stroke="#000000" stroke-width="1.5"/>
+  <text x="895" y="203" font-size="12" font-weight="bold" text-anchor="middle" fill="#000000">Red R + conector</text>
+  <text x="895" y="217" font-size="9" text-anchor="middle" fill="#666666">D-PHY TX (confirmado)</text>
+  <text x="895" y="234" font-size="9" text-anchor="middle" fill="#333333">122(GCLKC_0)&#8596;R&#8596;117 = 0P</text>
+  <text x="895" y="247" font-size="9" text-anchor="middle" fill="#333333">123(GCLKT_0)&#8596;R&#8596;116 = 0N</text>
+  <text x="895" y="260" font-size="9" text-anchor="middle" fill="#333333">124(IOT23B)&#8596;R&#8596;115 = 1P</text>
+  <text x="895" y="273" font-size="9" text-anchor="middle" fill="#333333">125(IOT22A)&#8596;R&#8596;114 = 1N</text>
+  <text x="895" y="286" font-size="9" text-anchor="middle" fill="#333333">126(IOT23A)&#8596;R&#8596;113 = CP</text>
+  <text x="895" y="299" font-size="9" text-anchor="middle" fill="#333333">128(IOT19A)&#8596;R&#8596;112 = CN</text>
+  <text x="895" y="316" font-size="9" text-anchor="middle" fill="#8a2c2c">GCLK usados como datos,</text>
+  <text x="895" y="329" font-size="9" text-anchor="middle" fill="#8a2c2c">no como reloj (CP/CN=126/128)</text>
+  <text x="895" y="346" font-size="9" text-anchor="middle" fill="#8a2c2c">4 pines FPGA/lane:</text>
+  <text x="895" y="359" font-size="9" text-anchor="middle" fill="#8a2c2c">2 LVDS HS + 2 LVCMOS LP</text>
+  <text x="895" y="372" font-size="9" text-anchor="middle" fill="#8a2c2c">esperado: ~50&#937;/~330&#937;</text>
+
+  <!-- LCD -->
+  <rect x="1030" y="250" width="150" height="80" fill="#f5f5f5" stroke="#000000" stroke-width="1.5"/>
+  <text x="1105" y="280" font-size="12" font-weight="bold" text-anchor="middle" fill="#000000">LCD MIPI</text>
+  <text x="1105" y="296" font-size="10" text-anchor="middle" fill="#666666">Panel BlackBerry</text>
+
+  <!-- USB-C -> MCU -->
+  <line x1="170" y1="295" x2="230" y2="295" stroke="#000000" stroke-width="1.5"/>
+
+  <!-- Flash -> FPGA (direct MSPI pins, physical) -->
+  <line x1="700" y1="420" x2="720" y2="420" stroke="#000000" stroke-width="1.5"/>
+  <text x="600" y="413" font-size="9" fill="#333333">MSPI directo (pines 93-96, EQ144P)</text>
+
+  <!-- MCU -> FPGA (JTAG: programa FPGA y accede flash indirectamente) -->
+  <line x1="400" y1="305" x2="480" y2="305" stroke="#000000" stroke-width="1.5"/>
+  <text x="405" y="298" font-size="9" fill="#333333">JTAG (TMS13 TCK14 TDI16 TDO18): FPGA+flash</text>
+
+  <!-- Pulsadores -> FPGA -->
+  <line x1="170" y1="415" x2="480" y2="415" stroke="#000000" stroke-width="1.5"/>
+
+  <!-- Buffer YF04E / TXS0104E: RD, WR, CS, CLK (4 canales, mapeo confirmado) -->
+  <rect x="280" y="450" width="120" height="53" fill="#f5f5f5" stroke="#000000" stroke-width="1.5"/>
+  <text x="340" y="464" font-size="11" font-weight="bold" text-anchor="middle" fill="#000000">YF04E</text>
+  <text x="340" y="475" font-size="8" text-anchor="middle" fill="#666666">&#8776;TXS0104E, 4ch autosens.</text>
+  <text x="340" y="486" font-size="8" text-anchor="middle" fill="#2c6e2c">FPGA: 60=CLK 61=WR</text>
+  <text x="340" y="497" font-size="8" text-anchor="middle" fill="#2c6e2c">FPGA: 62=RD 63=CS</text>
+
+  <!-- Cartucho -> A0-A15 (directo, sin buffer, rodea al YF04E) -->
+  <line x1="170" y1="495" x2="230" y2="495" stroke="#000000" stroke-width="1.5"/>
+  <line x1="230" y1="495" x2="230" y2="430" stroke="#000000" stroke-width="1.5"/>
+  <line x1="230" y1="430" x2="480" y2="430" stroke="#000000" stroke-width="1.5"/>
+  <text x="235" y="423" font-size="9" fill="#333333">A0-A15: FPGA 64-72,76,78-84</text>
+
+  <!-- Cartucho -> Buffer YF04E -> FPGA: RD, WR, CS, CLK -->
+  <line x1="170" y1="500" x2="280" y2="500" stroke="#000000" stroke-width="1.5"/>
+  <line x1="400" y1="500" x2="480" y2="500" stroke="#000000" stroke-width="1.5"/>
+  <text x="405" y="513" font-size="9" fill="#333333">RD WR CS CLK</text>
+
+  <!-- Cartucho -> Buffer -> FPGA: D0-D7 -->
+  <line x1="170" y1="555" x2="280" y2="555" stroke="#000000" stroke-width="1.5"/>
+  <line x1="400" y1="555" x2="480" y2="555" stroke="#000000" stroke-width="1.5"/>
+  <text x="405" y="548" font-size="9" fill="#333333">D0-D7 (buffered)</text>
+
+  <!-- FPGA -> Buffer: control OE/DIR -->
+  <line x1="480" y1="573" x2="400" y2="573" stroke="#000000" stroke-width="1.5"/>
+  <text x="405" y="586" font-size="8" fill="#333333">OE/DIR &#8592; FPGA pin 37</text>
+
+  <!-- EEPROM -> FPGA (I2C) -->
+  <line x1="400" y1="190" x2="480" y2="190" stroke="#000000" stroke-width="1.5"/>
+  <text x="405" y="183" font-size="9" fill="#333333">I2C</text>
+
+  <!-- FPGA -> PSRAM -->
+  <line x1="590" y1="560" x2="590" y2="590" stroke="#000000" stroke-width="1.5"/>
+
+  <!-- FPGA -> Audio (PWM 1-bit, sin DAC dedicado) -->
+  <line x1="700" y1="540" x2="700" y2="600" stroke="#000000" stroke-width="1.5"/>
+  <text x="605" y="605" font-size="9" fill="#333333">PWM/&#931;&#916; 1-bit</text>
+
+  <!-- Filtro RC (el "DAC") -->
+  <rect x="700" y="592" width="110" height="42" fill="#f5f5f5" stroke="#000000" stroke-width="1.5"/>
+  <text x="755" y="608" font-size="10" font-weight="bold" text-anchor="middle" fill="#000000">Filtro RC</text>
+  <text x="755" y="620" font-size="8" text-anchor="middle" fill="#8a2c2c">R serie + C a GND</text>
+  <text x="755" y="630" font-size="8" text-anchor="middle" fill="#8a2c2c">(el "DAC" real)</text>
+
+  <!-- Filtro -> Amplificador (el amplificador cruza el borde, como MIPI/USB-C) -->
+  <line x1="810" y1="613" x2="830" y2="613" stroke="#000000" stroke-width="1.5"/>
+  <rect x="830" y="593" width="140" height="40" fill="#f5f5f5" stroke="#000000" stroke-width="1.5"/>
+  <text x="900" y="609" font-size="10" font-weight="bold" text-anchor="middle" fill="#000000">Amplificador</text>
+  <text x="900" y="621" font-size="8" text-anchor="middle" fill="#666666">(identificado, sin ref.)</text>
+
+  <!-- Amplificador -> Parlante (externo) -->
+  <line x1="970" y1="613" x2="1030" y2="613" stroke="#000000" stroke-width="1.5"/>
+  <rect x="1030" y="593" width="90" height="40" fill="#f5f5f5" stroke="#000000" stroke-width="1.5"/>
+  <text x="1075" y="617" font-size="10" font-weight="bold" text-anchor="middle" fill="#000000">Parlante</text>
+
+  <!-- FPGA -> Red R (HS: LVDS25, solo salida) -->
+  <line x1="700" y1="250" x2="820" y2="250" stroke="#000000" stroke-width="1.5"/>
+  <text x="705" y="243" font-size="9" fill="#333333">HS: LVDS, 2 pines, solo TX</text>
+
+  <!-- Red R <-> FPGA (LP: LVCMOS, bidireccional) -->
+  <line x1="820" y1="320" x2="700" y2="320" stroke="#000000" stroke-width="1.5"/>
+  <text x="705" y="333" font-size="9" fill="#333333">LP: LVCMOS, 2 pines, bidir.</text>
+
+  <!-- Red R -> LCD -->
+  <line x1="970" y1="285" x2="1030" y2="285" stroke="#000000" stroke-width="1.5"/>
+
+  <!-- Legend -->
+  <text x="20" y="700" font-size="10" fill="#666666">Chip real: GW2AR-LV18EQ144PC8 (EQ144P). JTAG: TMS13 TCK14 TDI16 TDO18, RECONFIG_N pin20. MIPI: 6 se&#241;ales confirmadas por continuidad en PCB.</text>
+  <text x="20" y="714" font-size="10" fill="#666666">Ref. Lattice RD1182 (TX D-PHY por SW): ~50&#937; en ramas HS (divisor) &#183; ~330&#937; en ramas LP (bidir. CMOS) &#183; ~70&#937; a GND si es variante solo-HS.</text>
+</svg>
