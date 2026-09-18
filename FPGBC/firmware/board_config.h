@@ -34,7 +34,8 @@
 
 #define FPGBC_SSPI_CS_ASSIGNED     0
 /* #define FPGBC_SSPI_CS_PORT  GPIOx */
-/* #define FPGBC_SSPI_CS_PIN   GPIO_Pin_x */
+/* #define FPGBC_SSPI_- `board_config.h`: única tabla para asignar los GPIO del CH32V203.
+CS_PIN   GPIO_Pin_x */
 
 #define FPGBC_CLKHOLD_ASSIGNED     0
 /* #define FPGBC_CLKHOLD_PORT  GPIOx */
