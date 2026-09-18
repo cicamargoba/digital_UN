@@ -31,7 +31,8 @@ Secuencia implementada:
 - `gowin_sspi_platform.h`: interfaz que debe implementar el HAL del CH32V203.
 - `board_config.h`: única tabla para asignar los GPIO del CH32V203.
 - `main.c`: prueba periódica de detección y reporte del JEDEC ID.
-- `Makefile`: compila el módulo como biblioteca estática RISC-V.
+- `platform_ch32v203.c`: GPIO, bit-bang SSPI y USB CDC para el CH32V203.
+- `Makefile`: construye la imagen ejecutable completa para el CH32V203.
 
 Salida esperada por USB CDC:
 
@@ -42,14 +43,83 @@ FLASH JEDEC ID: EF 40 15
 
 Para una W25Q16JV, `EF` identifica Winbond y `15` corresponde a 16 Mbit.
 
-## Compilación del módulo
+## Base DAPLink utilizada
+
+El firmware reutiliza el soporte para CH32V203 disponible en:
+
+```text
+https://github.com/XIVN1987/DAPLink
+```
+
+DAPLink se descarga al directorio hermano `../DAPLink` ejecutando:
+
+```bash
+make daplink
+```
+
+El `Makefile` comprueba si ya existe:
+
+```text
+../DAPLink/CH32V203/link.ld
+```
+
+Si no existe `../DAPLink`, ejecuta el equivalente a:
+
+```bash
+git clone https://github.com/XIVN1987/DAPLink.git ../DAPLink
+```
+
+De `DAPLink/CH32V203` se utilizan:
+
+- `link.ld`: mapa de memoria del CH32V203.
+- `src/Startup/`: startup, vectores, inicialización del reloj y soporte RISC-V.
+- `src/Peripheral/`: biblioteca de periféricos de WCH.
+- `src/USBLib/`: pila USB device.
+- `src/USBUsr/`: descriptores y control USB usados por la interfaz CDC.
+
+No se está construyendo la aplicación CMSIS-DAP original. DAPLink se usa como
+**SDK/base de hardware del CH32V203**; `main.c`, la lectura SSPI y la salida USB
+CDC pertenecen a esta aplicación.
+
+La ubicación y el repositorio pueden cambiarse sin editar el `Makefile`:
+
+```bash
+make DAPLINK_DIR=/ruta/DAPLink
+make daplink DAPLINK_REPO=https://github.com/XIVN1987/DAPLink.git
+```
+
+## Construcción de `firmware.bin`
 
 Requiere un toolchain RISC-V bare-metal. Por defecto usa
 `riscv64-unknown-elf-gcc`, generando código RV32:
 
 ```bash
+make daplink
 make
 ```
+
+El proceso ejecutado por `make` es:
+
+```text
+Fuentes locales C
+  + startup/periféricos/USB de DAPLink/CH32V203
+  + DAPLink/CH32V203/link.ld
+                    │
+                    ▼
+        riscv64-unknown-elf-gcc
+                    │
+                    ▼
+          build/firmware.elf
+                    │
+                    ▼
+ riscv64-unknown-elf-objcopy -O binary
+                    │
+                    ▼
+          build/firmware.bin
+```
+
+El archivo ELF conserva símbolos e información de depuración. `objcopy`
+extrae únicamente la imagen binaria que se graba en la flash del CH32V203.
 
 Para el toolchain de WCH:
 
@@ -60,7 +130,9 @@ make CROSS_COMPILE=riscv-none-elf-
 El resultado es:
 
 ```text
-build/libgowin_sspi_flash.a
+build/firmware.elf
+build/firmware.bin
+build/firmware.map
 ```
 
 También están disponibles:
@@ -111,8 +183,7 @@ wlink 0.1.2
 
 ## Integración pendiente
 
-Este módulo todavía no es una imagen de firmware autónoma. La aplicación del
-CH32V203 debe implementar las funciones declaradas en
+La imagen ya incluye las funciones de plataforma del CH32V203 declaradas en
 `gowin_sspi_platform.h`:
 
 ```c
@@ -123,8 +194,7 @@ void gowin_delay_ms(uint32_t ms);
 uint8_t gowin_spi_xfer(uint8_t tx);
 ```
 
-La compilación genera una imagen ejecutable en `build/firmware.bin`. La lectura
-SSPI queda bloqueada hasta completar la asignación de GPIO en
+La lectura SSPI queda bloqueada hasta completar la asignación de GPIO en
 `board_config.h`.
 La recepción progresiva del archivo `.fs` no forma parte de esta prueba.
 Los valores `PIN_*` son identificadores abstractos, no pines físicos del

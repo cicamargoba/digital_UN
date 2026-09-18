@@ -9,7 +9,9 @@ BUILD_DIR     := build
 TARGET        := $(BUILD_DIR)/firmware.elf
 PROGRAM_FILE  ?= $(BUILD_DIR)/firmware.bin
 FLASH_ADDRESS ?= 0x08000000
-SDK_ROOT      := ../DAPLink/CH32V203
+DAPLINK_REPO  ?= https://github.com/XIVN1987/DAPLink.git
+DAPLINK_DIR   ?= ../DAPLink
+SDK_ROOT      := $(DAPLINK_DIR)/CH32V203
 SDK_SRC       := $(SDK_ROOT)/src
 LINKER_SCRIPT := $(SDK_ROOT)/link.ld
 
@@ -36,15 +38,18 @@ LDFLAGS       ?= -nostdlib -T$(LINKER_SCRIPT) -Wl,--gc-sections \
 		 -Wl,-Map,$(BUILD_DIR)/firmware.map
 LDLIBS        ?= -lgcc
 
-.PHONY: all clean check program
+.PHONY: all clean check daplink help program
 
 all: $(PROGRAM_FILE)
 
+# 1. GCC compila los fuentes locales, startup, periféricos y USB del SDK.
+# 2. El linker script de CH32V203 produce build/firmware.elf.
 $(TARGET): $(SOURCES) $(LINKER_SCRIPT) | $(BUILD_DIR)
 	$(CC) $(ARCH_FLAGS) $(CPPFLAGS) $(CFLAGS) $(SOURCES) \
 		$(LDFLAGS) $(LDLIBS) -o $@
 	$(SIZE) $@
 
+# 3. objcopy elimina la información ELF y genera la imagen binaria grabable.
 $(PROGRAM_FILE): $(TARGET)
 	$(OBJCOPY) -O binary $< $@
 
@@ -54,6 +59,28 @@ $(BUILD_DIR):
 check:
 	$(CC) $(ARCH_FLAGS) $(CPPFLAGS) $(CFLAGS) -fsyntax-only \
 		$(LOCAL_SOURCES)
+
+# Descarga el SDK/base DAPLink requerido por este firmware.
+daplink:
+	@if [ -f "$(LINKER_SCRIPT)" ]; then \
+		echo "DAPLink disponible en $(DAPLINK_DIR)"; \
+	elif [ -e "$(DAPLINK_DIR)" ]; then \
+		echo "Error: $(DAPLINK_DIR) existe, pero no contiene CH32V203/link.ld."; \
+		exit 1; \
+	else \
+		git clone "$(DAPLINK_REPO)" "$(DAPLINK_DIR)"; \
+	fi
+
+help:
+	@echo "Preparación y compilación:" 
+	@echo "  make daplink   Descarga $(DAPLINK_REPO) en $(DAPLINK_DIR)"
+	@echo "  make           Crea $(TARGET) y después $(PROGRAM_FILE)"
+	@echo "  make check     Verifica la sintaxis de los fuentes locales"
+	@echo "  make program   Graba $(PROGRAM_FILE) mediante WCH-LinkE/wlink"
+	@echo ""
+	@echo "Conversión de firmware:" 
+	@echo "  fuentes C/ASM + CH32V203 SDK -> GCC/linker -> firmware.elf"
+	@echo "  firmware.elf -> objcopy -O binary -> firmware.bin"
 
 # Programa el CH32V203 mediante WCH-LinkE usando la herramienta wlink.
 program:
