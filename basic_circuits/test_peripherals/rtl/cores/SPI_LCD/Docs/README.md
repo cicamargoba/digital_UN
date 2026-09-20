@@ -2,7 +2,7 @@
 
 **Estado:** Diseño en curso (arquitectura definida, RTL pendiente)
 **Fecha:** 2026-09-20
-**Diagrama de bloques:** `spiLCD.pdf` (original de Carlos, en `~/Downloads`)
+**Diagrama de bloques:** `spiLCD.pdf` (este directorio, versión con bits DC/DELAY de INIT_MEM)
 **Flowchart:** `flowchart_spilcd.svg` (este directorio)
 
 ## Objetivo
@@ -34,9 +34,9 @@ INIT_MEM[A_COUNT] ──► SPI_TX     fase 1: init (una pasada)
 
 | Bloque | Función |
 |---|---|
-| CRTL (FSM) | Máquina de estados maestra |
-| SPI_TX | Transmisor serial, entrada DATA[9:0], salida DONE_TX |
-| D_COUNT | Contador de delay (para comandos que requieren espera) |
+| CRTL (FSM) | Máquina de estados maestra: in RESTART, DONE_DELAY, ST_DELAY, SRC_LAST, SRC_VALID, DONE_TX; out RST, CS, INIT_TX, SEL_DATA, INC_ADDR, RST_ALL, S_DELAY, SRC.RDY |
+| SPI_TX | Transmisor serial, entrada DATA[8:0] (DC + byte), salida DONE_TX |
+| D_COUNT | Contador de delay; carga el valor directamente desde INIT_MEM[7:0] |
 | A_COUNT | Contador de direcciones de INIT_MEM |
 | INIT_MEM | ROM de comandos de inicialización, 10 bits por entrada |
 | Mux 3→1 | SEL_DATA: 0=INIT_MEM, 1={1,0xDC}, 2=converter |
@@ -83,5 +83,9 @@ no se re-envía 0xDC ni la inicialización.
 
 ## Archivos
 
+- `spiLCD.pdf` — diagrama de bloques (incluye codificación DC=DATA[8], DELAY=DATA[9])
 - `flowchart_spilcd.svg` — diagrama de flujo del FSM
-- Referencia original: `spiLCD.pdf` (block diagram, 1 página)
+
+## Pendiente antes del RTL
+
+- Unificar nombre del handshake del converter: `SRC.RDY` (diagrama de bloques) vs `SRC_RDY` (flowchart/DMA). Usar un solo nombre.
