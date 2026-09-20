@@ -1,0 +1,93 @@
+[*]
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*] Sat Sep 19 23:40:00 2026
+[*]
+[dumpfile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/cores/PWM_LED_panel_AI/pwm_led_panel_TB.vcd"
+[dumpfile_mtime] "Sat Sep 19 23:32:00 2026"
+[dumpfile_size] 329675462
+[savefile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/cores/PWM_LED_panel_AI/pwm_led_panel_sim.gtkw"
+[timestart] 0
+[size] 1648 951
+[pos] -1 -1
+*-19.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] pwm_led_panel_TB.
+[treeopen] pwm_led_panel_TB.uut.
+[treeopen] pwm_led_panel_TB.uut.load0.
+[treeopen] pwm_led_panel_TB.uut.load0.ctr_cfg0.
+[sst_width] 278
+[signals_width] 320
+[sst_expanded] 1
+[sst_vpaned_height] 608
+@200
+-Top
+@28
+pwm_led_panel_TB.clk
+pwm_led_panel_TB.rst
+pwm_led_panel_TB.init
+@22
+pwm_led_panel_TB.uut.state[3:0]
+@28
+pwm_led_panel_TB.uut.done_configure
+pwm_led_panel_TB.uut.vs_done
+pwm_led_panel_TB.uut.done_data
+pwm_led_panel_TB.uut.init_show
+@200
+-Salidas al panel
+@28
+pwm_led_panel_TB.LP_CLK
+pwm_led_panel_TB.LATCH
+pwm_led_panel_TB.NOE
+@22
+pwm_led_panel_TB.ROW[4:0]
+@800028
+pwm_led_panel_TB.RGB0[2:0]
+@28
+(0)pwm_led_panel_TB.RGB0[2:0]
+(1)pwm_led_panel_TB.RGB0[2:0]
+(2)pwm_led_panel_TB.RGB0[2:0]
+@1001200
+-group_end
+@800028
+pwm_led_panel_TB.RGB1[2:0]
+@28
+(0)pwm_led_panel_TB.RGB1[2:0]
+(1)pwm_led_panel_TB.RGB1[2:0]
+(2)pwm_led_panel_TB.RGB1[2:0]
+@1001200
+-group_end
+@200
+-Config (ctrl_cfg)
+@820
+pwm_led_panel_TB.uut.load0.ctr_cfg0.state_name[320:1]
+@22
+pwm_led_panel_TB.uut.load0.ctr_cfg0.latches[3:0]
+@28
+pwm_led_panel_TB.uut.load0.ctr_cfg0.le_data
+pwm_led_panel_TB.uut.load0.done_latch
+pwm_led_panel_TB.uut.load0.clk_en_latch
+@22
+pwm_led_panel_TB.uut.load0.lsr_r0.bit_cnt[4:0]
+@200
+-Pixeles (load_data)
+@22
+pwm_led_panel_TB.uut.load0.pstate[2:0]
+pwm_led_panel_TB.uut.load0.row_count[5:0]
+pwm_led_panel_TB.uut.load0.chan_cnt[4:0]
+pwm_led_panel_TB.uut.load0.chip_cnt[3:0]
+pwm_led_panel_TB.uut.load0.plane[1:0]
+pwm_led_panel_TB.uut.load0.mem_addr[10:0]
+@28
+pwm_led_panel_TB.uut.load0.pix_le
+pwm_led_panel_TB.uut.load0.done_out
+@200
+-Show (show_data)
+@820
+pwm_led_panel_TB.uut.display0.ctrl0.state_name[320:1]
+@28
+pwm_led_panel_TB.uut.display0.vs_pend
+pwm_led_panel_TB.uut.display0.clk_en
+@22
+pwm_led_panel_TB.uut.display0.count_hdr.outc[2:0]
+pwm_led_panel_TB.uut.display0.count_pulse.outc[8:0]
+[pattern_trace] 1
+[pattern_trace] 0

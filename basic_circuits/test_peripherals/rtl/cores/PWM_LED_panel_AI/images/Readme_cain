@@ -1,0 +1,2 @@
+convert principito.jpg -resize 64x64! -colors 8 -type palette S.png
+python image_to_raw.py flag_8.png

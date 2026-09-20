@@ -1,0 +1,30 @@
+Reading netlist file: "/Work/Embedded/digital_UN/femtoRV/basic/rtl/cores/PWM_LED_panel/impl/gwsynthesis/project.vg"
+Parsing netlist file "/Work/Embedded/digital_UN/femtoRV/basic/rtl/cores/PWM_LED_panel/impl/gwsynthesis/project.vg" completed
+Processing netlist completed
+Reading constraint file: "/Work/Embedded/digital_UN/femtoRV/basic/rtl/cores/PWM_LED_panel/sipeed_tang_primer_25k.cst"
+Physical Constraint parsed completed
+Running placement......
+[10%] Placement Phase 0 completed
+[20%] Placement Phase 1 completed
+[30%] Placement Phase 2 completed
+WARN  (TA1132) :  'clk1' was determined to be a clock but was not created.
+[50%] Placement Phase 3 completed
+Running routing......
+[60%] Routing Phase 0 completed
+[70%] Routing Phase 1 completed
+[80%] Routing Phase 2 completed
+[90%] Routing Phase 3 completed
+Running timing analysis......
+[95%] Timing analysis completed
+Placement and routing completed
+Bitstream generation in progress......
+Bitstream generation completed
+Running power analysis......
+[100%] Power analysis completed
+Generate file "/Work/Embedded/digital_UN/femtoRV/basic/rtl/cores/PWM_LED_panel/impl/pnr/project.power.html" completed
+Generate file "/Work/Embedded/digital_UN/femtoRV/basic/rtl/cores/PWM_LED_panel/impl/pnr/project.pin.html" completed
+Generate file "/Work/Embedded/digital_UN/femtoRV/basic/rtl/cores/PWM_LED_panel/impl/pnr/project.rpt.html" completed
+Generate file "/Work/Embedded/digital_UN/femtoRV/basic/rtl/cores/PWM_LED_panel/impl/pnr/project.rpt.txt" completed
+Generate file "/Work/Embedded/digital_UN/femtoRV/basic/rtl/cores/PWM_LED_panel/impl/pnr/project.tr.html" completed
+Mon Nov 24 21:28:39 2025
+

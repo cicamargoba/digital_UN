@@ -1,0 +1,40 @@
+set_io  clk 35
+set_io  rst 10
+set_io  RXD 6
+set_io -pullup yes TXD 9
+#set_io  spiflash4x_cs_n 16
+#set_io  spiflash4x_clk 15
+#set_io  spiflash4x_dq[0] 14
+#set_io  spiflash4x_dq[1] 17
+#set_io  spiflash4x_dq[2] 12
+#set_io  spiflash4x_dq[3] 13
+set_io  LEDS 26
+#set_io  user_led1 27
+#set_io  user_led2 25
+#set_io  user_led3 23
+#set_io  user_led4 21
+
+
+
+ # Control
+set_io -nowarn LP_CLK 32
+set_io -nowarn LATCH 36	
+set_io -nowarn NOE 42
+
+set_io -nowarn ROW[0]  43
+set_io -nowarn ROW[1]  38
+set_io -nowarn ROW[2]  34
+set_io -nowarn ROW[3]  31
+set_io -nowarn ROW[4]  28
+
+set_io -nowarn RGB0[0] 4
+set_io -nowarn RGB0[1] 2
+set_io -nowarn RGB0[2] 47
+set_io -nowarn RGB1[0] 3
+set_io -nowarn RGB1[1] 48
+set_io -nowarn RGB1[2] 46
+
+
+
+
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module name="led_panel_4k" Register="6" Alu="4" Lut="6" T_Register="49(6)" T_Alu="29(4)" T_Lut="63(6)" T_Bsram="3(0)">
+ <SubModule name="count_row" Register="11" Alu="10" Lut="4" T_Register="11(11)" T_Alu="10(10)" T_Lut="4(4)"/>
+ <SubModule name="count_col" Register="6" Alu="5" Lut="2" T_Register="6(6)" T_Alu="5(5)" T_Lut="2(2)"/>
+ <SubModule name="cnt_delay" Register="11" Alu="10" Lut="2" T_Register="11(11)" T_Alu="10(10)" T_Lut="2(2)"/>
+ <SubModule name="count_index" Register="2" Lut="2" T_Register="2(2)" T_Lut="2(2)"/>
+ <SubModule name="lsr_led0" Register="9" T_Register="9(9)"/>
+ <SubModule name="mem0" Bsram="3" T_Bsram="3(3)"/>
+ <SubModule name="mux0" Lut="12" T_Lut="12(12)"/>
+ <SubModule name="ctrl0" Register="4" Lut="35" T_Register="4(4)" T_Lut="35(35)"/>
+</Module>

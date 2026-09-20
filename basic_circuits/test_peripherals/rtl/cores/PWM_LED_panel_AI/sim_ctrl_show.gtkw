@@ -1,0 +1,38 @@
+[*]
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*] Tue Dec  2 13:02:54 2025
+[*]
+[dumpfile] "/Work/Embedded/digital_UN/femtoRV/basic/rtl/cores/PWM_LED_panel/pwm_led_panel_TB.vcd"
+[dumpfile_mtime] "Tue Dec  2 13:01:57 2025"
+[dumpfile_size] 3795451
+[savefile] "/Work/Embedded/digital_UN/femtoRV/basic/rtl/cores/PWM_LED_panel/sim_ctrl_show.gtkw"
+[timestart] 0
+[size] 1648 951
+[pos] -1 -1
+*-25.100000 27600000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] pwm_led_panel_TB.
+[treeopen] pwm_led_panel_TB.uut.
+[treeopen] pwm_led_panel_TB.uut.display0.
+[sst_width] 278
+[signals_width] 166
+[sst_expanded] 1
+[sst_vpaned_height] 496
+@28
+pwm_led_panel_TB.NOE
+pwm_led_panel_TB.rst
+pwm_led_panel_TB.init
+pwm_led_panel_TB.clk
+@820
+pwm_led_panel_TB.uut.display0.ctrl0.state_name[320:1]
+@22
+pwm_led_panel_TB.uut.display0.count_zero.outc[4:0]
+@420
+pwm_led_panel_TB.uut.display0.count_zero.limit
+@22
+pwm_led_panel_TB.uut.ROW[4:0]
+@24
++{pulses} pwm_led_panel_TB.uut.display0.count_pulse.outc[6:0]
+@22
++{zeros} pwm_led_panel_TB.uut.display0.count_zero.outc[4:0]
+[pattern_trace] 1
+[pattern_trace] 0

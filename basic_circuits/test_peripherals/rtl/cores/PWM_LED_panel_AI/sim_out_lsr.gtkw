@@ -1,0 +1,37 @@
+[*]
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*] Thu Dec  4 00:19:46 2025
+[*]
+[dumpfile] "/Work/Embedded/digital_UN/femtoRV/basic/rtl/cores/PWM_LED_panel/out_lsr_TB.vcd"
+[dumpfile_mtime] "Thu Dec  4 00:18:49 2025"
+[dumpfile_size] 2890267
+[savefile] "/Work/Embedded/digital_UN/femtoRV/basic/rtl/cores/PWM_LED_panel/sim_out_lsr.gtkw"
+[timestart] 0
+[size] 1648 951
+[pos] -1 -1
+*-17.000000 530000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] out_lsr_TB.
+[sst_width] 278
+[signals_width] 126
+[sst_expanded] 1
+[sst_vpaned_height] 280
+@28
+out_lsr_TB.clk
+@22
+out_lsr_TB.in_val[15:0]
+@28
+out_lsr_TB.uut.state[2:0]
+[color] 2
+out_lsr_TB.load
+[color] 3
+out_lsr_TB.shift
+out_lsr_TB.uut.s_out
+[color] 7
+out_lsr_TB.uut.done
+@29
+out_lsr_TB.uut.clk_en
+@22
+out_lsr_TB.uut.bits[5:0]
+out_lsr_TB.uut.outc[15:0]
+[pattern_trace] 1
+[pattern_trace] 0
