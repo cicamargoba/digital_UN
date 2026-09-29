@@ -6,7 +6,7 @@ SECTIONS
     everything :
     {
         . = ALIGN(4);
-        call_test.o get_number.o bin2bcd.o bcd2bin.o bin_to_bcd.o putchar.o getchar.o putstring.o(.text)
+        for.o(.text)
         *(.*)
     } >BRAM
 }

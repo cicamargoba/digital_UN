@@ -17,9 +17,11 @@
 
 
 
-TARGET  = test
-OBJS    = call_$(TARGET).o get_number.o bin2bcd.o bcd2bin.o bin_to_bcd.o putchar.o getchar.o putstring.o
-OBJECTS = $(OBJS) $(TARGET).o
+TARGET  = for
+#OBJS    = call_$(TARGET).o get_number.o bin2bcd.o bcd2bin.o bin_to_bcd.o putchar.o getchar.o putstring.o
+#OBJECTS = $(OBJS) $(TARGET).o
+OBJS    = for.o
+OBJECTS = $(OBJS)
 
 CROSS   = riscv32-unknown-elf
 CC      = $(CROSS)-gcc
