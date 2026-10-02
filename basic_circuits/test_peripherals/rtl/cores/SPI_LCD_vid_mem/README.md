@@ -15,10 +15,12 @@ Los números de la tabla corresponden a los pines del encapsulado de la FPGA, no
 | CLK | `lcd_sck` | 32 | `LP_CLK` |
 | DIN | `lcd_sdi` | 4 | `RGB0[0]` |
 | DC | `lcd_dc` | 36 | `LATCH` |
-| CS | `lcd_cs` | 42 | `NOE` |
+| CS | — | — | Conectar directamente a GND |
 | RST | `lcd_rst` | 43 | `ROW[0]` |
 
 Restricciones: `spi_lcd_icebreaker.pcf`.
+
+El pin CS del LCD se conecta directamente a GND para mantenerlo seleccionado. No conectar CS al pin 42 de la FPGA; la salida `lcd_cs` permanece sin conexión al módulo.
 
 ### Alimentación y retroiluminación
 

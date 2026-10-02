@@ -7,7 +7,6 @@ module ctrl_TB;
  reg done_delay;
  wire st_delay;
  wire last_addr;
- reg src_last;
  reg src_valid;
  reg done_tx;
  wire rst;
@@ -20,7 +19,7 @@ module ctrl_TB;
     ctrl #(.RESET_TICKS(8)) uut(
         .clk(clk), .restart(restart), .last_addr(last_addr),
         .done_delay(done_delay), .st_delay(st_delay),
-        .src_last(src_last), .src_valid(src_valid), .done_tx(done_tx),
+        .src_valid(src_valid), .done_tx(done_tx),
         .rst(rst), .init_tx(init_tx), .sel_data(sel_data),
         .inc_addr(inc_addr), .rst_all(rst_all), .s_delay(s_delay),
         .src_rdy(src_rdy)
@@ -72,7 +71,7 @@ module ctrl_TB;
         $display("ctrl: src_rdy (stream byte) at %0t", $time);
     integer bytes;
     initial begin
-        #0 restart = 0; src_last = 0; src_valid = 0;
+        #0 restart = 0; src_valid = 0;
         @ (posedge clk);
         restart = 1;
         @ (posedge clk);
@@ -82,7 +81,6 @@ module ctrl_TB;
         @ (posedge init_tx); begin end
         $display("ctrl: init + memwr done at %0t, entering stream", $time);
         src_valid = 1;
-        src_last  = 0;
         for (bytes = 0; bytes < 4; bytes = bytes + 1) begin
             @ (posedge src_rdy);
         end

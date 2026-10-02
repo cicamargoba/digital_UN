@@ -54,7 +54,6 @@ SEQ['ILI9341'] = [
 ]
 
 SEQ['GC9A01'] = [
-    ('cmd', [0x11]), ('delay', 120),
     ('cmd', [0xEF]),
     ('cmd', [0xEB, 0x14]),
     ('cmd', [0xFE]),
@@ -72,7 +71,7 @@ SEQ['GC9A01'] = [
     ('cmd', [0x8D, 0x01]),
     ('cmd', [0x8E, 0xFF]),
     ('cmd', [0x8F, 0xFF]),
-    ('cmd', [0xB6, 0x00, 0x00]),
+    ('cmd', [0xB6, 0x00, 0x20]),
     ('cmd', [0x36, 0x08]),
     ('cmd', [0x3A, 0x05]),
     ('cmd', [0x90, 0x08, 0x08, 0x08, 0x08]),
@@ -221,17 +220,18 @@ def check(lcd, logfile):
             print('FAIL %s: byte %d expected 0x%02X dc=%d got 0x%02X dc=%d'
                   % (lcd, i, e[0], e[1], g[0], g[1]))
             return 1
-    if got[len(exp)] != (0xDC, 0):
-        print('FAIL %s: after init expected 0xDC dc=0 got 0x%02X dc=%d'
+    if got[len(exp)] != (0x2C, 0):
+        print('FAIL %s: after init expected 0x2C dc=0 got 0x%02X dc=%d'
               % (lcd, got[len(exp)][0], got[len(exp)][1]))
         return 1
     stream = got[len(exp) + 1: len(exp) + 9]
-    exp_stream = [(0xAA, 1), (0xBB, 1), (0xCC, 1), (0xDD, 1),
-                  (0x11, 1), (0x22, 1), (0x33, 1), (0x44, 1)]
+    from pathlib import Path
+    fixture = Path(__file__).resolve().parent / 'video_mem_init_TB.hex'
+    exp_stream = [(int(value, 16), 1) for value in fixture.read_text().split()[:8]]
     if stream != exp_stream:
         print('FAIL %s: stream mismatch: %s' % (lcd, stream))
         return 1
-    print('PASS %s: %d init bytes + 0xDC + 8 stream bytes verified'
+    print('PASS %s: %d init bytes + 0x2C + 8 stream bytes verified'
           % (lcd, len(exp)))
     return 0
 

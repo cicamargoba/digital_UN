@@ -1,0 +1,102 @@
+[*]
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*] Fri Oct  2 16:17:21 2026
+[*]
+[dumpfile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/cores/SPI_LCD_vid_mem/spi_lcd_vid_mem_TB.vcd"
+[dumpfile_mtime] "Fri Oct  2 15:25:40 2026"
+[dumpfile_size] 4959806
+[savefile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/cores/SPI_LCD_vid_mem/SPI_LCD_vid_mem_sim.gtkw"
+[timestart] 0
+[size] 1635 1098
+[pos] -1109 -345
+*-18.000000 711000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] spi_lcd_vid_mem_TB.
+[treeopen] spi_lcd_vid_mem_TB.uut.
+[sst_width] 278
+[signals_width] 175
+[sst_expanded] 1
+[sst_vpaned_height] 331
+@200
+-
+-LCD
+@28
+spi_lcd_vid_mem_TB.uut.lcd_cs
+spi_lcd_vid_mem_TB.uut.lcd_dc
+spi_lcd_vid_mem_TB.uut.lcd_rst
+@29
+spi_lcd_vid_mem_TB.uut.clk
+@28
+spi_lcd_vid_mem_TB.uut.lcd_sck
+spi_lcd_vid_mem_TB.uut.lcd_sdi
+@200
+-SPI_TX
+@c00022
+spi_lcd_vid_mem_TB.uut.SPI_TX.data[8:0]
+@28
+(0)spi_lcd_vid_mem_TB.uut.SPI_TX.data[8:0]
+(1)spi_lcd_vid_mem_TB.uut.SPI_TX.data[8:0]
+(2)spi_lcd_vid_mem_TB.uut.SPI_TX.data[8:0]
+(3)spi_lcd_vid_mem_TB.uut.SPI_TX.data[8:0]
+(4)spi_lcd_vid_mem_TB.uut.SPI_TX.data[8:0]
+(5)spi_lcd_vid_mem_TB.uut.SPI_TX.data[8:0]
+(6)spi_lcd_vid_mem_TB.uut.SPI_TX.data[8:0]
+(7)spi_lcd_vid_mem_TB.uut.SPI_TX.data[8:0]
+(8)spi_lcd_vid_mem_TB.uut.SPI_TX.data[8:0]
+@1401200
+-group_end
+@28
+spi_lcd_vid_mem_TB.uut.SPI_TX.init_tx
+spi_lcd_vid_mem_TB.uut.SPI_TX.done_tx
+@200
+-DELAY
+@24
+spi_lcd_vid_mem_TB.uut.D_COUNT.delay_val[7:0]
+@c00024
+spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+@28
+(0)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(1)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(2)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(3)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(4)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(5)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(6)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(7)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(8)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(9)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(10)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(11)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(12)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(13)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(14)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(15)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(16)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(17)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(18)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(19)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(20)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(21)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(22)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(23)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(24)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(25)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(26)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(27)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(28)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(29)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(30)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+(31)spi_lcd_vid_mem_TB.uut.D_COUNT.unit_cnt[31:0]
+@1401200
+-group_end
+@24
+spi_lcd_vid_mem_TB.uut.D_COUNT.val_cnt[7:0]
+@28
+spi_lcd_vid_mem_TB.uut.D_COUNT.s_delay
+spi_lcd_vid_mem_TB.uut.D_COUNT.done_delay
+@200
+-INIT_MEM
+-VIDEO_MEM
+@28
+spi_lcd_vid_mem_TB.uut.sel_data[1:0]
+[pattern_trace] 1
+[pattern_trace] 0

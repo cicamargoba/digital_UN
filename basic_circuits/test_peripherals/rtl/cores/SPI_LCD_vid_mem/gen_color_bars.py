@@ -1,7 +1,11 @@
 from pathlib import Path
+import argparse
 import struct
 import zlib
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--row-only', action='store_true')
+args = parser.parse_args()
 root = Path(__file__).resolve().parent
 width = height = 240
 colors = [(255,255,255), (255,255,0), (0,255,255), (0,255,0), (255,0,255), (255,0,0), (0,0,255), (0,0,0)]
@@ -14,6 +18,13 @@ for y in range(height):
         rows.extend((r, g, b))
         value = ((b >> 3) << 11) | ((g >> 2) << 5) | (r >> 3)
         frame.extend((value >> 8, value & 255))
+
+row = frame[:width * 2]
+assert all(frame[start:start + len(row)] == row for start in range(0, len(frame), len(row)))
+(root / 'video_mem_row.hex').write_text(''.join(f'{byte:02X}\n' for byte in row))
+if args.row_only:
+    print(f'Created video_mem_row.hex: {len(row)} bytes, BGR565 row, MSB first')
+    raise SystemExit(0)
 
 def chunk(kind, data):
     return struct.pack('>I', len(data)) + kind + data + struct.pack('>I', zlib.crc32(kind + data) & 0xffffffff)

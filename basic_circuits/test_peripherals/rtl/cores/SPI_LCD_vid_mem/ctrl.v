@@ -5,7 +5,6 @@ module ctrl #(
     input            restart,
     input            last_addr,
     input            st_delay,
-    input            src_last,
     input            src_valid,
     input            done_tx,
     input            done_delay,
@@ -16,8 +15,7 @@ module ctrl #(
     output reg       rst_all,
     output reg       s_delay,
     output reg       src_rdy,
-    output reg       inc_v_addr,
-    output reg       rst_v
+    output reg       inc_v_addr
 );
 localparam S_RESET  = 4'd0;
 localparam S_READ   = 4'd1;
@@ -148,7 +146,6 @@ always @(*) begin
             s_delay    = 1'b0;
             src_rdy    = 1'b0;
             inc_v_addr = 1'b0;
-            rst_v      = 1'b1;
         end
         S_READ: begin
             rst        = 1'b1;
@@ -159,7 +156,6 @@ always @(*) begin
             s_delay    = 1'b0;
             src_rdy    = 1'b0;
             inc_v_addr = 1'b0;
-            rst_v      = 1'b0;
         end
         S_DECODE: begin
             rst        = 1'b1;
@@ -170,7 +166,6 @@ always @(*) begin
             s_delay    = 1'b0;
             src_rdy    = 1'b0;
             inc_v_addr = 1'b0;
-            rst_v      = 1'b0;
         end
         S_CMD: begin
             rst        = 1'b1;
@@ -181,7 +176,6 @@ always @(*) begin
             s_delay    = 1'b0;
             src_rdy    = 1'b0;
             inc_v_addr = 1'b0;
-            rst_v      = 1'b0;
         end
         S_WTX: begin
             rst        = 1'b1;
@@ -192,7 +186,6 @@ always @(*) begin
             s_delay    = 1'b0;
             src_rdy    = 1'b0;
             inc_v_addr = 1'b0;
-            rst_v      = 1'b0;
         end
         S_DL: begin
             rst        = 1'b1;
@@ -203,7 +196,6 @@ always @(*) begin
             s_delay    = 1'b1;
             src_rdy    = 1'b0;
             inc_v_addr = 1'b0;
-            rst_v      = 1'b0;
         end
         S_WDL: begin
             rst        = 1'b1;
@@ -214,7 +206,6 @@ always @(*) begin
             s_delay    = 1'b0;
             src_rdy    = 1'b0;
             inc_v_addr = 1'b0;
-            rst_v      = 1'b0;
         end
         S_INC: begin
             rst        = 1'b1;
@@ -225,7 +216,6 @@ always @(*) begin
             s_delay    = 1'b0;
             src_rdy    = 1'b0;
             inc_v_addr = 1'b0;
-            rst_v      = 1'b0;
         end
         S_MEMWR: begin
             rst        = 1'b1;
@@ -236,7 +226,6 @@ always @(*) begin
             s_delay    = 1'b0;
             src_rdy    = 1'b0;
             inc_v_addr = 1'b0;
-            rst_v      = 1'b0;
         end
         S_WTX2: begin
             rst        = 1'b1;
@@ -247,7 +236,6 @@ always @(*) begin
             s_delay    = 1'b0;
             src_rdy    = 1'b0;
             inc_v_addr = 1'b0;
-            rst_v      = 1'b0;
         end
         S_STREAM: begin
             rst        = 1'b1;
@@ -258,7 +246,6 @@ always @(*) begin
             s_delay    = 1'b0;
             src_rdy    = 1'b0;
             inc_v_addr = 1'b0;
-            rst_v      = 1'b0;
         end
         S_CMD3: begin
             rst        = 1'b1;
@@ -269,7 +256,6 @@ always @(*) begin
             s_delay    = 1'b0;
             src_rdy    = 1'b0;
             inc_v_addr = 1'b0;
-            rst_v      = 1'b0;
         end
         S_WTX3: begin
             rst        = 1'b1;
@@ -280,7 +266,6 @@ always @(*) begin
             s_delay    = 1'b0;
             src_rdy    = 1'b0;
             inc_v_addr = 1'b0;
-            rst_v      = 1'b0;
         end
         S_RDY: begin
             rst        = 1'b1;
@@ -291,7 +276,6 @@ always @(*) begin
             s_delay    = 1'b0;
             src_rdy    = 1'b1;
             inc_v_addr = 1'b1;
-            rst_v      = 1'b0;
         end
         default: begin
             rst        = 1'b1;
@@ -302,7 +286,6 @@ always @(*) begin
             s_delay    = 1'b0;
             src_rdy    = 1'b0;
             inc_v_addr = 1'b0;
-            rst_v      = 1'b0;
         end
     endcase
 end

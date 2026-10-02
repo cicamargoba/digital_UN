@@ -5,6 +5,7 @@ module spi_lcd_vid_mem #(
     parameter UNIT_TICKS  = 25000,
     parameter RESET_TICKS = 250000,
     parameter VID_AW      = 18,
+    parameter VID_BYTES   = (1 << VID_AW),
     parameter VID_INIT_FILE = "video_mem_init.hex"
 )(
     input         clk,
@@ -33,7 +34,6 @@ wire [7:0] init_last;
 wire [VID_AW-1:0] v_addr;
 wire [7:0] vid_data;
 wire       inc_v_addr;
-wire       rst_v;
 assign st_delay = init_mem_data[9];
 assign init_last = INIT_MAX - 1;
 comp_addr #(
@@ -51,7 +51,6 @@ ctrl #(
     .last_addr  (last_addr),
     .done_delay (done_delay),
     .st_delay   (st_delay),
-    .src_last   (1'b1),
     .src_valid  (1'b1),
     .done_tx    (done_tx),
     .rst        (lcd_rst),
@@ -61,8 +60,7 @@ ctrl #(
     .rst_all    (rst_all),
     .s_delay    (s_delay),
     .src_rdy    (),
-    .inc_v_addr (inc_v_addr),
-    .rst_v      (rst_v)
+    .inc_v_addr (inc_v_addr)
 );
 spi_tx #(
     .CLK_DIV (CLK_DIV)
@@ -99,15 +97,17 @@ memwr_cmd MEMWR_CMD (
     .cmd (memwr)
 );
 v_count #(
-    .AW (VID_AW)
+    .AW (VID_AW),
+    .NBYTES (VID_BYTES)
 ) V_COUNT (
     .clk  (clk),
-    .rst  (rst_v),
+    .rst  (rst_all),
     .inc  (inc_v_addr),
     .addr (v_addr)
 );
 video_mem #(
     .AW        (VID_AW),
+    .NBYTES    (VID_BYTES),
     .INIT_FILE (VID_INIT_FILE)
 ) VIDEO_MEM (
     .addr (v_addr),

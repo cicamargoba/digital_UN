@@ -4,10 +4,11 @@ TOP = spi_lcd_vid_mem
 BUILD_DIR ?= build
 VID_INIT_FILE ?= video_mem_init.hex
 VID_AW ?= 18
+VID_BYTES ?= $(shell python3 -c 'print(1 << $(VID_AW))')
 HW_OBJS = a_count.v comp_addr.v ctrl.v d_count.v init_mem.v memwr_cmd.v \
           mux_3to1.v spi_tx.v v_count.v video_mem.v spi_lcd_vid_mem.v
 HW_DEPS = $(HW_OBJS) init_defs.vh $(wildcard init_mem_*.vh)
-HW_PARAMS = chparam -set VID_AW $(VID_AW) -set VID_INIT_FILE "$(VID_INIT_FILE)" $(TOP)
+HW_PARAMS = chparam -set VID_AW $(VID_AW) -set VID_BYTES $(VID_BYTES) -set VID_INIT_FILE "$(VID_INIT_FILE)" $(TOP)
 
 ifeq ($(TARGET), spi_lcd_vid_mem)
     OBJS = a_count.v comp_addr.v ctrl.v d_count.v init_mem.v memwr_cmd.v \
@@ -26,13 +27,13 @@ sim:
 	rm -f a.out *.vcd
 	iverilog -DLCD_$(LCD) -DBENCH $(TARGET)_TB.v $(OBJS)
 	vvp a.out | tee sim.log
-	google-chrome $(TARGET)_TB.vcd 2>/dev/null || true
+	gtkwave $(TARGET)_TB.vcd 2>/dev/null || true
 
 svg: $(OBJS)
 	rm -rf *svg *out *dot *json
 	yosys -p "prep -top ${TARGET}; memory -nomap; opt; opt_expr; techmap; abc -g AND,OR,XOR; write_json ${TARGET}.json" ${OBJS}
 	python3 -c "import json; d=json.load(open('${TARGET}.json')); [ (m.pop('parameter_default_values',None), [n.pop('signed',None) for n in m.get('netnames',{}).values()]) for m in d['modules'].values() ]; json.dump(d, open('${TARGET}.json','w'))"
-	node /tmp/netlist2svg/bin/netlist2svg.js ${TARGET}.json -o ${TARGET}.svg --config netlistsvg_config.json
+	netlist2svg ${TARGET}.json -o ${TARGET}.svg
 	google-chrome ${TARGET}.svg
 
 svg-flat: $(OBJS)
@@ -45,11 +46,15 @@ clean:
 	rm -rf *svg *out *dot a.out *.vcd *json *_synth.v *log *bit *rpt *svf *out.config
 
 check_video_mem:
+	@if [ "$(VID_INIT_FILE)" = video_mem_row.hex ]; then python3 gen_color_bars.py --row-only; fi
 	@test -f "$(VID_INIT_FILE)" || { printf 'Falta el archivo de imagen: %s\n' "$(VID_INIT_FILE)" >&2; exit 1; }
 
 $(BUILD_DIR):
 	mkdir -p "$@"
 
+build_icebreaker: VID_AW = 9
+build_icebreaker: VID_BYTES = 480
+build_icebreaker: VID_INIT_FILE = video_mem_row.hex
 build_icebreaker: check_video_mem $(HW_DEPS) spi_lcd_icebreaker.pcf icebreaker_pre_pack.py | $(BUILD_DIR)
 	yosys -l $(BUILD_DIR)/icebreaker.rpt -p 'read_verilog -defer -DLCD_$(LCD) $(HW_OBJS); $(HW_PARAMS); synth_ice40 -dsp -top $(TOP); write_json $(BUILD_DIR)/icebreaker.json'
 	nextpnr-ice40 --json $(BUILD_DIR)/icebreaker.json --pcf spi_lcd_icebreaker.pcf --asc $(BUILD_DIR)/icebreaker.asc --pre-pack icebreaker_pre_pack.py --up5k --package sg48 --seed 1
