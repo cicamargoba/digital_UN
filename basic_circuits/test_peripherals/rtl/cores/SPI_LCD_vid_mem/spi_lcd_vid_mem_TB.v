@@ -14,6 +14,7 @@ module spi_lcd_vid_mem_TB;
         .CLK_DIV     (2),
         .UNIT_TICKS  (4),
         .RESET_TICKS (8),
+        .RECOVERY_TICKS (8),
         .VID_AW      (AW),
         .VID_INIT_FILE ("video_mem_init_TB.hex")
     ) uut(

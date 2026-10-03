@@ -1,5 +1,5 @@
 TARGET = spi_lcd_vid_mem
-LCD   ?= GC9A01
+LCD   ?= ST7789
 TOP = spi_lcd_vid_mem
 BUILD_DIR ?= build
 VID_INIT_FILE ?= video_mem_init.hex
@@ -55,6 +55,7 @@ $(BUILD_DIR):
 build_icebreaker: VID_AW = 9
 build_icebreaker: VID_BYTES = 480
 build_icebreaker: VID_INIT_FILE = video_mem_row.hex
+build_icebreaker: HW_PARAMS += ; chparam -set RESET_ACTIVE_LOW 1 -set RECOVERY_TICKS 2880000 $(TOP)
 build_icebreaker: check_video_mem $(HW_DEPS) spi_lcd_icebreaker.pcf icebreaker_pre_pack.py | $(BUILD_DIR)
 	yosys -l $(BUILD_DIR)/icebreaker.rpt -p 'read_verilog -defer -DLCD_$(LCD) $(HW_OBJS); $(HW_PARAMS); synth_ice40 -dsp -top $(TOP); write_json $(BUILD_DIR)/icebreaker.json'
 	nextpnr-ice40 --json $(BUILD_DIR)/icebreaker.json --pcf spi_lcd_icebreaker.pcf --asc $(BUILD_DIR)/icebreaker.asc --pre-pack icebreaker_pre_pack.py --up5k --package sg48 --seed 1

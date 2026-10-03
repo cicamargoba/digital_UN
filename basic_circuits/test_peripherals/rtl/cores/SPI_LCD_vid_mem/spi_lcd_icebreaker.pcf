@@ -5,5 +5,5 @@ set_io rst 10
 set_io lcd_sck 32  # LP_CLK
 set_io lcd_dc 36   # LATCH
 set_io lcd_cs 42   # NOE
-set_io lcd_rst 43  # ROW[0]
+set_io lcd_rst 43 # ROW[0]
 set_io lcd_sdi 4   # RGB0[0]

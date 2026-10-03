@@ -13,7 +13,7 @@ module spi_tx #(
 localparam S_IDLE = 2'd0;
 localparam S_RUN  = 2'd1;
 localparam S_DONE = 2'd2;
-reg [1:0]  state;
+reg [1:0]  state = S_IDLE;
 reg [7:0]  shreg;
 reg [2:0]  bit_cnt;
 reg [15:0] div_cnt;

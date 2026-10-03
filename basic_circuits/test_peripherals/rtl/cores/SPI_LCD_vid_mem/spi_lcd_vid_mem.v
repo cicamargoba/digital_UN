@@ -4,6 +4,8 @@ module spi_lcd_vid_mem #(
     parameter CLK_DIV     = 4,
     parameter UNIT_TICKS  = 25000,
     parameter RESET_TICKS = 250000,
+    parameter RECOVERY_TICKS = 3000000,
+    parameter RESET_ACTIVE_LOW = 0,
     parameter VID_AW      = 18,
     parameter VID_BYTES   = (1 << VID_AW),
     parameter VID_INIT_FILE = "video_mem_init.hex"
@@ -16,6 +18,8 @@ module spi_lcd_vid_mem #(
     output        lcd_sck,
     output        lcd_sdi
 );
+wire reset_active;
+assign reset_active = RESET_ACTIVE_LOW ? ~rst : rst;
 wire [7:0] a_addr;
 wire [9:0] init_mem_data;
 wire [8:0] memwr;
@@ -44,10 +48,11 @@ comp_addr #(
     .z   (last_addr)
 );
 ctrl #(
-    .RESET_TICKS (RESET_TICKS)
+    .RESET_TICKS (RESET_TICKS),
+    .RECOVERY_TICKS (RECOVERY_TICKS)
 ) CRTL (
     .clk        (clk),
-    .restart    (rst),
+    .restart    (reset_active),
     .last_addr  (last_addr),
     .done_delay (done_delay),
     .st_delay   (st_delay),
@@ -66,7 +71,7 @@ spi_tx #(
     .CLK_DIV (CLK_DIV)
 ) SPI_TX (
     .clk     (clk),
-    .rst     (rst),
+    .rst     (reset_active),
     .init_tx (init_tx),
     .data    (spi_data),
     .dc      (lcd_dc),

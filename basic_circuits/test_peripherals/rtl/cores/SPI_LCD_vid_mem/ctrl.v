@@ -1,5 +1,6 @@
 module ctrl #(
-    parameter RESET_TICKS = 250000
+    parameter RESET_TICKS = 250000,
+    parameter RECOVERY_TICKS = 3000000
 )(
     input            clk,
     input            restart,
@@ -31,13 +32,15 @@ localparam S_STREAM = 4'd10;
 localparam S_CMD3   = 4'd11;
 localparam S_WTX3   = 4'd12;
 localparam S_RDY    = 4'd13;
-reg [3:0]  state;
-reg [31:0] rst_cnt;
+localparam S_RECOVER = 4'd14;
+reg [3:0]  state = S_RESET;
+reg [31:0] rst_cnt = 32'd0;
 `ifdef BENCH
 reg [8*40:1] state_name;
 always @(*) begin
     case(state)
         S_RESET  : state_name = "S_RESET";
+        S_RECOVER: state_name = "S_RECOVER";
         S_READ   : state_name = "S_READ";
         S_DECODE : state_name = "S_DECODE";
         S_CMD    : state_name = "S_CMD";
@@ -63,6 +66,14 @@ always @(negedge clk) begin
         case (state)
             S_RESET: begin
                 if (rst_cnt == RESET_TICKS-1) begin
+                    state <= S_RECOVER;
+                    rst_cnt <= 32'd0;
+                end else begin
+                    rst_cnt <= rst_cnt + 1;
+                end
+            end
+            S_RECOVER: begin
+                if (rst_cnt == RECOVERY_TICKS-1) begin
                     state <= S_READ;
                 end else begin
                     rst_cnt <= rst_cnt + 1;
@@ -131,6 +142,7 @@ always @(negedge clk) begin
             end
             default: begin
                 state <= S_RESET;
+                rst_cnt <= 32'd0;
             end
         endcase
     end
@@ -139,6 +151,16 @@ always @(*) begin
     case (state)
         S_RESET: begin
             rst        = 1'b0;
+            init_tx    = 1'b0;
+            sel_data   = 2'd0;
+            inc_addr   = 1'b0;
+            rst_all    = 1'b1;
+            s_delay    = 1'b0;
+            src_rdy    = 1'b0;
+            inc_v_addr = 1'b0;
+        end
+        S_RECOVER: begin
+            rst        = 1'b1;
             init_tx    = 1'b0;
             sel_data   = 2'd0;
             inc_addr   = 1'b0;

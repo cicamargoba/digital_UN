@@ -16,7 +16,7 @@ module ctrl_TB;
  wire rst_all;
  wire s_delay;
  wire src_rdy;
-    ctrl #(.RESET_TICKS(8)) uut(
+    ctrl #(.RESET_TICKS(8), .RECOVERY_TICKS(8)) uut(
         .clk(clk), .restart(restart), .last_addr(last_addr),
         .done_delay(done_delay), .st_delay(st_delay),
         .src_valid(src_valid), .done_tx(done_tx),
