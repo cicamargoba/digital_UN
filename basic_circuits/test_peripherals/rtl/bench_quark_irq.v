@@ -111,10 +111,14 @@ always #(tck/2) CLK <= ~CLK;
     #(tck*2500)
 
 
-    interrupt_request = 1;
-    #(tck)
-    interrupt_request = 0;
 
+  for (idx=0; idx<8; idx=idx+1) begin
+    @(posedge CLK);
+    interrupt_request = 1;
+    @(posedge CLK);
+    interrupt_request = 0;
+    repeat (10)  @(posedge CLK);
+  end
 
     #(tck*90000)
     UART_WRITE_BYTE(8'h30);

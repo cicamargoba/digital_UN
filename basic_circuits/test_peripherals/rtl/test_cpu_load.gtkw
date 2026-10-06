@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
-[*] Tue Oct  6 16:14:58 2026
+[*] Tue Oct  6 17:03:43 2026
 [*]
 [dumpfile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/bench.vcd"
-[dumpfile_mtime] "Tue Oct  6 16:12:07 2026"
-[dumpfile_size] 23200011
+[dumpfile_mtime] "Tue Oct  6 17:03:43 2026"
+[dumpfile_size] 408682496
 [savefile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/test_cpu_load.gtkw"
-[timestart] 0
+[timestart] 9776200000
 [size] 1920 1121
 [pos] -1 -1
-*-25.770798 7700000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-22.770798 9797103000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] bench.
 [treeopen] bench.uut.
 [treeopen] bench.uut.bcd2bin0.bcd2bin0.
@@ -273,9 +273,11 @@ bench.uut.per_uart.rx_data[7:0]
 @200
 -
 -INTERRUPT
-@29
+@28
 bench.uut.CPU.interrupt
+@29
 bench.uut.CPU.interrupt_accepted
+@28
 bench.uut.CPU.interrupt_request
 bench.uut.CPU.interrupt_request_sticky
 bench.uut.CPU.interrupt_return
