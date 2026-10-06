@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
-[*] Mon May  4 23:49:22 2026
+[*] Tue Oct  6 16:14:58 2026
 [*]
 [dumpfile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/bench.vcd"
-[dumpfile_mtime] "Mon May  4 23:43:36 2026"
-[dumpfile_size] 205639923
+[dumpfile_mtime] "Tue Oct  6 16:12:07 2026"
+[dumpfile_size] 23200011
 [savefile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/test_cpu_load.gtkw"
-[timestart] 5347851000
-[size] 1648 951
+[timestart] 0
+[size] 1920 1121
 [pos] -1 -1
-*-20.770798 7705581000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-25.770798 7700000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] bench.
 [treeopen] bench.uut.
 [treeopen] bench.uut.bcd2bin0.bcd2bin0.
@@ -18,10 +18,10 @@
 [treeopen] bench.uut.CPU.
 [treeopen] bench.uut.mult1.
 [treeopen] bench.uut.per_uart.
-[sst_width] 462
-[signals_width] 346
+[sst_width] 278
+[signals_width] 452
 [sst_expanded] 1
-[sst_vpaned_height] 692
+[sst_vpaned_height] 186
 @28
 bench.uut.resetn
 @c00028
@@ -105,11 +105,50 @@ bench.uut.CPU.writeBackData[31:0]
 @1401200
 -group_end
 @28
+bench.uut.CPU.LT
+bench.uut.CPU.LTU
+bench.uut.CPU.predicate
 [color] 3
 bench.uut.CPU.writeBack
 @22
 [color] 3
 bench.uut.CPU.rdId[4:0]
+@c00028
+bench.uut.CPU.instr[31:2]
+@28
+(0)bench.uut.CPU.instr[31:2]
+(1)bench.uut.CPU.instr[31:2]
+(2)bench.uut.CPU.instr[31:2]
+(3)bench.uut.CPU.instr[31:2]
+(4)bench.uut.CPU.instr[31:2]
+(5)bench.uut.CPU.instr[31:2]
+(6)bench.uut.CPU.instr[31:2]
+(7)bench.uut.CPU.instr[31:2]
+(8)bench.uut.CPU.instr[31:2]
+(9)bench.uut.CPU.instr[31:2]
+(10)bench.uut.CPU.instr[31:2]
+(11)bench.uut.CPU.instr[31:2]
+(12)bench.uut.CPU.instr[31:2]
+(13)bench.uut.CPU.instr[31:2]
+(14)bench.uut.CPU.instr[31:2]
+(15)bench.uut.CPU.instr[31:2]
+(16)bench.uut.CPU.instr[31:2]
+(17)bench.uut.CPU.instr[31:2]
+(18)bench.uut.CPU.instr[31:2]
+(19)bench.uut.CPU.instr[31:2]
+(20)bench.uut.CPU.instr[31:2]
+(21)bench.uut.CPU.instr[31:2]
+(22)bench.uut.CPU.instr[31:2]
+(23)bench.uut.CPU.instr[31:2]
+(24)bench.uut.CPU.instr[31:2]
+(25)bench.uut.CPU.instr[31:2]
+(26)bench.uut.CPU.instr[31:2]
+(27)bench.uut.CPU.instr[31:2]
+(28)bench.uut.CPU.instr[31:2]
+(29)bench.uut.CPU.instr[31:2]
+@1401200
+-group_end
+@22
 bench.uut.CPU.rs1[31:0]
 bench.uut.CPU.rs2[31:0]
 @c00022
@@ -233,6 +272,14 @@ bench.uut.per_uart.rx_avail
 bench.uut.per_uart.rx_data[7:0]
 @200
 -
+-INTERRUPT
+@29
+bench.uut.CPU.interrupt
+bench.uut.CPU.interrupt_accepted
+bench.uut.CPU.interrupt_request
+bench.uut.CPU.interrupt_request_sticky
+bench.uut.CPU.interrupt_return
+@200
 -REGISTER BANK
 @22
 [color] 2
@@ -381,7 +428,7 @@ bench.uut.mult1.result[31:0]
 bench.uut.bin2bcd0.A[15:0]
 @28
 bench.uut.bin2bcd0.cs
-@23
+@22
 bench.uut.bin2bcd0.result[19:0]
 @28
 bench.uut.bin2bcd0.init

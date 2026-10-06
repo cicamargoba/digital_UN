@@ -4,7 +4,8 @@ module SOC (
     input        resetn, // reset button
     output wire  LEDS,   // system LEDs
     input        RXD,    // UART receive
-    output       TXD     // UART transmit
+    output       TXD,     // UART transmit
+    input        interrupt_request
 );
 
    wire [31:0] mem_addr;
@@ -28,7 +29,8 @@ module SOC (
       .mem_wdata(mem_wdata),
       .mem_wmask(mem_wmask),
       .mem_rbusy(1'b0),
-      .mem_wbusy(1'b0)
+      .mem_wbusy(1'b0),
+      .interrupt_request(interrupt_request)
    );
    wire [31:0] RAM_rdata;
    wire  wr = |mem_wmask;

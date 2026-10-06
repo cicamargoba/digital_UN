@@ -31,7 +31,9 @@ TCL_SCRIPT = auto_generated.tcl
 
 #COMM_OBJS+= cores/cpu/femtorv32_quark_V2.v
 
-COMM_OBJS+= cores/cpu/femtorv32_quark_V2.v
+#COMM_OBJS+= cores/cpu/femtorv32_quark_V2.v
+#COMM_OBJS+= cores/cpu/femtorv32_quark_un.v
+COMM_OBJS+= cores/cpu/femtorv32_quark_un_irq.v
 COMM_OBJS+= cores/uart/perip_uart.v
 COMM_OBJS+= cores/uart/uart.v
 
@@ -81,6 +83,12 @@ all: sim_quark
 sim_quark:
 	rm -f a.out *.vcd
 	iverilog -DBENCH  bench_quark.v $(OBJS)
+	vvp a.out
+	gtkwave bench.vcd
+
+sim_irq:
+	rm -f a.out *.vcd
+	iverilog -DBENCH  bench_quark_irq.v $(OBJS)
 	vvp a.out
 	gtkwave bench.vcd
 

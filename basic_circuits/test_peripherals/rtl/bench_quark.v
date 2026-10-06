@@ -97,6 +97,10 @@ always #(tck/2) CLK <= ~CLK;
     UART_WRITE_BYTE(8'h0A);
 
 
+    #(tck*50000)
+    UART_WRITE_BYTE(8'h2A);
+
+
     #(tck*90000)
     UART_WRITE_BYTE(8'h39);
     #(tck*1500)
@@ -113,6 +117,11 @@ always #(tck/2) CLK <= ~CLK;
     UART_WRITE_BYTE(8'h37);
     #(tck*1500)
     UART_WRITE_BYTE(8'h0A);
+
+
+    #(tck*50000)
+    UART_WRITE_BYTE(8'h2F);
+
 
 
     #(tck*90000)

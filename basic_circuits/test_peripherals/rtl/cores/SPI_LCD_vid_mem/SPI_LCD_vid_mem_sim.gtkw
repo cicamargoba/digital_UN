@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
-[*] Fri Oct  2 16:17:21 2026
+[*] Fri Oct  2 16:54:40 2026
 [*]
 [dumpfile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/cores/SPI_LCD_vid_mem/spi_lcd_vid_mem_TB.vcd"
-[dumpfile_mtime] "Fri Oct  2 15:25:40 2026"
-[dumpfile_size] 4959806
+[dumpfile_mtime] "Fri Oct  2 16:46:26 2026"
+[dumpfile_size] 4965252
 [savefile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/cores/SPI_LCD_vid_mem/SPI_LCD_vid_mem_sim.gtkw"
-[timestart] 0
-[size] 1635 1098
-[pos] -1109 -345
-*-18.000000 711000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[timestart] 1443000
+[size] 1000 600
+[pos] -1 -1
+*-20.000000 2660000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] spi_lcd_vid_mem_TB.
 [treeopen] spi_lcd_vid_mem_TB.uut.
 [sst_width] 278
@@ -23,10 +23,10 @@
 spi_lcd_vid_mem_TB.uut.lcd_cs
 spi_lcd_vid_mem_TB.uut.lcd_dc
 spi_lcd_vid_mem_TB.uut.lcd_rst
-@29
 spi_lcd_vid_mem_TB.uut.clk
-@28
+@29
 spi_lcd_vid_mem_TB.uut.lcd_sck
+@28
 spi_lcd_vid_mem_TB.uut.lcd_sdi
 @200
 -SPI_TX
