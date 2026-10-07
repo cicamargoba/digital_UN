@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
-[*] Tue Oct  6 17:03:43 2026
+[*] Wed Oct  7 00:08:10 2026
 [*]
 [dumpfile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/bench.vcd"
-[dumpfile_mtime] "Tue Oct  6 17:03:43 2026"
-[dumpfile_size] 408682496
+[dumpfile_mtime] "Wed Oct  7 00:08:10 2026"
+[dumpfile_size] 213925888
 [savefile] "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/test_cpu_load.gtkw"
-[timestart] 9776200000
+[timestart] 0
 [size] 1920 1121
 [pos] -1 -1
-*-22.770798 9797103000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-32.770798 5700460000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] bench.
 [treeopen] bench.uut.
 [treeopen] bench.uut.bcd2bin0.bcd2bin0.
@@ -275,9 +275,7 @@ bench.uut.per_uart.rx_data[7:0]
 -INTERRUPT
 @28
 bench.uut.CPU.interrupt
-@29
 bench.uut.CPU.interrupt_accepted
-@28
 bench.uut.CPU.interrupt_request
 bench.uut.CPU.interrupt_request_sticky
 bench.uut.CPU.interrupt_return
@@ -389,6 +387,9 @@ bench.uut.CPU.\registerFile[14][31:0]
 bench.uut.CPU.\registerFile[15][31:0]
 [color] 2
 bench.uut.CPU.\registerFile[16][31:0]
+bench.uut.CPU.\registerFile[17][31:0]
+@23
+bench.uut.CPU.\registerFile[18][31:0]
 @200
 -
 @20000

@@ -86,6 +86,18 @@ always #(tck/2) CLK <= ~CLK;
     #80  RESET = 0;
     #160 RESET = 1;
     // Send a command to the UART (exercise Rx)
+
+
+
+    for (idx=0; idx<20; idx=idx+1) begin
+      @(posedge CLK);
+      interrupt_request = 1;
+      @(posedge CLK);
+      interrupt_request = 0;
+      repeat (10)  @(posedge CLK);
+    end
+
+
     @(posedge CLK);
     #(tck*60000)
     UART_WRITE_BYTE(8'h30);
@@ -103,22 +115,21 @@ always #(tck/2) CLK <= ~CLK;
     #(tck*50000)
     UART_WRITE_BYTE(8'h2A);    // Operator *
 
+    for (idx=0; idx<20; idx=idx+1) begin
+      @(posedge CLK);
+      interrupt_request = 1;
+      @(posedge CLK);
+      interrupt_request = 0;
+      repeat (10)  @(posedge CLK);
+    end
 
+
+    
     #(tck*90000)
     UART_WRITE_BYTE(8'h39);
     #(tck*1500)
     UART_WRITE_BYTE(8'h0A);
     #(tck*2500)
-
-
-
-  for (idx=0; idx<8; idx=idx+1) begin
-    @(posedge CLK);
-    interrupt_request = 1;
-    @(posedge CLK);
-    interrupt_request = 0;
-    repeat (10)  @(posedge CLK);
-  end
 
     #(tck*90000)
     UART_WRITE_BYTE(8'h30);
@@ -134,8 +145,6 @@ always #(tck/2) CLK <= ~CLK;
 
     #(tck*50000)
     UART_WRITE_BYTE(8'h2F);
-
-
 
     #(tck*90000)
     UART_WRITE_BYTE(8'h39);

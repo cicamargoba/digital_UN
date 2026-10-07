@@ -9,6 +9,13 @@ loopM:
    li   sp,0x2000
    li   sp,0x2000
 
+
+    la    t0, isr           # mtvec <- dirección de la rutina de interrupción
+    csrw  mtvec, t0
+    li    s2, 0             # contador de interrupciones
+    csrsi mstatus, 8        # MIE = 1: habilita las interrupciones
+	
+
 	la   a0, number
 	call putstring
 	call get_number      # first number
@@ -57,21 +64,12 @@ print_result:
 	call bin2bcd
 
 
-    la    t0, isr           # mtvec <- dirección de la rutina de interrupción
-    csrw  mtvec, t0
-    li    s0, 0             # contador de interrupciones
-    li    s1, 0             # contador del programa principal
-    csrsi mstatus, 8        # MIE = 1: habilita las interrupciones
-main:
-    addi  s1, s1, 1         # el programa principal solo cuenta
-    j     main
+	j    loopM
 
 isr:
-    addi  s0, s0, 1         # una interrupción más
+    addi  s2, s2, 1         # una interrupción más
     mret
 
-
-	j    loopM
 
 .section .data
 number:
