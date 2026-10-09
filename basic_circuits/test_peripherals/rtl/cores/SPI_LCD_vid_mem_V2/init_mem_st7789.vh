@@ -1,0 +1,93 @@
+module init_mem (
+    input      [7:0] addr,
+    output reg [9:0] data
+);
+localparam NUM_ENTRIES = 82;
+always @(*) begin
+    case (addr)
+        8'd0  : data = {1'b0, 1'b0, 8'h11};
+        8'd1  : data = {1'b1, 1'b0, 8'd120};
+        8'd2  : data = {1'b0, 1'b0, 8'h13};
+        8'd3  : data = {1'b0, 1'b0, 8'h36};
+        8'd4  : data = {1'b0, 1'b1, 8'h00};
+        8'd5  : data = {1'b0, 1'b0, 8'hB6};
+        8'd6  : data = {1'b0, 1'b1, 8'h0A};
+        8'd7  : data = {1'b0, 1'b1, 8'h82};
+        8'd8  : data = {1'b0, 1'b0, 8'hB0};
+        8'd9  : data = {1'b0, 1'b1, 8'h00};
+        8'd10 : data = {1'b0, 1'b1, 8'hE0};
+        8'd11 : data = {1'b0, 1'b0, 8'h3A};
+        8'd12 : data = {1'b0, 1'b1, 8'h55};
+        8'd13 : data = {1'b1, 1'b0, 8'd10};
+        8'd14 : data = {1'b0, 1'b0, 8'hB2};
+        8'd15 : data = {1'b0, 1'b1, 8'h0C};
+        8'd16 : data = {1'b0, 1'b1, 8'h0C};
+        8'd17 : data = {1'b0, 1'b1, 8'h00};
+        8'd18 : data = {1'b0, 1'b1, 8'h33};
+        8'd19 : data = {1'b0, 1'b1, 8'h33};
+        8'd20 : data = {1'b0, 1'b0, 8'hB7};
+        8'd21 : data = {1'b0, 1'b1, 8'h35};
+        8'd22 : data = {1'b0, 1'b0, 8'hBB};
+        8'd23 : data = {1'b0, 1'b1, 8'h28};
+        8'd24 : data = {1'b0, 1'b0, 8'hC0};
+        8'd25 : data = {1'b0, 1'b1, 8'h0C};
+        8'd26 : data = {1'b0, 1'b0, 8'hC2};
+        8'd27 : data = {1'b0, 1'b1, 8'h01};
+        8'd28 : data = {1'b0, 1'b1, 8'hFF};
+        8'd29 : data = {1'b0, 1'b0, 8'hC3};
+        8'd30 : data = {1'b0, 1'b1, 8'h10};
+        8'd31 : data = {1'b0, 1'b0, 8'hC4};
+        8'd32 : data = {1'b0, 1'b1, 8'h20};
+        8'd33 : data = {1'b0, 1'b0, 8'hC6};
+        8'd34 : data = {1'b0, 1'b1, 8'h0F};
+        8'd35 : data = {1'b0, 1'b0, 8'hD0};
+        8'd36 : data = {1'b0, 1'b1, 8'hA4};
+        8'd37 : data = {1'b0, 1'b1, 8'hA1};
+        8'd38 : data = {1'b0, 1'b0, 8'hE0};
+        8'd39 : data = {1'b0, 1'b1, 8'hD0};
+        8'd40 : data = {1'b0, 1'b1, 8'h00};
+        8'd41 : data = {1'b0, 1'b1, 8'h02};
+        8'd42 : data = {1'b0, 1'b1, 8'h07};
+        8'd43 : data = {1'b0, 1'b1, 8'h0A};
+        8'd44 : data = {1'b0, 1'b1, 8'h28};
+        8'd45 : data = {1'b0, 1'b1, 8'h32};
+        8'd46 : data = {1'b0, 1'b1, 8'h44};
+        8'd47 : data = {1'b0, 1'b1, 8'h42};
+        8'd48 : data = {1'b0, 1'b1, 8'h06};
+        8'd49 : data = {1'b0, 1'b1, 8'h0E};
+        8'd50 : data = {1'b0, 1'b1, 8'h12};
+        8'd51 : data = {1'b0, 1'b1, 8'h14};
+        8'd52 : data = {1'b0, 1'b1, 8'h17};
+        8'd53 : data = {1'b0, 1'b0, 8'hE1};
+        8'd54 : data = {1'b0, 1'b1, 8'hD0};
+        8'd55 : data = {1'b0, 1'b1, 8'h00};
+        8'd56 : data = {1'b0, 1'b1, 8'h02};
+        8'd57 : data = {1'b0, 1'b1, 8'h07};
+        8'd58 : data = {1'b0, 1'b1, 8'h0A};
+        8'd59 : data = {1'b0, 1'b1, 8'h28};
+        8'd60 : data = {1'b0, 1'b1, 8'h31};
+        8'd61 : data = {1'b0, 1'b1, 8'h54};
+        8'd62 : data = {1'b0, 1'b1, 8'h47};
+        8'd63 : data = {1'b0, 1'b1, 8'h0E};
+        8'd64 : data = {1'b0, 1'b1, 8'h1C};
+        8'd65 : data = {1'b0, 1'b1, 8'h17};
+        8'd66 : data = {1'b0, 1'b1, 8'h1B};
+        8'd67 : data = {1'b0, 1'b1, 8'h1E};
+        8'd68 : data = {1'b0, 1'b0, 8'h21};
+        8'd69 : data = {1'b0, 1'b0, 8'h2A};
+        8'd70 : data = {1'b0, 1'b1, 8'h00};
+        8'd71 : data = {1'b0, 1'b1, 8'h00};
+        8'd72 : data = {1'b0, 1'b1, 8'h00};
+        8'd73 : data = {1'b0, 1'b1, 8'hEF};
+        8'd74 : data = {1'b0, 1'b0, 8'h2B};
+        8'd75 : data = {1'b0, 1'b1, 8'h00};
+        8'd76 : data = {1'b0, 1'b1, 8'h00};
+        8'd77 : data = {1'b0, 1'b1, 8'h01};
+        8'd78 : data = {1'b0, 1'b1, 8'h3F};
+        8'd79 : data = {1'b1, 1'b0, 8'd120};
+        8'd80 : data = {1'b0, 1'b0, 8'h29};
+        8'd81 : data = {1'b1, 1'b0, 8'd120};
+        default: data = 10'h000;
+    endcase
+end
+endmodule

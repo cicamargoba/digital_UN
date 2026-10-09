@@ -1,0 +1,2217 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2025  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.59+62 (git sha1 9aa2dde7e, g++ 14.2.0-19ubuntu2 -fPIC -O3)
+
+-- Running command `read_verilog -defer -DLCD_GC9A01 a_count.v comp_addr.v ctrl.v d_count.v init_mem.v memwr_cmd.v mux_3to1.v spi_tx.v v_count.v video_mem.v spi_lcd_vid_mem.v; chparam -set VID_AW 4 -set VID_INIT_FILE "video_mem_init_TB.hex" spi_lcd_vid_mem; synth_ecp5 -top spi_lcd_vid_mem; write_json build/lattice.json' --
+
+1. Executing Verilog-2005 frontend: a_count.v
+Parsing Verilog input from `a_count.v' to AST representation.
+verilog frontend filename a_count.v
+Storing AST representation for module `$abstract\a_count'.
+Successfully finished Verilog frontend.
+
+2. Executing Verilog-2005 frontend: comp_addr.v
+Parsing Verilog input from `comp_addr.v' to AST representation.
+verilog frontend filename comp_addr.v
+Storing AST representation for module `$abstract\comp_addr'.
+Successfully finished Verilog frontend.
+
+3. Executing Verilog-2005 frontend: ctrl.v
+Parsing Verilog input from `ctrl.v' to AST representation.
+verilog frontend filename ctrl.v
+Storing AST representation for module `$abstract\ctrl'.
+Successfully finished Verilog frontend.
+
+4. Executing Verilog-2005 frontend: d_count.v
+Parsing Verilog input from `d_count.v' to AST representation.
+verilog frontend filename d_count.v
+Storing AST representation for module `$abstract\d_count'.
+Successfully finished Verilog frontend.
+
+5. Executing Verilog-2005 frontend: init_mem.v
+Parsing Verilog input from `init_mem.v' to AST representation.
+verilog frontend filename init_mem.v
+Storing AST representation for module `$abstract\init_mem'.
+Successfully finished Verilog frontend.
+
+6. Executing Verilog-2005 frontend: memwr_cmd.v
+Parsing Verilog input from `memwr_cmd.v' to AST representation.
+verilog frontend filename memwr_cmd.v
+Storing AST representation for module `$abstract\memwr_cmd'.
+Successfully finished Verilog frontend.
+
+7. Executing Verilog-2005 frontend: mux_3to1.v
+Parsing Verilog input from `mux_3to1.v' to AST representation.
+verilog frontend filename mux_3to1.v
+Storing AST representation for module `$abstract\mux_3to1'.
+Successfully finished Verilog frontend.
+
+8. Executing Verilog-2005 frontend: spi_tx.v
+Parsing Verilog input from `spi_tx.v' to AST representation.
+verilog frontend filename spi_tx.v
+Storing AST representation for module `$abstract\spi_tx'.
+Successfully finished Verilog frontend.
+
+9. Executing Verilog-2005 frontend: v_count.v
+Parsing Verilog input from `v_count.v' to AST representation.
+verilog frontend filename v_count.v
+Storing AST representation for module `$abstract\v_count'.
+Successfully finished Verilog frontend.
+
+10. Executing Verilog-2005 frontend: video_mem.v
+Parsing Verilog input from `video_mem.v' to AST representation.
+verilog frontend filename video_mem.v
+Storing AST representation for module `$abstract\video_mem'.
+Successfully finished Verilog frontend.
+
+11. Executing Verilog-2005 frontend: spi_lcd_vid_mem.v
+Parsing Verilog input from `spi_lcd_vid_mem.v' to AST representation.
+verilog frontend filename spi_lcd_vid_mem.v
+Storing AST representation for module `$abstract\spi_lcd_vid_mem'.
+Successfully finished Verilog frontend.
+Parameter \VID_AW = 4
+Parameter \VID_INIT_FILE = 168'011101100110100101100100011001010110111101011111011011010110010101101101010111110110100101101110011010010111010001011111010101000100001000101110011010000110010101111000
+
+12. Executing AST frontend in derive mode using pre-parsed AST for module `\spi_lcd_vid_mem'.
+Parameter \VID_AW = 4
+Parameter \VID_INIT_FILE = 168'011101100110100101100100011001010110111101011111011011010110010101101101010111110110100101101110011010010111010001011111010101000100001000101110011010000110010101111000
+Generating RTLIL representation for module `$paramod$be7c6070b1318b1352c6fb5338b74cf7acfd2ce9\spi_lcd_vid_mem'.
+
+13. Executing SYNTH_LATTICE pass.
+
+13.1. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/lattice/cells_sim_ecp5.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/lattice/cells_sim_ecp5.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/lattice/cells_sim_ecp5.v
+Generating RTLIL representation for module `\LUT4'.
+Generating RTLIL representation for module `\$__ABC9_LUT5'.
+Generating RTLIL representation for module `\$__ABC9_LUT6'.
+Generating RTLIL representation for module `\$__ABC9_LUT7'.
+Generating RTLIL representation for module `\L6MUX21'.
+Generating RTLIL representation for module `\TRELLIS_RAM16X2'.
+Generating RTLIL representation for module `\PFUMX'.
+Generating RTLIL representation for module `\TRELLIS_DPR16X4'.
+Generating RTLIL representation for module `\DPR16X4C'.
+Generating RTLIL representation for module `\LUT2'.
+Generating RTLIL representation for module `\TRELLIS_FF'.
+Generating RTLIL representation for module `\TRELLIS_IO'.
+Generating RTLIL representation for module `\INV'.
+Generating RTLIL representation for module `\TRELLIS_COMB'.
+Generating RTLIL representation for module `\VLO'.
+Generating RTLIL representation for module `\VHI'.
+Generating RTLIL representation for module `\FD1P3AX'.
+Generating RTLIL representation for module `\FD1P3AY'.
+Generating RTLIL representation for module `\FD1P3BX'.
+Generating RTLIL representation for module `\FD1P3DX'.
+Generating RTLIL representation for module `\FD1P3IX'.
+Generating RTLIL representation for module `\FD1P3JX'.
+Generating RTLIL representation for module `\FD1S3AX'.
+Generating RTLIL representation for module `\FD1S3AY'.
+Generating RTLIL representation for module `\FD1S3BX'.
+Generating RTLIL representation for module `\FD1S3DX'.
+Generating RTLIL representation for module `\FD1S3IX'.
+Generating RTLIL representation for module `\FD1S3JX'.
+Generating RTLIL representation for module `\IFS1P3BX'.
+Generating RTLIL representation for module `\IFS1P3DX'.
+Generating RTLIL representation for module `\IFS1P3IX'.
+Generating RTLIL representation for module `\IFS1P3JX'.
+Generating RTLIL representation for module `\OFS1P3BX'.
+Generating RTLIL representation for module `\OFS1P3DX'.
+Generating RTLIL representation for module `\OFS1P3IX'.
+Generating RTLIL representation for module `\OFS1P3JX'.
+Generating RTLIL representation for module `\IB'.
+Generating RTLIL representation for module `\IBPU'.
+Generating RTLIL representation for module `\IBPD'.
+Generating RTLIL representation for module `\OB'.
+Generating RTLIL representation for module `\OBZ'.
+Generating RTLIL representation for module `\OBZPU'.
+Generating RTLIL representation for module `\OBZPD'.
+Generating RTLIL representation for module `\OBCO'.
+Generating RTLIL representation for module `\BB'.
+Generating RTLIL representation for module `\BBPU'.
+Generating RTLIL representation for module `\BBPD'.
+Generating RTLIL representation for module `\ILVDS'.
+Generating RTLIL representation for module `\OLVDS'.
+Generating RTLIL representation for module `\CCU2C'.
+Generating RTLIL representation for module `\DP16KD'.
+Replacing existing blackbox module `\FD1P3AX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:2.1-2.261.
+Generating RTLIL representation for module `\FD1P3AX'.
+Replacing existing blackbox module `\FD1P3AY' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:3.1-3.261.
+Generating RTLIL representation for module `\FD1P3AY'.
+Replacing existing blackbox module `\FD1P3BX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:4.1-4.261.
+Generating RTLIL representation for module `\FD1P3BX'.
+Replacing existing blackbox module `\FD1P3DX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:5.1-5.261.
+Generating RTLIL representation for module `\FD1P3DX'.
+Replacing existing blackbox module `\FD1P3IX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:6.1-6.261.
+Generating RTLIL representation for module `\FD1P3IX'.
+Replacing existing blackbox module `\FD1P3JX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:7.1-7.261.
+Generating RTLIL representation for module `\FD1P3JX'.
+Replacing existing blackbox module `\FD1S3AX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:8.1-8.261.
+Generating RTLIL representation for module `\FD1S3AX'.
+Replacing existing blackbox module `\FD1S3AY' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:9.1-9.261.
+Generating RTLIL representation for module `\FD1S3AY'.
+Replacing existing blackbox module `\FD1S3BX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:10.1-10.261.
+Generating RTLIL representation for module `\FD1S3BX'.
+Replacing existing blackbox module `\FD1S3DX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:11.1-11.261.
+Generating RTLIL representation for module `\FD1S3DX'.
+Replacing existing blackbox module `\FD1S3IX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:12.1-12.261.
+Generating RTLIL representation for module `\FD1S3IX'.
+Replacing existing blackbox module `\FD1S3JX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:13.1-13.261.
+Generating RTLIL representation for module `\FD1S3JX'.
+Replacing existing blackbox module `\IFS1P3BX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:26.1-26.301.
+Generating RTLIL representation for module `\IFS1P3BX'.
+Replacing existing blackbox module `\IFS1P3DX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:27.1-27.301.
+Generating RTLIL representation for module `\IFS1P3DX'.
+Replacing existing blackbox module `\IFS1P3IX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:28.1-28.301.
+Generating RTLIL representation for module `\IFS1P3IX'.
+Replacing existing blackbox module `\IFS1P3JX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:29.1-29.301.
+Generating RTLIL representation for module `\IFS1P3JX'.
+Replacing existing blackbox module `\OFS1P3BX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:31.1-31.302.
+Generating RTLIL representation for module `\OFS1P3BX'.
+Replacing existing blackbox module `\OFS1P3DX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:32.1-32.302.
+Generating RTLIL representation for module `\OFS1P3DX'.
+Replacing existing blackbox module `\OFS1P3IX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:33.1-33.302.
+Generating RTLIL representation for module `\OFS1P3IX'.
+Replacing existing blackbox module `\OFS1P3JX' at /usr/local/bin/../share/yosys/lattice/cells_ff.vh:34.1-34.302.
+Generating RTLIL representation for module `\OFS1P3JX'.
+Replacing existing blackbox module `\IB' at /usr/local/bin/../share/yosys/lattice/cells_io.vh:2.1-2.157.
+Generating RTLIL representation for module `\IB'.
+Replacing existing blackbox module `\IBPU' at /usr/local/bin/../share/yosys/lattice/cells_io.vh:3.1-3.157.
+Generating RTLIL representation for module `\IBPU'.
+Replacing existing blackbox module `\IBPD' at /usr/local/bin/../share/yosys/lattice/cells_io.vh:4.1-4.157.
+Generating RTLIL representation for module `\IBPD'.
+Replacing existing blackbox module `\OB' at /usr/local/bin/../share/yosys/lattice/cells_io.vh:5.1-5.157.
+Generating RTLIL representation for module `\OB'.
+Replacing existing blackbox module `\OBZ' at /usr/local/bin/../share/yosys/lattice/cells_io.vh:6.1-6.164.
+Generating RTLIL representation for module `\OBZ'.
+Replacing existing blackbox module `\OBZPU' at /usr/local/bin/../share/yosys/lattice/cells_io.vh:7.1-7.164.
+Generating RTLIL representation for module `\OBZPU'.
+Replacing existing blackbox module `\OBZPD' at /usr/local/bin/../share/yosys/lattice/cells_io.vh:8.1-8.164.
+Generating RTLIL representation for module `\OBZPD'.
+Replacing existing blackbox module `\OBCO' at /usr/local/bin/../share/yosys/lattice/cells_io.vh:9.1-9.90.
+Generating RTLIL representation for module `\OBCO'.
+Replacing existing blackbox module `\BB' at /usr/local/bin/../share/yosys/lattice/cells_io.vh:10.1-10.179.
+Generating RTLIL representation for module `\BB'.
+Replacing existing blackbox module `\BBPU' at /usr/local/bin/../share/yosys/lattice/cells_io.vh:11.1-11.179.
+Generating RTLIL representation for module `\BBPU'.
+Replacing existing blackbox module `\BBPD' at /usr/local/bin/../share/yosys/lattice/cells_io.vh:12.1-12.179.
+Generating RTLIL representation for module `\BBPD'.
+Replacing existing blackbox module `\ILVDS' at /usr/local/bin/../share/yosys/lattice/cells_io.vh:13.1-13.139.
+Generating RTLIL representation for module `\ILVDS'.
+Replacing existing blackbox module `\OLVDS' at /usr/local/bin/../share/yosys/lattice/cells_io.vh:14.1-14.146.
+Generating RTLIL representation for module `\OLVDS'.
+Successfully finished Verilog frontend.
+
+13.2. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/lattice/cells_bb_ecp5.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/lattice/cells_bb_ecp5.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/lattice/cells_bb_ecp5.v
+Generating RTLIL representation for module `\GSR'.
+Generating RTLIL representation for module `\PUR'.
+Generating RTLIL representation for module `\SGSR'.
+Generating RTLIL representation for module `\PDPW16KD'.
+Generating RTLIL representation for module `\MULT18X18D'.
+Generating RTLIL representation for module `\ALU54B'.
+Generating RTLIL representation for module `\CLKDIVF'.
+Generating RTLIL representation for module `\PCSCLKDIV'.
+Generating RTLIL representation for module `\DCSC'.
+Generating RTLIL representation for module `\DCCA'.
+Generating RTLIL representation for module `\ECLKSYNCB'.
+Generating RTLIL representation for module `\ECLKBRIDGECS'.
+Generating RTLIL representation for module `\DELAYF'.
+Generating RTLIL representation for module `\DELAYG'.
+Generating RTLIL representation for module `\USRMCLK'.
+Generating RTLIL representation for module `\DQSBUFM'.
+Generating RTLIL representation for module `\DDRDLLA'.
+Generating RTLIL representation for module `\DLLDELD'.
+Generating RTLIL representation for module `\IDDRX1F'.
+Generating RTLIL representation for module `\IDDRX2F'.
+Generating RTLIL representation for module `\IDDR71B'.
+Generating RTLIL representation for module `\IDDRX2DQA'.
+Generating RTLIL representation for module `\ODDRX1F'.
+Generating RTLIL representation for module `\ODDRX2F'.
+Generating RTLIL representation for module `\ODDR71B'.
+Generating RTLIL representation for module `\OSHX2A'.
+Generating RTLIL representation for module `\TSHX2DQA'.
+Generating RTLIL representation for module `\TSHX2DQSA'.
+Generating RTLIL representation for module `\ODDRX2DQA'.
+Generating RTLIL representation for module `\ODDRX2DQSB'.
+Generating RTLIL representation for module `\EHXPLLL'.
+Generating RTLIL representation for module `\DTR'.
+Generating RTLIL representation for module `\OSCG'.
+Generating RTLIL representation for module `\EXTREFB'.
+Generating RTLIL representation for module `\JTAGG'.
+Generating RTLIL representation for module `\DCUA'.
+Successfully finished Verilog frontend.
+
+13.3. Executing HIERARCHY pass (managing design hierarchy).
+
+13.4. Executing AST frontend in derive mode using pre-parsed AST for module `\spi_lcd_vid_mem'.
+Generating RTLIL representation for module `\spi_lcd_vid_mem'.
+
+13.4.1. Analyzing design hierarchy..
+Top module:  \spi_lcd_vid_mem
+
+13.4.2. Executing AST frontend in derive mode using pre-parsed AST for module `\mux_3to1'.
+Generating RTLIL representation for module `\mux_3to1'.
+Parameter \AW = 4
+Parameter \INIT_FILE = 168'011101100110100101100100011001010110111101011111011011010110010101101101010111110110100101101110011010010111010001011111010101000100001000101110011010000110010101111000
+
+13.4.3. Executing AST frontend in derive mode using pre-parsed AST for module `\video_mem'.
+Parameter \AW = 4
+Parameter \INIT_FILE = 168'011101100110100101100100011001010110111101011111011011010110010101101101010111110110100101101110011010010111010001011111010101000100001000101110011010000110010101111000
+Generating RTLIL representation for module `$paramod$77e1d2ec6a1a9d642723ab322ea0bb8c4ac92c6b\video_mem'.
+Parameter \AW = 4
+
+13.4.4. Executing AST frontend in derive mode using pre-parsed AST for module `\v_count'.
+Parameter \AW = 4
+Generating RTLIL representation for module `$paramod\v_count\AW=32'00000000000000000000000000000100'.
+
+13.4.5. Executing AST frontend in derive mode using pre-parsed AST for module `\memwr_cmd'.
+Generating RTLIL representation for module `\memwr_cmd'.
+
+13.4.6. Executing AST frontend in derive mode using pre-parsed AST for module `\init_mem'.
+Generating RTLIL representation for module `\init_mem'.
+
+13.4.7. Executing AST frontend in derive mode using pre-parsed AST for module `\a_count'.
+Generating RTLIL representation for module `\a_count'.
+Parameter \UNIT_TICKS = 25000
+
+13.4.8. Executing AST frontend in derive mode using pre-parsed AST for module `\d_count'.
+Parameter \UNIT_TICKS = 25000
+Generating RTLIL representation for module `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000'.
+Parameter \CLK_DIV = 4
+
+13.4.9. Executing AST frontend in derive mode using pre-parsed AST for module `\spi_tx'.
+Parameter \CLK_DIV = 4
+Generating RTLIL representation for module `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100'.
+Parameter \RESET_TICKS = 250000
+
+13.4.10. Executing AST frontend in derive mode using pre-parsed AST for module `\ctrl'.
+Parameter \RESET_TICKS = 250000
+Generating RTLIL representation for module `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000'.
+Parameter \W = 8
+
+13.4.11. Executing AST frontend in derive mode using pre-parsed AST for module `\comp_addr'.
+Parameter \W = 8
+Generating RTLIL representation for module `$paramod\comp_addr\W=s32'00000000000000000000000000001000'.
+
+13.4.12. Analyzing design hierarchy..
+Top module:  \spi_lcd_vid_mem
+Used module:     \mux_3to1
+Used module:     $paramod$77e1d2ec6a1a9d642723ab322ea0bb8c4ac92c6b\video_mem
+Used module:     $paramod\v_count\AW=32'00000000000000000000000000000100
+Used module:     \memwr_cmd
+Used module:     \init_mem
+Used module:     \a_count
+Used module:     $paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000
+Used module:     $paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100
+Used module:     $paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000
+Used module:     $paramod\comp_addr\W=s32'00000000000000000000000000001000
+
+13.4.13. Analyzing design hierarchy..
+Top module:  \spi_lcd_vid_mem
+Used module:     \mux_3to1
+Used module:     $paramod$77e1d2ec6a1a9d642723ab322ea0bb8c4ac92c6b\video_mem
+Used module:     $paramod\v_count\AW=32'00000000000000000000000000000100
+Used module:     \memwr_cmd
+Used module:     \init_mem
+Used module:     \a_count
+Used module:     $paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000
+Used module:     $paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100
+Used module:     $paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000
+Used module:     $paramod\comp_addr\W=s32'00000000000000000000000000001000
+Removing unused module `$abstract\spi_lcd_vid_mem'.
+Removing unused module `$abstract\video_mem'.
+Removing unused module `$abstract\v_count'.
+Removing unused module `$abstract\spi_tx'.
+Removing unused module `$abstract\mux_3to1'.
+Removing unused module `$abstract\memwr_cmd'.
+Removing unused module `$abstract\init_mem'.
+Removing unused module `$abstract\d_count'.
+Removing unused module `$abstract\ctrl'.
+Removing unused module `$abstract\comp_addr'.
+Removing unused module `$abstract\a_count'.
+Removed 11 unused modules.
+
+13.5. Executing PROC pass (convert processes to netlists).
+
+13.5.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Removing empty process `$paramod$77e1d2ec6a1a9d642723ab322ea0bb8c4ac92c6b\video_mem.$proc$video_mem.v:10$230'.
+Cleaned up 0 empty switches.
+
+13.5.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 1 switch rules as full_case in process $proc$ctrl.v:140$251 in module $paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.
+Marked 6 switch rules as full_case in process $proc$ctrl.v:60$248 in module $paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.
+Marked 5 switch rules as full_case in process $proc$spi_tx.v:20$242 in module $paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.
+Marked 5 switch rules as full_case in process $proc$d_count.v:13$236 in module $paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.
+Marked 1 switch rules as full_case in process $proc$a_count.v:9$234 in module a_count.
+Marked 1 switch rules as full_case in process $proc$init_mem_gc9a01.vh:6$233 in module init_mem.
+Marked 1 switch rules as full_case in process $proc$v_count.v:9$231 in module $paramod\v_count\AW=32'00000000000000000000000000000100.
+Marked 1 switch rules as full_case in process $proc$mux_3to1.v:8$226 in module mux_3to1.
+Removed a total of 0 dead cases.
+
+13.5.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 2 redundant assignments.
+Promoted 12 assignments to connections.
+
+13.5.4. Executing PROC_INIT pass (extract init attributes).
+
+13.5.5. Executing PROC_ARST pass (detect async resets in processes).
+
+13.5.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 2 switches.
+<suppressed ~28 debug messages>
+
+13.5.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:140$251'.
+     1/1: { $1\rst_v[0:0] $1\inc_v_addr[0:0] $1\src_rdy[0:0] $1\s_delay[0:0] $1\rst_all[0:0] $1\inc_addr[0:0] $1\sel_data[1:0] $1\init_tx[0:0] $1\rst[0:0] }
+Creating decoders for process `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:60$248'.
+     1/2: $0\rst_cnt[31:0]
+     2/2: $0\state[3:0]
+Creating decoders for process `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.$proc$spi_tx.v:20$242'.
+     1/8: $0\done_tx[0:0]
+     2/8: $0\div_cnt[15:0]
+     3/8: $0\bit_cnt[2:0]
+     4/8: $0\shreg[7:0]
+     5/8: $0\state[1:0]
+     6/8: $0\sdi[0:0]
+     7/8: $0\sck[0:0]
+     8/8: $0\dc[0:0]
+Creating decoders for process `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.$proc$d_count.v:13$236'.
+     1/4: $0\done_delay[0:0]
+     2/4: $0\delay[0:0]
+     3/4: $0\unit_cnt[31:0]
+     4/4: $0\val_cnt[7:0]
+Creating decoders for process `\a_count.$proc$a_count.v:9$234'.
+     1/1: $0\addr[7:0]
+Creating decoders for process `\init_mem.$proc$init_mem_gc9a01.vh:6$233'.
+     1/1: $1\data[9:0]
+Creating decoders for process `$paramod\v_count\AW=32'00000000000000000000000000000100.$proc$v_count.v:9$231'.
+     1/1: $0\addr[3:0]
+Creating decoders for process `$paramod$77e1d2ec6a1a9d642723ab322ea0bb8c4ac92c6b\video_mem.$proc$video_mem.v:13$227'.
+Creating decoders for process `\mux_3to1.$proc$mux_3to1.v:8$226'.
+     1/1: $1\out[8:0]
+
+13.5.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.\rst' from process `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:140$251'.
+No latch inferred for signal `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.\init_tx' from process `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:140$251'.
+No latch inferred for signal `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.\sel_data' from process `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:140$251'.
+No latch inferred for signal `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.\inc_addr' from process `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:140$251'.
+No latch inferred for signal `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.\rst_all' from process `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:140$251'.
+No latch inferred for signal `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.\s_delay' from process `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:140$251'.
+No latch inferred for signal `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.\inc_v_addr' from process `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:140$251'.
+No latch inferred for signal `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.\rst_v' from process `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:140$251'.
+No latch inferred for signal `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.\src_rdy' from process `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:140$251'.
+No latch inferred for signal `\init_mem.\data' from process `\init_mem.$proc$init_mem_gc9a01.vh:6$233'.
+No latch inferred for signal `$paramod$77e1d2ec6a1a9d642723ab322ea0bb8c4ac92c6b\video_mem.\data' from process `$paramod$77e1d2ec6a1a9d642723ab322ea0bb8c4ac92c6b\video_mem.$proc$video_mem.v:13$227'.
+No latch inferred for signal `\mux_3to1.\out' from process `\mux_3to1.$proc$mux_3to1.v:8$226'.
+
+13.5.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.\state' using process `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:60$248'.
+  created $dff cell `$procdff$513' with negative edge clock.
+Creating register for signal `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.\rst_cnt' using process `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:60$248'.
+  created $dff cell `$procdff$514' with negative edge clock.
+Creating register for signal `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.\done_tx' using process `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.$proc$spi_tx.v:20$242'.
+  created $dff cell `$procdff$515' with positive edge clock.
+Creating register for signal `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.\dc' using process `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.$proc$spi_tx.v:20$242'.
+  created $dff cell `$procdff$516' with positive edge clock.
+Creating register for signal `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.\sck' using process `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.$proc$spi_tx.v:20$242'.
+  created $dff cell `$procdff$517' with positive edge clock.
+Creating register for signal `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.\sdi' using process `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.$proc$spi_tx.v:20$242'.
+  created $dff cell `$procdff$518' with positive edge clock.
+Creating register for signal `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.\state' using process `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.$proc$spi_tx.v:20$242'.
+  created $dff cell `$procdff$519' with positive edge clock.
+Creating register for signal `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.\shreg' using process `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.$proc$spi_tx.v:20$242'.
+  created $dff cell `$procdff$520' with positive edge clock.
+Creating register for signal `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.\bit_cnt' using process `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.$proc$spi_tx.v:20$242'.
+  created $dff cell `$procdff$521' with positive edge clock.
+Creating register for signal `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.\div_cnt' using process `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.$proc$spi_tx.v:20$242'.
+  created $dff cell `$procdff$522' with positive edge clock.
+Creating register for signal `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.\done_delay' using process `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.$proc$d_count.v:13$236'.
+  created $dff cell `$procdff$523' with positive edge clock.
+Creating register for signal `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.\val_cnt' using process `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.$proc$d_count.v:13$236'.
+  created $dff cell `$procdff$524' with positive edge clock.
+Creating register for signal `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.\unit_cnt' using process `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.$proc$d_count.v:13$236'.
+  created $dff cell `$procdff$525' with positive edge clock.
+Creating register for signal `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.\delay' using process `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.$proc$d_count.v:13$236'.
+  created $dff cell `$procdff$526' with positive edge clock.
+Creating register for signal `\a_count.\addr' using process `\a_count.$proc$a_count.v:9$234'.
+  created $dff cell `$procdff$527' with positive edge clock.
+Creating register for signal `$paramod\v_count\AW=32'00000000000000000000000000000100.\addr' using process `$paramod\v_count\AW=32'00000000000000000000000000000100.$proc$v_count.v:9$231'.
+  created $dff cell `$procdff$528' with positive edge clock.
+
+13.5.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+13.5.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 1 empty switch in `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:140$251'.
+Removing empty process `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:140$251'.
+Found and cleaned up 11 empty switches in `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:60$248'.
+Removing empty process `$paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.$proc$ctrl.v:60$248'.
+Found and cleaned up 6 empty switches in `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.$proc$spi_tx.v:20$242'.
+Removing empty process `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.$proc$spi_tx.v:20$242'.
+Found and cleaned up 6 empty switches in `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.$proc$d_count.v:13$236'.
+Removing empty process `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.$proc$d_count.v:13$236'.
+Found and cleaned up 2 empty switches in `\a_count.$proc$a_count.v:9$234'.
+Removing empty process `a_count.$proc$a_count.v:9$234'.
+Found and cleaned up 1 empty switch in `\init_mem.$proc$init_mem_gc9a01.vh:6$233'.
+Removing empty process `init_mem.$proc$init_mem_gc9a01.vh:6$233'.
+Found and cleaned up 2 empty switches in `$paramod\v_count\AW=32'00000000000000000000000000000100.$proc$v_count.v:9$231'.
+Removing empty process `$paramod\v_count\AW=32'00000000000000000000000000000100.$proc$v_count.v:9$231'.
+Removing empty process `$paramod$77e1d2ec6a1a9d642723ab322ea0bb8c4ac92c6b\video_mem.$proc$video_mem.v:13$227'.
+Found and cleaned up 1 empty switch in `\mux_3to1.$proc$mux_3to1.v:8$226'.
+Removing empty process `mux_3to1.$proc$mux_3to1.v:8$226'.
+Cleaned up 30 empty switches.
+
+13.5.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\comp_addr\W=s32'00000000000000000000000000001000.
+Optimizing module $paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.
+<suppressed ~2 debug messages>
+Optimizing module $paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.
+<suppressed ~6 debug messages>
+Optimizing module $paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.
+<suppressed ~1 debug messages>
+Optimizing module a_count.
+Optimizing module init_mem.
+Optimizing module memwr_cmd.
+Optimizing module $paramod\v_count\AW=32'00000000000000000000000000000100.
+Optimizing module $paramod$77e1d2ec6a1a9d642723ab322ea0bb8c4ac92c6b\video_mem.
+Optimizing module mux_3to1.
+<suppressed ~1 debug messages>
+Optimizing module spi_lcd_vid_mem.
+
+13.6. Executing FLATTEN pass (flatten design).
+Deleting now unused module $paramod\comp_addr\W=s32'00000000000000000000000000001000.
+Deleting now unused module $paramod\ctrl\RESET_TICKS=s32'00000000000000111101000010010000.
+Deleting now unused module $paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.
+Deleting now unused module $paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.
+Deleting now unused module a_count.
+Deleting now unused module init_mem.
+Deleting now unused module memwr_cmd.
+Deleting now unused module $paramod\v_count\AW=32'00000000000000000000000000000100.
+Deleting now unused module $paramod$77e1d2ec6a1a9d642723ab322ea0bb8c4ac92c6b\video_mem.
+Deleting now unused module mux_3to1.
+<suppressed ~10 debug messages>
+
+13.7. Executing TRIBUF pass.
+
+13.8. Executing DEMINOUT pass (demote inout ports to input or output).
+
+13.9. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+<suppressed ~1 debug messages>
+
+13.10. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 0 unused cells and 109 unused wires.
+<suppressed ~1 debug messages>
+
+13.11. Executing CHECK pass (checking for obvious problems).
+Checking module spi_lcd_vid_mem...
+Found and reported 0 problems.
+
+13.12. Executing OPT pass (performing simple optimizations).
+
+13.12.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.12.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+<suppressed ~36 debug messages>
+Removed a total of 12 cells.
+
+13.12.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \spi_lcd_vid_mem..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+      Replacing known input bits on port A of cell $flatten\D_COUNT.$procmux$455: \D_COUNT.delay -> 1'0
+      Replacing known input bits on port A of cell $flatten\D_COUNT.$procmux$453: \D_COUNT.delay -> 1'1
+      Replacing known input bits on port A of cell $flatten\D_COUNT.$procmux$451: \D_COUNT.delay -> 1'1
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~93 debug messages>
+
+13.12.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \spi_lcd_vid_mem.
+    New ctrl vector for $pmux cell $flatten\SPI_TX.$procmux$412: { $flatten\SPI_TX.$procmux$337_CMP $auto$opt_reduce.cc:137:opt_pmux$540 }
+  Optimizing cells in module \spi_lcd_vid_mem.
+Performed a total of 1 changes.
+
+13.12.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+<suppressed ~3 debug messages>
+Removed a total of 1 cells.
+
+13.12.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+13.12.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 0 unused cells and 13 unused wires.
+<suppressed ~1 debug messages>
+
+13.12.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.12.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+13.12.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \spi_lcd_vid_mem..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~95 debug messages>
+
+13.12.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \spi_lcd_vid_mem.
+Performed a total of 0 changes.
+
+13.12.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+Removed a total of 0 cells.
+
+13.12.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+13.12.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+
+13.12.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.12.16. Finished fast OPT passes. (There is nothing left to do.)
+
+13.13. Executing FSM pass (extract and optimize FSM).
+
+13.13.1. Executing FSM_DETECT pass (finding FSMs in design).
+Not marking spi_lcd_vid_mem.CRTL.state as FSM state register:
+    Users of register don't seem to benefit from recoding.
+Found FSM state register spi_lcd_vid_mem.SPI_TX.state.
+
+13.13.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+Extracting FSM `\SPI_TX.state' from module `\spi_lcd_vid_mem'.
+  found $dff cell for state register: $flatten\SPI_TX.$procdff$519
+  root of input selection tree: $flatten\SPI_TX.$0\state[1:0]
+  found reset state: 2'00 (guessed from mux tree)
+  found ctrl input: \rst
+  found ctrl input: $flatten\SPI_TX.$procmux$337_CMP
+  found ctrl input: $flatten\SPI_TX.$procmux$340_CMP
+  found state code: 2'00
+  found ctrl input: $flatten\SPI_TX.$eq$spi_tx.v:44$243_Y
+  found ctrl input: \SPI_TX.sck
+  found ctrl input: $flatten\SPI_TX.$eq$spi_tx.v:51$245_Y
+  found state code: 2'10
+  found ctrl input: \CRTL.init_tx
+  found state code: 2'01
+  found ctrl output: $flatten\SPI_TX.$procmux$340_CMP
+  found ctrl output: $flatten\SPI_TX.$procmux$337_CMP
+  found ctrl output: $flatten\SPI_TX.$procmux$327_CMP
+  ctrl inputs: { \SPI_TX.sck $flatten\SPI_TX.$eq$spi_tx.v:44$243_Y $flatten\SPI_TX.$eq$spi_tx.v:51$245_Y \CRTL.init_tx \rst }
+  ctrl outputs: { $flatten\SPI_TX.$0\state[1:0] $flatten\SPI_TX.$procmux$327_CMP $flatten\SPI_TX.$procmux$337_CMP $flatten\SPI_TX.$procmux$340_CMP }
+  transition:       2'00 5'---00 ->       2'00 5'00001
+  transition:       2'00 5'---10 ->       2'01 5'01001
+  transition:       2'00 5'----1 ->       2'00 5'00001
+  transition:       2'10 5'----0 ->       2'00 5'00100
+  transition:       2'10 5'----1 ->       2'00 5'00100
+  transition:       2'01 5'-0--0 ->       2'01 5'01010
+  transition:       2'01 5'010-0 ->       2'01 5'01010
+  transition:       2'01 5'011-0 ->       2'10 5'10010
+  transition:       2'01 5'11--0 ->       2'01 5'01010
+  transition:       2'01 5'----1 ->       2'00 5'00010
+
+13.13.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+Optimizing FSM `$fsm$\SPI_TX.state$541' from module `\spi_lcd_vid_mem'.
+  Merging pattern 5'----0 and 5'----1 from group (1 0 5'00100).
+  Merging pattern 5'----1 and 5'----0 from group (1 0 5'00100).
+
+13.13.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 10 unused cells and 10 unused wires.
+<suppressed ~11 debug messages>
+
+13.13.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+Optimizing FSM `$fsm$\SPI_TX.state$541' from module `\spi_lcd_vid_mem'.
+  Removing unused output signal $flatten\SPI_TX.$0\state[1:0] [0].
+  Removing unused output signal $flatten\SPI_TX.$0\state[1:0] [1].
+
+13.13.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+Recoding FSM `$fsm$\SPI_TX.state$541' from module `\spi_lcd_vid_mem' using `auto' encoding:
+  mapping auto encoding to `one-hot` for this FSM.
+  00 -> --1
+  10 -> -1-
+  01 -> 1--
+
+13.13.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+FSM `$fsm$\SPI_TX.state$541' from module `spi_lcd_vid_mem':
+-------------------------------------
+
+  Information on FSM $fsm$\SPI_TX.state$541 (\SPI_TX.state):
+
+  Number of input signals:    5
+  Number of output signals:   3
+  Number of state bits:       3
+
+  Input signals:
+    0: \rst
+    1: \CRTL.init_tx
+    2: $flatten\SPI_TX.$eq$spi_tx.v:51$245_Y
+    3: $flatten\SPI_TX.$eq$spi_tx.v:44$243_Y
+    4: \SPI_TX.sck
+
+  Output signals:
+    0: $flatten\SPI_TX.$procmux$340_CMP
+    1: $flatten\SPI_TX.$procmux$337_CMP
+    2: $flatten\SPI_TX.$procmux$327_CMP
+
+  State encoding:
+    0:      3'--1  <RESET STATE>
+    1:      3'-1-
+    2:      3'1--
+
+  Transition Table (state_in, ctrl_in, state_out, ctrl_out):
+      0:     0 5'---00   ->     0 3'001
+      1:     0 5'----1   ->     0 3'001
+      2:     0 5'---10   ->     2 3'001
+      3:     1 5'-----   ->     0 3'100
+      4:     2 5'----1   ->     0 3'010
+      5:     2 5'011-0   ->     1 3'010
+      6:     2 5'010-0   ->     2 3'010
+      7:     2 5'-0--0   ->     2 3'010
+      8:     2 5'11--0   ->     2 3'010
+
+-------------------------------------
+
+13.13.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+Mapping FSM `$fsm$\SPI_TX.state$541' from module `\spi_lcd_vid_mem'.
+
+13.14. Executing OPT pass (performing simple optimizations).
+
+13.14.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+<suppressed ~3 debug messages>
+
+13.14.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+Removed a total of 0 cells.
+
+13.14.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \spi_lcd_vid_mem..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~88 debug messages>
+
+13.14.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \spi_lcd_vid_mem.
+Performed a total of 0 changes.
+
+13.14.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+Removed a total of 0 cells.
+
+13.14.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $flatten\V_COUNT.$procdff$528 ($dff) from module spi_lcd_vid_mem (D = $flatten\V_COUNT.$procmux$503_Y, Q = \V_COUNT.addr, rval = 4'0000).
+Adding EN signal on $auto$ff.cc:266:slice$578 ($sdff) from module spi_lcd_vid_mem (D = $flatten\V_COUNT.$add$v_count.v:13$232_Y [3:0], Q = \V_COUNT.addr).
+Adding SRST signal on $flatten\SPI_TX.$procdff$522 ($dff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.$procmux$336_Y, Q = \SPI_TX.div_cnt, rval = 16'0000000000000000).
+Adding EN signal on $auto$ff.cc:266:slice$580 ($sdff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.$procmux$336_Y, Q = \SPI_TX.div_cnt).
+Adding SRST signal on $flatten\SPI_TX.$procdff$521 ($dff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.$procmux$355_Y, Q = \SPI_TX.bit_cnt, rval = 3'000).
+Adding EN signal on $auto$ff.cc:266:slice$588 ($sdff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.$procmux$355_Y, Q = \SPI_TX.bit_cnt).
+Adding SRST signal on $flatten\SPI_TX.$procdff$520 ($dff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.$procmux$371_Y, Q = \SPI_TX.shreg, rval = 8'00000000).
+Adding EN signal on $auto$ff.cc:266:slice$602 ($sdff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.$procmux$371_Y, Q = \SPI_TX.shreg).
+Adding SRST signal on $flatten\SPI_TX.$procdff$518 ($dff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.$procmux$406_Y, Q = \SPI_TX.sdi, rval = 1'0).
+Adding EN signal on $auto$ff.cc:266:slice$614 ($sdff) from module spi_lcd_vid_mem (D = \SPI_TX.shreg [7], Q = \SPI_TX.sdi).
+Adding SRST signal on $flatten\SPI_TX.$procdff$517 ($dff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.$procmux$412_Y, Q = \SPI_TX.sck, rval = 1'1).
+Adding EN signal on $auto$ff.cc:266:slice$618 ($sdff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.$procmux$412_Y, Q = \SPI_TX.sck).
+Adding SRST signal on $flatten\SPI_TX.$procdff$516 ($dff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.$procmux$427_Y, Q = \SPI_TX.dc, rval = 1'0).
+Adding EN signal on $auto$ff.cc:266:slice$626 ($sdff) from module spi_lcd_vid_mem (D = \SPI_TX.data [8], Q = \SPI_TX.dc).
+Adding SRST signal on $flatten\SPI_TX.$procdff$515 ($dff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.$procmux$326_Y, Q = \SPI_TX.done_tx, rval = 1'0).
+Adding EN signal on $flatten\D_COUNT.$procdff$526 ($dff) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$461_Y, Q = \D_COUNT.delay).
+Adding SRST signal on $flatten\D_COUNT.$procdff$525 ($dff) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$475_Y, Q = \D_COUNT.unit_cnt, rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$638 ($sdff) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$475_Y, Q = \D_COUNT.unit_cnt).
+Adding SRST signal on $flatten\D_COUNT.$procdff$524 ($dff) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$492_Y, Q = \D_COUNT.val_cnt, rval = 8'00000000).
+Adding EN signal on $auto$ff.cc:266:slice$646 ($sdff) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$492_Y, Q = \D_COUNT.val_cnt).
+Adding SRST signal on $flatten\D_COUNT.$procdff$523 ($dff) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$444_Y, Q = \D_COUNT.done_delay, rval = 1'0).
+Adding SRST signal on $flatten\CRTL.$procdff$514 ($dff) from module spi_lcd_vid_mem (D = $flatten\CRTL.$procmux$279_Y, Q = \CRTL.rst_cnt, rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$659 ($sdff) from module spi_lcd_vid_mem (D = $flatten\CRTL.$add$ctrl.v:70$250_Y, Q = \CRTL.rst_cnt).
+Adding SRST signal on $flatten\CRTL.$procdff$513 ($dff) from module spi_lcd_vid_mem (D = $flatten\CRTL.$procmux$285_Y, Q = \CRTL.state, rval = 4'0000).
+Adding EN signal on $auto$ff.cc:266:slice$665 ($sdff) from module spi_lcd_vid_mem (D = $flatten\CRTL.$procmux$285_Y, Q = \CRTL.state).
+Adding SRST signal on $flatten\A_COUNT.$procdff$527 ($dff) from module spi_lcd_vid_mem (D = $flatten\A_COUNT.$procmux$497_Y, Q = \A_COUNT.addr, rval = 8'00000000).
+Adding EN signal on $auto$ff.cc:266:slice$679 ($sdff) from module spi_lcd_vid_mem (D = $flatten\A_COUNT.$add$a_count.v:13$235_Y [7:0], Q = \A_COUNT.addr).
+
+13.14.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 24 unused cells and 31 unused wires.
+<suppressed ~25 debug messages>
+
+13.14.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+<suppressed ~7 debug messages>
+
+13.14.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+13.14.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \spi_lcd_vid_mem..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~57 debug messages>
+
+13.14.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \spi_lcd_vid_mem.
+Performed a total of 0 changes.
+
+13.14.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+<suppressed ~27 debug messages>
+Removed a total of 9 cells.
+
+13.14.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+13.14.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 0 unused cells and 9 unused wires.
+<suppressed ~1 debug messages>
+
+13.14.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.14.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+13.14.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \spi_lcd_vid_mem..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~57 debug messages>
+
+13.14.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \spi_lcd_vid_mem.
+Performed a total of 0 changes.
+
+13.14.19. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+Removed a total of 0 cells.
+
+13.14.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+13.14.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+
+13.14.22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.14.23. Finished fast OPT passes. (There is nothing left to do.)
+
+13.15. Executing WREDUCE pass (reducing word size of cells).
+Removed top 28 address bits (of 32) from memory init port spi_lcd_vid_mem.$flatten\CRTL.$auto$mem.cc:351:emit$256 ($flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254).
+Removed top 24 address bits (of 32) from memory init port spi_lcd_vid_mem.$flatten\INIT_MEM.$auto$mem.cc:351:emit$260 ($flatten\INIT_MEM.$auto$proc_rom.cc:155:do_switch$258).
+Removed top 28 address bits (of 32) from memory init port spi_lcd_vid_mem.$flatten\VIDEO_MEM.$meminit$\MEM$video_mem.v:11$229 (VIDEO_MEM.MEM).
+Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$676 ($ne).
+Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$674 ($ne).
+Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$672 ($ne).
+Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$670 ($ne).
+Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$668 ($ne).
+Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$611 ($ne).
+Removed top 1 bits (of 4) from port B of cell spi_lcd_vid_mem.$auto$fsm_map.cc:77:implement_pattern_cache$566 ($eq).
+Removed top 1 bits (of 4) from port B of cell spi_lcd_vid_mem.$auto$fsm_map.cc:77:implement_pattern_cache$558 ($eq).
+Removed top 3 bits (of 4) from port B of cell spi_lcd_vid_mem.$flatten\CRTL.$procmux$317_CMP0 ($eq).
+Removed top 2 bits (of 4) from port B of cell spi_lcd_vid_mem.$flatten\CRTL.$procmux$316_CMP0 ($eq).
+Removed top 1 bits (of 4) from mux cell spi_lcd_vid_mem.$flatten\CRTL.$procmux$314 ($mux).
+Removed top 2 bits (of 4) from port B of cell spi_lcd_vid_mem.$flatten\CRTL.$procmux$312_CMP0 ($eq).
+Removed top 1 bits (of 4) from port B of cell spi_lcd_vid_mem.$flatten\CRTL.$procmux$311_CMP0 ($eq).
+Removed top 1 bits (of 4) from port B of cell spi_lcd_vid_mem.$flatten\CRTL.$procmux$305_CMP0 ($eq).
+Removed top 1 bits (of 4) from port B of cell spi_lcd_vid_mem.$flatten\CRTL.$procmux$304_CMP0 ($eq).
+Removed top 1 bits (of 4) from port B of cell spi_lcd_vid_mem.$flatten\CRTL.$procmux$298_CMP0 ($eq).
+Removed top 31 bits (of 32) from port B of cell spi_lcd_vid_mem.$flatten\CRTL.$add$ctrl.v:70$250 ($add).
+Removed top 14 bits (of 32) from port B of cell spi_lcd_vid_mem.$flatten\CRTL.$eq$ctrl.v:67$249 ($eq).
+Removed top 31 bits (of 32) from port B of cell spi_lcd_vid_mem.$flatten\SPI_TX.$add$spi_tx.v:58$247 ($add).
+Removed top 16 bits (of 32) from port Y of cell spi_lcd_vid_mem.$flatten\SPI_TX.$add$spi_tx.v:58$247 ($add).
+Removed top 31 bits (of 32) from port B of cell spi_lcd_vid_mem.$flatten\SPI_TX.$add$spi_tx.v:54$246 ($add).
+Removed top 29 bits (of 32) from port Y of cell spi_lcd_vid_mem.$flatten\SPI_TX.$add$spi_tx.v:54$246 ($add).
+Removed top 14 bits (of 16) from port B of cell spi_lcd_vid_mem.$flatten\SPI_TX.$eq$spi_tx.v:44$243 ($eq).
+Removed top 31 bits (of 32) from port B of cell spi_lcd_vid_mem.$flatten\D_COUNT.$add$d_count.v:38$241 ($add).
+Removed top 31 bits (of 32) from port B of cell spi_lcd_vid_mem.$flatten\D_COUNT.$sub$d_count.v:35$240 ($sub).
+Removed top 24 bits (of 32) from port Y of cell spi_lcd_vid_mem.$flatten\D_COUNT.$sub$d_count.v:35$240 ($sub).
+Removed top 7 bits (of 8) from port B of cell spi_lcd_vid_mem.$flatten\D_COUNT.$eq$d_count.v:31$239 ($eq).
+Removed top 17 bits (of 32) from port B of cell spi_lcd_vid_mem.$flatten\D_COUNT.$eq$d_count.v:29$238 ($eq).
+Removed top 31 bits (of 32) from port B of cell spi_lcd_vid_mem.$flatten\A_COUNT.$add$a_count.v:13$235 ($add).
+Removed top 24 bits (of 32) from port Y of cell spi_lcd_vid_mem.$flatten\A_COUNT.$add$a_count.v:13$235 ($add).
+Removed top 31 bits (of 32) from port B of cell spi_lcd_vid_mem.$flatten\V_COUNT.$add$v_count.v:13$232 ($add).
+Removed top 28 bits (of 32) from port Y of cell spi_lcd_vid_mem.$flatten\V_COUNT.$add$v_count.v:13$232 ($add).
+Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$flatten\MUX.$procmux$511_CMP0 ($eq).
+Removed top 24 bits (of 32) from wire spi_lcd_vid_mem.$flatten\A_COUNT.$add$a_count.v:13$235_Y.
+Removed top 1 bits (of 4) from wire spi_lcd_vid_mem.$flatten\CRTL.$procmux$314_Y.
+Removed top 24 bits (of 32) from wire spi_lcd_vid_mem.$flatten\D_COUNT.$sub$d_count.v:35$240_Y.
+Removed top 29 bits (of 32) from wire spi_lcd_vid_mem.$flatten\SPI_TX.$add$spi_tx.v:54$246_Y.
+Removed top 21 bits (of 32) from wire spi_lcd_vid_mem.$flatten\SPI_TX.$add$spi_tx.v:58$247_Y.
+Removed top 28 bits (of 32) from wire spi_lcd_vid_mem.$flatten\V_COUNT.$add$v_count.v:13$232_Y.
+
+13.16. Executing PEEPOPT pass (run peephole optimizers).
+
+13.17. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 0 unused cells and 6 unused wires.
+<suppressed ~1 debug messages>
+
+13.18. Executing SHARE pass (SAT-based resource sharing).
+
+13.19. Executing TECHMAP pass (map to technology primitives).
+
+13.19.1. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/cmp2lut.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/cmp2lut.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/cmp2lut.v
+Generating RTLIL representation for module `\_90_lut_cmp_'.
+Successfully finished Verilog frontend.
+
+13.19.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~6 debug messages>
+
+13.20. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+
+13.22. Executing TECHMAP pass (map to technology primitives).
+
+13.22.1. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/mul2dsp.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/mul2dsp.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/mul2dsp.v
+Generating RTLIL representation for module `\_80_mul'.
+Generating RTLIL representation for module `\_90_soft_mul'.
+Successfully finished Verilog frontend.
+
+13.22.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~4 debug messages>
+
+13.23. Executing TECHMAP pass (map to technology primitives).
+
+13.23.1. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/lattice/dsp_map_18x18.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/lattice/dsp_map_18x18.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/lattice/dsp_map_18x18.v
+Generating RTLIL representation for module `\$__MUL18X18'.
+Successfully finished Verilog frontend.
+
+13.23.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~3 debug messages>
+
+13.24. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module spi_lcd_vid_mem:
+  creating $macc model for $flatten\A_COUNT.$add$a_count.v:13$235 ($add).
+  creating $macc model for $flatten\CRTL.$add$ctrl.v:70$250 ($add).
+  creating $macc model for $flatten\D_COUNT.$add$d_count.v:38$241 ($add).
+  creating $macc model for $flatten\D_COUNT.$sub$d_count.v:35$240 ($sub).
+  creating $macc model for $flatten\SPI_TX.$add$spi_tx.v:54$246 ($add).
+  creating $macc model for $flatten\SPI_TX.$add$spi_tx.v:58$247 ($add).
+  creating $macc model for $flatten\V_COUNT.$add$v_count.v:13$232 ($add).
+  creating $alu model for $macc $flatten\V_COUNT.$add$v_count.v:13$232.
+  creating $alu model for $macc $flatten\SPI_TX.$add$spi_tx.v:58$247.
+  creating $alu model for $macc $flatten\SPI_TX.$add$spi_tx.v:54$246.
+  creating $alu model for $macc $flatten\D_COUNT.$sub$d_count.v:35$240.
+  creating $alu model for $macc $flatten\D_COUNT.$add$d_count.v:38$241.
+  creating $alu model for $macc $flatten\CRTL.$add$ctrl.v:70$250.
+  creating $alu model for $macc $flatten\A_COUNT.$add$a_count.v:13$235.
+  creating $alu model for $flatten\D_COUNT.$eq$d_count.v:31$239 ($eq): merged with $flatten\D_COUNT.$sub$d_count.v:35$240.
+  creating $alu cell for $flatten\A_COUNT.$add$a_count.v:13$235: $auto$alumacc.cc:512:replace_alu$688
+  creating $alu cell for $flatten\CRTL.$add$ctrl.v:70$250: $auto$alumacc.cc:512:replace_alu$691
+  creating $alu cell for $flatten\D_COUNT.$add$d_count.v:38$241: $auto$alumacc.cc:512:replace_alu$694
+  creating $alu cell for $flatten\D_COUNT.$sub$d_count.v:35$240, $flatten\D_COUNT.$eq$d_count.v:31$239: $auto$alumacc.cc:512:replace_alu$697
+  creating $alu cell for $flatten\SPI_TX.$add$spi_tx.v:54$246: $auto$alumacc.cc:512:replace_alu$702
+  creating $alu cell for $flatten\SPI_TX.$add$spi_tx.v:58$247: $auto$alumacc.cc:512:replace_alu$705
+  creating $alu cell for $flatten\V_COUNT.$add$v_count.v:13$232: $auto$alumacc.cc:512:replace_alu$708
+  created 7 $alu and 0 $macc cells.
+
+13.25. Executing OPT pass (performing simple optimizations).
+
+13.25.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.25.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+Removed a total of 0 cells.
+
+13.25.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \spi_lcd_vid_mem..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~57 debug messages>
+
+13.25.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \spi_lcd_vid_mem.
+Performed a total of 0 changes.
+
+13.25.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+Removed a total of 0 cells.
+
+13.25.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+13.25.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+13.25.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.25.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+13.25.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \spi_lcd_vid_mem..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~57 debug messages>
+
+13.25.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \spi_lcd_vid_mem.
+Performed a total of 0 changes.
+
+13.25.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+Removed a total of 0 cells.
+
+13.25.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+13.25.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+
+13.25.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.25.16. Finished fast OPT passes. (There is nothing left to do.)
+
+13.26. Executing MEMORY pass.
+
+13.26.1. Executing OPT_MEM pass (optimize memories).
+spi_lcd_vid_mem.VIDEO_MEM.MEM: removing const-1 lane 4
+spi_lcd_vid_mem.VIDEO_MEM.MEM: removing const-0 lane 5
+spi_lcd_vid_mem.VIDEO_MEM.MEM: removing const-0 lane 6
+spi_lcd_vid_mem.VIDEO_MEM.MEM: removing const-0 lane 7
+Performed a total of 1 transformations.
+
+13.26.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+13.26.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+13.26.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+13.26.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+Checking read port `$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254'[0] in module `\spi_lcd_vid_mem': no output FF found.
+Checking read port `$flatten\INIT_MEM.$auto$proc_rom.cc:155:do_switch$258'[0] in module `\spi_lcd_vid_mem': no output FF found.
+Checking read port `\VIDEO_MEM.MEM'[0] in module `\spi_lcd_vid_mem': no output FF found.
+Checking read port address `$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254'[0] in module `\spi_lcd_vid_mem': merged address FF to cell.
+Checking read port address `$flatten\INIT_MEM.$auto$proc_rom.cc:155:do_switch$258'[0] in module `\spi_lcd_vid_mem': merged address FF to cell.
+Checking read port address `\VIDEO_MEM.MEM'[0] in module `\spi_lcd_vid_mem': merged address FF to cell.
+
+13.26.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+
+13.26.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+13.26.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+13.26.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+
+13.26.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+13.27. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+
+13.28. Executing MEMORY_LIBMAP pass (mapping memories to cells).
+using FF mapping for memory spi_lcd_vid_mem.$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254
+mapping memory spi_lcd_vid_mem.$flatten\INIT_MEM.$auto$proc_rom.cc:155:do_switch$258 via $__DP16KD_
+using FF mapping for memory spi_lcd_vid_mem.VIDEO_MEM.MEM
+<suppressed ~435 debug messages>
+
+13.29. Executing TECHMAP pass (map to technology primitives).
+
+13.29.1. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/lattice/lutrams_map_trellis.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/lattice/lutrams_map_trellis.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/lattice/lutrams_map_trellis.v
+Generating RTLIL representation for module `\$__TRELLIS_DPR16X4_'.
+Successfully finished Verilog frontend.
+
+13.29.2. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/lattice/brams_map_16kd.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/lattice/brams_map_16kd.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/lattice/brams_map_16kd.v
+Generating RTLIL representation for module `\$__DP16KD_'.
+Generating RTLIL representation for module `\$__PDPW16KD_'.
+Successfully finished Verilog frontend.
+
+13.29.3. Continuing TECHMAP pass.
+Using template $paramod$390a0f757a359265d6608ff4f28544116d7de1b1\$__DP16KD_ for cells of type $__DP16KD_.
+No more expansions possible.
+<suppressed ~35 debug messages>
+
+13.30. Executing OPT pass (performing simple optimizations).
+
+13.30.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+<suppressed ~28 debug messages>
+
+13.30.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+Removed a total of 0 cells.
+
+13.30.3. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $auto$ff.cc:266:slice$631 ($dffe) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$455_Y, Q = \D_COUNT.delay, rval = 1'1).
+
+13.30.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 1 unused cells and 47 unused wires.
+<suppressed ~2 debug messages>
+
+13.30.5. Rerunning OPT passes. (Removed registers in this run.)
+
+13.30.6. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.30.7. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+Removed a total of 0 cells.
+
+13.30.8. Executing OPT_DFF pass (perform DFF optimizations).
+
+13.30.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+
+13.30.10. Finished fast OPT passes.
+
+13.31. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+Mapping memory $flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254 in module \spi_lcd_vid_mem:
+  created 16 $dff cells and 0 static cells of width 10.
+Extracted data FF from read port 0 of spi_lcd_vid_mem.$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254: $$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdreg[0]
+  read interface: 1 $dff and 15 $mux cells.
+  write interface: 0 write mux blocks.
+Mapping memory \VIDEO_MEM.MEM in module \spi_lcd_vid_mem:
+  created 16 $dff cells and 0 static cells of width 4.
+Extracted data FF from read port 0 of spi_lcd_vid_mem.VIDEO_MEM.MEM: $\VIDEO_MEM.MEM$rdreg[0]
+  read interface: 1 $dff and 15 $mux cells.
+  write interface: 0 write mux blocks.
+
+13.32. Executing OPT pass (performing simple optimizations).
+
+13.32.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+<suppressed ~1 debug messages>
+
+13.32.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+Removed a total of 0 cells.
+
+13.32.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \spi_lcd_vid_mem..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~69 debug messages>
+
+13.32.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \spi_lcd_vid_mem.
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][3][5]$1008:
+      Old ports: A=4'1010, B=4'1011, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][2]$b$989
+      New ports: A=1'0, B=1'1, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][2]$b$989 [0]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][2][2]$b$989 [3:1] = 3'101
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][3][4]$1005:
+      Old ports: A=4'1000, B=4'1001, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][2]$a$988
+      New ports: A=1'0, B=1'1, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][2]$a$988 [0]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][2][2]$a$988 [3:1] = 3'100
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][3][3]$1002:
+      Old ports: A=4'0110, B=4'0111, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][1]$b$986
+      New ports: A=1'0, B=1'1, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][1]$b$986 [0]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][2][1]$b$986 [3:1] = 3'011
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][3][2]$999:
+      Old ports: A=4'0100, B=4'0101, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][1]$a$985
+      New ports: A=1'0, B=1'1, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][1]$a$985 [0]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][2][1]$a$985 [3:1] = 3'010
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][3][1]$996:
+      Old ports: A=4'0010, B=4'0011, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][0]$b$983
+      New ports: A=1'0, B=1'1, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][0]$b$983 [0]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][2][0]$b$983 [3:1] = 3'001
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][3][0]$993:
+      Old ports: A=4'0000, B=4'0001, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][0]$a$982
+      New ports: A=1'0, B=1'1, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][0]$a$982 [0]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][2][0]$a$982 [3:1] = 3'000
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][3][6]$966:
+      Old ports: A=10'0000001001, B=10'0110001001, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][3]$a$946
+      New ports: A=1'0, B=1'1, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][3]$a$946 [7]
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][3]$a$946 [9:8] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][3]$a$946 [6:0] } = { 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][3]$a$946 [7] 7'0001001 }
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][3][5]$963:
+      Old ports: A=10'0000001001, B=10'0000001011, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][2]$b$944
+      New ports: A=1'0, B=1'1, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][2]$b$944 [1]
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][2]$b$944 [9:2] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][2]$b$944 [0] } = 9'000000101
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][3][4]$960:
+      Old ports: A=10'0000000111, B=10'0000000101, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][2]$a$943
+      New ports: A=1'1, B=1'0, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][2]$a$943 [1]
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][2]$a$943 [9:2] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][2]$a$943 [0] } = 9'000000011
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][3][3]$957:
+      Old ports: A=10'0000000001, B=10'0000010001, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][1]$b$941
+      New ports: A=1'0, B=1'1, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][1]$b$941 [4]
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][1]$b$941 [9:5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][1]$b$941 [3:0] } = 9'000000001
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][3][2]$954:
+      Old ports: A=10'0000000001, B=10'0001000001, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][1]$a$940
+      New ports: A=1'0, B=1'1, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][1]$a$940 [6]
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][1]$a$940 [9:7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][1]$a$940 [5:0] } = 9'000000001
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][3][1]$951:
+      Old ports: A=10'0000000001, B=10'0000000011, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$b$938
+      New ports: A=1'0, B=1'1, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$b$938 [1]
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$b$938 [9:2] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$b$938 [0] } = 9'000000001
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][3][0]$948:
+      Old ports: A=10'1000100000, B=10'0000000001, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$a$937
+      New ports: A=2'10, B=2'01, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$a$937 [5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$a$937 [0] }
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$a$937 [9:6] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$a$937 [4:1] } = { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$a$937 [5] 7'0000000 }
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][3][6]$1011:
+      Old ports: A=4'1100, B=4'1101, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][3]$a$991
+      New ports: A=1'0, B=1'1, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][3]$a$991 [0]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][2][3]$a$991 [3:1] = 3'110
+    New ctrl vector for $pmux cell $flatten\CRTL.$procmux$285: { $flatten\CRTL.$procmux$317_CMP $flatten\CRTL.$procmux$316_CMP $flatten\CRTL.$procmux$312_CMP $flatten\CRTL.$procmux$305_CMP $auto$opt_reduce.cc:137:opt_pmux$1022 $auto$opt_reduce.cc:137:opt_pmux$1020 $flatten\CRTL.$procmux$297_CMP $flatten\CRTL.$procmux$293_CMP $flatten\CRTL.$procmux$290_CMP $flatten\CRTL.$procmux$289_CMP $auto$opt_reduce.cc:137:opt_pmux$1018 }
+    Consolidated identical input bits for $mux cell $flatten\CRTL.$procmux$300:
+      Old ports: A=4'0111, B=4'1000, Y=$flatten\CRTL.$procmux$300_Y
+      New ports: A=2'01, B=2'10, Y={ $flatten\CRTL.$procmux$300_Y [3] $flatten\CRTL.$procmux$300_Y [0] }
+      New connections: $flatten\CRTL.$procmux$300_Y [2:1] = { $flatten\CRTL.$procmux$300_Y [0] $flatten\CRTL.$procmux$300_Y [0] }
+    Consolidated identical input bits for $mux cell $flatten\CRTL.$procmux$314:
+      Old ports: A=3'011, B=3'101, Y=$auto$wreduce.cc:514:run$682 [2:0]
+      New ports: A=2'01, B=2'10, Y=$auto$wreduce.cc:514:run$682 [2:1]
+      New connections: $auto$wreduce.cc:514:run$682 [0] = 1'1
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][3][7]$1014:
+      Old ports: A=4'1110, B=4'1111, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][3]$b$992
+      New ports: A=1'0, B=1'1, Y=$memory\VIDEO_MEM.MEM$rdmux[0][2][3]$b$992 [0]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][2][3]$b$992 [3:1] = 3'111
+  Optimizing cells in module \spi_lcd_vid_mem.
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][2][3]$990:
+      Old ports: A=$memory\VIDEO_MEM.MEM$rdmux[0][2][3]$a$991, B=$memory\VIDEO_MEM.MEM$rdmux[0][2][3]$b$992, Y=$memory\VIDEO_MEM.MEM$rdmux[0][1][1]$b$980
+      New ports: A={ 1'0 $memory\VIDEO_MEM.MEM$rdmux[0][2][3]$a$991 [0] }, B={ 1'1 $memory\VIDEO_MEM.MEM$rdmux[0][2][3]$b$992 [0] }, Y=$memory\VIDEO_MEM.MEM$rdmux[0][1][1]$b$980 [1:0]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][1][1]$b$980 [3:2] = 2'11
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][2][2]$987:
+      Old ports: A=$memory\VIDEO_MEM.MEM$rdmux[0][2][2]$a$988, B=$memory\VIDEO_MEM.MEM$rdmux[0][2][2]$b$989, Y=$memory\VIDEO_MEM.MEM$rdmux[0][1][1]$a$979
+      New ports: A={ 1'0 $memory\VIDEO_MEM.MEM$rdmux[0][2][2]$a$988 [0] }, B={ 1'1 $memory\VIDEO_MEM.MEM$rdmux[0][2][2]$b$989 [0] }, Y=$memory\VIDEO_MEM.MEM$rdmux[0][1][1]$a$979 [1:0]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][1][1]$a$979 [3:2] = 2'10
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][2][1]$984:
+      Old ports: A=$memory\VIDEO_MEM.MEM$rdmux[0][2][1]$a$985, B=$memory\VIDEO_MEM.MEM$rdmux[0][2][1]$b$986, Y=$memory\VIDEO_MEM.MEM$rdmux[0][1][0]$b$977
+      New ports: A={ 1'0 $memory\VIDEO_MEM.MEM$rdmux[0][2][1]$a$985 [0] }, B={ 1'1 $memory\VIDEO_MEM.MEM$rdmux[0][2][1]$b$986 [0] }, Y=$memory\VIDEO_MEM.MEM$rdmux[0][1][0]$b$977 [1:0]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][1][0]$b$977 [3:2] = 2'01
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][2][0]$981:
+      Old ports: A=$memory\VIDEO_MEM.MEM$rdmux[0][2][0]$a$982, B=$memory\VIDEO_MEM.MEM$rdmux[0][2][0]$b$983, Y=$memory\VIDEO_MEM.MEM$rdmux[0][1][0]$a$976
+      New ports: A={ 1'0 $memory\VIDEO_MEM.MEM$rdmux[0][2][0]$a$982 [0] }, B={ 1'1 $memory\VIDEO_MEM.MEM$rdmux[0][2][0]$b$983 [0] }, Y=$memory\VIDEO_MEM.MEM$rdmux[0][1][0]$a$976 [1:0]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][1][0]$a$976 [3:2] = 2'00
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][3]$945:
+      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][3]$a$946, B=10'0000000001, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$b$935
+      New ports: A={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][3]$a$946 [7] 1'1 }, B=2'00, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$b$935 [7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$b$935 [3] }
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$b$935 [9:8] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$b$935 [6:4] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$b$935 [2:0] } = { 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$b$935 [7] 6'000001 }
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][2]$942:
+      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][2]$a$943, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][2]$b$944, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$a$934
+      New ports: A={ 2'01 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][2]$a$943 [1] }, B={ 2'10 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][2]$b$944 [1] }, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$a$934 [3:1]
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$a$934 [9:4] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$a$934 [0] } = 7'0000001
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][1]$939:
+      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][1]$a$940, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][1]$b$941, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$b$932
+      New ports: A={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][1]$a$940 [6] 1'0 }, B={ 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][1]$b$941 [4] }, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$b$932 [6] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$b$932 [4] }
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$b$932 [9:7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$b$932 [5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$b$932 [3:0] } = 8'00000001
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$936:
+      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$a$937, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$b$938, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$a$931
+      New ports: A={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$a$937 [5] 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$a$937 [0] }, B={ 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$b$938 [1] 1'1 }, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$a$931 [5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$a$931 [1:0] }
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$a$931 [9:6] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$a$931 [4:2] } = { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$a$931 [5] 6'000000 }
+  Optimizing cells in module \spi_lcd_vid_mem.
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][1][1]$978:
+      Old ports: A=$memory\VIDEO_MEM.MEM$rdmux[0][1][1]$a$979, B=$memory\VIDEO_MEM.MEM$rdmux[0][1][1]$b$980, Y=$memory\VIDEO_MEM.MEM$rdmux[0][0][0]$b$974
+      New ports: A={ 1'0 $memory\VIDEO_MEM.MEM$rdmux[0][1][1]$a$979 [1:0] }, B={ 1'1 $memory\VIDEO_MEM.MEM$rdmux[0][1][1]$b$980 [1:0] }, Y=$memory\VIDEO_MEM.MEM$rdmux[0][0][0]$b$974 [2:0]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][0][0]$b$974 [3] = 1'1
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][1][0]$975:
+      Old ports: A=$memory\VIDEO_MEM.MEM$rdmux[0][1][0]$a$976, B=$memory\VIDEO_MEM.MEM$rdmux[0][1][0]$b$977, Y=$memory\VIDEO_MEM.MEM$rdmux[0][0][0]$a$973
+      New ports: A={ 1'0 $memory\VIDEO_MEM.MEM$rdmux[0][1][0]$a$976 [1:0] }, B={ 1'1 $memory\VIDEO_MEM.MEM$rdmux[0][1][0]$b$977 [1:0] }, Y=$memory\VIDEO_MEM.MEM$rdmux[0][0][0]$a$973 [2:0]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][0][0]$a$973 [3] = 1'0
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$933:
+      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$a$934, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$b$935, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$b$929
+      New ports: A={ 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$a$934 [3:1] }, B={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$b$935 [7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$b$935 [3] 2'00 }, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$b$929 [7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$b$929 [3:1] }
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$b$929 [9:8] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$b$929 [6:4] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$b$929 [0] } = { 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$b$929 [7] 4'0001 }
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$930:
+      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$a$931, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$b$932, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$a$928
+      New ports: A={ 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$a$931 [5] 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$a$931 [1:0] }, B={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$b$932 [6] 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][0]$b$932 [4] 2'01 }, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$a$928 [6:4] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$a$928 [1:0] }
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$a$928 [9:7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$a$928 [3:2] } = { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$a$928 [5] 4'0000 }
+  Optimizing cells in module \spi_lcd_vid_mem.
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$927:
+      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$a$928, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$b$929, Y=$$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdreg[0]$d
+      New ports: A={ 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$a$928 [6:4] 2'00 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$a$928 [1:0] }, B={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$b$929 [7] 3'000 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$b$929 [3:1] 1'1 }, Y=$$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdreg[0]$d [7:0]
+      New connections: $$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdreg[0]$d [9:8] = { $$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdreg[0]$d [5] $$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdreg[0]$d [7] }
+  Optimizing cells in module \spi_lcd_vid_mem.
+Performed a total of 31 changes.
+
+13.32.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+<suppressed ~45 debug messages>
+Removed a total of 15 cells.
+
+13.32.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdreg[0] ($dff) from module spi_lcd_vid_mem (D = $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][1]$b$941 [4], Q = \A_COUNT.inc, rval = 1'0).
+Adding SRST signal on $$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdreg[0] ($dff) from module spi_lcd_vid_mem (D = $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][1]$a$940 [6], Q = \CRTL.s_delay, rval = 1'0).
+Adding SRST signal on $$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdreg[0] ($dff) from module spi_lcd_vid_mem (D = $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$a$937 [0], Q = \lcd_rst, rval = 1'1).
+Adding SRST signal on $$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdreg[0] ($dff) from module spi_lcd_vid_mem (D = $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][1][1]$a$934 [2], Q = \MUX.sel [0], rval = 1'0).
+Adding SRST signal on $$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdreg[0] ($dff) from module spi_lcd_vid_mem (D = $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$b$929 [3], Q = \MUX.sel [1], rval = 1'0).
+
+13.32.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 0 unused cells and 48 unused wires.
+<suppressed ~1 debug messages>
+
+13.32.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+<suppressed ~2 debug messages>
+
+13.32.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+13.32.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \spi_lcd_vid_mem..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~58 debug messages>
+
+13.32.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \spi_lcd_vid_mem.
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][0][0]$972:
+      Old ports: A={ 1'0 $memory\VIDEO_MEM.MEM$rdmux[0][0][0]$a$973 [2:0] }, B={ 1'1 $memory\VIDEO_MEM.MEM$rdmux[0][0][0]$a$973 [2:0] }, Y=$\VIDEO_MEM.MEM$rdreg[0]$d
+      New ports: A=1'0, B=1'1, Y=$\VIDEO_MEM.MEM$rdreg[0]$d [3]
+      New connections: $\VIDEO_MEM.MEM$rdreg[0]$d [2:0] = $memory\VIDEO_MEM.MEM$rdmux[0][0][0]$a$973 [2:0]
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][1][0]$975:
+      Old ports: A={ 1'0 $memory\VIDEO_MEM.MEM$rdmux[0][1][0]$a$976 [1:0] }, B={ 1'1 $memory\VIDEO_MEM.MEM$rdmux[0][1][0]$a$976 [1:0] }, Y=$memory\VIDEO_MEM.MEM$rdmux[0][0][0]$a$973 [2:0]
+      New ports: A=1'0, B=1'1, Y=$memory\VIDEO_MEM.MEM$rdmux[0][0][0]$a$973 [2]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][0][0]$a$973 [1:0] = $memory\VIDEO_MEM.MEM$rdmux[0][1][0]$a$976 [1:0]
+    Consolidated identical input bits for $mux cell $memory\VIDEO_MEM.MEM$rdmux[0][2][3]$990:
+      Old ports: A={ 1'0 $memory\VIDEO_MEM.MEM$rdmux[0][2][0]$a$982 [0] }, B={ 1'1 $memory\VIDEO_MEM.MEM$rdmux[0][2][0]$a$982 [0] }, Y=$memory\VIDEO_MEM.MEM$rdmux[0][1][0]$a$976 [1:0]
+      New ports: A=1'0, B=1'1, Y=$memory\VIDEO_MEM.MEM$rdmux[0][1][0]$a$976 [1]
+      New connections: $memory\VIDEO_MEM.MEM$rdmux[0][1][0]$a$976 [0] = $auto$rtlil.cc:3482:Mux$728 [0]
+  Optimizing cells in module \spi_lcd_vid_mem.
+Performed a total of 3 changes.
+
+13.32.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+<suppressed ~3 debug messages>
+Removed a total of 1 cells.
+
+13.32.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+13.32.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 0 unused cells and 5 unused wires.
+<suppressed ~1 debug messages>
+
+13.32.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+<suppressed ~3 debug messages>
+
+13.32.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+13.32.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \spi_lcd_vid_mem..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~50 debug messages>
+
+13.32.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \spi_lcd_vid_mem.
+Performed a total of 0 changes.
+
+13.32.19. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+Removed a total of 0 cells.
+
+13.32.20. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $\VIDEO_MEM.MEM$rdreg[0] ($dff) from module spi_lcd_vid_mem (D = $auto$rtlil.cc:3482:Mux$726 [0], Q = \VIDEO_MEM.data [0], rval = 1'0).
+
+13.32.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+13.32.22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.32.23. Rerunning OPT passes. (Maybe there is more to do..)
+
+13.32.24. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \spi_lcd_vid_mem..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~51 debug messages>
+
+13.32.25. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \spi_lcd_vid_mem.
+Performed a total of 0 changes.
+
+13.32.26. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+Removed a total of 0 cells.
+
+13.32.27. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $auto$ff.cc:266:slice$1046 ($dff) from module spi_lcd_vid_mem (D = $auto$rtlil.cc:3482:Mux$726 [3:1], Q = \VIDEO_MEM.data [3:1], rval = 3'000).
+
+13.32.28. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 1 unused cells and 1 unused wires.
+<suppressed ~2 debug messages>
+
+13.32.29. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.32.30. Rerunning OPT passes. (Maybe there is more to do..)
+
+13.32.31. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \spi_lcd_vid_mem..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~49 debug messages>
+
+13.32.32. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \spi_lcd_vid_mem.
+Performed a total of 0 changes.
+
+13.32.33. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+Removed a total of 0 cells.
+
+13.32.34. Executing OPT_DFF pass (perform DFF optimizations).
+
+13.32.35. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+
+13.32.36. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.32.37. Finished fast OPT passes. (There is nothing left to do.)
+
+13.33. Executing TECHMAP pass (map to technology primitives).
+
+13.33.1. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/techmap.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/techmap.v
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `\$__div_mod_u'.
+Generating RTLIL representation for module `\$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `\$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Generating RTLIL representation for module `\$connect'.
+Generating RTLIL representation for module `\$input_port'.
+Successfully finished Verilog frontend.
+
+13.33.2. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/lattice/arith_map_ccu2c.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/lattice/arith_map_ccu2c.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/lattice/arith_map_ccu2c.v
+Generating RTLIL representation for module `\_80_ccu2c_alu'.
+Successfully finished Verilog frontend.
+
+13.33.3. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $sdff.
+Using extmapper simplemap for cells of type $dff.
+Using extmapper simplemap for cells of type $reduce_or.
+Using extmapper simplemap for cells of type $not.
+Using extmapper simplemap for cells of type $sdffce.
+Using extmapper simplemap for cells of type $mux.
+Using template $paramod$32a7b7b86c07519b7537abc18e96f0331f97914d\_90_alu for cells of type $alu.
+Using template $paramod$2af30114e9bd4ccb04dad757b3f0a8f6bf0615b0\_80_ccu2c_alu for cells of type $alu.
+Using template $paramod$3ef7d3dd227da7627a99c5e5a6a4deb817573e39\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $reduce_and.
+Using template $paramod$403a3c2fa431a154c52a6a5429d7a6260b5d144f\_80_ccu2c_alu for cells of type $alu.
+Using template $paramod$6a42b6fefed750f8a1c58eab59479d960557103c\_80_ccu2c_alu for cells of type $alu.
+Using template $paramod$c3cd1564c35d873179656addd6052d7ea8b6d991\_80_ccu2c_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $sdffe.
+Using extmapper simplemap for cells of type $ne.
+Using extmapper simplemap for cells of type $reduce_bool.
+Using extmapper simplemap for cells of type $and.
+Using extmapper simplemap for cells of type $eq.
+Using extmapper simplemap for cells of type $logic_not.
+Using template $paramod$73c1c7322faaaa595331a8d8d336d7d573593385\_90_pmux for cells of type $pmux.
+Using template $paramod$200cf4763a5dd97104da97c2740bc6396db7fa25\_90_pmux for cells of type $pmux.
+Using extmapper simplemap for cells of type $xor.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000000100 for cells of type $fa.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000000100 for cells of type $lcu.
+Using extmapper simplemap for cells of type $pos.
+Using extmapper simplemap for cells of type $logic_or.
+Using extmapper simplemap for cells of type $logic_and.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000000011 for cells of type $fa.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000000011 for cells of type $lcu.
+Using extmapper simplemap for cells of type $or.
+No more expansions possible.
+<suppressed ~919 debug messages>
+
+13.34. Executing OPT pass (performing simple optimizations).
+
+13.34.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+<suppressed ~737 debug messages>
+
+13.34.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+<suppressed ~306 debug messages>
+Removed a total of 102 cells.
+
+13.34.3. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $auto$ff.cc:266:slice$1138 ($_DFF_N_) from module spi_lcd_vid_mem (D = $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][2][0]$a$937 [9], Q = \A_COUNT.rst, rval = 1'0).
+Adding SRST signal on $auto$ff.cc:266:slice$1140 ($_DFF_N_) from module spi_lcd_vid_mem (D = $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$254$rdmux[0][0][0]$b$929 [8], Q = \CRTL.inc_v_addr, rval = 1'0).
+
+13.34.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 124 unused cells and 624 unused wires.
+<suppressed ~125 debug messages>
+
+13.34.5. Rerunning OPT passes. (Removed registers in this run.)
+
+13.34.6. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.34.7. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+<suppressed ~6 debug messages>
+Removed a total of 2 cells.
+
+13.34.8. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $auto$ff.cc:266:slice$3337 ($_SDFF_NN0_) from module spi_lcd_vid_mem (D = $auto$rtlil.cc:3482:Mux$718 [0], Q = \CRTL.inc_v_addr, rval = 1'0).
+
+13.34.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 2 unused cells and 4 unused wires.
+<suppressed ~3 debug messages>
+
+13.34.10. Rerunning OPT passes. (Removed registers in this run.)
+
+13.34.11. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.34.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+<suppressed ~9 debug messages>
+Removed a total of 3 cells.
+
+13.34.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+13.34.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 0 unused cells and 3 unused wires.
+<suppressed ~1 debug messages>
+
+13.34.15. Finished fast OPT passes.
+
+13.35. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+
+13.36. Executing DFFLEGALIZE pass (convert FFs to types supported by the target).
+
+13.37. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+<suppressed ~3 debug messages>
+Removed a total of 1 cells.
+
+13.38. Executing TECHMAP pass (map to technology primitives).
+
+13.38.1. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/lattice/cells_map_trellis.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/lattice/cells_map_trellis.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/lattice/cells_map_trellis.v
+Generating RTLIL representation for module `\$_DFF_N_'.
+Generating RTLIL representation for module `\$_DFF_P_'.
+Generating RTLIL representation for module `\$_DFFE_NN_'.
+Generating RTLIL representation for module `\$_DFFE_PN_'.
+Generating RTLIL representation for module `\$_DFFE_NP_'.
+Generating RTLIL representation for module `\$_DFFE_PP_'.
+Generating RTLIL representation for module `\$_DFF_NP0_'.
+Generating RTLIL representation for module `\$_DFF_NP1_'.
+Generating RTLIL representation for module `\$_DFF_PP0_'.
+Generating RTLIL representation for module `\$_DFF_PP1_'.
+Generating RTLIL representation for module `\$_SDFF_NP0_'.
+Generating RTLIL representation for module `\$_SDFF_NP1_'.
+Generating RTLIL representation for module `\$_SDFF_PP0_'.
+Generating RTLIL representation for module `\$_SDFF_PP1_'.
+Generating RTLIL representation for module `\$_DFFE_NP0P_'.
+Generating RTLIL representation for module `\$_DFFE_NP1P_'.
+Generating RTLIL representation for module `\$_DFFE_PP0P_'.
+Generating RTLIL representation for module `\$_DFFE_PP1P_'.
+Generating RTLIL representation for module `\$_DFFE_NP0N_'.
+Generating RTLIL representation for module `\$_DFFE_NP1N_'.
+Generating RTLIL representation for module `\$_DFFE_PP0N_'.
+Generating RTLIL representation for module `\$_DFFE_PP1N_'.
+Generating RTLIL representation for module `\$_SDFFE_NP0P_'.
+Generating RTLIL representation for module `\$_SDFFE_NP1P_'.
+Generating RTLIL representation for module `\$_SDFFE_PP0P_'.
+Generating RTLIL representation for module `\$_SDFFE_PP1P_'.
+Generating RTLIL representation for module `\$_SDFFE_NP0N_'.
+Generating RTLIL representation for module `\$_SDFFE_NP1N_'.
+Generating RTLIL representation for module `\$_SDFFE_PP0N_'.
+Generating RTLIL representation for module `\$_SDFFE_PP1N_'.
+Generating RTLIL representation for module `\$_ALDFF_NP_'.
+Generating RTLIL representation for module `\$_ALDFF_PP_'.
+Generating RTLIL representation for module `\$_ALDFFE_NPN_'.
+Generating RTLIL representation for module `\$_ALDFFE_NPP_'.
+Generating RTLIL representation for module `\$_ALDFFE_PPN_'.
+Generating RTLIL representation for module `\$_ALDFFE_PPP_'.
+Generating RTLIL representation for module `\FD1P3AX'.
+Generating RTLIL representation for module `\FD1P3AY'.
+Generating RTLIL representation for module `\FD1P3BX'.
+Generating RTLIL representation for module `\FD1P3DX'.
+Generating RTLIL representation for module `\FD1P3IX'.
+Generating RTLIL representation for module `\FD1P3JX'.
+Generating RTLIL representation for module `\FD1S3AX'.
+Generating RTLIL representation for module `\FD1S3AY'.
+Generating RTLIL representation for module `\FD1S3BX'.
+Generating RTLIL representation for module `\FD1S3DX'.
+Generating RTLIL representation for module `\FD1S3IX'.
+Generating RTLIL representation for module `\FD1S3JX'.
+Generating RTLIL representation for module `\IFS1P3BX'.
+Generating RTLIL representation for module `\IFS1P3DX'.
+Generating RTLIL representation for module `\IFS1P3IX'.
+Generating RTLIL representation for module `\IFS1P3JX'.
+Generating RTLIL representation for module `\OFS1P3BX'.
+Generating RTLIL representation for module `\OFS1P3DX'.
+Generating RTLIL representation for module `\OFS1P3IX'.
+Generating RTLIL representation for module `\OFS1P3JX'.
+Generating RTLIL representation for module `\IB'.
+Generating RTLIL representation for module `\IBPU'.
+Generating RTLIL representation for module `\IBPD'.
+Generating RTLIL representation for module `\OB'.
+Generating RTLIL representation for module `\OBZ'.
+Generating RTLIL representation for module `\OBZPU'.
+Generating RTLIL representation for module `\OBZPD'.
+Generating RTLIL representation for module `\OBCO'.
+Generating RTLIL representation for module `\BB'.
+Generating RTLIL representation for module `\BBPU'.
+Generating RTLIL representation for module `\BBPD'.
+Generating RTLIL representation for module `\ILVDS'.
+Generating RTLIL representation for module `\OLVDS'.
+Successfully finished Verilog frontend.
+
+13.38.2. Continuing TECHMAP pass.
+Using template \$_SDFF_NP0_ for cells of type $_SDFF_NP0_.
+Using template $paramod\$_DFF_P_\_TECHMAP_WIREINIT_Q_=1'x for cells of type $_DFF_P_.
+Using template \$_SDFFE_PP0P_ for cells of type $_SDFFE_PP0P_.
+Using template \$_SDFFE_PP1P_ for cells of type $_SDFFE_PP1P_.
+Using template \$_SDFF_PP0_ for cells of type $_SDFF_PP0_.
+Using template \$_SDFFE_NP0P_ for cells of type $_SDFFE_NP0P_.
+Using template \$_SDFF_NP1_ for cells of type $_SDFF_NP1_.
+Using template $paramod\$_DFF_N_\_TECHMAP_WIREINIT_Q_=1'x for cells of type $_DFF_N_.
+No more expansions possible.
+<suppressed ~229 debug messages>
+
+13.39. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.40. Executing SIMPLEMAP pass (map simple cells to gate primitives).
+
+13.41. Executing LATTICE_GSR pass (implement FF init values).
+Handling GSR in spi_lcd_vid_mem.
+
+13.42. Executing ATTRMVCP pass (move or copy attributes).
+
+13.43. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 0 unused cells and 796 unused wires.
+<suppressed ~1 debug messages>
+
+13.44. Executing TECHMAP pass (map to technology primitives).
+
+13.44.1. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/lattice/latches_map.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/lattice/latches_map.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/lattice/latches_map.v
+Generating RTLIL representation for module `\$_DLATCH_N_'.
+Generating RTLIL representation for module `\$_DLATCH_P_'.
+Successfully finished Verilog frontend.
+
+13.44.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~4 debug messages>
+
+13.45. Executing ABC9 pass.
+
+13.45.1. Executing ABC9_OPS pass (helper functions for ABC9).
+
+13.45.2. Executing ABC9_OPS pass (helper functions for ABC9).
+
+13.45.3. Executing SCC pass (detecting logic loops).
+Found an SCC: $auto$simplemap.cc:298:simplemap_mux$3005 $auto$simplemap.cc:157:simplemap_reduce$2945 $auto$simplemap.cc:157:simplemap_reduce$2943 $auto$simplemap.cc:298:simplemap_mux$3006 $auto$simplemap.cc:157:simplemap_reduce$2931 $auto$simplemap.cc:157:simplemap_reduce$2929 $auto$simplemap.cc:157:simplemap_reduce$2936 $auto$simplemap.cc:106:simplemap_bitop$2978 $auto$simplemap.cc:298:simplemap_mux$1193 $auto$simplemap.cc:298:simplemap_mux$1197 $auto$simplemap.cc:157:simplemap_reduce$1148 $auto$simplemap.cc:298:simplemap_mux$1192 $auto$simplemap.cc:298:simplemap_mux$1196 $auto$simplemap.cc:157:simplemap_reduce$1399 $auto$simplemap.cc:157:simplemap_reduce$1397 $auto$simplemap.cc:157:simplemap_reduce$1395 $auto$simplemap.cc:157:simplemap_reduce$1427 $auto$ff.cc:266:slice$1474 $auto$opt_expr.cc:617:replace_const_cells$3208 $auto$ff.cc:266:slice$1392 $auto$simplemap.cc:157:simplemap_reduce$1734 $auto$ff.cc:266:slice$1391 $auto$opt_expr.cc:617:replace_const_cells$3210 $auto$ff.cc:266:slice$1390 $auto$ff.cc:266:slice$1389 $auto$simplemap.cc:46:simplemap_not$2899 $auto$ff.cc:266:slice$1388 $auto$simplemap.cc:157:simplemap_reduce$1732 $auto$ff.cc:266:slice$1387 $auto$simplemap.cc:46:simplemap_not$2897 $auto$ff.cc:266:slice$1386 $auto$simplemap.cc:157:simplemap_reduce$1736 $auto$simplemap.cc:157:simplemap_reduce$1731 $auto$simplemap.cc:46:simplemap_not$2896 $auto$ff.cc:266:slice$1385 $auto$ff.cc:266:slice$3330 $auto$simplemap.cc:157:simplemap_reduce$1150 $auto$simplemap.cc:298:simplemap_mux$1194 $auto$simplemap.cc:298:simplemap_mux$1198 $auto$simplemap.cc:298:simplemap_mux$3007 $auto$simplemap.cc:157:simplemap_reduce$2915 $auto$simplemap.cc:157:simplemap_reduce$2912 $auto$simplemap.cc:106:simplemap_bitop$2979 $auto$simplemap.cc:227:simplemap_lognot$1741 $auto$simplemap.cc:157:simplemap_reduce$1739 $auto$simplemap.cc:157:simplemap_reduce$1737 $auto$simplemap.cc:157:simplemap_reduce$1733 $auto$simplemap.cc:46:simplemap_not$2900
+Found 1 SCCs in module spi_lcd_vid_mem.
+Found 1 SCCs.
+
+13.45.4. Executing ABC9_OPS pass (helper functions for ABC9).
+
+13.45.5. Executing TECHMAP pass (map to technology primitives).
+
+13.45.5.1. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/techmap.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/techmap.v
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `\$__div_mod_u'.
+Generating RTLIL representation for module `\$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `\$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Generating RTLIL representation for module `\$connect'.
+Generating RTLIL representation for module `\$input_port'.
+Successfully finished Verilog frontend.
+
+13.45.5.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~166 debug messages>
+
+13.45.6. Executing OPT pass (performing simple optimizations).
+
+13.45.6.1. Executing OPT_EXPR pass (perform const folding).
+
+13.45.6.2. Executing OPT_MERGE pass (detect identical cells).
+Removed a total of 0 cells.
+
+13.45.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Removed 0 multiplexer ports.
+
+13.45.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+Performed a total of 0 changes.
+
+13.45.6.5. Executing OPT_MERGE pass (detect identical cells).
+Removed a total of 0 cells.
+
+13.45.6.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+13.45.6.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+13.45.6.8. Executing OPT_EXPR pass (perform const folding).
+
+13.45.6.9. Finished fast OPT passes. (There is nothing left to do.)
+
+13.45.7. Executing TECHMAP pass (map to technology primitives).
+
+13.45.7.1. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/abc9_map.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/abc9_map.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/abc9_map.v
+Successfully finished Verilog frontend.
+
+13.45.7.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~2 debug messages>
+
+13.45.8. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/abc9_model.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/abc9_model.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/abc9_model.v
+Generating RTLIL representation for module `$__ABC9_DELAY'.
+Generating RTLIL representation for module `$__ABC9_SCC_BREAKER'.
+Generating RTLIL representation for module `$__DFF_N__$abc9_flop'.
+Generating RTLIL representation for module `$__DFF_P__$abc9_flop'.
+Successfully finished Verilog frontend.
+
+13.45.9. Executing ABC9_OPS pass (helper functions for ABC9).
+<suppressed ~2 debug messages>
+
+13.45.10. Executing ABC9_OPS pass (helper functions for ABC9).
+
+13.45.11. Executing ABC9_OPS pass (helper functions for ABC9).
+<suppressed ~2 debug messages>
+
+13.45.12. Executing TECHMAP pass (map to technology primitives).
+
+13.45.12.1. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/techmap.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/techmap.v
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `\$__div_mod_u'.
+Generating RTLIL representation for module `\$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `\$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Generating RTLIL representation for module `\$connect'.
+Generating RTLIL representation for module `\$input_port'.
+Successfully finished Verilog frontend.
+
+13.45.12.2. Continuing TECHMAP pass.
+Using template $paramod$838872d5a4bab89607f53482b205c0fd50d8b82e\CCU2C for cells of type $paramod$838872d5a4bab89607f53482b205c0fd50d8b82e\CCU2C.
+Using extmapper simplemap for cells of type $or.
+Using extmapper simplemap for cells of type $and.
+Using extmapper simplemap for cells of type $not.
+Using extmapper simplemap for cells of type $xor.
+Using template $paramod\LUT2\INIT=4'1010 for cells of type LUT2.
+Using template $paramod\LUT4\INIT=16'1001011010101010 for cells of type LUT4.
+Using extmapper simplemap for cells of type $mux.
+No more expansions possible.
+<suppressed ~205 debug messages>
+
+13.45.13. Executing OPT pass (performing simple optimizations).
+
+13.45.13.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+<suppressed ~18 debug messages>
+
+13.45.13.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+<suppressed ~6 debug messages>
+Removed a total of 2 cells.
+
+13.45.13.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \spi_lcd_vid_mem..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+13.45.13.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \spi_lcd_vid_mem.
+Performed a total of 0 changes.
+
+13.45.13.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+Removed a total of 0 cells.
+
+13.45.13.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+13.45.13.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+Removed 0 unused cells and 55 unused wires.
+<suppressed ~1 debug messages>
+
+13.45.13.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.45.13.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+13.45.13.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \spi_lcd_vid_mem..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+13.45.13.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \spi_lcd_vid_mem.
+Performed a total of 0 changes.
+
+13.45.13.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\spi_lcd_vid_mem'.
+Removed a total of 0 cells.
+
+13.45.13.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+13.45.13.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \spi_lcd_vid_mem..
+
+13.45.13.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module spi_lcd_vid_mem.
+
+13.45.13.16. Finished fast OPT passes. (There is nothing left to do.)
+
+13.45.14. Executing AIGMAP pass (map logic to AIG).
+Module spi_lcd_vid_mem: replaced 18 cells with 120 new cells, skipped 39 cells.
+  replaced 3 cell types:
+      14 $_MUX_
+       2 $_OR_
+       2 $_XOR_
+  not replaced 3 cell types:
+       4 $_AND_
+       4 $_NOT_
+      31 $specify2
+
+13.45.15. Executing AIGMAP pass (map logic to AIG).
+Module spi_lcd_vid_mem: replaced 371 cells with 2003 new cells, skipped 334 cells.
+  replaced 3 cell types:
+     168 $_MUX_
+     198 $_OR_
+       5 $_XOR_
+  not replaced 7 cell types:
+      54 $_AND_
+      84 $_NOT_
+       1 $__ABC9_SCC_BREAKER
+      10 $scopeinfo
+     136 TRELLIS_FF
+       1 DP16KD
+      48 $paramod$838872d5a4bab89607f53482b205c0fd50d8b82e\CCU2C
+
+13.45.15.1. Executing ABC9_OPS pass (helper functions for ABC9).
+
+13.45.15.2. Executing ABC9_OPS pass (helper functions for ABC9).
+
+13.45.15.3. Executing XAIGER backend.
+<suppressed ~11 debug messages>
+Extracted 771 AND gates and 2548 wires from module `spi_lcd_vid_mem' to a netlist network with 149 inputs and 168 outputs.
+
+13.45.15.4. Executing ABC9_EXE pass (technology mapping using ABC9).
+
+13.45.15.5. Executing ABC9.
+Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_lut <abc-temp-dir>/input.lut 
+ABC: + read_box <abc-temp-dir>/input.box 
+ABC: + &read <abc-temp-dir>/input.xaig 
+ABC: + &ps 
+ABC: <abc-temp-dir>/input : i/o =    149/    168  and =     498  lev =   17 (1.23)  mem = 0.02 MB  box = 48  bb = 0
+ABC: + &scorr 
+ABC: Warning: The network is combinational.
+ABC: + &sweep 
+ABC: + &dc2 
+ABC: + &dch -f -r 
+ABC: + &ps 
+ABC: <abc-temp-dir>/input : i/o =    149/    168  and =     632  lev =   14 (0.75)  mem = 0.02 MB  ch =   82  box = 48  bb = 0
+ABC: cst =       0  cls =     81  lit =      82  unused =     762  proof =     0
+ABC: + &if -W 300 -v 
+ABC: K = 7. Memory (bytes): Truth =    0. Cut =   64. Obj =  148. Set =  672. CutMin = no
+ABC: Node =     632.  Ch =    81.  Total mem =    0.24 MB. Peak cut mem =    0.02 MB.
+ABC: P:  Del = 3183.00.  Ar =     485.0.  Edge =      702.  Cut =     4173.  T =     0.00 sec
+ABC: P:  Del = 3180.00.  Ar =     473.0.  Edge =      697.  Cut =     4175.  T =     0.00 sec
+ABC: P:  Del = 3180.00.  Ar =     274.0.  Edge =      623.  Cut =     6598.  T =     0.00 sec
+ABC: F:  Del = 3034.00.  Ar =     198.0.  Edge =      542.  Cut =     4841.  T =     0.00 sec
+ABC: A:  Del = 3031.00.  Ar =     193.0.  Edge =      524.  Cut =     4716.  T =     0.00 sec
+ABC: A:  Del = 3031.00.  Ar =     193.0.  Edge =      524.  Cut =     4742.  T =     0.00 sec
+ABC: Total time =     0.01 sec
+ABC: + &write -n <abc-temp-dir>/output.aig 
+ABC: + &mfs 
+ABC: + &ps -l 
+ABC: <abc-temp-dir>/input : i/o =    149/    168  and =     431  lev =   16 (0.82)  mem = 0.02 MB  box = 48  bb = 0
+ABC: Mapping (K=6)  :  lut =    160  edge =     507  lev =    6 (0.41)  levB =   17  mem = 0.01 MB
+ABC: LUT = 160 : 2=61 38.1 %  3=31 19.4 %  4=52 32.5 %  5=12 7.5 %  6=4 2.5 %  Ave = 3.17
+ABC: + &write -n <abc-temp-dir>/output.aig 
+ABC: + time 
+ABC: elapse: 0.06 seconds, total: 0.06 seconds
+
+13.45.15.6. Executing AIGER frontend.
+<suppressed ~646 debug messages>
+Removed 555 unused cells and 1576 unused wires.
+
+13.45.15.7. Executing ABC9_OPS pass (helper functions for ABC9).
+ABC RESULTS:              $lut cells:      164
+ABC RESULTS:   $paramod$838872d5a4bab89607f53482b205c0fd50d8b82e\CCU2C cells:       48
+ABC RESULTS:           input signals:       23
+ABC RESULTS:          output signals:       52
+Removing temp directory.
+
+13.45.16. Executing TECHMAP pass (map to technology primitives).
+
+13.45.16.1. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/abc9_unmap.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/abc9_unmap.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/abc9_unmap.v
+Generating RTLIL representation for module `\$__DFF_x__$abc9_flop'.
+Generating RTLIL representation for module `\$__ABC9_SCC_BREAKER'.
+Successfully finished Verilog frontend.
+
+13.45.16.2. Continuing TECHMAP pass.
+Using template $paramod\$__ABC9_SCC_BREAKER\WIDTH=32'00000000000000000000000000000001 for cells of type $__ABC9_SCC_BREAKER.
+Using template $paramod$838872d5a4bab89607f53482b205c0fd50d8b82e\CCU2C for cells of type $paramod$838872d5a4bab89607f53482b205c0fd50d8b82e\CCU2C.
+No more expansions possible.
+<suppressed ~66 debug messages>
+Removed 29 unused cells and 3026 unused wires.
+
+13.46. Executing TECHMAP pass (map to technology primitives).
+
+13.46.1. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/lattice/cells_map_trellis.v
+Parsing Verilog input from `/usr/local/bin/../share/yosys/lattice/cells_map_trellis.v' to AST representation.
+verilog frontend filename /usr/local/bin/../share/yosys/lattice/cells_map_trellis.v
+Generating RTLIL representation for module `\$_DFF_N_'.
+Generating RTLIL representation for module `\$_DFF_P_'.
+Generating RTLIL representation for module `\$_DFFE_NN_'.
+Generating RTLIL representation for module `\$_DFFE_PN_'.
+Generating RTLIL representation for module `\$_DFFE_NP_'.
+Generating RTLIL representation for module `\$_DFFE_PP_'.
+Generating RTLIL representation for module `\$_DFF_NP0_'.
+Generating RTLIL representation for module `\$_DFF_NP1_'.
+Generating RTLIL representation for module `\$_DFF_PP0_'.
+Generating RTLIL representation for module `\$_DFF_PP1_'.
+Generating RTLIL representation for module `\$_SDFF_NP0_'.
+Generating RTLIL representation for module `\$_SDFF_NP1_'.
+Generating RTLIL representation for module `\$_SDFF_PP0_'.
+Generating RTLIL representation for module `\$_SDFF_PP1_'.
+Generating RTLIL representation for module `\$_DFFE_NP0P_'.
+Generating RTLIL representation for module `\$_DFFE_NP1P_'.
+Generating RTLIL representation for module `\$_DFFE_PP0P_'.
+Generating RTLIL representation for module `\$_DFFE_PP1P_'.
+Generating RTLIL representation for module `\$_DFFE_NP0N_'.
+Generating RTLIL representation for module `\$_DFFE_NP1N_'.
+Generating RTLIL representation for module `\$_DFFE_PP0N_'.
+Generating RTLIL representation for module `\$_DFFE_PP1N_'.
+Generating RTLIL representation for module `\$_SDFFE_NP0P_'.
+Generating RTLIL representation for module `\$_SDFFE_NP1P_'.
+Generating RTLIL representation for module `\$_SDFFE_PP0P_'.
+Generating RTLIL representation for module `\$_SDFFE_PP1P_'.
+Generating RTLIL representation for module `\$_SDFFE_NP0N_'.
+Generating RTLIL representation for module `\$_SDFFE_NP1N_'.
+Generating RTLIL representation for module `\$_SDFFE_PP0N_'.
+Generating RTLIL representation for module `\$_SDFFE_PP1N_'.
+Generating RTLIL representation for module `\$_ALDFF_NP_'.
+Generating RTLIL representation for module `\$_ALDFF_PP_'.
+Generating RTLIL representation for module `\$_ALDFFE_NPN_'.
+Generating RTLIL representation for module `\$_ALDFFE_NPP_'.
+Generating RTLIL representation for module `\$_ALDFFE_PPN_'.
+Generating RTLIL representation for module `\$_ALDFFE_PPP_'.
+Generating RTLIL representation for module `\FD1P3AX'.
+Generating RTLIL representation for module `\FD1P3AY'.
+Generating RTLIL representation for module `\FD1P3BX'.
+Generating RTLIL representation for module `\FD1P3DX'.
+Generating RTLIL representation for module `\FD1P3IX'.
+Generating RTLIL representation for module `\FD1P3JX'.
+Generating RTLIL representation for module `\FD1S3AX'.
+Generating RTLIL representation for module `\FD1S3AY'.
+Generating RTLIL representation for module `\FD1S3BX'.
+Generating RTLIL representation for module `\FD1S3DX'.
+Generating RTLIL representation for module `\FD1S3IX'.
+Generating RTLIL representation for module `\FD1S3JX'.
+Generating RTLIL representation for module `\IFS1P3BX'.
+Generating RTLIL representation for module `\IFS1P3DX'.
+Generating RTLIL representation for module `\IFS1P3IX'.
+Generating RTLIL representation for module `\IFS1P3JX'.
+Generating RTLIL representation for module `\OFS1P3BX'.
+Generating RTLIL representation for module `\OFS1P3DX'.
+Generating RTLIL representation for module `\OFS1P3IX'.
+Generating RTLIL representation for module `\OFS1P3JX'.
+Generating RTLIL representation for module `\IB'.
+Generating RTLIL representation for module `\IBPU'.
+Generating RTLIL representation for module `\IBPD'.
+Generating RTLIL representation for module `\OB'.
+Generating RTLIL representation for module `\OBZ'.
+Generating RTLIL representation for module `\OBZPU'.
+Generating RTLIL representation for module `\OBZPD'.
+Generating RTLIL representation for module `\OBCO'.
+Generating RTLIL representation for module `\BB'.
+Generating RTLIL representation for module `\BBPU'.
+Generating RTLIL representation for module `\BBPD'.
+Generating RTLIL representation for module `\ILVDS'.
+Generating RTLIL representation for module `\OLVDS'.
+Generating RTLIL representation for module `\$lut'.
+Successfully finished Verilog frontend.
+
+13.46.2. Continuing TECHMAP pass.
+Using template $paramod$272652f6c6fbe9a75eff76e45cc7e2788835518b\$lut for cells of type $lut.
+Using template $paramod$658b9ed803f0d3d335616d3858b53e0a2522f1e8\$lut for cells of type $lut.
+Using template $paramod$571404c0889eaf57f492cb5e37f8acb5df5852f9\$lut for cells of type $lut.
+Using template $paramod$a5516fc31d1e552de2435200bb732b4d4ad63a9c\$lut for cells of type $lut.
+Using template $paramod$30305e55a780880b9c824fe3509a4d981acb0f2b\$lut for cells of type $lut.
+Using template $paramod$afa9400186bbe7dc72d432eddcf2ab88f956bfb2\$lut for cells of type $lut.
+Using template $paramod$364c9ffbffac467d60dfec81bba4e18476c15602\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000001\LUT=2'01 for cells of type $lut.
+Using template $paramod$a743caf801766df40bcc22d49baa12a0bdc2f7fe\$lut for cells of type $lut.
+Using template $paramod$a9cfafd16add44a909fc7c76e2a40bc403d47fa8\$lut for cells of type $lut.
+Using template $paramod$20f82dd03802038bc013e5804609eaebb5d257db\$lut for cells of type $lut.
+Using template $paramod$231115182ad9792701211979233765872aa16603\$lut for cells of type $lut.
+Using template $paramod$3f49d1dc076a66a2090f5947131c4e3844c95133\$lut for cells of type $lut.
+Using template $paramod$be212506c2bba562c53ff6fd80c2a5b8f2078599\$lut for cells of type $lut.
+Using template $paramod$c5500ca31de94b5576908be0dcac2f8750af1fe3\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00000001 for cells of type $lut.
+Using template $paramod$5f2c184e719bd4e5fefb9f913b84bd9e97cd57c5\$lut for cells of type $lut.
+Using template $paramod$901ffb85a08240d39902068b699031da2f7e4fd3\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00100011 for cells of type $lut.
+Using template $paramod$7e3d8ac009723e554811ad53385162c0e6a41625\$lut for cells of type $lut.
+Using template $paramod$fa8c34f9d7d37dcbba0529fd8beb339f3024d545\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01111111 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1101 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'11100010 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1110 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'11111101 for cells of type $lut.
+Using template $paramod$9664b2f5fd61944d7798b30cde43b99ccda87303\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'11010001 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01000000 for cells of type $lut.
+Using template $paramod$6e238df02989b317f10820a22773676e71120644\$lut for cells of type $lut.
+Using template $paramod$8e44661def013b6bf9fe6f8b049ef2c838d749f9\$lut for cells of type $lut.
+Using template $paramod$cf652acbfbf67d2248e3045cd0f09c58ca55886c\$lut for cells of type $lut.
+Using template $paramod$f9813472aa48e533b3838c6f2316dc2e78c66111\$lut for cells of type $lut.
+Using template $paramod$6d6beead1425af15cf78b27fd9b11b41b5d4bce8\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'0100 for cells of type $lut.
+Using template $paramod$f7e977e4ab769956ecac4448595a773db86c44e8\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'10111000 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'0110 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01101010 for cells of type $lut.
+Using template $paramod$a77d03a9b0abec24a0e445b58b5f1fa5e9871115\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'10001101 for cells of type $lut.
+Using template $paramod$619b7c9a4d44585e10b42f7fb79b16304cca97c5\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'11000001 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'10001011 for cells of type $lut.
+Using template $paramod$0aa2bf42bf7ce6a2fd875463039110ca775886eb\$lut for cells of type $lut.
+Using template $paramod$b8df8a8770065ad6d5b237a1bd296b2355d2d25f\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'0010 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00000111 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'0001 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1000 for cells of type $lut.
+Using template $paramod$3c67bc849b863ee73dac306e1472fcbc818b883d\$lut for cells of type $lut.
+Using template $paramod$cdc5bba2585477f1744fd1f869bebc8beb23d707\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'10000000 for cells of type $lut.
+Using template $paramod$94ac66a11090dca84889e55fcf03297912a5b7ec\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00101010 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00001110 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00010100 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00000100 for cells of type $lut.
+Using template $paramod$ff58554493773336c4e06dc62f25c37448f98c7b\$lut for cells of type $lut.
+Using template $paramod$09e8beda20e63d9d8996d6470618f566ef6efe86\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00101000 for cells of type $lut.
+Using template $paramod$6b7c9c56fc2a32a479d463d5f3b0d3f4673b67f1\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'11011000 for cells of type $lut.
+Using template $paramod$d7856980c8e3df62f97c26ab34037f33a9e831b5\$lut for cells of type $lut.
+Using template $paramod$5348912da867a611a8088b6b8b27a62d65f1de6e\$lut for cells of type $lut.
+Using template $paramod$c68110307ed3a83d1f1d050a34218c458bce2221\$lut for cells of type $lut.
+Using template $paramod$295518173f971989184bfa8a738021203a1e591c\$lut for cells of type $lut.
+Using template $paramod$4e942e0dd662c6f1bc461100a4ad99f70298e00c\$lut for cells of type $lut.
+No more expansions possible.
+<suppressed ~1121 debug messages>
+
+13.47. Executing OPT_LUT_INS pass (discard unused LUT inputs).
+Optimizing LUTs in spi_lcd_vid_mem.
+  Optimizing lut $abc$8035$lut$auto$rtlil.cc:3482:Mux$718.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut2 (4 -> 3)
+  Optimizing lut $abc$8035$lut$auto$rtlil.cc:3482:Mux$718.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut3 (4 -> 0)
+  Optimizing lut $auto$abc9_ops.cc:1552:reintegrate$8062.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut3 (4 -> 3)
+  Optimizing lut $auto$abc9_ops.cc:1552:reintegrate$8065.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1 (4 -> 1)
+  Optimizing lut $auto$abc9_ops.cc:1552:reintegrate$8065.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut3 (4 -> 1)
+  Optimizing lut $auto$abc9_ops.cc:1552:reintegrate$8066.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1 (4 -> 3)
+  Optimizing lut $auto$abc9_ops.cc:1552:reintegrate$8066.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut2 (4 -> 3)
+  Optimizing lut $auto$abc9_ops.cc:1552:reintegrate$8066.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut3 (4 -> 0)
+  Optimizing lut $abc$8035$lut$aiger8034$353.genblk1.genblk1.genblk1.genblk1.genblk1.lut1 (4 -> 0)
+  Optimizing lut $abc$8035$lut$aiger8034$347.genblk1.genblk1.genblk1.genblk1.genblk1.lut1 (4 -> 0)
+  Optimizing lut $abc$8035$lut$auto$opt_dff.cc:272:make_patterns_logic$663.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut2 (4 -> 0)
+  Optimizing lut $abc$8035$lut$auto$opt_dff.cc:272:make_patterns_logic$663.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1 (4 -> 0)
+  Optimizing lut $abc$8035$lut$aiger8034$335.genblk1.genblk1.genblk1.genblk1.genblk1.lut0 (4 -> 0)
+  Optimizing lut $auto$abc9_ops.cc:1552:reintegrate$8062.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1 (4 -> 3)
+  Optimizing lut $abc$8035$lut$aiger8034$485.genblk1.genblk1.genblk1.genblk1.genblk1.lut0 (4 -> 0)
+  Optimizing lut $abc$8035$lut$aiger8034$501.genblk1.genblk1.genblk1.genblk1.genblk1.lut0 (4 -> 0)
+  Optimizing lut $abc$8035$lut$auto$opt_dff.cc:272:make_patterns_logic$663.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut0 (4 -> 0)
+  Optimizing lut $abc$8035$lut$auto$rtlil.cc:3482:Mux$718.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut0 (4 -> 3)
+  Optimizing lut $abc$8035$lut$flatten\SPI_TX.$procmux$371_Y[4].genblk1.genblk1.genblk1.genblk1.genblk1.lut1 (4 -> 3)
+  Optimizing lut $abc$8035$lut$auto$rtlil.cc:3482:Mux$718.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut1 (4 -> 3)
+  Optimizing lut $abc$8035$lut$flatten\SPI_TX.$procmux$371_Y[6].genblk1.genblk1.genblk1.genblk1.genblk1.lut1 (4 -> 3)
+  Optimizing lut $abc$8035$lut$flatten\SPI_TX.$procmux$371_Y[7].genblk1.genblk1.genblk1.genblk1.genblk1.lut1 (4 -> 3)
+  Optimizing lut $auto$abc9_ops.cc:1552:reintegrate$8039.genblk1.genblk1.genblk1.genblk1.genblk1.lut1 (4 -> 2)
+  Optimizing lut $auto$abc9_ops.cc:1552:reintegrate$8064.genblk1.genblk1.genblk1.genblk1.genblk1.lut0 (4 -> 3)
+  Optimizing lut $auto$abc9_ops.cc:1552:reintegrate$8066.genblk1.genblk1.genblk1.genblk1.genblk1.genblk1.lut0 (4 -> 3)
+Removed 0 unused cells and 358 unused wires.
+
+13.48. Executing AUTONAME pass.
+Renamed 624 objects in module spi_lcd_vid_mem (120 iterations).
+<suppressed ~624 debug messages>
+
+13.49. Executing HIERARCHY pass (managing design hierarchy).
+Attribute `top' found on module `spi_lcd_vid_mem'. Setting top module to spi_lcd_vid_mem.
+
+13.49.1. Analyzing design hierarchy..
+Top module:  \spi_lcd_vid_mem
+
+13.49.2. Analyzing design hierarchy..
+Top module:  \spi_lcd_vid_mem
+Removed 0 unused modules.
+
+13.50. Printing statistics.
+
+=== spi_lcd_vid_mem ===
+
+        +----------Local Count, excluding submodules.
+        | 
+      302 wires
+      854 wire bits
+      302 public wires
+      854 public wire bits
+        7 ports
+        7 port bits
+       11 cells
+       10   $scopeinfo
+        1   DP16KD
+      403 submodules
+       48   CCU2C
+        5   L6MUX21
+      192   LUT4
+       22   PFUMX
+      136   TRELLIS_FF
+
+=== design hierarchy ===
+
+        +----------Count including submodules.
+        | 
+       11 spi_lcd_vid_mem
+
+        +----------Count including submodules.
+        | 
+      302 wires
+      854 wire bits
+      302 public wires
+      854 public wire bits
+        7 ports
+        7 port bits
+        - memories
+        - memory bits
+        - processes
+       11 cells
+       10   $scopeinfo
+        1   DP16KD
+      403 submodules
+       48   CCU2C
+        5   L6MUX21
+      192   LUT4
+       22   PFUMX
+      136   TRELLIS_FF
+
+13.51. Executing CHECK pass (checking for obvious problems).
+Checking module spi_lcd_vid_mem...
+Found and reported 0 problems.
+
+14. Executing JSON backend.
+
+End of script. Logfile hash: d8e6df48c8, CPU: user 0.90s system 0.02s, MEM: 48.43 MB peak
+Yosys 0.59+62 (git sha1 9aa2dde7e, g++ 14.2.0-19ubuntu2 -fPIC -O3)
+Time spent: 28% 31x read_verilog (0 sec), 20% 12x techmap (0 sec), ...

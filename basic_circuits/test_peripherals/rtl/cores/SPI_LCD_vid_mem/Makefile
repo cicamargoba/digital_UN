@@ -60,9 +60,9 @@ build_icebreaker: check_video_mem $(HW_DEPS) spi_lcd_icebreaker.pcf icebreaker_p
 	yosys -l $(BUILD_DIR)/icebreaker.rpt -p 'read_verilog -defer -DLCD_$(LCD) $(HW_OBJS); $(HW_PARAMS); synth_ice40 -dsp -top $(TOP); write_json $(BUILD_DIR)/icebreaker.json'
 	nextpnr-ice40 --json $(BUILD_DIR)/icebreaker.json --pcf spi_lcd_icebreaker.pcf --asc $(BUILD_DIR)/icebreaker.asc --pre-pack icebreaker_pre_pack.py --up5k --package sg48 --seed 1
 	icepack -s $(BUILD_DIR)/icebreaker.asc $(BUILD_DIR)/icebreaker.bin
+	iceprog -d i:0x0403:0x6010 $(BUILD_DIR)/icebreaker.bin
 
 configure_icebreaker: build_icebreaker
-	iceprog -d i:0x0403:0x6010 $(BUILD_DIR)/icebreaker.bin
 
 build_lattice: check_video_mem $(HW_DEPS) spi_lcd_vid_mem.lpf | $(BUILD_DIR)
 	yosys -l $(BUILD_DIR)/lattice.rpt -p 'read_verilog -defer -DLCD_$(LCD) $(HW_OBJS); $(HW_PARAMS); synth_ecp5 -top $(TOP); write_json $(BUILD_DIR)/lattice.json'

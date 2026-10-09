@@ -35,16 +35,14 @@ module FemtoRV32(
    input 	 clk,
 
    output reg [31:0] mem_addr,  // address bus
-   output [31:0] mem_wdata, // data to be written
+   output [31:0] mem_wdata,     // data to be written
    output reg [3:0]  mem_wmask, // write mask for the 4 bytes of each word
-   input  [31:0] mem_rdata, // input lines for both data and instr
-   output reg	 mem_rstrb, // active to initiate memory read (used by IO)
-   input 	 mem_rbusy, // asserted if memory is busy reading value
-   input 	 mem_wbusy, // asserted if memory is busy writing value
-
-   input         interrupt_request, // petición de interrupción (activa en alto)
-
-   input 	 reset      // set to 0 to reset the processor
+   input  [31:0] mem_rdata,     // input lines for both data and instr
+   output reg	 mem_rstrb,      // active to initiate memory read (used by IO)
+   input 	 mem_rbusy,         // asserted if memory is busy reading value
+   input 	 mem_wbusy,         // asserted if memory is busy writing value
+   input     interrupt_request, // petición de interrupción (activa en alto)
+   input 	 reset              // set to 0 to reset the processor
 );
 
    parameter RESET_ADDR       = 32'h00000000;

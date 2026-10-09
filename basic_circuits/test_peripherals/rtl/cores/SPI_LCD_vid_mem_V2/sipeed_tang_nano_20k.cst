@@ -1,0 +1,6 @@
+# Clock y reset tomados de ../../sipeed_tang_nano_20k.cst.
+IO_LOC "clk" 4;
+IO_PORT "clk" IO_TYPE=LVCMOS33;
+IO_LOC "rst" 88;
+IO_PORT "rst" IO_TYPE=LVCMOS33;
+# Pendiente: lcd_sck, lcd_dc, lcd_cs, lcd_rst, lcd_sdi.
