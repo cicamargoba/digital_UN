@@ -339,9 +339,23 @@ configure_tang_nano_20k: clean_gowin $(TCL_SCRIPT)
 clean_gowin:
 	rm -rf impl
 
-configure_tang_primer_25k: $(TCL_SCRIPT)
-	gw_sh  $(TCL_SCRIPT)
-	openFPGALoader --cable ft2232 --bitstream ./impl/pnr/project.fs
+PRIMER_OPEN_BIN ?= /Work/CAD/gowin-open/bin
+PRIMER_YOSYS ?= yosys
+PRIMER_NEXTPNR ?= $(PRIMER_OPEN_BIN)/nextpnr-himbaechel
+PRIMER_PACK ?= $(PRIMER_OPEN_BIN)/gowin_pack
+PRIMER_BUILD_DIR ?= $(BUILD_DIR)/primer25k_open
+PRIMER_FTDI_SERIAL ?= 2025030317
+
+.PHONY: build_tang_primer_25k configure_tang_primer_25k
+
+build_tang_primer_25k: $(COMM_OBJS) sipeed_tang_primer_25k.cst sipeed_tang_primer_25k.sdc
+	mkdir -p "$(PRIMER_BUILD_DIR)"
+	"$(PRIMER_YOSYS)" -Q -T -q -l $(PRIMER_BUILD_DIR)/$(TOP)_synth.log -p 'read_verilog $(COMM_OBJS); synth_gowin -family gw5a -strict-gw5a-dffs -nolutram -top $(TOP) -json $(PRIMER_BUILD_DIR)/$(TOP)_synth.json; check -assert'
+	"$(PRIMER_NEXTPNR)" --device GW5A-LV25MG121NC1/I0 --top $(TOP) --json $(PRIMER_BUILD_DIR)/$(TOP)_synth.json --write $(PRIMER_BUILD_DIR)/$(TOP)_pnr.json --sdc sipeed_tang_primer_25k.sdc --freq 50 --vopt cst=sipeed_tang_primer_25k.cst --vopt i2c_as_gpio --vopt sspi_as_gpio --seed 1 --report $(PRIMER_BUILD_DIR)/$(TOP)_report.json --log $(PRIMER_BUILD_DIR)/$(TOP)_pnr.log
+	"$(PRIMER_PACK)" -d GW5A-25A --cpu_as_gpio --i2c_as_gpio --sspi_as_gpio --mspi_as_gpio --ready_as_gpio --done_as_gpio -o $(PRIMER_BUILD_DIR)/$(TOP).fs $(PRIMER_BUILD_DIR)/$(TOP)_pnr.json
+
+configure_tang_primer_25k: build_tang_primer_25k
+	openFPGALoader --board tangprimer25k --ftdi-serial "$(PRIMER_FTDI_SERIAL)" --bitstream $(PRIMER_BUILD_DIR)/$(TOP).fs
 
 
 

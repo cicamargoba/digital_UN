@@ -24,7 +24,10 @@ foreach file {a_count.v comp_addr.v ctrl.v d_count.v init_mem.v memwr_cmd.v mux_
     add_file -type verilog $file
 }
 set_option -top_module spi_lcd_vid_mem
-set_option -verilog_define [list LCD_$env(LCD)]
+set_option -verilog_define [list \
+    LCD_$env(LCD) \
+    "LCD_CLK_HZ=$env(CLK_HZ)" \
+    "LCD_ROW_MODE=$env(ROW_MODE)"]
 set_option -use_mspi_as_gpio 1
 set_option -use_ready_as_gpio 1
 set_option -use_done_as_gpio 1

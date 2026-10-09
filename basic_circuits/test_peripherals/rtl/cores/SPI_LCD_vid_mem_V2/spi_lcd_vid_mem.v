@@ -1,14 +1,25 @@
 `include "init_defs.vh"
 module spi_lcd_vid_mem #(
     parameter INIT_MAX    = `LCD_INIT_MAX,
-    parameter CLK_DIV     = 4,
-    parameter UNIT_TICKS  = 25000,
-    parameter RESET_TICKS = 250000,
-    parameter RECOVERY_TICKS = 3000000,
+    parameter CLK_DIV     = 1,
+    parameter CLK_HZ      = `LCD_CLK_HZ,
+    parameter UNIT_TICKS  =
+        (64'd25000 * CLK_HZ + 11999999) / 12000000,
+    parameter RESET_TICKS =
+        (64'd250000 * CLK_HZ + 11999999) / 12000000,
+    parameter RECOVERY_TICKS =
+        (64'd3000000 * CLK_HZ + 11999999) / 12000000,
     parameter RESET_ACTIVE_LOW = 0,
-    parameter VID_AW      = 18,
-    parameter VID_BYTES   = (1 << VID_AW),
-    parameter VID_INIT_FILE = "video_mem_init.hex"
+    parameter LCD_WIDTH   = `LCD_WIDTH,
+    parameter LCD_HEIGHT  = `LCD_HEIGHT,
+    parameter BYTES_PER_PIXEL = `LCD_BYTES_PER_PIXEL,
+    parameter ROW_MODE    = `LCD_ROW_MODE,
+    parameter VID_BYTES   =
+        LCD_WIDTH * BYTES_PER_PIXEL * (ROW_MODE ? 1 : LCD_HEIGHT),
+    parameter VID_AW      =
+        (VID_BYTES > 1) ? $clog2(VID_BYTES) : 1,
+    parameter VID_INIT_FILE =
+        ROW_MODE ? "video_mem_row.hex" : "video_mem_init.hex"
 )(
     input         clk,
     input         rst,
@@ -115,6 +126,7 @@ video_mem #(
     .NBYTES    (VID_BYTES),
     .INIT_FILE (VID_INIT_FILE)
 ) VIDEO_MEM (
+    .clk  (clk),
     .addr (v_addr),
     .data (vid_data)
 );

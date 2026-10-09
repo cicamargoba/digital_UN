@@ -1,6 +1,9 @@
 `timescale 1ns/1ps
 `include "init_defs.vh"
 module spi_lcd_vid_mem_check_TB;
+parameter TEST_BYTES = 16;
+parameter TEST_INIT_FILE = "video_mem_init_TB.hex";
+localparam TEST_AW = (TEST_BYTES > 1) ? $clog2(TEST_BYTES) : 1;
 reg clk = 1'b0;
 reg rst = 1'b1;
 wire lcd_rst;
@@ -11,7 +14,7 @@ wire lcd_sdi;
 reg [7:0] ref_addr;
 wire [9:0] ref_data;
 reg [8:0] expected [0:255];
-reg [7:0] pixels [0:15];
+reg [7:0] pixels [0:TEST_BYTES-1];
 reg [7:0] received = 8'd0;
 reg sampling = 1'b0;
 reg [8:0] expected_byte;
@@ -25,9 +28,9 @@ spi_lcd_vid_mem #(
     .UNIT_TICKS(4),
     .RESET_TICKS(8),
     .RECOVERY_TICKS(8),
-    .VID_AW(4),
-    .VID_BYTES(16),
-    .VID_INIT_FILE("video_mem_init_TB.hex")
+    .VID_AW(TEST_AW),
+    .VID_BYTES(TEST_BYTES),
+    .VID_INIT_FILE(TEST_INIT_FILE)
 ) uut (
     .clk(clk),
     .rst(rst),
@@ -53,7 +56,7 @@ always @(posedge lcd_sck) begin
             end else if (byte_count == init_bytes) begin
                 expected_byte = 9'h02c;
             end else begin
-                expected_byte = {1'b1, pixels[(byte_count-init_bytes-1)%16]};
+                expected_byte = {1'b1, pixels[(byte_count-init_bytes-1)%TEST_BYTES]};
             end
             if ({lcd_dc, received} !== expected_byte || lcd_cs !== 1'b0) begin
                 $fatal(1, "byte=%0d expected=%h received=%h CS=%b",
@@ -63,8 +66,8 @@ always @(posedge lcd_sck) begin
                      received, lcd_dc, lcd_cs, $time);
             bit_count = 0;
             byte_count = byte_count + 1;
-            if (byte_count == init_bytes+1+48) begin
-                $display("PASS LCD: %0d init bytes, 0x2C, 3 video-memory passes", init_bytes);
+            if (byte_count == init_bytes+1+3*TEST_BYTES) begin
+                $display("PASS LCD: %0d init bytes, 0x2C, 3 passes of %0d bytes", init_bytes, TEST_BYTES);
                 $finish;
             end
         end
@@ -73,7 +76,7 @@ end
 initial begin
     $dumpfile("build/spi_lcd_vid_mem_check_TB.vcd");
     $dumpvars(0, uut);
-    $readmemh("video_mem_init_TB.hex", pixels);
+    $readmemh(TEST_INIT_FILE, pixels);
     for (i = 0; i < `LCD_INIT_MAX; i = i+1) begin
         ref_addr = i;
         #1;
@@ -87,7 +90,7 @@ initial begin
     rst = 1'b0;
 end
 initial begin
-    #4000000;
+    #(4000000 + TEST_BYTES*10000);
     $fatal(1, "LCD integration timeout");
 end
 endmodule

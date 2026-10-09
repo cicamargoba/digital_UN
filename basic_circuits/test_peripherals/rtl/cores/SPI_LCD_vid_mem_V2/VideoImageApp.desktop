@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Inicialización de vídeo ST7789
+Comment=Convertir imágenes a memoria BGR565 para Primer 25K
+Exec=python3 "/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/cores/SPI_LCD_vid_mem_V2/gen_color_bars.py" --gui
+Path=/Work/Embedded/digital_UN/basic_circuits/test_peripherals/rtl/cores/SPI_LCD_vid_mem_V2
+Icon=image-x-generic
+Terminal=false
+Categories=Graphics;

@@ -123,11 +123,70 @@ La medición anterior de V2, con DC registrado, daba 270 celdas lógicas, 246 LU
 
 - **Hardware, fuente humana:** Carlos confirmó el funcionamiento de la primera V2, conservó una referencia funcional en `ctrl_spi_ok.v`, informó que la propuesta de la IA con S_COUNT no mostraba las franjas y posteriormente comunicó que había solucionado el problema en `ctrl_spi.v`. Estas confirmaciones y el reporte de falla pertenecen al 8 de octubre de 2026.
 - **Simulación y síntesis históricas:** la propuesta de la IA pasó pruebas del transmisor para 256 valores de byte y CLK_DIV=1, 2, 4 y 7; integración de cuatro secuencias LCD; y síntesis/place-and-route con memoria de 480 bytes. Eso no evitó el fallo informado en hardware.
-- **Archivo corregido por Carlos:** revisado por lectura del RTL. Después de esa corrección no se han repetido las simulaciones ni las mediciones de recursos de esta sesión. Las cifras históricas no deben presentarse como resultados del archivo actual.
+- **Archivo corregido por Carlos, cierre del 8 de octubre:** en esa revisión se leyó el RTL, sin repetir las simulaciones ni las mediciones de recursos. Las cifras históricas de ese día no deben presentarse como resultados del archivo actual. La validación posterior del 9 de octubre se registra por separado en la sección de imagen bidimensional.
 - El testbench del transmisor anterior exige semiperíodos iguales de CLK_DIV ciclos. La corrección humana cambia esa temporización; antes de reutilizar la prueba hay que contrastar sus expectativas con el protocolo y con el RTL actual. No se debe alterar el RTL confirmado en hardware sólo para satisfacer una expectativa antigua del testbench.
 - El framebuffer completo no se ha validado en hardware. En formato de 16 bits, 240×240 requiere 115 200 bytes; 240×320 requiere 153 600 bytes. La comparación de recursos usa una fila repetida, no un framebuffer completo.
 
 Los objetivos `check_spi_tx` y `check_lcd` ejecutan las pruebas sin abrir GTKWave; `check_synth` comprueba la síntesis con memoria de una fila. Los Makefiles de ambas versiones se corrigieron para que `build_icebreaker` genere el bitstream y programe la placa; `configure_icebreaker` queda como alias. No son objetivos de sólo compilación.
+
+## Imagen bidimensional en Primer 25K (9 de octubre de 2026)
+
+La FPGA GW5A-25 dispone de 56 bloques BSRAM. El framebuffer ST7789 de 240×320 en formato de 16 bits necesita 153 600 bytes y no cabe completo. Para probar una imagen con variación horizontal y vertical se preparó un bloque de **240×160 píxeles BGR565, 76 800 bytes**. El controlador lo transmite dos veces por cada ventana de 240×320: se verán dos copias verticales, no una imagen independiente de 320 filas. Como 153 600 es exactamente dos veces 76 800, la vuelta del contador no desplaza las filas entre cuadros.
+
+La primera imagen fue un patrón sintético con degradados, cuadrícula, tablero gris, figura circular y muestras de color. También se puede importar una imagen externa mediante la aplicación gráfica. Actualmente `complex_image.hex` y `complex_image.png` contienen **Tux**, ajustado proporcionalmente a 240×160 sobre blanco. Su fuente es `tux_source.png`, descargada desde la URL de Wikimedia proporcionada por Carlos; la información de autoría y licencia del original está en [File:Tux.svg](https://commons.wikimedia.org/wiki/File:Tux.svg). El formato de bytes sigue siendo el mismo BGR565/MSB primero del patrón confirmado en pantalla.
+
+![Imagen de prueba de 240×160](complex_image.png)
+
+### Archivos y objetivos
+
+| Elemento | Uso |
+|---|---|
+| `complex_image.hex` | Inicialización de memoria, exactamente 76 800 bytes; dos bytes por píxel |
+| `complex_image.png` | Vista de referencia de una copia de 240×160 |
+| `gen_color_bars.py --complex` | Genera sólo los dos archivos de imagen compleja; no sobrescribe las franjas |
+| `complex_image` | Regenera explícitamente el patrón sintético; reemplaza la imagen externa exportada |
+| `VideoImageApp.desktop` | Lanzador gráfico del conversor de imágenes |
+| `image_app` | Objetivo Make que abre la aplicación gráfica |
+| `gen_color_bars.py --input archivo.png` | Conversión automatizada de una imagen externa usando la misma rutina que la GUI |
+| `build_tang_primer_25k_image` | Sintetiza, enruta y empaqueta la imagen con el flujo abierto; no programa |
+| `configure_tang_primer_25k_image` | Construye y carga la imagen en Primer mediante el depurador SIPEED seleccionado |
+| `configure_tang_primer_25k` | Conserva el patrón de una fila para regresar a las franjas |
+
+El bitstream de la imagen está en `build/primer25k_image/tang_primer_25k.fs`. No reemplaza `build/tang_primer_25k.fs`, correspondiente a las franjas. Los parámetros de la imagen son ST7789, CLK_HZ=50 000 000, VID_BYTES=76 800, VID_AW=17 y VID_INIT_FILE=complex_image.hex. El modo abierto transmite estos parámetros mediante chparam; la restricción de parámetros derivados del flujo comercial se conserva sólo donde sigue siendo necesaria.
+
+### Aplicación gráfica: generar la inicialización desde una imagen
+
+La aplicación está implementada en `gen_color_bars.py`, usando Python 3, Tkinter y Pillow. El lanzador local es `VideoImageApp.desktop`; si el gestor de archivos solicita autorización para ejecutar el lanzador, debe concederla el usuario. El archivo desktop apunta a la ubicación de este proyecto en este equipo; si se mueve la carpeta, debe actualizarse el lanzador.
+
+1. Abrir la aplicación. Si existe `tux_source.png`, lo muestra inicialmente.
+2. Pulsar **Abrir imagen…** para elegir PNG, JPEG, BMP o WebP.
+3. Revisar el original y la vista de pantalla de 240×320. La aplicación conserva la relación de aspecto, aplica la orientación EXIF, ajusta a 240×160 sin recortar y compone las transparencias sobre blanco. La vista previa usa los colores cuantizados a BGR565 y muestra las dos copias verticales que produce el hardware.
+4. Pulsar **Generar HEX**. Se pide confirmación antes de reemplazar los archivos existentes. El resultado es `complex_image.hex`, con exactamente 76 800 líneas de un byte hexadecimal cada una, y `complex_image.png`, la referencia de 240×160. Se escriben en la carpeta del proyecto, independientemente del directorio desde el que se abrió la aplicación.
+5. El objetivo `configure_tang_primer_25k_image` consume ese HEX para construir y cargar la FPGA. **La aplicación sólo genera los archivos: no compila ni programa la placa.**
+
+El Makefile ya no regenera `complex_image.hex` automáticamente al construir. Se comprobó que su hash no cambia durante el build, por lo que no sustituye Tux ni otra imagen externa por el patrón sintético. El objetivo explícito `complex_image` sigue disponible para volver al patrón sintético.
+
+Se aprobaron ocho pruebas automatizadas: proporciones en retrato y paisaje, nombres con espacios, transparencias, orientación EXIF, colores y orden BGR565, exportación y repetición de pantalla, rechazo de entradas inválidas, y carga/exportación/cancelación mediante los controles reales de Tkinter. La ventana se creó y se verificó su mapeo en el servidor gráfico disponible. El Tux se convirtió y su bitstream se generó con el flujo abierto; no se cargó en la placa durante esta comprobación.
+
+Copia anterior de generador, Makefile, README y activos de imagen: `../SPI_LCD_vid_mem_V2_before_image_app_20261009.tar.gz`. La copia previa a importar Tux está en `../SPI_LCD_vid_mem_V2_before_tux_image_20261009.tar.gz`.
+
+### Recursos medidos después de place-and-route
+
+| Recurso | Franjas de una fila | Imagen de 240×160 |
+|---|---:|---:|
+| LUT4 / 23 040 | 510 (2,21 %) | 859 (3,73 %) |
+| Flip-flops / 23 040 | 126 (0,55 %) | 140 (0,61 %) |
+| BSRAM / 56 | 1 (1,79 %) | 34 (60,71 %) |
+
+Medición con Yosys, nextpnr-himbaechel `861c57b` y Apycula 0.34. El consumo de ROM depende también del contenido y de las optimizaciones de síntesis: 34 bloques es el resultado para esta imagen concreta, no una garantía para cualquier archivo del mismo tamaño. El flujo pasó las comprobaciones de temporización a 50 MHz, con una advertencia de ruteo de reloj parcialmente no dedicado, también presente con las franjas.
+
+### Validación y recuperación
+
+- Codificación verificada para los 38 400 píxeles, longitud exacta, filas distintas y repetición alineada con la ventana del LCD.
+- Simulación integrada del patrón sintético aprobada: inicialización ST7789, comando 0x2C y **tres recorridos completos de 76 800 bytes**, comprobando cada byte recibido. La lectura de la memoria es síncrona. Esa simulación no se ha repetido con Tux; para Tux se verificaron la conversión, la exportación, la GUI y la generación del bitstream.
+- Síntesis, place-and-route y empaquetado de la imagen aprobados. La imagen aún **no se ha cargado ni confirmado físicamente** en esta etapa.
+- `ctrl_spi.v`, `ctrl_spi_ok.v`, `ctrl.v`, `v_count.v`, CST, reloj y reset no se modificaron para crear esta imagen. El archivo de control actual al iniciar esta prueba usa `S_SHIFT → S_LOW`; se conserva tal como Carlos lo dejó. La secuencia del caso de estudio de abajo describe la versión mostrada el 8 de octubre, no sustituye esta referencia posterior.
+- Los archivos de franjas se conservan. La copia anterior de Makefile, generador y README está en `../SPI_LCD_vid_mem_V2_before_complex_image_20261009.tar.gz`; permite restaurar esos tres archivos sin descartar otros cambios del proyecto.
 
 ## Caso de estudio: interacción humano–IA
 

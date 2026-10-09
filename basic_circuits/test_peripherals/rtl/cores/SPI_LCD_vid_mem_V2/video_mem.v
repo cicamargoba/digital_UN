@@ -3,6 +3,7 @@ module video_mem #(
     parameter NBYTES = (1 << AW),
     parameter INIT_FILE = "video_mem_init.hex"
 )(
+    input             clk,
     input      [AW-1:0] addr,
     output reg [7:0]   data
 );
@@ -11,7 +12,7 @@ reg [7:0] MEM [0:LAST];
 initial begin
     $readmemh(INIT_FILE, MEM);
 end
-always @(*) begin
-    data = MEM[addr];
+always @(posedge clk) begin
+    data <= MEM[addr];
 end
 endmodule

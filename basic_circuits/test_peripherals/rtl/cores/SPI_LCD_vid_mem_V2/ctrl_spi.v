@@ -57,7 +57,7 @@ always @(*) begin
         end
 
         S_SHIFT: begin
-                next_state = S_COUNT;
+                next_state = S_LOW;
         end
 
         S_COUNT: begin

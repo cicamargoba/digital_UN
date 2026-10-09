@@ -51,7 +51,7 @@ always @(posedge clk) begin
 end
 always @(negedge sck) begin
     if (active && !rst) begin
-        if (falling_edges != 0 && $time-last_edge != DIV*10) begin
+        if (falling_edges != 0 && $time-last_edge != ((DIV == 1) ? 20 : DIV*10)) begin
             $fatal(1, "DIV=%0d high duration=%0t", DIV, $time-last_edge);
         end
         falling_edges = falling_edges + 1;
@@ -60,7 +60,7 @@ always @(negedge sck) begin
 end
 always @(posedge sck) begin
     if (active && !rst) begin
-        if ($time-last_edge != DIV*10) begin
+        if ($time-last_edge != ((DIV == 1 && falling_edges > 1) ? 20 : DIV*10)) begin
             $fatal(1, "DIV=%0d low duration=%0t", DIV, $time-last_edge);
         end
         received = {received[6:0], sdi};
