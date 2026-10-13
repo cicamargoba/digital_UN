@@ -357,6 +357,25 @@ build_tang_primer_25k: $(COMM_OBJS) sipeed_tang_primer_25k.cst sipeed_tang_prime
 configure_tang_primer_25k: build_tang_primer_25k
 	openFPGALoader --board tangprimer25k --ftdi-serial "$(PRIMER_FTDI_SERIAL)" --bitstream $(PRIMER_BUILD_DIR)/$(TOP).fs
 
+EQ144_OPEN_BIN ?= $(PRIMER_OPEN_BIN)
+EQ144_YOSYS ?= yosys
+EQ144_NEXTPNR ?= $(EQ144_OPEN_BIN)/nextpnr-himbaechel
+EQ144_PACK ?= $(EQ144_OPEN_BIN)/gowin_pack
+EQ144_BUILD_DIR ?= $(BUILD_DIR)/gw2ar_eq144_open
+EQ144_FTDI_SERIAL ?=
+EQ144_JTAG_FREQ ?= 1000000
+
+.PHONY: build_gw2ar_eq144 configure_gw2ar_eq144
+
+build_gw2ar_eq144: $(COMM_OBJS) firmware.hex gw2ar_eq144.cst gw2ar_eq144.sdc
+	mkdir -p "$(EQ144_BUILD_DIR)"
+	"$(EQ144_YOSYS)" -Q -T -q -l $(EQ144_BUILD_DIR)/$(TOP)_synth.log -p 'read_verilog $(COMM_OBJS); synth_gowin -family gw2a -top $(TOP) -json $(EQ144_BUILD_DIR)/$(TOP)_synth.json; check -assert'
+	"$(EQ144_NEXTPNR)" --device GW2AR-LV18EQ144PC8/I7 --top $(TOP) --json $(EQ144_BUILD_DIR)/$(TOP)_synth.json --write $(EQ144_BUILD_DIR)/$(TOP)_pnr.json --sdc gw2ar_eq144.sdc --freq 25 --vopt family=GW2A-18C --vopt cst=gw2ar_eq144.cst --seed 1 --report $(EQ144_BUILD_DIR)/$(TOP)_report.json --log $(EQ144_BUILD_DIR)/$(TOP)_pnr.log
+	"$(EQ144_PACK)" -d GW2A-18C -o $(EQ144_BUILD_DIR)/$(TOP).fs $(EQ144_BUILD_DIR)/$(TOP)_pnr.json
+
+configure_gw2ar_eq144: build_gw2ar_eq144
+	openFPGALoader --cable ft232RL --pins TXD:CTS:DTR:RXD --freq $(EQ144_JTAG_FREQ) $(if $(strip $(EQ144_FTDI_SERIAL)),--ftdi-serial "$(EQ144_FTDI_SERIAL)") --write-sram --bitstream $(EQ144_BUILD_DIR)/$(TOP).fs
+
 
 
 

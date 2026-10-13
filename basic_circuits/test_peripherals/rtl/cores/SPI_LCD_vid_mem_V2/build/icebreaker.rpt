@@ -6,7 +6,7 @@
  \----------------------------------------------------------------------------/
  Yosys 0.59+62 (git sha1 9aa2dde7e, g++ 14.2.0-19ubuntu2 -fPIC -O3)
 
--- Running command `read_verilog -defer -DLCD_ST7789 a_count.v comp_addr.v ctrl.v d_count.v init_mem.v memwr_cmd.v mux_3to1.v spi_tx.v ctrl_spi.v lsr.v byte_cnt.v f_div.v v_count.v video_mem.v spi_lcd_vid_mem.v; chparam -set VID_AW 9 -set VID_BYTES 480 -set VID_INIT_FILE "video_mem_row.hex" spi_lcd_vid_mem ; chparam -set RESET_ACTIVE_LOW 1 -set RECOVERY_TICKS 2880000 spi_lcd_vid_mem; synth_ice40 -dsp -top spi_lcd_vid_mem; write_json build/icebreaker.json' --
+-- Running command `read_verilog -defer -DLCD_ST7789 -DLCD_CLK_HZ=12000000 -DLCD_ROW_MODE=1 a_count.v comp_addr.v ctrl.v d_count.v init_mem.v memwr_cmd.v mux_3to1.v spi_tx.v ctrl_spi.v lsr.v byte_cnt.v f_div.v v_count.v video_mem.v spi_lcd_vid_mem.v; chparam -set VID_AW 9 -set VID_BYTES 480 -set VID_INIT_FILE "video_mem_row.hex" spi_lcd_vid_mem ; chparam -set RESET_ACTIVE_LOW 1 -set RECOVERY_TICKS 2880000 spi_lcd_vid_mem; synth_ice40 -dsp -top spi_lcd_vid_mem; write_json build/icebreaker.json' --
 
 1. Executing Verilog-2005 frontend: a_count.v
 Parsing Verilog input from `a_count.v' to AST representation.
@@ -97,15 +97,15 @@ Parsing Verilog input from `spi_lcd_vid_mem.v' to AST representation.
 verilog frontend filename spi_lcd_vid_mem.v
 Storing AST representation for module `$abstract\spi_lcd_vid_mem'.
 Successfully finished Verilog frontend.
-Parameter \VID_AW = 9
 Parameter \VID_BYTES = 480
+Parameter \VID_AW = 9
 Parameter \VID_INIT_FILE = 136'0111011001101001011001000110010101101111010111110110110101100101011011010101111101110010011011110111011100101110011010000110010101111000
 
 16. Executing AST frontend in derive mode using pre-parsed AST for module `\spi_lcd_vid_mem'.
-Parameter \VID_AW = 9
 Parameter \VID_BYTES = 480
+Parameter \VID_AW = 9
 Parameter \VID_INIT_FILE = 136'0111011001101001011001000110010101101111010111110110110101100101011011010101111101110010011011110111011100101110011010000110010101111000
-Generating RTLIL representation for module `$paramod$17f0cd0d5b0bc20c8c0aae868a60a6e559495760\spi_lcd_vid_mem'.
+Generating RTLIL representation for module `$paramod$a060224db09871cc3a219112d6c7bcd1578a187b\spi_lcd_vid_mem'.
 Parameter \RECOVERY_TICKS = 2880000
 Parameter \RESET_ACTIVE_LOW = 1
 
@@ -206,23 +206,23 @@ Generating RTLIL representation for module `\init_mem'.
 
 18.3.7. Executing AST frontend in derive mode using pre-parsed AST for module `\a_count'.
 Generating RTLIL representation for module `\a_count'.
-Parameter \UNIT_TICKS = 25000
+Parameter \UNIT_TICKS = 64'0000000000000000000000000000000000000000000000000110000110101000
 
 18.3.8. Executing AST frontend in derive mode using pre-parsed AST for module `\d_count'.
-Parameter \UNIT_TICKS = 25000
-Generating RTLIL representation for module `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000'.
-Parameter \CLK_DIV = 4
+Parameter \UNIT_TICKS = 64'0000000000000000000000000000000000000000000000000110000110101000
+Generating RTLIL representation for module `$paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count'.
+Parameter \CLK_DIV = 1
 
 18.3.9. Executing AST frontend in derive mode using pre-parsed AST for module `\spi_tx'.
-Parameter \CLK_DIV = 4
-Generating RTLIL representation for module `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100'.
-Parameter \RESET_TICKS = 250000
+Parameter \CLK_DIV = 1
+Generating RTLIL representation for module `$paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000001'.
+Parameter \RESET_TICKS = 64'0000000000000000000000000000000000000000000000111101000010010000
 Parameter \RECOVERY_TICKS = 2880000
 
 18.3.10. Executing AST frontend in derive mode using pre-parsed AST for module `\ctrl'.
-Parameter \RESET_TICKS = 250000
+Parameter \RESET_TICKS = 64'0000000000000000000000000000000000000000000000111101000010010000
 Parameter \RECOVERY_TICKS = 2880000
-Generating RTLIL representation for module `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl'.
+Generating RTLIL representation for module `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl'.
 Parameter \W = 8
 
 18.3.11. Executing AST frontend in derive mode using pre-parsed AST for module `\comp_addr'.
@@ -237,26 +237,26 @@ Used module:     $paramod$6fb8f87a9b9886fdd72e76ace650b13a16ea8088\v_count
 Used module:     \memwr_cmd
 Used module:     \init_mem
 Used module:     \a_count
-Used module:     $paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000
-Used module:     $paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100
-Used module:     $paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl
+Used module:     $paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count
+Used module:     $paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000001
+Used module:     $paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl
 Used module:     $paramod\comp_addr\W=s32'00000000000000000000000000001000
-Parameter \CLK_DIV = 4
+Parameter \CLK_DIV = 1
 
 18.3.13. Executing AST frontend in derive mode using pre-parsed AST for module `\f_div'.
-Parameter \CLK_DIV = 4
-Generating RTLIL representation for module `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000100'.
+Parameter \CLK_DIV = 1
+Generating RTLIL representation for module `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000001'.
 
 18.3.14. Executing AST frontend in derive mode using pre-parsed AST for module `\byte_cnt'.
 Generating RTLIL representation for module `\byte_cnt'.
 
 18.3.15. Executing AST frontend in derive mode using pre-parsed AST for module `\lsr'.
 Generating RTLIL representation for module `\lsr'.
-Parameter \CLK_DIV = 4
+Parameter \CLK_DIV = 1
 
 18.3.16. Executing AST frontend in derive mode using pre-parsed AST for module `\ctrl_spi'.
-Parameter \CLK_DIV = 4
-Generating RTLIL representation for module `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100'.
+Parameter \CLK_DIV = 1
+Generating RTLIL representation for module `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001'.
 
 18.3.17. Analyzing design hierarchy..
 Top module:  \spi_lcd_vid_mem
@@ -266,13 +266,13 @@ Used module:     $paramod$6fb8f87a9b9886fdd72e76ace650b13a16ea8088\v_count
 Used module:     \memwr_cmd
 Used module:     \init_mem
 Used module:     \a_count
-Used module:     $paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000
-Used module:     $paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100
-Used module:         $paramod\f_div\CLK_DIV=s32'00000000000000000000000000000100
+Used module:     $paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count
+Used module:     $paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000001
+Used module:         $paramod\f_div\CLK_DIV=s32'00000000000000000000000000000001
 Used module:         \byte_cnt
 Used module:         \lsr
-Used module:         $paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100
-Used module:     $paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl
+Used module:         $paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001
+Used module:     $paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl
 Used module:     $paramod\comp_addr\W=s32'00000000000000000000000000001000
 
 18.3.18. Analyzing design hierarchy..
@@ -283,13 +283,13 @@ Used module:     $paramod$6fb8f87a9b9886fdd72e76ace650b13a16ea8088\v_count
 Used module:     \memwr_cmd
 Used module:     \init_mem
 Used module:     \a_count
-Used module:     $paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000
-Used module:     $paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100
-Used module:         $paramod\f_div\CLK_DIV=s32'00000000000000000000000000000100
+Used module:     $paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count
+Used module:     $paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000001
+Used module:         $paramod\f_div\CLK_DIV=s32'00000000000000000000000000000001
 Used module:         \byte_cnt
 Used module:         \lsr
-Used module:         $paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100
-Used module:     $paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl
+Used module:         $paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001
+Used module:     $paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl
 Used module:     $paramod\comp_addr\W=s32'00000000000000000000000000001000
 Removing unused module `$abstract\spi_lcd_vid_mem'.
 Removing unused module `$abstract\video_mem'.
@@ -311,19 +311,19 @@ Removed 15 unused modules.
 18.4. Executing PROC pass (convert processes to netlists).
 
 18.4.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
-Removing empty process `$paramod$82b290ec14159c8d4eeef15ecf1cd616b4a08408\video_mem.$proc$video_mem.v:11$387'.
+Removing empty process `$paramod$82b290ec14159c8d4eeef15ecf1cd616b4a08408\video_mem.$proc$video_mem.v:12$387'.
 Cleaned up 0 empty switches.
 
 18.4.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
-Marked 2 switch rules as full_case in process $proc$ctrl_spi.v:79$420 in module $paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.
-Marked 5 switch rules as full_case in process $proc$ctrl_spi.v:32$419 in module $paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.
-Marked 1 switch rules as full_case in process $proc$ctrl_spi.v:25$418 in module $paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.
+Marked 2 switch rules as full_case in process $proc$ctrl_spi.v:79$420 in module $paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.
+Marked 5 switch rules as full_case in process $proc$ctrl_spi.v:32$419 in module $paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.
+Marked 1 switch rules as full_case in process $proc$ctrl_spi.v:25$418 in module $paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.
 Marked 2 switch rules as full_case in process $proc$lsr.v:10$417 in module lsr.
 Marked 1 switch rules as full_case in process $proc$byte_cnt.v:8$414 in module byte_cnt.
-Marked 3 switch rules as full_case in process $proc$f_div.v:11$410 in module $paramod\f_div\CLK_DIV=s32'00000000000000000000000000000100.
-Marked 1 switch rules as full_case in process $proc$ctrl.v:150$406 in module $paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.
-Marked 7 switch rules as full_case in process $proc$ctrl.v:61$401 in module $paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.
-Marked 5 switch rules as full_case in process $proc$d_count.v:13$394 in module $paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.
+Marked 3 switch rules as full_case in process $proc$f_div.v:11$410 in module $paramod\f_div\CLK_DIV=s32'00000000000000000000000000000001.
+Marked 1 switch rules as full_case in process $proc$ctrl.v:150$406 in module $paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.
+Marked 7 switch rules as full_case in process $proc$ctrl.v:61$401 in module $paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.
+Marked 5 switch rules as full_case in process $proc$d_count.v:13$394 in module $paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count.
 Marked 1 switch rules as full_case in process $proc$a_count.v:9$392 in module a_count.
 Marked 1 switch rules as full_case in process $proc$init_mem_st7789.vh:6$391 in module init_mem.
 Marked 2 switch rules as full_case in process $proc$v_count.v:10$388 in module $paramod$6fb8f87a9b9886fdd72e76ace650b13a16ea8088\v_count.
@@ -335,11 +335,11 @@ Removed 4 redundant assignments.
 Promoted 21 assignments to connections.
 
 18.4.4. Executing PROC_INIT pass (extract init attributes).
-Found init rule in `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:23$421'.
+Found init rule in `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:23$421'.
   Set init value: \state = 7'0000001
-Found init rule in `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:37$408'.
+Found init rule in `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:37$408'.
   Set init value: \rst_cnt = 0
-Found init rule in `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:36$407'.
+Found init rule in `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:36$407'.
   Set init value: \state = 4'0000
 
 18.4.5. Executing PROC_ARST pass (detect async resets in processes).
@@ -349,8 +349,8 @@ Converted 2 switches.
 <suppressed ~40 debug messages>
 
 18.4.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
-Creating decoders for process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:23$421'.
-Creating decoders for process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:79$420'.
+Creating decoders for process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:23$421'.
+Creating decoders for process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:79$420'.
      1/12: $2\done_tx[0:0]
      2/12: $2\clk_out[0:0]
      3/12: $2\st_div[0:0]
@@ -363,29 +363,29 @@ Creating decoders for process `$paramod\ctrl_spi\CLK_DIV=s32'0000000000000000000
     10/12: $1\inc_cbyte[0:0]
     11/12: $1\rst_all[0:0]
     12/12: $1\sh[0:0]
-Creating decoders for process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:32$419'.
+Creating decoders for process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:32$419'.
      1/5: $5\next_state[6:0]
      2/5: $4\next_state[6:0]
      3/5: $3\next_state[6:0]
      4/5: $2\next_state[6:0]
      5/5: $1\next_state[6:0]
-Creating decoders for process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:25$418'.
+Creating decoders for process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:25$418'.
      1/1: $0\state[6:0]
 Creating decoders for process `\lsr.$proc$lsr.v:10$417'.
      1/1: $0\data_reg[7:0]
 Creating decoders for process `\byte_cnt.$proc$byte_cnt.v:8$414'.
      1/1: $0\count[3:0]
-Creating decoders for process `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000100.$proc$f_div.v:11$410'.
+Creating decoders for process `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000001.$proc$f_div.v:11$410'.
      1/2: $0\done_div[0:0]
-     2/2: $0\count[1:0]
-Creating decoders for process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:37$408'.
-Creating decoders for process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:36$407'.
-Creating decoders for process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:150$406'.
+     2/2: $0\count[0:0]
+Creating decoders for process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:37$408'.
+Creating decoders for process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:36$407'.
+Creating decoders for process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:150$406'.
      1/1: { $1\inc_v_addr[0:0] $1\src_rdy[0:0] $1\s_delay[0:0] $1\rst_all[0:0] $1\inc_addr[0:0] $1\sel_data[1:0] $1\init_tx[0:0] $1\rst[0:0] }
-Creating decoders for process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:61$401'.
+Creating decoders for process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:61$401'.
      1/2: $0\rst_cnt[31:0]
      2/2: $0\state[3:0]
-Creating decoders for process `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.$proc$d_count.v:13$394'.
+Creating decoders for process `$paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count.$proc$d_count.v:13$394'.
      1/4: $0\done_delay[0:0]
      2/4: $0\delay[0:0]
      3/4: $0\unit_cnt[31:0]
@@ -396,104 +396,105 @@ Creating decoders for process `\init_mem.$proc$init_mem_st7789.vh:6$391'.
      1/1: $1\data[9:0]
 Creating decoders for process `$paramod$6fb8f87a9b9886fdd72e76ace650b13a16ea8088\v_count.$proc$v_count.v:10$388'.
      1/1: $0\addr[8:0]
-Creating decoders for process `$paramod$82b290ec14159c8d4eeef15ecf1cd616b4a08408\video_mem.$proc$video_mem.v:14$384'.
+Creating decoders for process `$paramod$82b290ec14159c8d4eeef15ecf1cd616b4a08408\video_mem.$proc$video_mem.v:15$384'.
 Creating decoders for process `\mux_3to1.$proc$mux_3to1.v:8$383'.
      1/1: $1\out[8:0]
 
 18.4.8. Executing PROC_DLATCH pass (convert process syncs to latches).
-No latch inferred for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.\done_tx' from process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:79$420'.
-No latch inferred for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.\rst_all' from process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:79$420'.
-No latch inferred for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.\sh' from process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:79$420'.
-No latch inferred for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.\inc_cbyte' from process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:79$420'.
-No latch inferred for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.\st_div' from process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:79$420'.
-No latch inferred for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.\clk_out' from process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:79$420'.
-No latch inferred for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.\next_state' from process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:32$419'.
-No latch inferred for signal `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.\rst' from process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:150$406'.
-No latch inferred for signal `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.\init_tx' from process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:150$406'.
-No latch inferred for signal `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.\sel_data' from process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:150$406'.
-No latch inferred for signal `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.\inc_addr' from process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:150$406'.
-No latch inferred for signal `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.\rst_all' from process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:150$406'.
-No latch inferred for signal `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.\s_delay' from process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:150$406'.
-No latch inferred for signal `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.\inc_v_addr' from process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:150$406'.
-No latch inferred for signal `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.\src_rdy' from process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:150$406'.
+No latch inferred for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.\done_tx' from process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:79$420'.
+No latch inferred for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.\rst_all' from process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:79$420'.
+No latch inferred for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.\sh' from process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:79$420'.
+No latch inferred for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.\inc_cbyte' from process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:79$420'.
+No latch inferred for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.\st_div' from process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:79$420'.
+No latch inferred for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.\clk_out' from process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:79$420'.
+No latch inferred for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.\next_state' from process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:32$419'.
+No latch inferred for signal `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.\rst' from process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:150$406'.
+No latch inferred for signal `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.\init_tx' from process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:150$406'.
+No latch inferred for signal `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.\sel_data' from process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:150$406'.
+No latch inferred for signal `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.\inc_addr' from process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:150$406'.
+No latch inferred for signal `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.\rst_all' from process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:150$406'.
+No latch inferred for signal `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.\s_delay' from process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:150$406'.
+No latch inferred for signal `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.\inc_v_addr' from process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:150$406'.
+No latch inferred for signal `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.\src_rdy' from process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:150$406'.
 No latch inferred for signal `\init_mem.\data' from process `\init_mem.$proc$init_mem_st7789.vh:6$391'.
-No latch inferred for signal `$paramod$82b290ec14159c8d4eeef15ecf1cd616b4a08408\video_mem.\data' from process `$paramod$82b290ec14159c8d4eeef15ecf1cd616b4a08408\video_mem.$proc$video_mem.v:14$384'.
 No latch inferred for signal `\mux_3to1.\out' from process `\mux_3to1.$proc$mux_3to1.v:8$383'.
 
 18.4.9. Executing PROC_DFF pass (convert process syncs to FFs).
-Creating register for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.\state' using process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:25$418'.
+Creating register for signal `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.\state' using process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:25$418'.
   created $dff cell `$procdff$738' with negative edge clock.
 Creating register for signal `\lsr.\data_reg' using process `\lsr.$proc$lsr.v:10$417'.
   created $dff cell `$procdff$739' with positive edge clock.
 Creating register for signal `\byte_cnt.\count' using process `\byte_cnt.$proc$byte_cnt.v:8$414'.
   created $dff cell `$procdff$740' with positive edge clock.
-Creating register for signal `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000100.\done_div' using process `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000100.$proc$f_div.v:11$410'.
+Creating register for signal `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000001.\done_div' using process `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000001.$proc$f_div.v:11$410'.
   created $dff cell `$procdff$741' with positive edge clock.
-Creating register for signal `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000100.\count' using process `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000100.$proc$f_div.v:11$410'.
+Creating register for signal `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000001.\count' using process `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000001.$proc$f_div.v:11$410'.
   created $dff cell `$procdff$742' with positive edge clock.
-Creating register for signal `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.\state' using process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:61$401'.
+Creating register for signal `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.\state' using process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:61$401'.
   created $dff cell `$procdff$743' with negative edge clock.
-Creating register for signal `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.\rst_cnt' using process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:61$401'.
+Creating register for signal `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.\rst_cnt' using process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:61$401'.
   created $dff cell `$procdff$744' with negative edge clock.
-Creating register for signal `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.\done_delay' using process `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.$proc$d_count.v:13$394'.
+Creating register for signal `$paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count.\done_delay' using process `$paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count.$proc$d_count.v:13$394'.
   created $dff cell `$procdff$745' with positive edge clock.
-Creating register for signal `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.\val_cnt' using process `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.$proc$d_count.v:13$394'.
+Creating register for signal `$paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count.\val_cnt' using process `$paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count.$proc$d_count.v:13$394'.
   created $dff cell `$procdff$746' with positive edge clock.
-Creating register for signal `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.\unit_cnt' using process `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.$proc$d_count.v:13$394'.
+Creating register for signal `$paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count.\unit_cnt' using process `$paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count.$proc$d_count.v:13$394'.
   created $dff cell `$procdff$747' with positive edge clock.
-Creating register for signal `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.\delay' using process `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.$proc$d_count.v:13$394'.
+Creating register for signal `$paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count.\delay' using process `$paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count.$proc$d_count.v:13$394'.
   created $dff cell `$procdff$748' with positive edge clock.
 Creating register for signal `\a_count.\addr' using process `\a_count.$proc$a_count.v:9$392'.
   created $dff cell `$procdff$749' with positive edge clock.
 Creating register for signal `$paramod$6fb8f87a9b9886fdd72e76ace650b13a16ea8088\v_count.\addr' using process `$paramod$6fb8f87a9b9886fdd72e76ace650b13a16ea8088\v_count.$proc$v_count.v:10$388'.
   created $dff cell `$procdff$750' with positive edge clock.
+Creating register for signal `$paramod$82b290ec14159c8d4eeef15ecf1cd616b4a08408\video_mem.\data' using process `$paramod$82b290ec14159c8d4eeef15ecf1cd616b4a08408\video_mem.$proc$video_mem.v:15$384'.
+  created $dff cell `$procdff$751' with positive edge clock.
 
 18.4.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
 
 18.4.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
-Removing empty process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:23$421'.
-Found and cleaned up 2 empty switches in `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:79$420'.
-Removing empty process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:79$420'.
-Found and cleaned up 5 empty switches in `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:32$419'.
-Removing empty process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:32$419'.
-Found and cleaned up 1 empty switch in `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:25$418'.
-Removing empty process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.$proc$ctrl_spi.v:25$418'.
+Removing empty process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:23$421'.
+Found and cleaned up 2 empty switches in `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:79$420'.
+Removing empty process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:79$420'.
+Found and cleaned up 5 empty switches in `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:32$419'.
+Removing empty process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:32$419'.
+Found and cleaned up 1 empty switch in `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:25$418'.
+Removing empty process `$paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.$proc$ctrl_spi.v:25$418'.
 Found and cleaned up 3 empty switches in `\lsr.$proc$lsr.v:10$417'.
 Removing empty process `lsr.$proc$lsr.v:10$417'.
 Found and cleaned up 2 empty switches in `\byte_cnt.$proc$byte_cnt.v:8$414'.
 Removing empty process `byte_cnt.$proc$byte_cnt.v:8$414'.
-Found and cleaned up 3 empty switches in `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000100.$proc$f_div.v:11$410'.
-Removing empty process `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000100.$proc$f_div.v:11$410'.
-Removing empty process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:37$408'.
-Removing empty process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:36$407'.
-Found and cleaned up 1 empty switch in `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:150$406'.
-Removing empty process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:150$406'.
-Found and cleaned up 12 empty switches in `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:61$401'.
-Removing empty process `$paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.$proc$ctrl.v:61$401'.
-Found and cleaned up 6 empty switches in `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.$proc$d_count.v:13$394'.
-Removing empty process `$paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.$proc$d_count.v:13$394'.
+Found and cleaned up 3 empty switches in `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000001.$proc$f_div.v:11$410'.
+Removing empty process `$paramod\f_div\CLK_DIV=s32'00000000000000000000000000000001.$proc$f_div.v:11$410'.
+Removing empty process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:37$408'.
+Removing empty process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:36$407'.
+Found and cleaned up 1 empty switch in `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:150$406'.
+Removing empty process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:150$406'.
+Found and cleaned up 12 empty switches in `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:61$401'.
+Removing empty process `$paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.$proc$ctrl.v:61$401'.
+Found and cleaned up 6 empty switches in `$paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count.$proc$d_count.v:13$394'.
+Removing empty process `$paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count.$proc$d_count.v:13$394'.
 Found and cleaned up 2 empty switches in `\a_count.$proc$a_count.v:9$392'.
 Removing empty process `a_count.$proc$a_count.v:9$392'.
 Found and cleaned up 1 empty switch in `\init_mem.$proc$init_mem_st7789.vh:6$391'.
 Removing empty process `init_mem.$proc$init_mem_st7789.vh:6$391'.
 Found and cleaned up 3 empty switches in `$paramod$6fb8f87a9b9886fdd72e76ace650b13a16ea8088\v_count.$proc$v_count.v:10$388'.
 Removing empty process `$paramod$6fb8f87a9b9886fdd72e76ace650b13a16ea8088\v_count.$proc$v_count.v:10$388'.
-Removing empty process `$paramod$82b290ec14159c8d4eeef15ecf1cd616b4a08408\video_mem.$proc$video_mem.v:14$384'.
+Removing empty process `$paramod$82b290ec14159c8d4eeef15ecf1cd616b4a08408\video_mem.$proc$video_mem.v:15$384'.
 Found and cleaned up 1 empty switch in `\mux_3to1.$proc$mux_3to1.v:8$383'.
 Removing empty process `mux_3to1.$proc$mux_3to1.v:8$383'.
 Cleaned up 42 empty switches.
 
 18.4.12. Executing OPT_EXPR pass (perform const folding).
-Optimizing module $paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.
+Optimizing module $paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.
 Optimizing module lsr.
 Optimizing module byte_cnt.
-Optimizing module $paramod\f_div\CLK_DIV=s32'00000000000000000000000000000100.
-<suppressed ~2 debug messages>
+Optimizing module $paramod\f_div\CLK_DIV=s32'00000000000000000000000000000001.
+<suppressed ~5 debug messages>
 Optimizing module $paramod\comp_addr\W=s32'00000000000000000000000000001000.
-Optimizing module $paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.
+Optimizing module $paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.
 <suppressed ~2 debug messages>
-Optimizing module $paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.
-Optimizing module $paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.
+Optimizing module $paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000001.
+Optimizing module $paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count.
 <suppressed ~1 debug messages>
 Optimizing module a_count.
 Optimizing module init_mem.
@@ -506,14 +507,14 @@ Optimizing module mux_3to1.
 Optimizing module spi_lcd_vid_mem.
 
 18.5. Executing FLATTEN pass (flatten design).
-Deleting now unused module $paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000100.
+Deleting now unused module $paramod\ctrl_spi\CLK_DIV=s32'00000000000000000000000000000001.
 Deleting now unused module lsr.
 Deleting now unused module byte_cnt.
-Deleting now unused module $paramod\f_div\CLK_DIV=s32'00000000000000000000000000000100.
+Deleting now unused module $paramod\f_div\CLK_DIV=s32'00000000000000000000000000000001.
 Deleting now unused module $paramod\comp_addr\W=s32'00000000000000000000000000001000.
-Deleting now unused module $paramod$fa9580972d3a76131016747c8f33249bec96f410\ctrl.
-Deleting now unused module $paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000100.
-Deleting now unused module $paramod\d_count\UNIT_TICKS=s32'00000000000000000110000110101000.
+Deleting now unused module $paramod$7fc47153674d93f323603d06d2fe6167857394d4\ctrl.
+Deleting now unused module $paramod\spi_tx\CLK_DIV=s32'00000000000000000000000000000001.
+Deleting now unused module $paramod$b134719251ee1b70422c4a261ed6583b515918dd\d_count.
 Deleting now unused module a_count.
 Deleting now unused module init_mem.
 Deleting now unused module memwr_cmd.
@@ -532,8 +533,8 @@ Optimizing module spi_lcd_vid_mem.
 
 18.9. Executing OPT_CLEAN pass (remove unused cells and wires).
 Finding unused cells or wires in module \spi_lcd_vid_mem..
-Removed 2 unused cells and 149 unused wires.
-<suppressed ~3 debug messages>
+Removed 3 unused cells and 149 unused wires.
+<suppressed ~4 debug messages>
 
 18.10. Executing CHECK pass (checking for obvious problems).
 Checking module spi_lcd_vid_mem...
@@ -572,11 +573,12 @@ Removed 10 multiplexer ports.
 
 18.11.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
   Optimizing cells in module \spi_lcd_vid_mem.
-    New ctrl vector for $pmux cell $flatten\CRTL.$procmux$582: { $flatten\CRTL.$procmux$603_CMP $flatten\CRTL.$procmux$599_CMP $auto$opt_reduce.cc:137:opt_pmux$766 }
-    New ctrl vector for $pmux cell $flatten\SPI_TX.\CRTL_SPI.$procmux$439: $auto$opt_reduce.cc:137:opt_pmux$768
-    New ctrl vector for $pmux cell $flatten\SPI_TX.\CRTL_SPI.$procmux$447: $auto$opt_reduce.cc:137:opt_pmux$770
+    New ctrl vector for $pmux cell $flatten\CRTL.$procmux$582: { $flatten\CRTL.$procmux$603_CMP $flatten\CRTL.$procmux$599_CMP $auto$opt_reduce.cc:137:opt_pmux$767 }
+    New ctrl vector for $pmux cell $flatten\SPI_TX.\CRTL_SPI.$procmux$439: $auto$opt_reduce.cc:137:opt_pmux$769
+    New ctrl vector for $pmux cell $flatten\SPI_TX.\CRTL_SPI.$procmux$447: $auto$opt_reduce.cc:137:opt_pmux$771
+    New ctrl vector for $pmux cell $flatten\SPI_TX.\CRTL_SPI.$procmux$539: { $flatten\SPI_TX.\CRTL_SPI.$procmux$536_CMP $flatten\SPI_TX.\CRTL_SPI.$procmux$441_CMP $flatten\SPI_TX.\CRTL_SPI.$procmux$450_CMP $auto$opt_reduce.cc:137:opt_pmux$773 $flatten\SPI_TX.\CRTL_SPI.$procmux$448_CMP }
   Optimizing cells in module \spi_lcd_vid_mem.
-Performed a total of 3 changes.
+Performed a total of 4 changes.
 
 18.11.5. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\spi_lcd_vid_mem'.
@@ -672,26 +674,26 @@ Removed a total of 0 cells.
 
 18.13.6. Executing OPT_DFF pass (perform DFF optimizations).
 Adding SRST signal on $flatten\V_COUNT.$procdff$750 ($dff) from module spi_lcd_vid_mem (D = $flatten\V_COUNT.$procmux$728_Y, Q = \V_COUNT.addr, rval = 9'000000000).
-Adding EN signal on $auto$ff.cc:266:slice$771 ($sdff) from module spi_lcd_vid_mem (D = $flatten\V_COUNT.$procmux$726_Y, Q = \V_COUNT.addr).
+Adding EN signal on $auto$ff.cc:266:slice$774 ($sdff) from module spi_lcd_vid_mem (D = $flatten\V_COUNT.$procmux$726_Y, Q = \V_COUNT.addr).
 Adding SRST signal on $flatten\SPI_TX.\LSR.$procdff$739 ($dff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\LSR.$procmux$552_Y, Q = \SPI_TX.LSR.data_reg, rval = 8'00000000).
-Adding EN signal on $auto$ff.cc:266:slice$773 ($sdff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\LSR.$procmux$552_Y, Q = \SPI_TX.LSR.data_reg).
-Adding SRST signal on $flatten\SPI_TX.\F_DIV.$procdff$742 ($dff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\F_DIV.$add$f_div.v:22$413_Y, Q = \SPI_TX.F_DIV.count, rval = 2'00).
+Adding EN signal on $auto$ff.cc:266:slice$776 ($sdff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\LSR.$procmux$552_Y, Q = \SPI_TX.LSR.data_reg).
+Adding SRST signal on $flatten\SPI_TX.\F_DIV.$procdff$742 ($dff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\F_DIV.$add$f_div.v:22$413_Y, Q = \SPI_TX.F_DIV.count, rval = 1'0).
 Adding SRST signal on $flatten\SPI_TX.\F_DIV.$procdff$741 ($dff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\F_DIV.$procmux$563_Y, Q = \SPI_TX.F_DIV.done_div, rval = 1'0).
 Adding SRST signal on $flatten\SPI_TX.\CRTL_SPI.$procdff$738 ($dff) from module spi_lcd_vid_mem (D = \SPI_TX.CRTL_SPI.next_state, Q = \SPI_TX.CRTL_SPI.state, rval = 7'0000001).
 Adding SRST signal on $flatten\SPI_TX.\BYTE_CNT.$procdff$740 ($dff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\BYTE_CNT.$procmux$557_Y, Q = \SPI_TX.BYTE_CNT.count, rval = 4'0000).
-Adding EN signal on $auto$ff.cc:266:slice$788 ($sdff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\BYTE_CNT.$add$byte_cnt.v:12$415_Y, Q = \SPI_TX.BYTE_CNT.count).
+Adding EN signal on $auto$ff.cc:266:slice$787 ($sdff) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\BYTE_CNT.$add$byte_cnt.v:12$415_Y, Q = \SPI_TX.BYTE_CNT.count).
 Adding EN signal on $flatten\D_COUNT.$procdff$748 ($dff) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$681_Y, Q = \D_COUNT.delay).
 Adding SRST signal on $flatten\D_COUNT.$procdff$747 ($dff) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$695_Y, Q = \D_COUNT.unit_cnt, rval = 0).
-Adding EN signal on $auto$ff.cc:266:slice$797 ($sdff) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$695_Y, Q = \D_COUNT.unit_cnt).
+Adding EN signal on $auto$ff.cc:266:slice$796 ($sdff) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$695_Y, Q = \D_COUNT.unit_cnt).
 Adding SRST signal on $flatten\D_COUNT.$procdff$746 ($dff) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$712_Y, Q = \D_COUNT.val_cnt, rval = 8'00000000).
-Adding EN signal on $auto$ff.cc:266:slice$805 ($sdff) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$712_Y, Q = \D_COUNT.val_cnt).
+Adding EN signal on $auto$ff.cc:266:slice$804 ($sdff) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$712_Y, Q = \D_COUNT.val_cnt).
 Adding SRST signal on $flatten\D_COUNT.$procdff$745 ($dff) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$664_Y, Q = \D_COUNT.done_delay, rval = 1'0).
 Adding SRST signal on $flatten\CRTL.$procdff$744 ($dff) from module spi_lcd_vid_mem (D = $flatten\CRTL.$procmux$582_Y, Q = \CRTL.rst_cnt, rval = 0).
-Adding EN signal on $auto$ff.cc:266:slice$818 ($sdff) from module spi_lcd_vid_mem (D = $flatten\CRTL.$procmux$582_Y, Q = \CRTL.rst_cnt).
+Adding EN signal on $auto$ff.cc:266:slice$817 ($sdff) from module spi_lcd_vid_mem (D = $flatten\CRTL.$procmux$582_Y, Q = \CRTL.rst_cnt).
 Adding SRST signal on $flatten\CRTL.$procdff$743 ($dff) from module spi_lcd_vid_mem (D = $flatten\CRTL.$procmux$608_Y, Q = \CRTL.state, rval = 4'0000).
-Adding EN signal on $auto$ff.cc:266:slice$826 ($sdff) from module spi_lcd_vid_mem (D = $flatten\CRTL.$procmux$608_Y, Q = \CRTL.state).
+Adding EN signal on $auto$ff.cc:266:slice$825 ($sdff) from module spi_lcd_vid_mem (D = $flatten\CRTL.$procmux$608_Y, Q = \CRTL.state).
 Adding SRST signal on $flatten\A_COUNT.$procdff$749 ($dff) from module spi_lcd_vid_mem (D = $flatten\A_COUNT.$procmux$717_Y, Q = \A_COUNT.addr, rval = 8'00000000).
-Adding EN signal on $auto$ff.cc:266:slice$842 ($sdff) from module spi_lcd_vid_mem (D = $flatten\A_COUNT.$add$a_count.v:13$393_Y [7:0], Q = \A_COUNT.addr).
+Adding EN signal on $auto$ff.cc:266:slice$841 ($sdff) from module spi_lcd_vid_mem (D = $flatten\A_COUNT.$add$a_count.v:13$393_Y [7:0], Q = \A_COUNT.addr).
 
 18.13.7. Executing OPT_CLEAN pass (remove unused cells and wires).
 Finding unused cells or wires in module \spi_lcd_vid_mem..
@@ -718,14 +720,14 @@ Performed a total of 0 changes.
 
 18.13.12. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\spi_lcd_vid_mem'.
-<suppressed ~12 debug messages>
-Removed a total of 4 cells.
+<suppressed ~9 debug messages>
+Removed a total of 3 cells.
 
 18.13.13. Executing OPT_DFF pass (perform DFF optimizations).
 
 18.13.14. Executing OPT_CLEAN pass (remove unused cells and wires).
 Finding unused cells or wires in module \spi_lcd_vid_mem..
-Removed 0 unused cells and 4 unused wires.
+Removed 0 unused cells and 3 unused wires.
 <suppressed ~1 debug messages>
 
 18.13.15. Executing OPT_EXPR pass (perform const folding).
@@ -762,13 +764,13 @@ Optimizing module spi_lcd_vid_mem.
 18.14. Executing WREDUCE pass (reducing word size of cells).
 Removed top 28 address bits (of 32) from memory init port spi_lcd_vid_mem.$flatten\CRTL.$auto$mem.cc:351:emit$425 ($flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423).
 Removed top 25 address bits (of 32) from memory init port spi_lcd_vid_mem.$flatten\INIT_MEM.$auto$mem.cc:351:emit$429 ($flatten\INIT_MEM.$auto$proc_rom.cc:155:do_switch$427).
-Removed top 23 address bits (of 32) from memory init port spi_lcd_vid_mem.$flatten\VIDEO_MEM.$meminit$\MEM$video_mem.v:12$386 (VIDEO_MEM.MEM).
-Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$839 ($ne).
-Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$837 ($ne).
-Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$835 ($ne).
-Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$833 ($ne).
-Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$831 ($ne).
-Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$829 ($ne).
+Removed top 23 address bits (of 32) from memory init port spi_lcd_vid_mem.$flatten\VIDEO_MEM.$meminit$\MEM$video_mem.v:13$386 (VIDEO_MEM.MEM).
+Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$838 ($ne).
+Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$836 ($ne).
+Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$834 ($ne).
+Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$832 ($ne).
+Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$830 ($ne).
+Removed top 1 bits (of 2) from port B of cell spi_lcd_vid_mem.$auto$opt_dff.cc:248:make_patterns_logic$828 ($ne).
 Removed top 1 bits (of 8) from port B of cell spi_lcd_vid_mem.$flatten\COMP_ADDR.$eq$comp_addr.v:8$409 ($eq).
 Removed top 1 bits (of 4) from mux cell spi_lcd_vid_mem.$flatten\CRTL.$procmux$637 ($mux).
 Removed top 3 bits (of 4) from port B of cell spi_lcd_vid_mem.$flatten\CRTL.$procmux$595_CMP0 ($eq).
@@ -817,13 +819,6 @@ Removed 0 unused cells and 8 unused wires.
 <suppressed ~1 debug messages>
 
 18.17. Executing SHARE pass (SAT-based resource sharing).
-Found 2 cells in module spi_lcd_vid_mem that may be considered for resource sharing.
-  Analyzing resource sharing options for $flatten\VIDEO_MEM.$memrd$\MEM$video_mem.v:15$385 ($memrd):
-    Found 1 activation_patterns using ctrl signal $flatten\MUX.$procmux$735_CMP.
-    No candidates found.
-  Analyzing resource sharing options for $flatten\INIT_MEM.$auto$mem.cc:305:emit$428 ($memrd_v2):
-    Found 1 activation_patterns using ctrl signal \A_COUNT.addr [7].
-    No candidates found.
 
 18.18. Executing TECHMAP pass (map to technology primitives).
 
@@ -846,10 +841,9 @@ Finding unused cells or wires in module \spi_lcd_vid_mem..
 18.21. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
 Checking read port `$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423'[0] in module `\spi_lcd_vid_mem': no output FF found.
 Checking read port `$flatten\INIT_MEM.$auto$proc_rom.cc:155:do_switch$427'[0] in module `\spi_lcd_vid_mem': no output FF found.
-Checking read port `\VIDEO_MEM.MEM'[0] in module `\spi_lcd_vid_mem': no output FF found.
+Checking read port `\VIDEO_MEM.MEM'[0] in module `\spi_lcd_vid_mem': merging output FF to cell.
 Checking read port address `$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423'[0] in module `\spi_lcd_vid_mem': address FF has fully-defined init value, not supported.
 Checking read port address `$flatten\INIT_MEM.$auto$proc_rom.cc:155:do_switch$427'[0] in module `\spi_lcd_vid_mem': merged address FF to cell.
-Checking read port address `\VIDEO_MEM.MEM'[0] in module `\spi_lcd_vid_mem': merged address FF to cell.
 
 18.22. Executing WREDUCE pass (reducing word size of cells).
 
@@ -895,13 +889,13 @@ Extracting $alu and $macc cells in module spi_lcd_vid_mem:
   creating $alu model for $macc $flatten\CRTL.$add$ctrl.v:72$403.
   creating $alu model for $macc $flatten\A_COUNT.$add$a_count.v:13$393.
   creating $alu model for $flatten\D_COUNT.$eq$d_count.v:31$397 ($eq): merged with $flatten\D_COUNT.$sub$d_count.v:35$398.
-  creating $alu cell for $flatten\A_COUNT.$add$a_count.v:13$393: $auto$alumacc.cc:512:replace_alu$867
-  creating $alu cell for $flatten\CRTL.$add$ctrl.v:72$403: $auto$alumacc.cc:512:replace_alu$870
-  creating $alu cell for $flatten\D_COUNT.$add$d_count.v:38$399: $auto$alumacc.cc:512:replace_alu$873
-  creating $alu cell for $flatten\D_COUNT.$sub$d_count.v:35$398, $flatten\D_COUNT.$eq$d_count.v:31$397: $auto$alumacc.cc:512:replace_alu$876
-  creating $alu cell for $flatten\SPI_TX.\BYTE_CNT.$add$byte_cnt.v:12$415: $auto$alumacc.cc:512:replace_alu$881
-  creating $alu cell for $flatten\SPI_TX.\F_DIV.$add$f_div.v:22$413: $auto$alumacc.cc:512:replace_alu$884
-  creating $alu cell for $flatten\V_COUNT.$add$v_count.v:17$390: $auto$alumacc.cc:512:replace_alu$887
+  creating $alu cell for $flatten\A_COUNT.$add$a_count.v:13$393: $auto$alumacc.cc:512:replace_alu$869
+  creating $alu cell for $flatten\CRTL.$add$ctrl.v:72$403: $auto$alumacc.cc:512:replace_alu$872
+  creating $alu cell for $flatten\D_COUNT.$add$d_count.v:38$399: $auto$alumacc.cc:512:replace_alu$875
+  creating $alu cell for $flatten\D_COUNT.$sub$d_count.v:35$398, $flatten\D_COUNT.$eq$d_count.v:31$397: $auto$alumacc.cc:512:replace_alu$878
+  creating $alu cell for $flatten\SPI_TX.\BYTE_CNT.$add$byte_cnt.v:12$415: $auto$alumacc.cc:512:replace_alu$883
+  creating $alu cell for $flatten\SPI_TX.\F_DIV.$add$f_div.v:22$413: $auto$alumacc.cc:512:replace_alu$886
+  creating $alu cell for $flatten\V_COUNT.$add$v_count.v:17$390: $auto$alumacc.cc:512:replace_alu$889
   created 7 $alu and 0 $macc cells.
 
 18.28. Executing OPT pass (performing simple optimizations).
@@ -919,7 +913,7 @@ Running muxtree optimizer on module \spi_lcd_vid_mem..
   Evaluating internal representation of mux trees.
   Analyzing evaluation results.
 Removed 0 multiplexer ports.
-<suppressed ~81 debug messages>
+<suppressed ~78 debug messages>
 
 18.28.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
   Optimizing cells in module \spi_lcd_vid_mem.
@@ -933,8 +927,8 @@ Removed a total of 0 cells.
 
 18.28.7. Executing OPT_CLEAN pass (remove unused cells and wires).
 Finding unused cells or wires in module \spi_lcd_vid_mem..
-Removed 0 unused cells and 1 unused wires.
-<suppressed ~1 debug messages>
+Removed 1 unused cells and 10 unused wires.
+<suppressed ~2 debug messages>
 
 18.28.8. Executing OPT_EXPR pass (perform const folding).
 Optimizing module spi_lcd_vid_mem.
@@ -947,7 +941,7 @@ Running muxtree optimizer on module \spi_lcd_vid_mem..
   Evaluating internal representation of mux trees.
   Analyzing evaluation results.
 Removed 0 multiplexer ports.
-<suppressed ~81 debug messages>
+<suppressed ~78 debug messages>
 
 18.28.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
   Optimizing cells in module \spi_lcd_vid_mem.
@@ -1031,18 +1025,18 @@ No more expansions possible.
 
 18.34.1. Executing OPT_EXPR pass (perform const folding).
 Optimizing module spi_lcd_vid_mem.
-<suppressed ~42 debug messages>
+<suppressed ~41 debug messages>
 
 18.34.2. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\spi_lcd_vid_mem'.
 Removed a total of 0 cells.
 
 18.34.3. Executing OPT_DFF pass (perform DFF optimizations).
-Adding SRST signal on $auto$ff.cc:266:slice$790 ($dffe) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$675_Y, Q = \D_COUNT.delay, rval = 1'1).
+Adding SRST signal on $auto$ff.cc:266:slice$789 ($dffe) from module spi_lcd_vid_mem (D = $flatten\D_COUNT.$procmux$675_Y, Q = \D_COUNT.delay, rval = 1'1).
 
 18.34.4. Executing OPT_CLEAN pass (remove unused cells and wires).
 Finding unused cells or wires in module \spi_lcd_vid_mem..
-Removed 1 unused cells and 53 unused wires.
+Removed 1 unused cells and 52 unused wires.
 <suppressed ~2 debug messages>
 
 18.34.5. Rerunning OPT passes. (Removed registers in this run.)
@@ -1082,93 +1076,93 @@ Running muxtree optimizer on module \spi_lcd_vid_mem..
   Evaluating internal representation of mux trees.
   Analyzing evaluation results.
 Removed 0 multiplexer ports.
-<suppressed ~70 debug messages>
+<suppressed ~69 debug messages>
 
 18.36.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
   Optimizing cells in module \spi_lcd_vid_mem.
-    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][6]$992:
-      Old ports: A=9'000001001, B=9'110001001, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$a$972
-      New ports: A=1'0, B=1'1, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$a$972 [7]
-      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$a$972 [8] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$a$972 [6:0] } = { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$a$972 [7] 7'0001001 }
-    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][5]$989:
-      Old ports: A=9'000001001, B=9'000001011, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$b$970
-      New ports: A=1'0, B=1'1, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$b$970 [1]
-      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$b$970 [8:2] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$b$970 [0] } = 8'00000101
-    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][4]$986:
-      Old ports: A=9'000000111, B=9'000000101, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$a$969
-      New ports: A=1'1, B=1'0, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$a$969 [1]
-      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$a$969 [8:2] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$a$969 [0] } = 8'00000011
-    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][3]$983:
-      Old ports: A=9'000000001, B=9'000010001, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$b$967
-      New ports: A=1'0, B=1'1, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$b$967 [4]
-      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$b$967 [8:5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$b$967 [3:0] } = 8'00000001
-    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][2]$980:
-      Old ports: A=9'000000001, B=9'001000001, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$a$966
-      New ports: A=1'0, B=1'1, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$a$966 [6]
-      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$a$966 [8:7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$a$966 [5:0] } = 8'00000001
-    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][1]$977:
-      Old ports: A=9'000000001, B=9'000000011, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$b$964
-      New ports: A=1'0, B=1'1, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$b$964 [1]
-      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$b$964 [8:2] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$b$964 [0] } = 8'00000001
-    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][0]$974:
-      Old ports: A=9'000100000, B=9'000000001, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$963
-      New ports: A=2'10, B=2'01, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$963 [5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$963 [0] }
-      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$963 [8:6] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$963 [4:1] } = 7'0000000
-    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][7]$995:
-      Old ports: A=9'000100001, B=9'000000001, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$b$973
-      New ports: A=1'1, B=1'0, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$b$973 [5]
-      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$b$973 [8:6] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$b$973 [4:0] } = 8'00000001
-    New ctrl vector for $pmux cell $flatten\CRTL.$procmux$608: { $flatten\CRTL.$procmux$603_CMP $flatten\CRTL.$procmux$595_CMP $flatten\CRTL.$procmux$594_CMP $flatten\CRTL.$procmux$593_CMP $flatten\CRTL.$procmux$591_CMP $auto$opt_reduce.cc:137:opt_pmux$1003 $auto$opt_reduce.cc:137:opt_pmux$1001 $flatten\CRTL.$procmux$588_CMP $flatten\CRTL.$procmux$586_CMP $flatten\CRTL.$procmux$585_CMP $flatten\CRTL.$procmux$584_CMP $auto$opt_reduce.cc:137:opt_pmux$999 }
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][6]$994:
+      Old ports: A=9'000001001, B=9'110001001, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$a$974
+      New ports: A=1'0, B=1'1, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$a$974 [7]
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$a$974 [8] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$a$974 [6:0] } = { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$a$974 [7] 7'0001001 }
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][5]$991:
+      Old ports: A=9'000001001, B=9'000001011, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$b$972
+      New ports: A=1'0, B=1'1, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$b$972 [1]
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$b$972 [8:2] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$b$972 [0] } = 8'00000101
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][4]$988:
+      Old ports: A=9'000000111, B=9'000000101, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$a$971
+      New ports: A=1'1, B=1'0, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$a$971 [1]
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$a$971 [8:2] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$a$971 [0] } = 8'00000011
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][3]$985:
+      Old ports: A=9'000000001, B=9'000010001, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$b$969
+      New ports: A=1'0, B=1'1, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$b$969 [4]
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$b$969 [8:5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$b$969 [3:0] } = 8'00000001
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][2]$982:
+      Old ports: A=9'000000001, B=9'001000001, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$a$968
+      New ports: A=1'0, B=1'1, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$a$968 [6]
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$a$968 [8:7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$a$968 [5:0] } = 8'00000001
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][1]$979:
+      Old ports: A=9'000000001, B=9'000000011, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$b$966
+      New ports: A=1'0, B=1'1, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$b$966 [1]
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$b$966 [8:2] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$b$966 [0] } = 8'00000001
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][0]$976:
+      Old ports: A=9'000100000, B=9'000000001, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$965
+      New ports: A=2'10, B=2'01, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$965 [5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$965 [0] }
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$965 [8:6] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$965 [4:1] } = 7'0000000
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][3][7]$997:
+      Old ports: A=9'000100001, B=9'000000001, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$b$975
+      New ports: A=1'1, B=1'0, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$b$975 [5]
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$b$975 [8:6] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$b$975 [4:0] } = 8'00000001
+    New ctrl vector for $pmux cell $flatten\CRTL.$procmux$608: { $flatten\CRTL.$procmux$603_CMP $flatten\CRTL.$procmux$595_CMP $flatten\CRTL.$procmux$594_CMP $flatten\CRTL.$procmux$593_CMP $flatten\CRTL.$procmux$591_CMP $auto$opt_reduce.cc:137:opt_pmux$1005 $auto$opt_reduce.cc:137:opt_pmux$1003 $flatten\CRTL.$procmux$588_CMP $flatten\CRTL.$procmux$586_CMP $flatten\CRTL.$procmux$585_CMP $flatten\CRTL.$procmux$584_CMP $auto$opt_reduce.cc:137:opt_pmux$1001 }
     Consolidated identical input bits for $mux cell $flatten\CRTL.$procmux$623:
       Old ports: A=4'0111, B=4'1000, Y=$flatten\CRTL.$procmux$623_Y
       New ports: A=2'01, B=2'10, Y={ $flatten\CRTL.$procmux$623_Y [3] $flatten\CRTL.$procmux$623_Y [0] }
       New connections: $flatten\CRTL.$procmux$623_Y [2:1] = { $flatten\CRTL.$procmux$623_Y [0] $flatten\CRTL.$procmux$623_Y [0] }
     Consolidated identical input bits for $mux cell $flatten\CRTL.$procmux$637:
-      Old ports: A=3'011, B=3'101, Y=$auto$wreduce.cc:514:run$845 [2:0]
-      New ports: A=2'01, B=2'10, Y=$auto$wreduce.cc:514:run$845 [2:1]
-      New connections: $auto$wreduce.cc:514:run$845 [0] = 1'1
+      Old ports: A=3'011, B=3'101, Y=$auto$wreduce.cc:514:run$844 [2:0]
+      New ports: A=2'01, B=2'10, Y=$auto$wreduce.cc:514:run$844 [2:1]
+      New connections: $auto$wreduce.cc:514:run$844 [0] = 1'1
     Consolidated identical input bits for $mux cell $flatten\SPI_TX.\CRTL_SPI.$procmux$502:
       Old ports: A=7'0001000, B=7'1000000, Y=$flatten\SPI_TX.\CRTL_SPI.$5\next_state[6:0]
       New ports: A=2'01, B=2'10, Y={ $flatten\SPI_TX.\CRTL_SPI.$5\next_state[6:0] [6] $flatten\SPI_TX.\CRTL_SPI.$5\next_state[6:0] [3] }
       New connections: { $flatten\SPI_TX.\CRTL_SPI.$5\next_state[6:0] [5:4] $flatten\SPI_TX.\CRTL_SPI.$5\next_state[6:0] [2:0] } = 5'00000
     Consolidated identical input bits for $mux cell $flatten\SPI_TX.\CRTL_SPI.$procmux$511:
-      Old ports: A=5'01000, B=5'10000, Y=$auto$wreduce.cc:514:run$849 [4:0]
-      New ports: A=2'01, B=2'10, Y=$auto$wreduce.cc:514:run$849 [4:3]
-      New connections: $auto$wreduce.cc:514:run$849 [2:0] = 3'000
+      Old ports: A=5'01000, B=5'10000, Y=$auto$wreduce.cc:514:run$848 [4:0]
+      New ports: A=2'01, B=2'10, Y=$auto$wreduce.cc:514:run$848 [4:3]
+      New connections: $auto$wreduce.cc:514:run$848 [2:0] = 3'000
     Consolidated identical input bits for $mux cell $flatten\SPI_TX.\CRTL_SPI.$procmux$521:
-      Old ports: A=6'000100, B=6'100000, Y=$auto$wreduce.cc:514:run$848 [5:0]
-      New ports: A=2'01, B=2'10, Y={ $auto$wreduce.cc:514:run$848 [5] $auto$wreduce.cc:514:run$848 [2] }
-      New connections: { $auto$wreduce.cc:514:run$848 [4:3] $auto$wreduce.cc:514:run$848 [1:0] } = 4'0000
+      Old ports: A=6'000100, B=6'100000, Y=$auto$wreduce.cc:514:run$847 [5:0]
+      New ports: A=2'01, B=2'10, Y={ $auto$wreduce.cc:514:run$847 [5] $auto$wreduce.cc:514:run$847 [2] }
+      New connections: { $auto$wreduce.cc:514:run$847 [4:3] $auto$wreduce.cc:514:run$847 [1:0] } = 4'0000
   Optimizing cells in module \spi_lcd_vid_mem.
-    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$971:
-      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$a$972, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$b$973, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$961
-      New ports: A={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$a$972 [7] 2'01 }, B={ 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$b$973 [5] 1'0 }, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$961 [7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$961 [5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$961 [3] }
-      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$961 [8] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$961 [6] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$961 [4] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$961 [2:0] } = { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$961 [7] 5'00001 }
-    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$968:
-      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$a$969, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$b$970, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$a$960
-      New ports: A={ 2'01 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$a$969 [1] }, B={ 2'10 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$b$970 [1] }, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$a$960 [3:1]
-      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$a$960 [8:4] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$a$960 [0] } = 6'000001
-    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$965:
-      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$a$966, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$b$967, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$958
-      New ports: A={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$a$966 [6] 1'0 }, B={ 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$b$967 [4] }, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$958 [6] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$958 [4] }
-      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$958 [8:7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$958 [5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$958 [3:0] } = 7'0000001
-    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$962:
-      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$963, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$b$964, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$957
-      New ports: A={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$963 [5] 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$963 [0] }, B={ 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$b$964 [1] 1'1 }, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$957 [5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$957 [1:0] }
-      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$957 [8:6] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$957 [4:2] } = 6'000000
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$973:
+      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$a$974, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$b$975, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$963
+      New ports: A={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$a$974 [7] 2'01 }, B={ 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][3]$b$975 [5] 1'0 }, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$963 [7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$963 [5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$963 [3] }
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$963 [8] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$963 [6] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$963 [4] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$963 [2:0] } = { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$963 [7] 5'00001 }
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$970:
+      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$a$971, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$b$972, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$a$962
+      New ports: A={ 2'01 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$a$971 [1] }, B={ 2'10 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][2]$b$972 [1] }, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$a$962 [3:1]
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$a$962 [8:4] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$a$962 [0] } = 6'000001
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$967:
+      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$a$968, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$b$969, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$960
+      New ports: A={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$a$968 [6] 1'0 }, B={ 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][1]$b$969 [4] }, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$960 [6] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$960 [4] }
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$960 [8:7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$960 [5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$960 [3:0] } = 7'0000001
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$964:
+      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$965, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$b$966, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$959
+      New ports: A={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$965 [5] 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$a$965 [0] }, B={ 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][2][0]$b$966 [1] 1'1 }, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$959 [5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$959 [1:0] }
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$959 [8:6] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$959 [4:2] } = 6'000000
   Optimizing cells in module \spi_lcd_vid_mem.
-    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$959:
-      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$a$960, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$961, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$955
-      New ports: A={ 2'00 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$a$960 [3:1] }, B={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$961 [7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$961 [5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$961 [3] 2'00 }, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$955 [7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$955 [5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$955 [3:1] }
-      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$955 [8] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$955 [6] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$955 [4] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$955 [0] } = { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$955 [7] 3'001 }
-    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$956:
-      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$957, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$958, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$954
-      New ports: A={ 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$957 [5] 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$957 [1:0] }, B={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$958 [6] 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$958 [4] 2'01 }, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$954 [6:4] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$954 [1:0] }
-      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$954 [8:7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$954 [3:2] } = 4'0000
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$961:
+      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$a$962, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$963, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$957
+      New ports: A={ 2'00 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$a$962 [3:1] }, B={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$963 [7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$963 [5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][1]$b$963 [3] 2'00 }, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$957 [7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$957 [5] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$957 [3:1] }
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$957 [8] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$957 [6] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$957 [4] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$957 [0] } = { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$957 [7] 3'001 }
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$958:
+      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$959, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$960, Y=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$956
+      New ports: A={ 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$959 [5] 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$a$959 [1:0] }, B={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$960 [6] 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][1][0]$b$960 [4] 2'01 }, Y={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$956 [6:4] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$956 [1:0] }
+      New connections: { $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$956 [8:7] $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$956 [3:2] } = 4'0000
   Optimizing cells in module \spi_lcd_vid_mem.
-    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$953:
-      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$954, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$955, Y={ \CRTL.inc_v_addr \CRTL.src_rdy \CRTL.s_delay \A_COUNT.rst \A_COUNT.inc \MUX.sel \CRTL.init_tx \lcd_rst }
-      New ports: A={ 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$954 [6:4] 2'00 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$954 [1:0] }, B={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$955 [7] 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$955 [5] 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$955 [3:1] 1'1 }, Y={ \CRTL.src_rdy \CRTL.s_delay \A_COUNT.rst \A_COUNT.inc \MUX.sel \CRTL.init_tx \lcd_rst }
+    Consolidated identical input bits for $mux cell $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$955:
+      Old ports: A=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$956, B=$memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$957, Y={ \CRTL.inc_v_addr \CRTL.src_rdy \CRTL.s_delay \A_COUNT.rst \A_COUNT.inc \MUX.sel \CRTL.init_tx \lcd_rst }
+      New ports: A={ 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$956 [6:4] 2'00 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$a$956 [1:0] }, B={ $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$957 [7] 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$957 [5] 1'0 $memory$flatten\CRTL.$auto$proc_rom.cc:155:do_switch$423$rdmux[0][0][0]$b$957 [3:1] 1'1 }, Y={ \CRTL.src_rdy \CRTL.s_delay \A_COUNT.rst \A_COUNT.inc \MUX.sel \CRTL.init_tx \lcd_rst }
       New connections: \CRTL.inc_v_addr = \CRTL.src_rdy
   Optimizing cells in module \spi_lcd_vid_mem.
 Performed a total of 21 changes.
@@ -1196,7 +1190,7 @@ Running muxtree optimizer on module \spi_lcd_vid_mem..
   Evaluating internal representation of mux trees.
   Analyzing evaluation results.
 Removed 0 multiplexer ports.
-<suppressed ~73 debug messages>
+<suppressed ~72 debug messages>
 
 18.36.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
   Optimizing cells in module \spi_lcd_vid_mem.
@@ -1261,7 +1255,7 @@ Successfully finished Verilog frontend.
 Using extmapper simplemap for cells of type $reduce_or.
 Using extmapper simplemap for cells of type $sdffce.
 Using template $paramod$53700bbee849b2010ad0b60a61ccd204a10e24ca\_80_ice40_alu for cells of type $alu.
-Using template $paramod$175e67c02b86e96b1288b9dc100122520d7240d8\_90_alu for cells of type $alu.
+Using template $paramod$fc972a7a46956c1788f3cb5257b53c8f1df2d0cc\_90_alu for cells of type $alu.
 Using template $paramod$32a7b7b86c07519b7537abc18e96f0331f97914d\_80_ice40_alu for cells of type $alu.
 Using extmapper simplemap for cells of type $reduce_and.
 Using template $paramod$403a3c2fa431a154c52a6a5429d7a6260b5d144f\_80_ice40_alu for cells of type $alu.
@@ -1277,46 +1271,46 @@ Using extmapper simplemap for cells of type $eq.
 Using template $paramod$1898f562910b1a95b1df10dbe7204af73891130f\_90_pmux for cells of type $pmux.
 Using extmapper simplemap for cells of type $logic_not.
 Using template $paramod$8fabc56b80a569262acfc42757a02ca0b8e91278\_90_pmux for cells of type $pmux.
-Using template $paramod$0063cc74cb9d92ba0fcb27304a45144f31b8a510\_90_pmux for cells of type $pmux.
+Using template $paramod$e2c4217a160d14a8040876e2686fbcd8b22a88d4\_90_pmux for cells of type $pmux.
 Using extmapper simplemap for cells of type $or.
 Using template $paramod$200cf4763a5dd97104da97c2740bc6396db7fa25\_90_pmux for cells of type $pmux.
 Using extmapper simplemap for cells of type $and.
 Using extmapper simplemap for cells of type $pos.
 Using extmapper simplemap for cells of type $xor.
-Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000000010 for cells of type $fa.
-Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000000010 for cells of type $lcu.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000000001 for cells of type $fa.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000000001 for cells of type $lcu.
 No more expansions possible.
-<suppressed ~633 debug messages>
+<suppressed ~627 debug messages>
 
 18.39. Executing OPT pass (performing simple optimizations).
 
 18.39.1. Executing OPT_EXPR pass (perform const folding).
 Optimizing module spi_lcd_vid_mem.
-<suppressed ~698 debug messages>
+<suppressed ~676 debug messages>
 
 18.39.2. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\spi_lcd_vid_mem'.
-<suppressed ~465 debug messages>
-Removed a total of 155 cells.
+<suppressed ~459 debug messages>
+Removed a total of 153 cells.
 
 18.39.3. Executing OPT_DFF pass (perform DFF optimizations).
 
 18.39.4. Executing OPT_CLEAN pass (remove unused cells and wires).
 Finding unused cells or wires in module \spi_lcd_vid_mem..
-Removed 50 unused cells and 554 unused wires.
-<suppressed ~51 debug messages>
+Removed 49 unused cells and 550 unused wires.
+<suppressed ~50 debug messages>
 
 18.39.5. Finished fast OPT passes.
 
 18.40. Executing ICE40_OPT pass (performing simple optimizations).
 
 18.40.1. Running ICE40 specific optimizations.
-Optimized $__ICE40_CARRY_WRAPPER cell back to logic (without SB_CARRY) spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$867.slice[0].carry: CO=\A_COUNT.addr [0]
-Optimized $__ICE40_CARRY_WRAPPER cell back to logic (without SB_CARRY) spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$870.slice[0].carry: CO=\CRTL.rst_cnt [0]
-Optimized $__ICE40_CARRY_WRAPPER cell back to logic (without SB_CARRY) spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$873.slice[0].carry: CO=\D_COUNT.unit_cnt [0]
-Optimized $__ICE40_CARRY_WRAPPER cell back to logic (without SB_CARRY) spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$876.slice[0].carry: CO=\D_COUNT.val_cnt [0]
-Optimized $__ICE40_CARRY_WRAPPER cell back to logic (without SB_CARRY) spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$881.slice[0].carry: CO=\SPI_TX.BYTE_CNT.count [0]
-Optimized $__ICE40_CARRY_WRAPPER cell back to logic (without SB_CARRY) spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$887.slice[0].carry: CO=\V_COUNT.addr [0]
+Optimized $__ICE40_CARRY_WRAPPER cell back to logic (without SB_CARRY) spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$869.slice[0].carry: CO=\A_COUNT.addr [0]
+Optimized $__ICE40_CARRY_WRAPPER cell back to logic (without SB_CARRY) spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$872.slice[0].carry: CO=\CRTL.rst_cnt [0]
+Optimized $__ICE40_CARRY_WRAPPER cell back to logic (without SB_CARRY) spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$875.slice[0].carry: CO=\D_COUNT.unit_cnt [0]
+Optimized $__ICE40_CARRY_WRAPPER cell back to logic (without SB_CARRY) spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$878.slice[0].carry: CO=\D_COUNT.val_cnt [0]
+Optimized $__ICE40_CARRY_WRAPPER cell back to logic (without SB_CARRY) spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$883.slice[0].carry: CO=\SPI_TX.BYTE_CNT.count [0]
+Optimized $__ICE40_CARRY_WRAPPER cell back to logic (without SB_CARRY) spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$889.slice[0].carry: CO=\V_COUNT.addr [0]
 
 18.40.2. Executing OPT_EXPR pass (perform const folding).
 Optimizing module spi_lcd_vid_mem.
@@ -1326,13 +1320,13 @@ Finding identical cells in module `\spi_lcd_vid_mem'.
 Removed a total of 0 cells.
 
 18.40.4. Executing OPT_DFF pass (perform DFF optimizations).
-Adding SRST signal on $auto$ff.cc:266:slice$1335 ($_SDFF_NN0_) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\CRTL_SPI.$procmux$539.B_AND_S [6], Q = \SPI_TX.CRTL_SPI.state [6], rval = 1'0).
-Adding SRST signal on $auto$ff.cc:266:slice$1334 ($_SDFF_NN0_) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\CRTL_SPI.$procmux$539.Y_B [5], Q = \SPI_TX.CRTL_SPI.state [5], rval = 1'0).
-Adding SRST signal on $auto$ff.cc:266:slice$1333 ($_SDFF_NN0_) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\CRTL_SPI.$procmux$539.B_AND_S [18], Q = \SPI_TX.CRTL_SPI.state [4], rval = 1'0).
-Adding SRST signal on $auto$ff.cc:266:slice$1332 ($_SDFF_NN0_) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\CRTL_SPI.$procmux$539.Y_B [3], Q = \SPI_TX.CRTL_SPI.state [3], rval = 1'0).
-Adding SRST signal on $auto$ff.cc:266:slice$1331 ($_SDFF_NN0_) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\CRTL_SPI.$procmux$539.Y_B [2], Q = \SPI_TX.CRTL_SPI.state [2], rval = 1'0).
-Adding SRST signal on $auto$ff.cc:266:slice$1330 ($_SDFF_NN0_) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\CRTL_SPI.$procmux$539.B_AND_S [36], Q = \SPI_TX.CRTL_SPI.state [1], rval = 1'0).
-Adding SRST signal on $auto$ff.cc:266:slice$1329 ($_SDFF_NN1_) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\CRTL_SPI.$procmux$539.B_AND_S [35], Q = \SPI_TX.CRTL_SPI.state [0], rval = 1'1).
+Adding SRST signal on $auto$ff.cc:266:slice$1319 ($_SDFF_NN0_) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\CRTL_SPI.$procmux$539.B_AND_S [6], Q = \SPI_TX.CRTL_SPI.state [6], rval = 1'0).
+Adding SRST signal on $auto$ff.cc:266:slice$1318 ($_SDFF_NN0_) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\CRTL_SPI.$procmux$539.B_AND_S [26], Q = \SPI_TX.CRTL_SPI.state [5], rval = 1'0).
+Adding SRST signal on $auto$ff.cc:266:slice$1317 ($_SDFF_NN0_) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\CRTL_SPI.$procmux$539.B_AND_S [18], Q = \SPI_TX.CRTL_SPI.state [4], rval = 1'0).
+Adding SRST signal on $auto$ff.cc:266:slice$1316 ($_SDFF_NN0_) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\CRTL_SPI.$procmux$539.Y_B [3], Q = \SPI_TX.CRTL_SPI.state [3], rval = 1'0).
+Adding SRST signal on $auto$ff.cc:266:slice$1315 ($_SDFF_NN0_) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\CRTL_SPI.$procmux$539.Y_B [2], Q = \SPI_TX.CRTL_SPI.state [2], rval = 1'0).
+Adding SRST signal on $auto$ff.cc:266:slice$1314 ($_SDFF_NN0_) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\CRTL_SPI.$procmux$539.B_AND_S [29], Q = \SPI_TX.CRTL_SPI.state [1], rval = 1'0).
+Adding SRST signal on $auto$ff.cc:266:slice$1313 ($_SDFF_NN1_) from module spi_lcd_vid_mem (D = $flatten\SPI_TX.\CRTL_SPI.$procmux$539.B_AND_S [28], Q = \SPI_TX.CRTL_SPI.state [0], rval = 1'1).
 
 18.40.5. Executing OPT_CLEAN pass (remove unused cells and wires).
 Finding unused cells or wires in module \spi_lcd_vid_mem..
@@ -1412,19 +1406,19 @@ Using template \$_SDFF_PP0_ for cells of type $_SDFF_PP0_.
 Using template \$_SDFFCE_NP0P_ for cells of type $_SDFFCE_NP0P_.
 Using template \$_SDFFCE_PP1P_ for cells of type $_SDFFCE_PP1P_.
 No more expansions possible.
-<suppressed ~139 debug messages>
+<suppressed ~138 debug messages>
 
 18.43. Executing OPT_EXPR pass (perform const folding).
 Optimizing module spi_lcd_vid_mem.
 <suppressed ~1 debug messages>
 
 18.44. Executing SIMPLEMAP pass (map simple cells to gate primitives).
-Mapping spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$870.slice[0].carry ($lut).
-Mapping spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$873.slice[0].carry ($lut).
-Mapping spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$876.slice[0].carry ($lut).
-Mapping spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$881.slice[0].carry ($lut).
-Mapping spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$887.slice[0].carry ($lut).
-Mapping spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$867.slice[0].carry ($lut).
+Mapping spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$872.slice[0].carry ($lut).
+Mapping spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$875.slice[0].carry ($lut).
+Mapping spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$878.slice[0].carry ($lut).
+Mapping spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$883.slice[0].carry ($lut).
+Mapping spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$889.slice[0].carry ($lut).
+Mapping spi_lcd_vid_mem.$auto$alumacc.cc:512:replace_alu$869.slice[0].carry ($lut).
 
 18.45. Executing ICE40_OPT pass (performing simple optimizations).
 
@@ -1443,7 +1437,7 @@ Removed a total of 153 cells.
 
 18.45.5. Executing OPT_CLEAN pass (remove unused cells and wires).
 Finding unused cells or wires in module \spi_lcd_vid_mem..
-Removed 0 unused cells and 863 unused wires.
+Removed 0 unused cells and 858 unused wires.
 <suppressed ~1 debug messages>
 
 18.45.6. Rerunning OPT passes. (Removed registers in this run.)
@@ -1577,7 +1571,7 @@ Generating RTLIL representation for module `$__DFF_P__$abc9_flop'.
 Successfully finished Verilog frontend.
 
 18.48.9. Executing ABC9_OPS pass (helper functions for ABC9).
-<suppressed ~352 debug messages>
+<suppressed ~350 debug messages>
 
 18.48.10. Executing ABC9_OPS pass (helper functions for ABC9).
 
@@ -1699,17 +1693,16 @@ Module spi_lcd_vid_mem: replaced 7 cells with 43 new cells, skipped 11 cells.
        8 $specify2
 
 18.48.15. Executing AIGMAP pass (map logic to AIG).
-Module spi_lcd_vid_mem: replaced 385 cells with 1852 new cells, skipped 922 cells.
-  replaced 4 cell types:
-     104 $_MUX_
+Module spi_lcd_vid_mem: replaced 364 cells with 1711 new cells, skipped 918 cells.
+  replaced 3 cell types:
+      86 $_MUX_
        3 $_ORNOT_
-     277 $_OR_
-       1 $_XOR_
+     275 $_OR_
   not replaced 19 cell types:
-     246 $_AND_
-     106 $_NOT_
+     247 $_AND_
+     104 $_NOT_
       14 $scopeinfo
-       4 SB_DFFSR
+       3 SB_DFFSR
       69 SB_DFFESR
        1 SB_DFFESS
        7 SB_DFFNSR
@@ -1722,17 +1715,17 @@ Module spi_lcd_vid_mem: replaced 385 cells with 1852 new cells, skipped 922 cell
       32 $paramod$__ABC9_DELAY\DELAY=32'00000000000000000000000100010010
        1 $paramod$4273c199792855c7a7775332fe8c0088f7f7cf24\SB_RAM40_4K
        1 $paramod$d5e76ae6ccd41fb8376be31d3a6aa6cae0f32fe7\SB_RAM40_4K
-     117 $paramod$__ABC9_DELAY\DELAY=32'00000000000000000000000000010101
+     116 $paramod$__ABC9_DELAY\DELAY=32'00000000000000000000000000010101
       87 $paramod$__ICE40_CARRY_WRAPPER\LUT=16'0110100110010110\I3_IS_CI=1'1
-     139 $paramod$__ABC9_DELAY\DELAY=32'00000000000000000000000011001011
+     138 $paramod$__ABC9_DELAY\DELAY=32'00000000000000000000000011001011
 
 18.48.15.1. Executing ABC9_OPS pass (helper functions for ABC9).
 
 18.48.15.2. Executing ABC9_OPS pass (helper functions for ABC9).
 
 18.48.15.3. Executing XAIGER backend.
-<suppressed ~160 debug messages>
-Extracted 841 AND gates and 2966 wires from module `spi_lcd_vid_mem' to a netlist network with 137 inputs and 364 outputs.
+<suppressed ~159 debug messages>
+Extracted 783 AND gates and 2809 wires from module `spi_lcd_vid_mem' to a netlist network with 136 inputs and 362 outputs.
 
 18.48.15.4. Executing ABC9_EXE pass (technology mapping using ABC9).
 
@@ -1744,45 +1737,45 @@ ABC: + read_lut <abc-temp-dir>/input.lut
 ABC: + read_box <abc-temp-dir>/input.box 
 ABC: + &read <abc-temp-dir>/input.xaig 
 ABC: + &ps 
-ABC: <abc-temp-dir>/input : i/o =    137/    364  and =     695  lev =   10 (1.11)  mem = 0.04 MB  box = 437  bb = 350
+ABC: <abc-temp-dir>/input : i/o =    136/    362  and =     656  lev =   10 (1.05)  mem = 0.04 MB  box = 435  bb = 348
 ABC: + &scorr 
 ABC: Warning: The network is combinational.
 ABC: + &sweep 
 ABC: + &dc2 
 ABC: + &dch -f -r 
 ABC: + &ps 
-ABC: <abc-temp-dir>/input : i/o =    137/    364  and =     681  lev =   10 (0.79)  mem = 0.04 MB  ch =   82  box = 437  bb = 350
-ABC: cst =       0  cls =     74  lit =      82  unused =    1186  proof =     0
+ABC: <abc-temp-dir>/input : i/o =    136/    362  and =     642  lev =   10 (0.73)  mem = 0.04 MB  ch =   82  box = 435  bb = 348
+ABC: cst =       0  cls =     77  lit =      82  unused =    1141  proof =     0
 ABC: + &if -W 250 -v 
 ABC: K = 4. Memory (bytes): Truth =    0. Cut =   52. Obj =  136. Set =  564. CutMin = no
-ABC: Node =     681.  Ch =    74.  Total mem =    0.36 MB. Peak cut mem =    0.03 MB.
-ABC: P:  Del = 5328.00.  Ar =     271.0.  Edge =      888.  Cut =     3422.  T =     0.00 sec
-ABC: P:  Del = 5328.00.  Ar =     272.0.  Edge =      898.  Cut =     3312.  T =     0.00 sec
-ABC: P:  Del = 5328.00.  Ar =     232.0.  Edge =      698.  Cut =     3551.  T =     0.00 sec
-ABC: F:  Del = 5328.00.  Ar =     228.0.  Edge =      682.  Cut =     3621.  T =     0.00 sec
-ABC: A:  Del = 5328.00.  Ar =     225.0.  Edge =      661.  Cut =     3632.  T =     0.00 sec
-ABC: A:  Del = 5328.00.  Ar =     225.0.  Edge =      661.  Cut =     3641.  T =     0.00 sec
-ABC: Total time =     0.01 sec
+ABC: Node =     642.  Ch =    77.  Total mem =    0.35 MB. Peak cut mem =    0.03 MB.
+ABC: P:  Del = 5328.00.  Ar =     247.0.  Edge =      814.  Cut =     3441.  T =     0.00 sec
+ABC: P:  Del = 5328.00.  Ar =     260.0.  Edge =      860.  Cut =     3328.  T =     0.00 sec
+ABC: P:  Del = 5328.00.  Ar =     219.0.  Edge =      656.  Cut =     3503.  T =     0.00 sec
+ABC: F:  Del = 5328.00.  Ar =     211.0.  Edge =      634.  Cut =     3560.  T =     0.00 sec
+ABC: A:  Del = 5328.00.  Ar =     211.0.  Edge =      620.  Cut =     3645.  T =     0.00 sec
+ABC: A:  Del = 5328.00.  Ar =     211.0.  Edge =      620.  Cut =     3645.  T =     0.00 sec
+ABC: Total time =     0.00 sec
 ABC: + &write -n <abc-temp-dir>/output.aig 
 ABC: + &mfs 
 ABC: + &ps -l 
-ABC: <abc-temp-dir>/input : i/o =    137/    364  and =     490  lev =   10 (0.82)  mem = 0.03 MB  box = 437  bb = 350
-ABC: Mapping (K=4)  :  lut =    225  edge =     659  lev =    7 (0.57)  Boxes are not in a topological order. Switching to level computation without boxes.
+ABC: <abc-temp-dir>/input : i/o =    136/    362  and =     457  lev =   10 (0.75)  mem = 0.03 MB  box = 435  bb = 348
+ABC: Mapping (K=4)  :  lut =    211  edge =     618  lev =    7 (0.60)  Boxes are not in a topological order. Switching to level computation without boxes.
 ABC: levB =   10  mem = 0.01 MB
-ABC: LUT = 225 : 2=105 46.7 %  3=31 13.8 %  4=89 39.6 %  Ave = 2.93
+ABC: LUT = 211 : 2=99 46.9 %  3=28 13.3 %  4=84 39.8 %  Ave = 2.93
 ABC: + &write -n <abc-temp-dir>/output.aig 
 ABC: + time 
-ABC: elapse: 0.07 seconds, total: 0.07 seconds
+ABC: elapse: 0.04 seconds, total: 0.04 seconds
 
 18.48.15.6. Executing AIGER frontend.
-<suppressed ~1014 debug messages>
-Removed 533 unused cells and 2353 unused wires.
+<suppressed ~1008 debug messages>
+Removed 495 unused cells and 2308 unused wires.
 
 18.48.15.7. Executing ABC9_OPS pass (helper functions for ABC9).
-ABC RESULTS:              $lut cells:      230
+ABC RESULTS:              $lut cells:      216
 ABC RESULTS:   $paramod$__ICE40_CARRY_WRAPPER\LUT=16'0110100110010110\I3_IS_CI=1'1 cells:       87
 ABC RESULTS:           input signals:       18
-ABC RESULTS:          output signals:      364
+ABC RESULTS:          output signals:      362
 Removing temp directory.
 
 18.48.16. Executing TECHMAP pass (map to technology primitives).
@@ -1833,39 +1826,39 @@ Successfully finished Verilog frontend.
 18.50.2. Continuing TECHMAP pass.
 No more expansions possible.
 <suppressed ~22 debug messages>
-Removed 53 unused cells and 3698 unused wires.
+Removed 42 unused cells and 3536 unused wires.
 
 18.51. Executing OPT_LUT pass (optimize LUTs).
 Discovering LUTs.
-Number of LUTs:      318
+Number of LUTs:      304
   1-LUT                5
-  2-LUT              112
-  3-LUT              112
-  4-LUT               89
+  2-LUT              106
+  3-LUT              109
+  4-LUT               84
   with \SB_CARRY    (#0)   81
   with \SB_CARRY    (#1)   81
 
 Eliminating LUTs.
-Number of LUTs:      318
+Number of LUTs:      304
   1-LUT                5
-  2-LUT              112
-  3-LUT              112
-  4-LUT               89
+  2-LUT              106
+  3-LUT              109
+  4-LUT               84
   with \SB_CARRY    (#0)   81
   with \SB_CARRY    (#1)   81
 
 Combining LUTs.
-Number of LUTs:      252
+Number of LUTs:      238
   1-LUT                5
-  2-LUT               43
-  3-LUT               52
-  4-LUT              152
+  2-LUT               37
+  3-LUT               49
+  4-LUT              147
   with \SB_CARRY    (#0)   81
   with \SB_CARRY    (#1)   81
 
 Eliminated 0 LUTs.
 Combined 66 LUTs.
-<suppressed ~2110 debug messages>
+<suppressed ~2074 debug messages>
 
 18.52. Executing TECHMAP pass (map to technology primitives).
 
@@ -1879,54 +1872,52 @@ Successfully finished Verilog frontend.
 Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'10000000 for cells of type $lut.
 Using template $paramod$571404c0889eaf57f492cb5e37f8acb5df5852f9\$lut for cells of type $lut.
 Using template $paramod$a59507d273cd827eb6c46c37820d50a1b717efdf\$lut for cells of type $lut.
-Using template $paramod$359fe4e746656bf9c72aecaff84fc7bdea9f55a5\$lut for cells of type $lut.
-Using template $paramod$658b9ed803f0d3d335616d3858b53e0a2522f1e8\$lut for cells of type $lut.
-Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'0010 for cells of type $lut.
-Using template $paramod$272652f6c6fbe9a75eff76e45cc7e2788835518b\$lut for cells of type $lut.
-Using template $paramod$6e238df02989b317f10820a22773676e71120644\$lut for cells of type $lut.
-Using template $paramod$e51a8a571bee774247b38f52d6e85fd62ae52cea\$lut for cells of type $lut.
-Using template $paramod$20235ca863361fbc253329cfc7eeea38c77404dc\$lut for cells of type $lut.
-Using template $paramod$d6ca727e39f31d51d29072e0f33aa09c65e37336\$lut for cells of type $lut.
 Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'0001 for cells of type $lut.
-Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1101 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'11101111 for cells of type $lut.
+Using template $paramod$d6ca727e39f31d51d29072e0f33aa09c65e37336\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1011 for cells of type $lut.
 Using template $paramod$9d707d218adbd63b6f9a0c79d7ee037306fb6296\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00000001 for cells of type $lut.
+Using template $paramod$658b9ed803f0d3d335616d3858b53e0a2522f1e8\$lut for cells of type $lut.
+Using template $paramod$101238f3d8d49ab12a9b49a2f01cd503b26e9c61\$lut for cells of type $lut.
+Using template $paramod$e51a8a571bee774247b38f52d6e85fd62ae52cea\$lut for cells of type $lut.
+Using template $paramod$272652f6c6fbe9a75eff76e45cc7e2788835518b\$lut for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00010101 for cells of type $lut.
 Using template $paramod$fd904e9e35cfd343a9df248824bd3f1408724879\$lut for cells of type $lut.
 Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'0100 for cells of type $lut.
 Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01000000 for cells of type $lut.
 Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1000 for cells of type $lut.
+Using template $paramod$6e238df02989b317f10820a22773676e71120644\$lut for cells of type $lut.
 Using template $paramod$6d6beead1425af15cf78b27fd9b11b41b5d4bce8\$lut for cells of type $lut.
 Using template $paramod$8e44661def013b6bf9fe6f8b049ef2c838d749f9\$lut for cells of type $lut.
 Using template $paramod$f9813472aa48e533b3838c6f2316dc2e78c66111\$lut for cells of type $lut.
-Using template $paramod$30305e55a780880b9c824fe3509a4d981acb0f2b\$lut for cells of type $lut.
-Using template $paramod$32c48a69e3acd22031599a3593da71076425a763\$lut for cells of type $lut.
-Using template $paramod$55c8b41162bae9ccba9478b8f5fd17695513cc6c\$lut for cells of type $lut.
-Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01100100 for cells of type $lut.
-Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00000001 for cells of type $lut.
 Using template $paramod$c28a8b7ce0535d090c4cfb52e9c74affd52b110c\$lut for cells of type $lut.
 Using template $paramod$364c9ffbffac467d60dfec81bba4e18476c15602\$lut for cells of type $lut.
 Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00010000 for cells of type $lut.
-Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'0110 for cells of type $lut.
-Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1110 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1101 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01100100 for cells of type $lut.
+Using template $paramod$32c48a69e3acd22031599a3593da71076425a763\$lut for cells of type $lut.
 Using template $paramod$7417d5c14ea88af43c40449968b06e971c31e1c3\$lut for cells of type $lut.
-Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'11111000 for cells of type $lut.
 Using template $paramod$a5516fc31d1e552de2435200bb732b4d4ad63a9c\$lut for cells of type $lut.
 Using template $paramod$b3b5cad4a8d1fcdc5e4c7aa27a4d43090669fc00\$lut for cells of type $lut.
-Using template $paramod$a20c6c1e16699890aacd2a27aa974a524fce88da\$lut for cells of type $lut.
-Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1011 for cells of type $lut.
-Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'11110100 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1001 for cells of type $lut.
+Using template $paramod$fca82610c4582bae0c561edc640eb928b48fbdcf\$lut for cells of type $lut.
+Using template $paramod$ad823946862e656cf7f96d606b18b8f972dc6d6c\$lut for cells of type $lut.
 Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'10001100 for cells of type $lut.
 Using template $paramod$b1680225cc6a5792caa95f54b8b3218fae21705d\$lut for cells of type $lut.
 Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'01010100 for cells of type $lut.
 Using template $paramod$c685a6e5e211287be351ac5f1078c1501564ce89\$lut for cells of type $lut.
 Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00100000 for cells of type $lut.
 Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00001110 for cells of type $lut.
+Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000010\LUT=4'1110 for cells of type $lut.
 Using template $paramod$2bf796e0fd6e6f7f76aac424a34e617ed5d61822\$lut for cells of type $lut.
 Using template $paramod$8c0971601fb4fd5ceff81ea4809d177822973b1f\$lut for cells of type $lut.
 Using template $paramod$8b76a70a1f2550a9818889bc64ad11039c8093e0\$lut for cells of type $lut.
 Using template $paramod$b39f0a1f6d92295baeb3322c9c7ab596dc80c144\$lut for cells of type $lut.
 Using template $paramod$47a8214374025465e226fa66bee690ff33268a25\$lut for cells of type $lut.
-Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00110001 for cells of type $lut.
-Using template $paramod$8cac5452d526045503c5864c3a1dac0121c7053e\$lut for cells of type $lut.
+Using template $paramod$e01a027fedb28671a20c130493a89c7afd4e87d3\$lut for cells of type $lut.
+Using template $paramod$8d8a6111e2a82db0bfbd78666fa69c753d8df004\$lut for cells of type $lut.
+Using template $paramod$ec4859793618c01e988e7f9fc1ebb26a73e8c2b1\$lut for cells of type $lut.
 Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00101000 for cells of type $lut.
 Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00101010 for cells of type $lut.
 Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'11101010 for cells of type $lut.
@@ -1940,21 +1931,20 @@ Using template $paramod$1114d560ed98e9182fe073c9893577168d869f6b\$lut for cells 
 Using template $paramod$f2df4b667face0caaca82d0d0b51e071f5bc489d\$lut for cells of type $lut.
 Using template $paramod$beae4210b922fc9ba2fcc4008a7474b475e38c50\$lut for cells of type $lut.
 Using template $paramod$17e0dd827d0000adc6eb806d1966d8031b0aca6c\$lut for cells of type $lut.
-Using template $paramod$728af64da11d42500d51a71dd7007ac25b15b46a\$lut for cells of type $lut.
 Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000001\LUT=2'01 for cells of type $lut.
-Using template $paramod$1aec000c5e4bd6b271b6325086aa53fd26486efa\$lut for cells of type $lut.
-Using template $paramod$608f40069c27841a5b3bdf03643a34bdc8974072\$lut for cells of type $lut.
 Using template $paramod$4853050665c020c8d21fb1a749196950a09d9df8\$lut for cells of type $lut.
+Using template $paramod$e876a0bb5cc43721691604ba530fe3c2dc6d67d4\$lut for cells of type $lut.
+Using template $paramod$608f40069c27841a5b3bdf03643a34bdc8974072\$lut for cells of type $lut.
 Using template $paramod$9c6e6a10ea00e5b0682f6243b802d7839a398197\$lut for cells of type $lut.
 Using template $paramod\$lut\WIDTH=32'00000000000000000000000000000011\LUT=8'00101110 for cells of type $lut.
 Using template $paramod$f7cbd8f5974233f70d25c33ef6a692898e4f6377\$lut for cells of type $lut.
 No more expansions possible.
-<suppressed ~1191 debug messages>
-Removed 0 unused cells and 604 unused wires.
+<suppressed ~1138 debug messages>
+Removed 0 unused cells and 574 unused wires.
 
 18.53. Executing AUTONAME pass.
-Renamed 751 objects in module spi_lcd_vid_mem (106 iterations).
-<suppressed ~751 debug messages>
+Renamed 724 objects in module spi_lcd_vid_mem (104 iterations).
+<suppressed ~724 debug messages>
 
 18.54. Executing HIERARCHY pass (managing design hierarchy).
 Attribute `top' found on module `spi_lcd_vid_mem'. Setting top module to spi_lcd_vid_mem.
@@ -1972,23 +1962,23 @@ Removed 0 unused modules.
 
         +----------Local Count, excluding submodules.
         | 
-      357 wires
-      822 wire bits
-      357 public wires
-      822 public wire bits
+      346 wires
+      786 wire bits
+      346 public wires
+      786 public wire bits
         7 ports
         7 port bits
        16 cells
        14   $scopeinfo
         2   SB_RAM40_4K
-      450 submodules
+      435 submodules
        81   SB_CARRY
        69   SB_DFFESR
         1   SB_DFFESS
        36   SB_DFFNESR
         7   SB_DFFNSR
-        4   SB_DFFSR
-      252   SB_LUT4
+        3   SB_DFFSR
+      238   SB_LUT4
 
 === design hierarchy ===
 
@@ -1998,10 +1988,10 @@ Removed 0 unused modules.
 
         +----------Count including submodules.
         | 
-      357 wires
-      822 wire bits
-      357 public wires
-      822 public wire bits
+      346 wires
+      786 wire bits
+      346 public wires
+      786 public wire bits
         7 ports
         7 port bits
         - memories
@@ -2010,14 +2000,14 @@ Removed 0 unused modules.
        16 cells
        14   $scopeinfo
         2   SB_RAM40_4K
-      450 submodules
+      435 submodules
        81   SB_CARRY
        69   SB_DFFESR
         1   SB_DFFESS
        36   SB_DFFNESR
         7   SB_DFFNSR
-        4   SB_DFFSR
-      252   SB_LUT4
+        3   SB_DFFSR
+      238   SB_LUT4
 
 18.56. Executing CHECK pass (checking for obvious problems).
 Checking module spi_lcd_vid_mem...
@@ -2025,6 +2015,6 @@ Found and reported 0 problems.
 
 19. Executing JSON backend.
 
-End of script. Logfile hash: 6c1f298c75, CPU: user 1.36s system 0.02s, MEM: 36.31 MB peak
+End of script. Logfile hash: cd499ec4ef, CPU: user 0.75s system 0.02s, MEM: 36.74 MB peak
 Yosys 0.59+62 (git sha1 9aa2dde7e, g++ 14.2.0-19ubuntu2 -fPIC -O3)
 Time spent: 39% 12x techmap (0 sec), 22% 37x read_verilog (0 sec), ...
