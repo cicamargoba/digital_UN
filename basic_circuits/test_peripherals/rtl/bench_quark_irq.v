@@ -73,7 +73,7 @@ always #(tck/2) CLK <= ~CLK;
     $dumpvars(0,bench);
   `ifndef SYNTH
     for(idx = 0; idx < 32; idx = idx +1)  $dumpvars(0, bench.uut.CPU.registerFile[idx]);
-    for(idx = 1020; idx < 1025; idx = idx +1)  $dumpvars(0, bench.uut.RAM.MEM[idx]);
+    for(idx = 2000; idx < 2025; idx = idx +1)  $dumpvars(0, bench.uut.RAM.MEM[idx]);
   `endif  
 
     //$dumpvars(0, bench.uut.CPU.registerFile[10],bench);
