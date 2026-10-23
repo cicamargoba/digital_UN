@@ -19,6 +19,10 @@ SIM_OBJS += ../../verilog_model/primitives.v
 PER_OBJS = perip_sqrt.v $(OBJS)
 
 BUILD_DIR = build
+SVG_DIR ?= $(BUILD_DIR)/svg
+TEXT_TOP ?= text_overlay
+SVG_RENDERER ?= netlist2svg
+SVG_FLAT_RENDERER ?= netlistsvg
 
 TCL_SCRIPT = auto_generated.tcl
 GOWIN_BOARD=primer_25k
@@ -84,11 +88,27 @@ sim_post_route: $(TOP).asc $(TOP).pcf
 	vvp $@.vpp
 	gtkwave $(TOP)_TB.vcd &
 
-svg: $(OBJS)
-	yosys -p "prep -top ${TARGET}; write_json ${TARGET}.json" ${OBJS}
-	netlistsvg ${TARGET}.json -o ${TARGET}.svg  #--skin default.svg
-	yosys -p "prep -top ${TARGET} -flatten; write_json ${TARGET}_flat.json" ${OBJS}
-	netlistsvg ${TARGET}_flat.json -o ${TARGET}_flat.svg  #--skin default.svg
+.PHONY: svg svg_top svg_text svg-flat
+
+svg: svg_top svg_text
+
+svg_top: $(COMM_OBJS) image0.hex image1.hex font8x8.mem pal16.mem text_demo_top.mem
+	mkdir -p "$(SVG_DIR)"
+	yosys -Q -T -l $(SVG_DIR)/$(TOP)_svg.log -p 'read_verilog -defer $(COMM_OBJS); prep -top $(TOP); write_json $(SVG_DIR)/$(TOP).json'
+	python3 -c 'import json,sys; p=sys.argv[1]; d=json.load(open(p)); [(m.pop("parameter_default_values",None), [n.pop("signed",None) for n in m.get("netnames",{}).values()]) for m in d["modules"].values()]; json.dump(d,open(p,"w"))' $(SVG_DIR)/$(TOP).json
+	$(SVG_RENDERER) $(SVG_DIR)/$(TOP).json -o $(SVG_DIR)/$(TOP).svg
+
+svg_text: $(COMM_OBJS) font8x8.mem pal16.mem
+	mkdir -p "$(SVG_DIR)"
+	yosys -Q -T -l $(SVG_DIR)/$(TEXT_TOP)_svg.log -p 'read_verilog -defer $(COMM_OBJS); prep -top $(TEXT_TOP); write_json $(SVG_DIR)/$(TEXT_TOP).json'
+	python3 -c 'import json,sys; p=sys.argv[1]; d=json.load(open(p)); [(m.pop("parameter_default_values",None), [n.pop("signed",None) for n in m.get("netnames",{}).values()]) for m in d["modules"].values()]; json.dump(d,open(p,"w"))' $(SVG_DIR)/$(TEXT_TOP).json
+	$(SVG_RENDERER) $(SVG_DIR)/$(TEXT_TOP).json -o $(SVG_DIR)/$(TEXT_TOP).svg
+
+svg-flat: $(COMM_OBJS) image0.hex image1.hex font8x8.mem pal16.mem text_demo_top.mem
+	mkdir -p "$(SVG_DIR)"
+	yosys -Q -T -l $(SVG_DIR)/$(TOP)_flat_svg.log -p 'read_verilog -defer $(COMM_OBJS); prep -top $(TOP) -flatten; write_json $(SVG_DIR)/$(TOP)_flat.json'
+	python3 -c 'import json,sys; p=sys.argv[1]; d=json.load(open(p)); [(m.pop("parameter_default_values",None), [n.pop("signed",None) for n in m.get("netnames",{}).values()]) for m in d["modules"].values()]; json.dump(d,open(p,"w"))' $(SVG_DIR)/$(TOP)_flat.json
+	$(SVG_FLAT_RENDERER) $(SVG_DIR)/$(TOP)_flat.json -o $(SVG_DIR)/$(TOP)_flat.svg
 
 clean:
 	rm -rf *.out *.vcd *.svg *.json $(TOP)_synth.v *.vpp *.asc $(TOP)_route.v synth.log *bin *rpt *asc

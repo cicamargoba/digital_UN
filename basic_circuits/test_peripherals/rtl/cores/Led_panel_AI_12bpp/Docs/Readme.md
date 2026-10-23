@@ -180,6 +180,17 @@ Se usan los 11 bits de dirección de píxel necesarios para 64×32 pares. El anc
 
 ## 6. Pruebas y síntesis
 
+### SVG automáticos desde el Makefile general
+
+| Comando | Resultado |
+|---|---|
+| `make svg` | Genera los diagramas del TOP general y del TOP de texto |
+| `make svg_top` | `build/svg/led_panel_4k.svg` |
+| `make svg_text` | `build/svg/text_overlay.svg` |
+| `make svg-flat` | `build/svg/led_panel_4k_flat.svg`, diagrama general aplanado |
+
+Los targets jerárquicos usan Yosys y `netlist2svg`; `svg-flat` conserva el renderer `netlistsvg` porque el instalado `netlist2svg` falla con el trazado aplanado de este diseño. No abren ventanas ni programan hardware. Los JSON intermedios y logs quedan en `build/svg`, sin sobrescribir las netlists de síntesis. `TOP`, `TEXT_TOP`, `SVG_DIR`, `SVG_RENDERER` y `SVG_FLAT_RENDERER` pueden sobrescribirse al invocar Make. Los diagramas manuales de `Docs` mantienen su estilo y no se reemplazan.
+
 Desde este directorio, los targets adicionales están en **`Makefile.text`**, separados del flujo existente:
 
 ```bash
