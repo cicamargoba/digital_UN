@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2100" height="1600" viewBox="0 0 2100 1600">
+  <title>Controlador HUB75 con memoria de imagen y módulo de texto</title>
+  <desc>Diagrama general con el estilo del controlador original. Se conservan CONTROL, los contadores, el temporizador BCM y el mux de planos. text_overlay añade text_memory y text_mix y está conectado dentro del top led_panel_4k, tanto para hardware como para simulación.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0 L8 4 L0 8 Z" fill="#161616"/></marker>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#111111}
+      .title{font-size:29px;font-weight:700}
+      .name{font-size:25px;font-weight:700}
+      .label{font-size:20px;font-weight:700}
+      .small{font-size:18px}
+      .code{font-family:monospace;font-size:18px}
+      .zero{fill:#b42a2a;font-size:21px;font-weight:700}
+      .ctl{fill:#fcfbe2;stroke:#111111;stroke-width:2}
+      .count{fill:#f9dedd;stroke:#111111;stroke-width:2}
+      .cmp{fill:#e1ecd7;stroke:#111111;stroke-width:2}
+      .outer{fill:#ffffff;stroke:#111111;stroke-width:2}
+      .new{fill:#edf2f7;stroke:#111111;stroke-width:2}
+      .wire{fill:none;stroke:#111111;stroke-width:2;marker-end:url(#arrow)}
+      .bus{fill:none;stroke:#111111;stroke-width:3;marker-end:url(#arrow)}
+      .join{fill:none;stroke:#111111;stroke-width:2}
+    </style>
+  </defs>
+  <rect width="2100" height="1600" fill="#ffffff"/>
+  <text x="100" y="40" class="title">HUB75 · BCM de 4 bits por color · imagen y texto</text>
+
+  <rect x="100" y="70" width="280" height="470" class="ctl"/>
+  <text x="240" y="315" text-anchor="middle" class="name">CONTROL</text>
+  <text x="65" y="195" text-anchor="end" class="zero">ZC</text><path d="M70 200 H100" class="wire"/>
+  <text x="65" y="240" text-anchor="end" class="zero">ZR</text><path d="M70 245 H100" class="wire"/>
+  <text x="65" y="285" text-anchor="end" class="zero">ZD</text><path d="M70 290 H100" class="wire"/>
+  <text x="65" y="330" text-anchor="end" class="zero">ZI</text><path d="M70 335 H100" class="wire"/>
+  <text x="65" y="385" text-anchor="end" class="label">INIT</text><path d="M70 390 H100" class="wire"/>
+  <path d="M380 110 H440" class="wire"/><text x="390" y="102" class="label">RST_R</text>
+  <path d="M380 143 H440" class="wire"/><text x="390" y="135" class="label">RST_C</text>
+  <path d="M380 176 H440" class="wire"/><text x="390" y="168" class="label">RST_D</text>
+  <path d="M380 209 H440" class="wire"/><text x="390" y="201" class="label">RST_I</text>
+  <path d="M380 242 H440" class="wire"/><text x="390" y="234" class="label">LD_D</text>
+  <path d="M380 275 H440" class="wire"/><text x="390" y="267" class="label">SH_D</text>
+  <path d="M380 318 H440" class="wire"/><text x="390" y="310" class="label">LATCH</text>
+  <path d="M380 351 H440" class="wire"/><text x="390" y="343" class="label">nOE</text>
+  <path d="M380 384 H440" class="wire"/><text x="390" y="376" class="label">PX_CLK_EN</text>
+  <path d="M380 427 H440" class="wire"/><text x="390" y="419" class="label">INC_R</text>
+  <path d="M380 460 H440" class="wire"/><text x="390" y="452" class="label">INC_C</text>
+  <path d="M380 493 H440" class="wire"/><text x="390" y="485" class="label">INC_D</text>
+  <path d="M380 526 H440" class="wire"/><text x="390" y="518" class="label">INC_I</text>
+
+  <rect x="120" y="650" width="200" height="90" class="count"/>
+  <text x="220" y="702" text-anchor="middle" class="name">Count R</text>
+  <path d="M35 675 H120" class="wire"/><text x="35" y="663" class="label">RST_R</text>
+  <path d="M35 720 H120" class="wire"/><text x="35" y="708" class="label">INC_R</text>
+  <path d="M320 695 H500" class="join"/><text x="337" y="680" class="label">ROW</text>
+  <path d="M320 730 H365" class="wire"/><text x="375" y="737" class="zero">ZR</text>
+
+  <rect x="120" y="800" width="200" height="90" class="count"/>
+  <text x="220" y="852" text-anchor="middle" class="name">Count C</text>
+  <path d="M35 825 H120" class="wire"/><text x="35" y="813" class="label">RST_C</text>
+  <path d="M35 870 H120" class="wire"/><text x="35" y="858" class="label">INC_C</text>
+  <path d="M320 845 H500" class="join"/><text x="337" y="830" class="label">COL</text>
+  <path d="M320 880 H365" class="wire"/><text x="375" y="887" class="zero">ZC</text>
+  <path d="M500 695 V845" class="join"/>
+  <path d="M500 760 H1160" class="bus"/>
+  <circle cx="700" cy="760" r="4" fill="#111111"/>
+  <path d="M700 760 V430 H820" class="bus"/>
+  <text x="540" y="795" class="label">PIX_ADDR[10:0]</text>
+
+  <rect x="820" y="300" width="200" height="170" class="ctl"/>
+  <text x="920" y="382" text-anchor="middle" class="name">MEMORY</text>
+  <text x="920" y="415" text-anchor="middle" class="small">Imagen existente</text>
+  <path d="M1020 385 H1430" class="bus"/>
+
+  <rect x="1130" y="220" width="500" height="660" class="outer"/>
+  <text x="1160" y="258" class="name">text_overlay</text>
+  <text x="1160" y="285" class="small">Módulo nuevo</text>
+  <rect x="1430" y="310" width="170" height="160" class="new"/>
+  <text x="1515" y="377" text-anchor="middle" class="name">text_mix</text>
+  <text x="1515" y="412" text-anchor="middle" class="small">Mezcla RGB444</text>
+  <rect x="1160" y="580" width="220" height="250" class="new"/>
+  <text x="1270" y="625" text-anchor="middle" class="name">text_memory</text>
+  <rect x="1180" y="650" width="180" height="45" class="count"/>
+  <text x="1270" y="679" text-anchor="middle" class="small">2 × RAM de texto</text>
+  <rect x="1180" y="705" width="180" height="45" class="ctl"/>
+  <text x="1270" y="734" text-anchor="middle" class="small">2 × ROM de fuente</text>
+  <rect x="1180" y="760" width="180" height="45" class="cmp"/>
+  <text x="1270" y="789" text-anchor="middle" class="small">Color y paletas</text>
+  <path d="M1020 385 H1430" class="bus"/>
+  <path d="M500 760 H1160" class="bus"/>
+  <path d="M1380 705 H1410 V450 H1430" class="bus"/>
+  <path d="M960 965 H1100 V810 H1160" class="bus"/>
+  <text x="820" y="998" class="label">Escritura de texto</text>
+
+  <path d="M1600 355 H1700" class="bus"/>
+  <path d="M1600 435 H1700" class="bus"/>
+  <polygon points="1700,240 1910,310 1910,510 1700,580" fill="#f7f7f7" stroke="#385333" stroke-width="3"/>
+  <text x="1805" y="395" text-anchor="middle" class="name">mux_led</text>
+  <text x="1805" y="430" text-anchor="middle" class="small">Plano BCM</text>
+  <path d="M1910 330 H2040" class="wire"/><text x="1930" y="320" class="label">R0</text>
+  <path d="M1910 360 H2040" class="wire"/><text x="1930" y="350" class="label">G0</text>
+  <path d="M1910 390 H2040" class="wire"/><text x="1930" y="380" class="label">B0</text>
+  <path d="M1910 430 H2040" class="wire"/><text x="1930" y="420" class="label">R1</text>
+  <path d="M1910 460 H2040" class="wire"/><text x="1930" y="450" class="label">G1</text>
+  <path d="M1910 490 H2040" class="wire"/><text x="1930" y="480" class="label">B1</text>
+
+  <rect x="1720" y="760" width="200" height="90" class="count"/>
+  <text x="1820" y="812" text-anchor="middle" class="name">Count I</text>
+  <path d="M1595 785 H1720" class="wire"/><text x="1595" y="773" class="label">RST_I</text>
+  <path d="M1595 830 H1720" class="wire"/><text x="1595" y="818" class="label">INC_I</text>
+  <path d="M1920 790 H1960 V620 H1800 V547" class="wire"/>
+  <path d="M1920 835 H1980" class="wire"/><text x="1990" y="842" class="zero">ZI</text>
+
+  <rect x="120" y="1020" width="200" height="90" class="count"/>
+  <text x="220" y="1072" text-anchor="middle" class="name">Count D</text>
+  <path d="M35 1045 H120" class="wire"/><text x="35" y="1033" class="label">RST_D</text>
+  <path d="M35 1090 H120" class="wire"/><text x="35" y="1078" class="label">INC_D</text>
+  <rect x="120" y="1160" width="200" height="90" class="ctl"/>
+  <text x="220" y="1212" text-anchor="middle" class="name">shift_reg</text>
+  <path d="M35 1185 H120" class="wire"/><text x="35" y="1173" class="label">LD_D</text>
+  <path d="M35 1230 H120" class="wire"/><text x="35" y="1218" class="label">SH_D</text>
+  <rect x="430" y="1040" width="190" height="210" class="cmp"/>
+  <text x="525" y="1155" text-anchor="middle" class="name">COMP</text>
+  <path d="M320 1065 H430" class="wire"/>
+  <path d="M320 1205 H430" class="wire"/>
+  <path d="M620 1145 H710" class="wire"/><text x="660" y="1130" class="zero">ZD</text>
+
+  <rect x="820" y="1080" width="1180" height="170" class="outer"/>
+  <text x="845" y="1116" class="label">Elementos conservados del diseño original</text>
+  <text x="845" y="1150" class="small">CONTROL, contadores R/C/D/I, shift_reg, comparador y mux BCM no cambian.</text>
+  <text x="845" y="1182" class="small">El camino de texto se añade en paralelo con MEMORY y se combina antes de seleccionar el plano.</text>
+  <text x="845" y="1214" class="small">text_overlay ya está integrado en led_panel_4k; escritura deshabilitada y texto inicializado desde archivos.</text>
+
+  <rect x="35" y="1310" width="2020" height="250" fill="#fafafa" stroke="#111111" stroke-width="1.5"/>
+  <text x="60" y="1348" class="label">Señales del nuevo módulo y correspondencia con el RTL</text>
+  <text x="60" y="1383" class="code">MEMORY → text_mix: img[23:0]. text_memory → text_mix: txt[23:0], txt_on0, txt_on1.</text>
+  <text x="60" y="1413" class="code">text_mix → mux_led: {data_r0[3:0], data_g0[3:0], data_b0[3:0], data_r1[3:0], data_g1[3:0], data_b1[3:0]}.</text>
+  <text x="60" y="1443" class="code">Escritura: we, waddr[5:0], wdata[14:0]. Texto: 2 × 32 × 15 bits; fuente: 2 × 1024 × 8; paletas: 2 × 16 × 12.</text>
+  <text x="60" y="1473" class="code">clk = clk1; RAM de imagen, RAM de texto y coordenadas se registran en negedge clk1. Mezcla combinacional.</text>
+  <text x="60" y="1503" class="code">Count I entrega index[1:0]. ZR = cero de Count R; ZC = cero de Count C. Los buses R/C se concatenan, no se cortocircuitan.</text>
+  <text x="60" y="1533" class="code">LD_D / SH_D corresponden a LD / SHD en ctrl_lp4k.v. LP_CLK = clk1 &amp; PX_CLK_EN; LATCH y nOE proceden de CONTROL.</text>
+  <text x="35" y="1590" class="small">Estilo del diagrama original: control y memoria en amarillo claro, contadores en rosa, comparador en verde; módulo nuevo en azul grisáceo.</text>
+</svg>

@@ -1,0 +1,98 @@
+[*]
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*] Sat Nov  8 17:52:56 2025
+[*]
+[dumpfile] "/Work/Embedded/digital_UN/femtoRV/basic/rtl/cores/Led_panel_12bpp/led_panel_4k_TB.vcd"
+[dumpfile_mtime] "Sat Nov  8 17:52:12 2025"
+[dumpfile_size] 5218871
+[savefile] "/Work/Embedded/digital_UN/femtoRV/basic/rtl/cores/Led_panel_12bpp/led_panel_4k_sim.gtkw"
+[timestart] 0
+[size] 1648 951
+[pos] -325 -176
+*-24.000000 91350000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] led_panel_4k_TB.
+[treeopen] led_panel_4k_TB.uut.
+[sst_width] 278
+[signals_width] 166
+[sst_expanded] 1
+[sst_vpaned_height] 608
+@28
+led_panel_4k_TB.RGB0[2:0]
+led_panel_4k_TB.RGB1[2:0]
+@22
+[color] 3
+led_panel_4k_TB.ROW[4:0]
+@23
+[color] 7
+led_panel_4k_TB.uut.COL[5:0]
+@28
+led_panel_4k_TB.LATCH
+led_panel_4k_TB.NOE
+@420
+led_panel_4k_TB.PERIOD
+@28
+led_panel_4k_TB.clk
+@420
+led_panel_4k_TB.idx
+@28
+led_panel_4k_TB.init
+led_panel_4k_TB.rst
+@c00024
+led_panel_4k_TB.uut.PIX_ADDR[10:0]
+@28
+(0)led_panel_4k_TB.uut.PIX_ADDR[10:0]
+(1)led_panel_4k_TB.uut.PIX_ADDR[10:0]
+(2)led_panel_4k_TB.uut.PIX_ADDR[10:0]
+(3)led_panel_4k_TB.uut.PIX_ADDR[10:0]
+(4)led_panel_4k_TB.uut.PIX_ADDR[10:0]
+(5)led_panel_4k_TB.uut.PIX_ADDR[10:0]
+(6)led_panel_4k_TB.uut.PIX_ADDR[10:0]
+(7)led_panel_4k_TB.uut.PIX_ADDR[10:0]
+(8)led_panel_4k_TB.uut.PIX_ADDR[10:0]
+(9)led_panel_4k_TB.uut.PIX_ADDR[10:0]
+(10)led_panel_4k_TB.uut.PIX_ADDR[10:0]
+@1401200
+-group_end
+@820
+led_panel_4k_TB.uut.ctrl0.state_name[320:1]
+@22
+led_panel_4k_TB.uut.compa.in1[10:0]
+led_panel_4k_TB.uut.compa.in2[10:0]
+@28
+led_panel_4k_TB.uut.compa.out
+@420
+led_panel_4k_TB.uut.compa.width
+led_panel_4k_TB.uut.lsr_led0.init_value
+@28
+led_panel_4k_TB.uut.lsr_led0.load
+@22
+led_panel_4k_TB.uut.lsr_led0.s_A[10:0]
+@28
+led_panel_4k_TB.uut.lsr_led0.shift
+led_panel_4k_TB.uut.lsr_led0.load
+@420
+led_panel_4k_TB.uut.lsr_led0.width
+@28
+led_panel_4k_TB.uut.mux0.sel[1:0]
+@22
+led_panel_4k_TB.uut.cnt_delay.outc[10:0]
+@28
+led_panel_4k_TB.uut.mux0.sel[1:0]
+@800028
+led_panel_4k_TB.uut.RGB0[2:0]
+@28
+(0)led_panel_4k_TB.uut.RGB0[2:0]
+(1)led_panel_4k_TB.uut.RGB0[2:0]
+(2)led_panel_4k_TB.uut.RGB0[2:0]
+@1001200
+-group_end
+@28
+led_panel_4k_TB.uut.RGB1[2:0]
+@22
+led_panel_4k_TB.uut.mem0.\MEM[0][23:0]
+led_panel_4k_TB.uut.mem0.\MEM[1][23:0]
+led_panel_4k_TB.uut.mem0.\MEM[2][23:0]
+led_panel_4k_TB.uut.mem0.\MEM[3][23:0]
+led_panel_4k_TB.uut.mem0.\MEM[4][23:0]
+[pattern_trace] 1
+[pattern_trace] 0

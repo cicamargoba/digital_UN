@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2100" height="1400" viewBox="0 0 2100 1400">
+<title>text_memory: caminos de texto superior e inferior y anchos de señal</title>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8 Z" fill="#111"/></marker><style>text{font-family:Arial,Helvetica,sans-serif;fill:#111}.title{font-size:27px;font-weight:bold}.name{font-size:23px;font-weight:bold}.port{font:17px monospace}.small{font-size:17px;fill:#414850}.tiny{font:15px monospace}.line{fill:none;stroke:#111;stroke-width:2;marker-end:url(#arrow)}.bus{fill:none;stroke:#111;stroke-width:3;marker-end:url(#arrow)}</style></defs><rect width="2100" height="1400" fill="white"/>
+<text x="35" y="38" class="title" text-anchor="start">text_memory · RAM de texto, fuente, selección de píxel y color</text>
+<path d="M35 520 H300" class="bus"/>
+<circle cx="300" cy="520" r="4" fill="#111"/>
+<text x="35" y="498" class="port" text-anchor="start">PIX_ADDR[10:0] (11 bits)</text>
+<path d="M300 520 V250 M300 520 V670" fill="none" stroke="#111" stroke-width="3"/>
+<path d="M300 250 H420" class="bus"/>
+<path d="M300 670 H420" class="bus"/>
+<text x="35" y="204" class="port" text-anchor="start">cell_addr[4:0] (5 bits)</text>
+<text x="35" y="230" class="tiny" text-anchor="start">{PIX_ADDR[10:9], PIX_ADDR[5:3]}</text>
+<text x="35" y="624" class="port" text-anchor="start">cell_addr[4:0] (5 bits)</text>
+<text x="35" y="650" class="tiny" text-anchor="start">{row[4:3], col[5:3]}</text>
+<text x="35" y="556" class="port" text-anchor="start">row = PIX_ADDR[10:6]</text>
+<text x="35" y="584" class="port" text-anchor="start">col = PIX_ADDR[5:0]</text>
+<rect x="420" y="145" width="240" height="210" fill="#f9dedd" stroke="#111" stroke-width="2"/>
+<text x="540" y="180" class="name" text-anchor="middle">txt_top · 32 × 15</text>
+<text x="540" y="211" class="small" text-anchor="middle">Filas de texto 0–3</text>
+<text x="540" y="247" class="small" text-anchor="middle">text_ram</text>
+<text x="540" y="282" class="small" text-anchor="middle">Lectura registrada</text>
+<text x="540" y="320" class="small" text-anchor="middle">Escribe si waddr[5]=0</text>
+<path d="M540 410 V355" class="line"/>
+<text x="540" y="438" class="tiny" text-anchor="middle">we_top (1), waddr[4:0] (5)</text>
+<text x="540" y="462" class="tiny" text-anchor="middle">wdata[14:0] (15)</text>
+<rect x="850" y="145" width="250" height="210" fill="#fcfbe2" stroke="#111" stroke-width="2"/>
+<text x="975" y="180" class="name" text-anchor="middle">font_top · 1024 × 8</text>
+<text x="975" y="216" class="small" text-anchor="middle">font_rom · combinacional</text>
+<text x="975" y="270" class="port" text-anchor="middle">{cell_top[6:0], gy}</text>
+<text x="975" y="312" class="port" text-anchor="middle">addr[9:0] · 10 bits</text>
+<path d="M660 270 H850" class="bus"/>
+<text x="750" y="253" class="tiny" text-anchor="middle">cell_top[6:0] (7)</text>
+<path d="M975 410 V355" class="line"/>
+<text x="975" y="438" class="port" text-anchor="middle">gy[2:0] (3 bits)</text>
+<path d="M660 175 H715 V95 H1380 V230 H1420" class="bus"/>
+<path d="M1380 230 V320 H1420" class="bus"/>
+<circle cx="1380" cy="230" r="4" fill="#111"/>
+<text x="1025" y="80" class="port" text-anchor="middle">cell_top[14:7] (8 bits) = {bg[3:0], fg[3:0]}</text>
+<polygon points="1240,200 1320,225 1320,315 1240,340" fill="#f7f7f7" stroke="#385333" stroke-width="2.5"/>
+<text x="1280" y="277" class="name" text-anchor="middle">8:1</text>
+<path d="M1100 270 H1240" class="bus"/>
+<text x="1170" y="252" class="tiny" text-anchor="middle">line_top[7:0]</text>
+<path d="M1280 410 V327" class="line"/>
+<text x="1280" y="438" class="port" text-anchor="middle">gx[2:0] (3 bits)</text>
+<polygon points="1420,185 1505,210 1505,340 1420,365" fill="#f7f7f7" stroke="#385333" stroke-width="2.5"/>
+<text x="1462.5" y="282" class="name" text-anchor="middle">2:1</text>
+<text x="1432" y="227" class="tiny" text-anchor="start">fg (4)</text>
+<text x="1432" y="326" class="tiny" text-anchor="start">bg (4)</text>
+<path d="M1320 270 H1360 V405 H1462 V352" class="line"/>
+<circle cx="1360" cy="405" r="4" fill="#111"/>
+<path d="M1505 270 H1600" class="bus"/>
+<text x="1550" y="251" class="tiny" text-anchor="middle">idx (4)</text>
+<rect x="1600" y="145" width="230" height="210" fill="#fcfbe2" stroke="#111" stroke-width="2"/>
+<text x="1715" y="184" class="name" text-anchor="middle">PALETTE</text>
+<text x="1715" y="221" class="small" text-anchor="middle">text_palette · 16 × 12</text>
+<text x="1715" y="271" class="port" text-anchor="middle">idx → RGB444</text>
+<text x="1715" y="313" class="small" text-anchor="middle">Combinacional</text>
+<path d="M1830 190 H1995" class="bus"/>
+<text x="1850" y="178" class="tiny" text-anchor="start">data_r0[3:0] (4)</text>
+<path d="M1830 250 H1995" class="bus"/>
+<text x="1850" y="238" class="tiny" text-anchor="start">data_g0[3:0] (4)</text>
+<path d="M1830 310 H1995" class="bus"/>
+<text x="1850" y="298" class="tiny" text-anchor="start">data_b0[3:0] (4)</text>
+<rect x="1600" y="380" width="230" height="100" fill="#e1ecd7" stroke="#111" stroke-width="2"/>
+<text x="1715" y="412" class="name" text-anchor="middle">Transparencia</text>
+<text x="1715" y="449" class="port" text-anchor="middle">bit | (bg != 0)</text>
+<path d="M1462 405 H1600" class="line"/>
+<circle cx="1462" cy="405" r="4" fill="#111"/>
+<text x="1515" y="394" class="tiny" text-anchor="middle">bit (1)</text>
+<path d="M1545 454 H1600" class="line"/>
+<text x="1530" y="477" class="tiny" text-anchor="middle">bg[3:0] (4)</text>
+<path d="M1830 430 H1995" class="line"/>
+<text x="1850" y="415" class="port" text-anchor="start">txt_on0 (1)</text>
+<text x="1850" y="462" class="port" text-anchor="start">→ text_mix</text>
+<rect x="420" y="565" width="240" height="210" fill="#f9dedd" stroke="#111" stroke-width="2"/>
+<text x="540" y="600" class="name" text-anchor="middle">txt_bot · 32 × 15</text>
+<text x="540" y="631" class="small" text-anchor="middle">Filas de texto 4–7</text>
+<text x="540" y="667" class="small" text-anchor="middle">text_ram</text>
+<text x="540" y="702" class="small" text-anchor="middle">Lectura registrada</text>
+<text x="540" y="740" class="small" text-anchor="middle">Escribe si waddr[5]=1</text>
+<path d="M540 830 V775" class="line"/>
+<text x="540" y="858" class="tiny" text-anchor="middle">we_bot (1), waddr[4:0] (5)</text>
+<text x="540" y="882" class="tiny" text-anchor="middle">wdata[14:0] (15)</text>
+<rect x="850" y="565" width="250" height="210" fill="#fcfbe2" stroke="#111" stroke-width="2"/>
+<text x="975" y="600" class="name" text-anchor="middle">font_bot · 1024 × 8</text>
+<text x="975" y="636" class="small" text-anchor="middle">font_rom · combinacional</text>
+<text x="975" y="690" class="port" text-anchor="middle">{cell_bot[6:0], gy}</text>
+<text x="975" y="732" class="port" text-anchor="middle">addr[9:0] · 10 bits</text>
+<path d="M660 690 H850" class="bus"/>
+<text x="750" y="673" class="tiny" text-anchor="middle">cell_bot[6:0] (7)</text>
+<path d="M975 830 V775" class="line"/>
+<text x="975" y="858" class="port" text-anchor="middle">gy[2:0] (3 bits)</text>
+<path d="M660 595 H715 V515 H1380 V650 H1420" class="bus"/>
+<path d="M1380 650 V740 H1420" class="bus"/>
+<circle cx="1380" cy="650" r="4" fill="#111"/>
+<text x="1025" y="500" class="port" text-anchor="middle">cell_bot[14:7] (8 bits) = {bg[3:0], fg[3:0]}</text>
+<polygon points="1240,620 1320,645 1320,735 1240,760" fill="#f7f7f7" stroke="#385333" stroke-width="2.5"/>
+<text x="1280" y="697" class="name" text-anchor="middle">8:1</text>
+<path d="M1100 690 H1240" class="bus"/>
+<text x="1170" y="672" class="tiny" text-anchor="middle">line_bot[7:0]</text>
+<path d="M1280 830 V747" class="line"/>
+<text x="1280" y="858" class="port" text-anchor="middle">gx[2:0] (3 bits)</text>
+<polygon points="1420,605 1505,630 1505,760 1420,785" fill="#f7f7f7" stroke="#385333" stroke-width="2.5"/>
+<text x="1462.5" y="702" class="name" text-anchor="middle">2:1</text>
+<text x="1432" y="647" class="tiny" text-anchor="start">fg (4)</text>
+<text x="1432" y="746" class="tiny" text-anchor="start">bg (4)</text>
+<path d="M1320 690 H1360 V825 H1462 V772" class="line"/>
+<circle cx="1360" cy="825" r="4" fill="#111"/>
+<path d="M1505 690 H1600" class="bus"/>
+<text x="1550" y="671" class="tiny" text-anchor="middle">idx (4)</text>
+<rect x="1600" y="565" width="230" height="210" fill="#fcfbe2" stroke="#111" stroke-width="2"/>
+<text x="1715" y="604" class="name" text-anchor="middle">PALETTE</text>
+<text x="1715" y="641" class="small" text-anchor="middle">text_palette · 16 × 12</text>
+<text x="1715" y="691" class="port" text-anchor="middle">idx → RGB444</text>
+<text x="1715" y="733" class="small" text-anchor="middle">Combinacional</text>
+<path d="M1830 610 H1995" class="bus"/>
+<text x="1850" y="598" class="tiny" text-anchor="start">data_r1[3:0] (4)</text>
+<path d="M1830 670 H1995" class="bus"/>
+<text x="1850" y="658" class="tiny" text-anchor="start">data_g1[3:0] (4)</text>
+<path d="M1830 730 H1995" class="bus"/>
+<text x="1850" y="718" class="tiny" text-anchor="start">data_b1[3:0] (4)</text>
+<rect x="1600" y="800" width="230" height="100" fill="#e1ecd7" stroke="#111" stroke-width="2"/>
+<text x="1715" y="832" class="name" text-anchor="middle">Transparencia</text>
+<text x="1715" y="869" class="port" text-anchor="middle">bit | (bg != 0)</text>
+<path d="M1462 825 H1600" class="line"/>
+<circle cx="1462" cy="825" r="4" fill="#111"/>
+<text x="1515" y="814" class="tiny" text-anchor="middle">bit (1)</text>
+<path d="M1545 874 H1600" class="line"/>
+<text x="1530" y="897" class="tiny" text-anchor="middle">bg[3:0] (4)</text>
+<path d="M1830 850 H1995" class="line"/>
+<text x="1850" y="835" class="port" text-anchor="start">txt_on1 (1)</text>
+<text x="1850" y="882" class="port" text-anchor="start">→ text_mix</text>
+<rect x="420" y="985" width="260" height="75" fill="#f9dedd" stroke="#111" stroke-width="2"/>
+<text x="550" y="1030" class="name" text-anchor="middle">Registro GX · 3 bits</text>
+<path d="M35 1022 H420" class="bus"/>
+<text x="35" y="1003" class="port" text-anchor="start">PIX_ADDR[2:0] (3 bits)</text>
+<path d="M680 1022 H775" class="bus"/>
+<text x="790" y="1030" class="port" text-anchor="start">gx[2:0] (3) a los dos mux 8:1</text>
+<rect x="420" y="1090" width="260" height="75" fill="#f9dedd" stroke="#111" stroke-width="2"/>
+<text x="550" y="1135" class="name" text-anchor="middle">Registro GY · 3 bits</text>
+<path d="M35 1127 H420" class="bus"/>
+<text x="35" y="1108" class="port" text-anchor="start">PIX_ADDR[8:6] (3 bits)</text>
+<path d="M680 1127 H775" class="bus"/>
+<text x="790" y="1135" class="port" text-anchor="start">gy[2:0] (3) a las dos ROM</text>
+<rect x="35" y="1220" width="2015" height="145" fill="#fafafa" stroke="#111" stroke-width="2"/>
+<text x="60" y="1250" class="name" text-anchor="start">Señales y temporización</text>
+<text x="60" y="1282" class="port" text-anchor="start">RAM: raddr = cell_addr[4:0] (5); salida cell[14:0] (15). Escritura: we (1), waddr[5:0] (6), wdata[14:0] (15).</text>
+<text x="60" y="1313" class="port" text-anchor="start">RGB superior: {data_r0,data_g0,data_b0} = txt[23:12]. RGB inferior: {data_r1,data_g1,data_b1} = txt[11:0].</text>
+<text x="60" y="1344" class="port" text-anchor="start">clk1 (1 bit): RAM y GX/GY en negedge. Fuentes, muxes, paletas y transparencia: combinacionales. Bit izquierdo = line[0].</text>
+<text x="35" y="1390" class="small" text-anchor="start">Los stubs de escritura, gx, gy y bg son referencias de red. Fuente de las señales: puertos y asignaciones del RTL implementado.</text>
+</svg>

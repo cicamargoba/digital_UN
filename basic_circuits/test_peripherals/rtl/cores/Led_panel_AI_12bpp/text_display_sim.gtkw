@@ -1,0 +1,115 @@
+[*] HUB75 text demo: HOLA / MUNDO
+[dumpfile] "build/text/text_display_TB.vcd"
+[timestart] 0
+[size] 1500 950
+*-18.000000 0 -1
+[treeopen] text_display_TB.
+[treeopen] text_display_TB.SCANNER.TEXT_OVERLAY.
+[treeopen] text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.
+[sst_width] 320
+[signals_width] 430
+[sst_expanded] 1
+@200
+-DISPLAY
+@28
+text_display_TB.clk
+text_display_TB.clk1
+text_display_TB.rst
+text_display_TB.LP_CLK
+text_display_TB.LATCH
+text_display_TB.NOE
+@22
+text_display_TB.ROW[4:0]
+text_display_TB.RGB0[2:0]
+text_display_TB.RGB1[2:0]
+text_display_TB.index[1:0]
+text_display_TB.pix_addr[10:0]
+@200
+-IMAGE_AND_TEXT
+@22
+text_display_TB.img[23:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.txt[23:0]
+text_display_TB.mixed[23:0]
+@28
+text_display_TB.SCANNER.TEXT_OVERLAY.txt_on0
+text_display_TB.SCANNER.TEXT_OVERLAY.txt_on1
+@200
+-TEXT_READ
+@22
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.cell_addr[4:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.cell_top[14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.cell_bot[14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.gx[2:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.gy[2:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.line_top[7:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.line_bot[7:0]
+@200
+-TEXT_RAM_TOP_HOLA_MUNDO
+@22
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[0][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[1][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[2][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[3][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[4][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[5][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[6][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[7][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[8][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[9][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[10][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[11][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[12][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[13][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[14][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[15][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[16][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[17][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[18][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[19][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[20][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[21][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[22][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[23][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[24][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[25][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[26][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[27][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[28][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[29][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[30][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_top.\MEM[31][14:0]
+@200
+-TEXT_RAM_BOTTOM_TRANSPARENT
+@22
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[0][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[1][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[2][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[3][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[4][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[5][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[6][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[7][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[8][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[9][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[10][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[11][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[12][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[13][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[14][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[15][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[16][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[17][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[18][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[19][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[20][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[21][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[22][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[23][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[24][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[25][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[26][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[27][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[28][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[29][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[30][14:0]
+text_display_TB.SCANNER.TEXT_OVERLAY.TEXT_MEMORY.txt_bot.\MEM[31][14:0]
