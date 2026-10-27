@@ -130,7 +130,7 @@ txt_on = glyph_bit | (bg != 0);
 - El índice 8 contiene negro para disponer de fondo negro opaco sin perder transparencia.
 - `txt_on0` y `txt_on1` se calculan por separado; una mitad puede mostrar texto y la otra conservar su imagen.
 
-Las RAM comienzan con 32 espacios transparentes cada una. No hay reset que borre el texto durante el barrido. `TOP_INIT_FILE` y `BOT_INIT_FILE`, vacíos por defecto, permiten cargar archivos de hasta 32 palabras hexadecimales de 15 bits; las posiciones no cargadas conservan el espacio inicial. `FONT_FILE` y `PALETTE_FILE` seleccionan los archivos de fuente y paleta.
+Sin archivo de inicialización, cada RAM comienza con 32 espacios transparentes (`15'h0020`). Si se especifica un archivo, se carga exclusivamente mediante `$readmemh`: el archivo debe definir las 32 celdas; no se garantiza un espacio en posiciones omitidas. No hay reset que borre el texto durante el barrido. `TOP_INIT_FILE` y `BOT_INIT_FILE` están vacíos por defecto en el overlay; el top `led_panel_4k` selecciona `text_demo_top.mem` para la mitad superior. `FONT_FILE` y `PALETTE_FILE` seleccionan los archivos de fuente y paleta.
 
 Actualizar una celda durante el refresco puede producir tearing o mezclar contenidos entre planos BCM. No se implementa doble buffer ni actualización atómica de cuadro.
 
@@ -211,7 +211,33 @@ Verificado el 2026-10-22:
 - **49 172 comparaciones** de las seis salidas RGB, incluyendo los cuatro planos BCM.
 - Síntesis del overlay: **1193 LUT4, 45 DFF y 2 bloques RAM de 4 Kibit**; `check -assert` sin problemas. Son recursos solo del overlay, no del sistema completo.
 
-Las RAM pequeñas de texto se infirieron como BRAM y las fuentes combinacionales como lógica en la prueba aislada. El uso final cambia al integrar texto inicializado constante. La inicialización por archivo superior está cubierta por el demo integrado; el archivo inferior opcional no tiene una prueba específica. La validación física del texto en el panel permanece pendiente.
+Las RAM pequeñas de texto se infirieron como BRAM y las fuentes combinacionales como lógica en la prueba aislada. El uso final cambia al integrar texto inicializado constante. La inicialización por archivo superior está cubierta por el demo integrado; el archivo inferior opcional no tiene una prueba específica. La visibilidad física del mensaje fue confirmada por Carlos el 2026-10-27; véase la corrección de inicialización siguiente.
+
+### Corrección de inicialización para síntesis — 2026-10-27
+
+**Síntoma:** el panel mostraba únicamente la imagen, aunque la simulación RTL cargaba el mensaje. En la netlist sintetizada, `TEXT_OVERLAY.TEXT_MEMORY.cell_top` quedó como espacio transparente (`15'h0020`) y `txt_on0` como cero; el mezclador seleccionaba la imagen.
+
+**Causa comprobada:** `text_ram.v` inicializaba primero todas las celdas con un `for` y después ejecutaba `$readmemh`. En el Yosys instalado, la síntesis de ese bloque conservaba los espacios en lugar del contenido del archivo. La síntesis aislada de `text_ram`, con `INIT_FILE="text_demo_top.mem"`, reprodujo el resultado: las primeras celdas eran `0020` en vez de `4648`, `454F`, `44CC`, `4741`.
+
+**Cambio aplicado:** hacer excluyentes la carga del archivo y el llenado con espacios:
+
+```verilog
+initial begin
+    if (INIT_FILE != "")
+        $readmemh(INIT_FILE, MEM);
+    else
+        for (i = 0; i < 32; i = i + 1)
+            MEM[i] = 15'h0020;
+end
+```
+
+No se cambiaron el formato de celda, la fuente, la paleta, el mezclador ni el barrido.
+
+**Validación:**
+
+- Síntesis aislada: las 32 palabras de inicialización coinciden exactamente con `text_demo_top.mem`.
+- Regresión `text_overlay_TB`: pasan las 49 172 comparaciones BCM.
+- Panel físico: Carlos confirmó el 2026-10-27 que se ve «HOLA MUNDO» en diferentes colores. Esta confirmación acredita la visibilidad del texto, no la correspondencia exacta de cada píxel ni la corrección del desplazamiento descrito en la sección 8.
 
 ### Validación del top integrado — 2026-10-23
 
@@ -276,7 +302,7 @@ iceprog -d i:0x0403:0x6010 build/text/led_panel_text.bin
 
 Después de programar, activar y liberar `rst` del controlador para comenzar desde un estado conocido. Para pruebas sucesivas, volver a aplicar ese reset después de cada carga.
 
-Este paso se documenta, pero **no se ha ejecutado en la placa durante esta integración**. El desplazamiento de una columna documentado en la sección 8 permanece en el bitstream; no se considera corregido por la carga de hardware.
+La visibilidad del texto en la placa fue confirmada por Carlos el 2026-10-27 tras la corrección de inicialización de `text_ram.v`. El desplazamiento de una columna documentado en la sección 8 no se considera corregido por esta validación visual.
 
 ## 7. Fuente y paleta
 
@@ -285,7 +311,7 @@ Este paso se documenta, pero **no se ha ejecutado en la placa durante esta integ
 El target `make -f Makefile.text sim_text_display` genera `build/text/text_display_TB.vcd`.
 El testbench `text_display_TB.v` instancia el top integrado `led_panel_4k` y conecta directamente sus salidas RGB al display simulado. No contiene un overlay ni un mux externos. Las señales `img`, `mixed`, `pix_addr` e `index` en la raíz son alias de observación del top.
 
-La memoria superior se inicializa mediante `text_demo_top.mem`: **HOLA** en la fila de texto 0 y **MUNDO** en la fila 1. Todas las celdas conservan el mismo fondo negro opaco (`bg=8`), y cada letra tiene un color diferente. La mitad inferior conserva la imagen original.
+La memoria superior se inicializa mediante `text_demo_top.mem`: **HOLA** en la fila de texto 0 y **MUNDO** en la fila 1. Solo las celdas ocupadas por esas letras conservan fondo negro opaco (`bg=8`), y cada letra tiene un color diferente. Desde el 2026-10-27, todas las celdas no utilizadas contienen espacios transparentes (`0020`, `bg=0`): las cuatro restantes de la fila 0, las tres restantes de la fila 1 y todas las de las filas 2 y 3 dejan ver la imagen. La mitad inferior conserva la imagen original. Este cambio del archivo requiere reconstruir y cargar el bitstream; su resultado físico está pendiente de confirmación. Las capturas y mediciones de la sección 8 corresponden al demo anterior, con toda la mitad superior opaca.
 
 | Letra | Índice fg | RGB444 | Color |
 |---|---:|---|---|
@@ -387,4 +413,4 @@ python3 reconstruct_text_display.py
 
 El script actualiza las dos imágenes de esta sección y **devuelve código de salida 1 si los píxeles no coinciden**. No declara aprobada una imagen por el solo hecho de que el texto sea legible. La salida `PASS` del testbench de captura anterior solo indica que terminó su recorrido; no es una validación de sus píxeles.
 
-Esta prueba complementa `test_text`: las 49 172 comparaciones del generador y la mezcla aislados siguen siendo válidas, pero no garantizan la alineación con el barrido real. La validación física del panel permanece pendiente.
+Esta prueba complementa `test_text`: las 49 172 comparaciones del generador y la mezcla aislados siguen siendo válidas, pero no garantizan la alineación con el barrido real. Carlos confirmó la visibilidad física de «HOLA MUNDO» en diferentes colores el 2026-10-27; la alineación exacta de píxeles en hardware sigue sin verificarse.

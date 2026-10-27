@@ -11,10 +11,11 @@ module text_ram #(
 reg [14:0] MEM [0:31];
 integer i;
 initial begin
-    for (i = 0; i < 32; i = i + 1)
-        MEM[i] = 15'h0020;
     if (INIT_FILE != "")
         $readmemh(INIT_FILE, MEM);
+    else
+        for (i = 0; i < 32; i = i + 1)
+            MEM[i] = 15'h0020;
 end
 always @(negedge clk) begin
     rdata <= MEM[raddr];
