@@ -56,13 +56,13 @@ module SOC (
 //     .clk_freq(50000000),  // for primer 25k
 //     .clk_freq(33333333),  // for efinix
 //     .clk_freq(27000000),  // for nano_20k
-     .clk_freq(25000000),  // for TEST
+     .clk_freq(40000000),  // for TEST
 //     .clk_freq(12000000),    // for icebreaker
      .baud(57600)            // 57600 for gowin
    ) per_uart(
      .clk(clk),
      .rst(!resetn),
-     .d_in(mem_wdata),
+     .d_in(mem_wdata),fpgbc_plat.py
      .cs(cs[5]),
      .addr(mem_addr[4:0]),
      .rd(rd),
