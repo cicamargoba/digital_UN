@@ -62,7 +62,7 @@ module SOC (
    ) per_uart(
      .clk(clk),
      .rst(!resetn),
-     .d_in(mem_wdata),fpgbc_plat.py
+     .d_in(mem_wdata),
      .cs(cs[5]),
      .addr(mem_addr[4:0]),
      .rd(rd),

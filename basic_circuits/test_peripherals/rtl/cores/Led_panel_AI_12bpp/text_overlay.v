@@ -35,6 +35,9 @@ text_mix MIX (
     .txt     (txt),
     .txt_on0 (txt_on0),
     .txt_on1 (txt_on1),
+    .spr     (24'd0),
+    .spr_on0 (1'b0),
+    .spr_on1 (1'b0),
     .data    (data)
 );
 endmodule

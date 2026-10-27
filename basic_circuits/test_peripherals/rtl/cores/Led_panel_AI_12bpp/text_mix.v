@@ -3,8 +3,11 @@ module text_mix (
     input  [23:0] txt,
     input         txt_on0,
     input         txt_on1,
+    input  [23:0] spr,
+    input         spr_on0,
+    input         spr_on1,
     output [23:0] data
 );
-assign data[23:12] = txt_on0 ? txt[23:12] : img[23:12];
-assign data[11:0] = txt_on1 ? txt[11:0] : img[11:0];
+assign data[23:12] = spr_on0 ? spr[23:12] : txt_on0 ? txt[23:12] : img[23:12];
+assign data[11:0] = spr_on1 ? spr[11:0] : txt_on1 ? txt[11:0] : img[11:0];
 endmodule
