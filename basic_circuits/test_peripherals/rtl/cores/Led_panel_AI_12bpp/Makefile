@@ -11,6 +11,7 @@ COMM_OBJS += comp.v
 COMM_OBJS += lsr_led.v
 COMM_OBJS += mux_led.v
 COMM_OBJS += text_ram.v font_rom.v text_palette.v text_color.v text_memory.v text_mix.v text_overlay.v
+COMM_OBJS += sprite_demo.v sprite_table.v sprite_detector.v sprite_select.v sprite_half.v sprite_rom.v sprite_collision.v sprite_engine.v
 
 
 SIM_OBJS =  ../../verilog_model/sky130_fd_sc_hd.v

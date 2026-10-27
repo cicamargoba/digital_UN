@@ -40,7 +40,7 @@ always @(posedge LATCH) begin
     latches = latches + 1;
     if (latches == 129) begin
         $display("CAPTURE: integrated top, 32 physical rows x 4 BCM planes, %0d shift events", shifts);
-        $display("Message: HOLA on text row 0, MUNDO on text row 1; bottom half keeps image");
+        $display("Message: HOLA/MUNDO with Space Invaders sprites; transparent pixels keep the image");
         $finish;
     end
 end

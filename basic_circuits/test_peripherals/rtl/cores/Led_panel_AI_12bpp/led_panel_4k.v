@@ -46,6 +46,9 @@ parameter TEXT_FONT_FILE = "font8x8.mem";
 parameter TEXT_PALETTE_FILE = "pal16.mem";
 parameter TEXT_TOP_INIT_FILE = "text_demo_top.mem";
 parameter TEXT_BOT_INIT_FILE = "";
+parameter SPRITE_INIT_FILE = "sprite_demo.mem";
+parameter SPRITE_PATTERN_FILE = "sprite_demo_patterns.mem";
+parameter SPRITE_PALETTE_FILE = "sprite_demo_palette.mem";
 
 wire [($clog2(NUM_COLS)-1):0]		COL;
 // ----------------------------------------------
@@ -53,6 +56,14 @@ wire [($clog2(NUM_COLS)-1):0]		COL;
 wire [11:0] PIX_ADDR;
 wire [23:0] mem_data;
 wire [23:0] mixed_data;
+wire [23:0] sprite_data;
+wire sprite_on0;
+wire sprite_on1;
+wire sprite_we;
+wire [2:0] sprite_waddr;
+wire [25:0] sprite_wdata;
+wire [7:0] sprite_col;
+wire sprite_ready;
 
 
 wire [2:0] tmp_rgb;
@@ -88,6 +99,19 @@ reg [4:0] clk_counter;
     lsr_led #(.init_value(DELAY), .width(10)) lsr_led0( .clk(clk1), .load(w_LD), .shift(w_SHD), .s_A(delay));
     comp_4k #(.width(10) ) compa(.in1(delay), .in2(count_delay), .out(w_ZD));
     memory  #(.size(NUM_PIXELS/2 -1), .width( $clog2(NUM_PIXELS)-2 ) ) mem0 (.clk(clk1), .address(PIX_ADDR), .rd(1'b1), .rdata(mem_data));
+    sprite_demo #(.INIT_FILE(SPRITE_INIT_FILE)) SPRITE_DEMO (
+        .clk(clk1), .rst(rst), .we(sprite_we), .waddr(sprite_waddr),
+        .wdata(sprite_wdata), .ready(sprite_ready)
+    );
+    sprite_engine #(
+        .PATTERN_FILE(SPRITE_PATTERN_FILE),
+        .PALETTE_FILE(SPRITE_PALETTE_FILE)
+    ) SPRITE_ENGINE (
+        .clk(clk1), .rst(rst), .pix_addr(PIX_ADDR[10:0]),
+        .we(sprite_we), .waddr(sprite_waddr), .wdata(sprite_wdata),
+        .col_clear(1'b0), .spr(sprite_data),
+        .spr_on0(sprite_on0), .spr_on1(sprite_on1), .col(sprite_col)
+    );
     text_overlay #(
         .FONT_FILE     (TEXT_FONT_FILE),
         .PALETTE_FILE  (TEXT_PALETTE_FILE),
@@ -100,6 +124,9 @@ reg [4:0] clk_counter;
         .we       (1'b0),
         .waddr    (6'd0),
         .wdata    (15'd0),
+        .spr      (sprite_data),
+        .spr_on0  (sprite_on0),
+        .spr_on1  (sprite_on1),
         .data     (mixed_data)
     );
     mux_led                mux0 (.in0(mixed_data), .out0({RGB0, RGB1}), .sel(index) );

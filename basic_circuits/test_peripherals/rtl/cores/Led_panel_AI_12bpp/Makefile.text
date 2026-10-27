@@ -1,10 +1,12 @@
 TEXT_BUILD_DIR ?= build/text
 TEXT_OBJS = text_ram.v font_rom.v text_palette.v text_color.v text_memory.v text_mix.v text_overlay.v
 TEXT_ASSETS = font8x8.mem pal16.mem
-DISPLAY_OBJS = led_panel_4k.v ctrl_lp4k.v count.v memory_V2.v comp.v lsr_led.v mux_led.v $(TEXT_OBJS)
-DISPLAY_ASSETS = $(TEXT_ASSETS) text_demo_top.mem image0.hex image1.hex
+SPRITE_OBJS = sprite_demo.v sprite_table.v sprite_detector.v sprite_select.v sprite_half.v sprite_rom.v sprite_collision.v sprite_engine.v
+SPRITE_ASSETS = sprite_demo.mem sprite_demo_patterns.mem sprite_demo_palette.mem
+DISPLAY_OBJS = led_panel_4k.v ctrl_lp4k.v count.v memory_V2.v comp.v lsr_led.v mux_led.v $(TEXT_OBJS) $(SPRITE_OBJS)
+DISPLAY_ASSETS = $(TEXT_ASSETS) text_demo_top.mem image0.hex image1.hex $(SPRITE_ASSETS)
 
-.PHONY: test_text synth_text sim_text_display view_text_display synth_text_display build_text_display_icebreaker
+.PHONY: test_text synth_text sim_text_display view_text_display synth_text_display build_text_display_icebreaker test_sprite_display
 
 test_text: $(TEXT_OBJS) $(TEXT_ASSETS) text_overlay_TB.v memory_V2.v mux_led.v image0.hex image1.hex
 	mkdir -p "$(TEXT_BUILD_DIR)"
@@ -15,13 +17,16 @@ synth_text: $(TEXT_OBJS) $(TEXT_ASSETS)
 	mkdir -p "$(TEXT_BUILD_DIR)"
 	yosys -Q -T -l $(TEXT_BUILD_DIR)/text_overlay_synth.log -p 'read_verilog $(TEXT_OBJS); synth_ice40 -top text_overlay -json $(TEXT_BUILD_DIR)/text_overlay.json; check -assert'
 
-sim_text_display: $(TEXT_OBJS) $(TEXT_ASSETS) text_display_TB.v text_demo_top.mem led_panel_4k.v ctrl_lp4k.v count.v memory_V2.v comp.v lsr_led.v mux_led.v image0.hex image1.hex
+sim_text_display: $(DISPLAY_OBJS) $(DISPLAY_ASSETS) text_display_TB.v
 	mkdir -p "$(TEXT_BUILD_DIR)"
-	iverilog -g2012 -DBENCH -s text_display_TB -o $(TEXT_BUILD_DIR)/text_display_TB text_display_TB.v $(TEXT_OBJS) led_panel_4k.v ctrl_lp4k.v count.v memory_V2.v comp.v lsr_led.v mux_led.v
+	iverilog -g2012 -DBENCH -s text_display_TB -o $(TEXT_BUILD_DIR)/text_display_TB text_display_TB.v $(DISPLAY_OBJS)
 	vvp $(TEXT_BUILD_DIR)/text_display_TB +VCD=$(TEXT_BUILD_DIR)/text_display_TB.vcd
 
 view_text_display: sim_text_display text_display_sim.gtkw
 	gtkwave $(TEXT_BUILD_DIR)/text_display_TB.vcd text_display_sim.gtkw
+
+test_sprite_display: sim_text_display reconstruct_sprite_display.py
+	python3 reconstruct_sprite_display.py --vcd "$(TEXT_BUILD_DIR)/text_display_TB.vcd"
 
 synth_text_display: $(DISPLAY_OBJS) $(DISPLAY_ASSETS)
 	mkdir -p "$(TEXT_BUILD_DIR)"

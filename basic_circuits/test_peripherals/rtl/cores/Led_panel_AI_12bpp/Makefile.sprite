@@ -1,0 +1,23 @@
+SPRITE_BUILD_DIR ?= build/sprites
+SPRITE_OBJS = sprite_table.v sprite_detector.v sprite_select.v sprite_half.v sprite_rom.v sprite_collision.v sprite_engine.v text_palette.v
+SPRITE_ASSETS = sprites.mem pal16.mem
+ICE40_CELLS ?= $(shell yosys-config --datdir)/ice40/cells_sim.v
+
+.PHONY: test_sprite synth_sprite test_sprite_post_synth test_space_invaders
+
+test_sprite: $(SPRITE_OBJS) $(SPRITE_ASSETS) text_mix.v sprite_engine_TB.v
+	mkdir -p "$(SPRITE_BUILD_DIR)"
+	iverilog -g2012 -Wall -s sprite_engine_TB -o $(SPRITE_BUILD_DIR)/sprite_engine_TB sprite_engine_TB.v $(SPRITE_OBJS) text_mix.v
+	vvp $(SPRITE_BUILD_DIR)/sprite_engine_TB +VCD=$(SPRITE_BUILD_DIR)/sprite_engine_TB.vcd
+
+synth_sprite: $(SPRITE_OBJS) $(SPRITE_ASSETS)
+	mkdir -p "$(SPRITE_BUILD_DIR)"
+	yosys -Q -T -l $(SPRITE_BUILD_DIR)/sprite_engine_synth.log -p 'read_verilog $(SPRITE_OBJS); synth_ice40 -top sprite_engine -json $(SPRITE_BUILD_DIR)/sprite_engine.json; check -assert; write_verilog -noattr $(SPRITE_BUILD_DIR)/sprite_engine_synth.v'
+
+test_sprite_post_synth: synth_sprite text_mix.v sprite_engine_TB.v
+	iverilog -g2012 -s sprite_engine_TB -o $(SPRITE_BUILD_DIR)/sprite_engine_post_TB sprite_engine_TB.v $(SPRITE_BUILD_DIR)/sprite_engine_synth.v $(ICE40_CELLS) text_mix.v
+	vvp $(SPRITE_BUILD_DIR)/sprite_engine_post_TB +VCD=$(SPRITE_BUILD_DIR)/sprite_engine_post_TB.vcd
+
+test_space_invaders: $(SPRITE_OBJS) sprite_scene_TB.v simulate_space_invaders.py
+	@test -n "$(SPACE_INVADERS_HTML)" || (echo 'Falta SPACE_INVADERS_HTML: archivo HTML fuente de los juegos'; exit 1)
+	python3 simulate_space_invaders.py "$(SPACE_INVADERS_HTML)" --output "$(SPRITE_BUILD_DIR)/space_invaders"

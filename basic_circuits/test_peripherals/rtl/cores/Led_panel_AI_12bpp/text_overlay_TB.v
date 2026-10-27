@@ -27,7 +27,8 @@ memory #(.size(2047), .width(10)) IMAGE (
 );
 text_overlay DUT (
     .clk(clk), .pix_addr(pix_addr), .img(img),
-    .we(we), .waddr(waddr), .wdata(wdata), .data(mixed)
+    .we(we), .waddr(waddr), .wdata(wdata), .data(mixed),
+    .spr(24'd0), .spr_on0(1'b0), .spr_on1(1'b0)
 );
 mux_led BCM (.in0(mixed), .sel(index), .out0(rgb));
 

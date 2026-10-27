@@ -10,6 +10,9 @@ module text_overlay #(
     input         we,
     input  [5:0]  waddr,
     input  [14:0] wdata,
+    input  [23:0] spr,
+    input         spr_on0,
+    input         spr_on1,
     output [23:0] data
 );
 wire [23:0] txt;
@@ -35,9 +38,9 @@ text_mix MIX (
     .txt     (txt),
     .txt_on0 (txt_on0),
     .txt_on1 (txt_on1),
-    .spr     (24'd0),
-    .spr_on0 (1'b0),
-    .spr_on1 (1'b0),
+    .spr     (spr),
+    .spr_on0 (spr_on0),
+    .spr_on1 (spr_on1),
     .data    (data)
 );
 endmodule

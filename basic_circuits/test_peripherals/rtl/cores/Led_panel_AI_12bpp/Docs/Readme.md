@@ -8,6 +8,8 @@ Implementación de los bloques de texto propuestos en `hub75_text_memory_diagram
 
 `text_overlay.v` reúne únicamente el generador y la mezcla. Permite probar o integrar la composición sin alterar el algoritmo BCM.
 
+El motor de sprites y la ampliación de `text_mix` se describen en [Motor de sprites HUB75](sprites.md). `led_panel_4k` incorpora el motor y un cargador de ocho descriptores de demostración. Sus salidas se conectan a `text_overlay`, que mezcla sprites por encima del texto y la imagen. La prueba integrada y su desplazamiento de columna pendiente se detallan en esa página.
+
 ## 1. Bloques implementados
 
 ### Diagrama general actualizado
@@ -49,7 +51,7 @@ PIX_ADDR ──┬── MEMORY existente ── img[23:0] ───────
 | `text_palette.v` | Paleta combinacional 16×12 |
 | `text_color.v` | Mux 8:1 de fuente, selección fg/bg, paleta y máscara |
 | `text_memory.v` | Dos RAM, dos fuentes, dos bloques de color y registro gx/gy |
-| `text_mix.v` | Dos muxes RGB444 independientes, sin registros |
+| `text_mix.v` | Mezcla RGB444 independiente por mitad: sprite > texto > imagen, sin registros |
 | `text_overlay.v` | Composición de `text_memory` y `text_mix` |
 | `font8x8.mem` | 128 caracteres × 8 filas, ASCII de 7 bits |
 | `pal16.mem` | Paleta RGB444; índice 0 transparente para el fondo, índice 8 negro opaco |
