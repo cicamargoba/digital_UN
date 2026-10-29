@@ -22,16 +22,12 @@ class _CRG(LiteXModule):
         # Clk
         clk40 = platform.request("clk40")
 
-        # Power on reset
-        por_count = Signal(16, reset=2**16-1)
-        por_done  = Signal()
-        self.comb += self.cd_por.clk.eq(clk40)
-        self.comb += por_done.eq(por_count == 0)
-        self.sync.por += If(~por_done, por_count.eq(por_count - 1))
+
+        rst_n = platform.request("btn")
 
         # PLL
         self.pll = pll = GW2APLL(devicename=platform.devicename, device=platform.device)
-        self.comb += pll.reset.eq(~por_done)
+        self.comb += pll.reset.eq(~rst_n)
         pll.register_clkin(clk40, 40e6)
         pll.create_clkout(self.cd_sys, sys_clk_freq)
 # BaseSoC ------------------------------------------------------------------------------------------
