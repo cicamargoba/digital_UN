@@ -23,7 +23,7 @@ class _CRG(LiteXModule):
         clk40 = platform.request("clk40")
 
 
-        rst_n = platform.request("btn")
+        rst_n = platform.request("reset_n")
 
         # PLL
         self.pll = pll = GW2APLL(devicename=platform.devicename, device=platform.device)
@@ -45,8 +45,10 @@ class BaseSoC(SoCCore):
         self.crg = _CRG(platform, sys_clk_freq)
 
         # SoCCore ----------------------------------------------------------------------------------
-        SoCCore.__init__(self, platform, sys_clk_freq, ident="LiteX SoC on FPGBC", **kwargs)
-
+        SoCCore.__init__(self, platform, sys_clk_freq,
+            ident                     = "LiteX SoC on FPGBC",
+            integrated_main_ram_size  = 0x8000,
+            **kwargs)
 
 
         #MULTIPLIER
@@ -61,8 +63,6 @@ class BaseSoC(SoCCore):
             self.add_spi_flash(mode="1x", module=SpiFlashModule(Codes.READ_1_1_1))
 
         # Buttons ----------------------------------------------------------------------------------
-        if with_buttons:
-            self.buttons = GPIOIn(pads=~platform.request_all("btn"))
 
 # Build --------------------------------------------------------------------------------------------
 
@@ -72,6 +72,10 @@ def main():
     parser.add_target_argument("--flash",          action="store_true",      help="Flash bitstream.")
     parser.add_target_argument("--sys-clk-freq",   default=48e6, type=float, help="System clock frequency.")
     parser.add_target_argument("--with-spi-flash", action="store_true",      help="Enable memory-mapped SPI flash.")
+    parser.set_defaults(
+        cpu_type = "femtorv",
+        cpu_variant = "quark",
+    )
     args = parser.parse_args()
 
     soc = BaseSoC(

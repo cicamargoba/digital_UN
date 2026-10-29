@@ -33,7 +33,7 @@ _io = [
     ),
 
     # Buttons.
-    ("btn", 0,  Pins("120"), IOStandard("LVCMOS33")),
+    ("reset_n", 0,  Pins("120"), IOStandard("LVCMOS33")),
 
 ]
 

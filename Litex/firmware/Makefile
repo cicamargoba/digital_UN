@@ -30,6 +30,8 @@ firmware.elf: $(OBJECTS)
 		-Wl,--start-group $(LIBS:lib%=-l%) -Wl,--end-group
 	chmod -x $@
 
+
+
 #	@riscv64-unknown-elf-objdump  -h -S $< > firmware.lst
 main.o: main.c
 	$(compile)
@@ -45,3 +47,6 @@ litex_term: firmware.bin
 clean:
 	$(RM) $(OBJECTS) $(OBJECTS:.o=.d) firmware.elf firmware.bin .*~ *~ *lst
 .PHONY: all main.o clean load
+
+
+#cd ../build/fpgbc_plat/software/libc && rm -rf * && make -f /Work/CAD/litex/litex/litex/soc/software/libc/Makefile LIBC_MODE=full

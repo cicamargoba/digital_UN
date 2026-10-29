@@ -18,7 +18,21 @@ SECTIONS
 
 		*(.text .stub .text.* .gnu.linkonce.t.*)
 		_etext = .;
-	} > sram 
+	} > main_ram 
+
+
+	.init_array :
+	{
+		. = ALIGN(4);
+		PROVIDE_HIDDEN(__preinit_array_start = .);
+		KEEP(*(.preinit_array))
+		PROVIDE_HIDDEN(__preinit_array_end = .);
+
+		PROVIDE_HIDDEN(__init_array_start = .);
+		KEEP(*(SORT(.init_array.*)))
+		KEEP(*(.init_array))
+		PROVIDE_HIDDEN(__init_array_end = .);
+	} > main_ram
 
 	.rodata :
 	{
@@ -30,7 +44,7 @@ SECTIONS
 		*(.toc .toc.*)
 		. = ALIGN(8);
 		_erodata = .;
-	} > sram
+	} > main_ram
 
 	.data :
 	{
@@ -42,7 +56,7 @@ SECTIONS
 		*(.sdata .sdata.* .gnu.linkonce.s.*)
 		. = ALIGN(8);
 		_edata = .;
-	} > sram 
+	} > sram AT > main_ram 
 
 	.bss :
 	{
