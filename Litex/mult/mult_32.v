@@ -1,5 +1,5 @@
 module mult_32(clk , rst , init , A , B , pp , done);
-  
+
   input rst;
   input clk;
   input init;

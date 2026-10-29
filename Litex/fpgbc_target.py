@@ -10,6 +10,7 @@ from litex.soc.integration.builder import *
 from litex.soc.cores.gpio import GPIOIn
 
 from board import fpgbc_plat
+from mult import mult_32
 
 # CRG ----------------------------------------------------------------------------------------------
 
@@ -49,6 +50,13 @@ class BaseSoC(SoCCore):
 
         # SoCCore ----------------------------------------------------------------------------------
         SoCCore.__init__(self, platform, sys_clk_freq, ident="LiteX SoC on FPGBC", **kwargs)
+
+
+
+        #MULTIPLIER
+        self.csr.add("mult0")
+        self.submodules.mult0 = mult_32.Mult32(platform)
+
 
         # SPI Flash: XT25F64B ----------------------------------------------------------------------
         if with_spi_flash:
@@ -91,3 +99,13 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+'''
+        SoCCore.__init__(self, platform,
+            cpu_type                 = "femtorv",
+            cpu_variant              = "intermissum",
+            clk_freq                 = 40e6,
+            ident                    = "LiteX CPU Test SoC", ident_version=True,
+            integrated_rom_size      = 0x9000#,
+            #integrated_rom_init      = "./NO_bios_firmware_stream/firmware.bin"
+'''
