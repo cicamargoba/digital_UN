@@ -9,7 +9,7 @@ module bram (
    input      [3:0]  mem_wmask  // masks for writing the 4 bytes (1=write byte) 
 );
 
-   reg [31:0] MEM [0:2047];    // Modificar .equ IO_HW_CONFIG_RAM, 8192  (2048 palabras de 32 bits = 2048 * 4 bytes) en libfemtorv/include/HardwareConfig_bits.inc 
+   reg [31:0] MEM [0:1023];
 
    initial begin
        $readmemh("./firmware.hex",MEM);

@@ -46,7 +46,8 @@ parameter c_BIT_PERIOD     = 17361;
      .resetn(RESET),
      .LEDS(LEDS),
      .RXD(RXD),
-     .TXD(TXD)
+     .TXD(TXD),
+     .interrupt_request(1'b0)
    );
 
 
@@ -65,13 +66,16 @@ always #(tck/2) CLK <= ~CLK;
    
    
        integer idx; 
+   reg [1023:0] vcd_path;
    initial begin
 
-    $dumpfile("bench.vcd");
+    if (!$value$plusargs("VCD=%s", vcd_path))
+      vcd_path = "bench.vcd";
+    $dumpfile(vcd_path);
     $dumpvars(0,bench);
   `ifndef SYNTH
     for(idx = 0; idx < 32; idx = idx +1)  $dumpvars(0, bench.uut.CPU.registerFile[idx]);
-    for(idx = 1020; idx < 1025; idx = idx +1)  $dumpvars(0, bench.uut.RAM.MEM[idx]);
+    for(idx = 1020; idx < 1024; idx = idx +1)  $dumpvars(0, bench.uut.RAM.MEM[idx]);
   `endif  
 
     //$dumpvars(0, bench.uut.CPU.registerFile[10],bench);

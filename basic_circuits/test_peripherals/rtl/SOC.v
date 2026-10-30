@@ -5,7 +5,13 @@ module SOC (
     output wire  LEDS,   // system LEDs
     input        RXD,    // UART receive
     output       TXD,     // UART transmit
-    input        interrupt_request
+    input        interrupt_request,
+    output       LP_CLK,
+    output       LATCH,
+    output       NOE,
+    output [4:0] ROW,
+    output [2:0] RGB0,
+    output [2:0] RGB1
 );
 
    wire [31:0] mem_addr;
@@ -18,7 +24,7 @@ module SOC (
   // se hace con los 8 bits mas significativos de mem_addr
   // Se asigna el rango de la memoria de programa 0x00000000 - 0x003FFFFF
   // ====================================================================
-  reg [7:0]cs;  // CHIP-SELECT
+  reg [8:0]cs;  // CHIP-SELECT
 
    FemtoRV32 CPU(
       .clk(clk),
@@ -51,6 +57,7 @@ module SOC (
    wire [31:0] sqrt_dout;
    wire [31:0] bin2bcd_dout;
    wire [31:0] bcd2bin_dout;
+   wire [31:0] led_panel_dout;
 
   peripheral_uart #(
 //     .clk_freq(50000000),  // for primer 25k
@@ -72,7 +79,7 @@ module SOC (
      .uart_rx(RXD),
      .ledout(LEDS)
    );
-
+/*
    peripheral_bin2bcd bin2bcd0 (
       .clk(clk),
       .reset(!resetn),
@@ -94,13 +101,15 @@ module SOC (
       .wr(wr),
       .d_out(bcd2bin_dout)
    );
-
+*/
 
 // --------------------------------------------------------------#
 // --------------------------------------------------------------#
 // --------Instanciacion del periferico a probar ----------------#
 // --------------------------------------------------------------#
 // --------------------------------------------------------------#
+
+/*
    peripheral_test mult1 (
       .clk(clk),
       .reset(!resetn),
@@ -111,19 +120,37 @@ module SOC (
       .wr(wr),
       .d_out(test_dout)
    );
+*/
+   peripheral_led_panel led_panel0 (
+      .clk(clk),
+      .reset(!resetn),
+      .d_in(mem_wdata),
+      .cs(cs[8]),
+      .addr(mem_addr[4:0]),
+      .rd(rd),
+      .wr(wr),
+      .d_out(led_panel_dout),
+      .LP_CLK(LP_CLK),
+      .LATCH(LATCH),
+      .NOE(NOE),
+      .ROW(ROW),
+      .RGB0(RGB0),
+      .RGB1(RGB1)
+   );
 
   always @*
   begin
       case (mem_addr[31:16])	// direcciones - chip_select
-        16'h0040: cs= 8'b00100000; //uart
-        16'h0041: cs= 8'b00010000; //sqrt
-        16'h0042: cs= 8'b00001000; //mult
-        16'h0043: cs= 8'b00000100; //div
-        16'h0044: cs= 8'b00000010; //bin_to_bcd
-        16'h0045: cs= 8'b01000000; //dpRAM
-        16'h0046: cs= 8'b10000000; //bcd_to_bin
-        16'h0000: cs= 8'b00000001; //RAM
-        default:  cs= 8'b00000001;
+        16'h0040: cs= 9'b000100000; //uart
+        16'h0041: cs= 9'b000010000; //sqrt
+        16'h0042: cs= 9'b000001000; //mult
+        16'h0043: cs= 9'b000000100; //div
+        16'h0044: cs= 9'b000000010; //bin_to_bcd
+        16'h0045: cs= 9'b001000000; //dpRAM
+        16'h0046: cs= 9'b010000000; //bcd_to_bin
+        16'h0047: cs= 9'b100000000;
+        16'h0000: cs= 9'b000000001; //RAM
+        default:  cs= 9'b000000001;
       endcase
   end
   // ============== MUX ========================  // se encarga de lecturas del RV32
@@ -131,13 +158,14 @@ module SOC (
   begin
       case (cs)
 //        7'b1000000: mem_rdata = dpram_dout;
-        8'b10000000: mem_rdata = bcd2bin_dout;
-        8'b00100000: mem_rdata = uart_dout;
-        8'b00010000: mem_rdata = sqrt_dout;
-        8'b00001000: mem_rdata = test_dout;
-        8'b00000100: mem_rdata = div_dout;
-        8'b00000010: mem_rdata = bin2bcd_dout;
-        8'b00000001: mem_rdata = RAM_rdata;
+        9'b100000000: mem_rdata = led_panel_dout;
+        9'b010000000: mem_rdata = bcd2bin_dout;
+        9'b000100000: mem_rdata = uart_dout;
+        9'b000010000: mem_rdata = sqrt_dout;
+        9'b000001000: mem_rdata = test_dout;
+        9'b000000100: mem_rdata = div_dout;
+        9'b000000010: mem_rdata = bin2bcd_dout;
+        9'b000000001: mem_rdata = RAM_rdata;
         default:  mem_rdata = RAM_rdata;
       endcase
   end

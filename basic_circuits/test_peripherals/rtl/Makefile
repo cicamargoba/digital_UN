@@ -65,6 +65,13 @@ COMM_OBJS+= cores/test/mult/lsr_mult.v
 COMM_OBJS+= cores/test/mult/control_mult2.v
 COMM_OBJS+= cores/test/mult/rsr.v
 
+LED_PANEL_DIR = cores/Led_panel_AI_12bpp
+LED_PANEL_OBJS = perip_led_panel.v led_panel_4k.v ctrl_lp4k.v count.v memory_V2.v comp.v lsr_led.v mux_led.v
+LED_PANEL_OBJS += text_ram.v font_rom.v text_palette.v text_color.v text_memory.v text_mix.v text_overlay.v
+LED_PANEL_OBJS += sprite_demo.v sprite_table.v sprite_detector.v sprite_select.v sprite_half.v sprite_rom.v sprite_collision.v sprite_engine.v
+COMM_OBJS += $(addprefix $(LED_PANEL_DIR)/,$(LED_PANEL_OBJS))
+LED_PANEL_MEM_FILES = image0.hex image1.hex font8x8.mem pal16.mem text_demo_top.mem sprite_demo_patterns.mem sprite_demo_palette.mem
+
 COMM_OBJS +=  SOC.v
 
 OBJS += $(COMM_OBJS)
@@ -77,14 +84,16 @@ SIM_OBJS   = cores/sim_spi_flash/spiflash.v
 
 
 BUILD_DIR = build
+SIM_QUARK_BUILD_DIR ?= $(BUILD_DIR)/sim_quark
+GTKWAVE ?= gtkwave
 
 all: sim_quark
 
 sim_quark:
-	rm -f a.out *.vcd
-	iverilog -DBENCH  bench_quark.v $(OBJS)
-	vvp a.out
-	gtkwave bench.vcd
+	mkdir -p "$(SIM_QUARK_BUILD_DIR)"
+	iverilog -g2012 -DBENCH -s bench -o "$(SIM_QUARK_BUILD_DIR)/sim_quark" bench_quark.v $(OBJS)
+	vvp "$(SIM_QUARK_BUILD_DIR)/sim_quark" +VCD=$(SIM_QUARK_BUILD_DIR)/bench.vcd
+	$(GTKWAVE) "$(SIM_QUARK_BUILD_DIR)/bench.vcd"
 
 sim_irq:
 	rm -f a.out *.vcd
@@ -430,3 +439,14 @@ clean_altera:
 #export QT_QPA_PLATFORM_PLUGIN_PATH=/Work/CAD/IDE/Programmer/bin/PyQt5/qt-plugins
 #export QT_QPA_PLATFORM=xcb
 #export QT_XCB_GL_INTEGRATION=none
+
+.PHONY: led_panel_assets
+
+led_panel_assets: $(LED_PANEL_MEM_FILES)
+
+$(LED_PANEL_MEM_FILES): %: $(LED_PANEL_DIR)/%
+	cp "$<" "$@"
+
+sim_quark sim_irq sim_quark_flash sim_post_syn_quark sim_post_syn_quark_efx svg svg_flash configure_icebreaker: | led_panel_assets
+$(TARGET).json $(TARGET)_i5.json $(TARGET)_sugar.json $(TARGET)_i9.json: | led_panel_assets
+build_tang_primer_25k build_gw2ar_eq144 $(TCL_SCRIPT) $(top).qpf create_files create_files_flash: | led_panel_assets

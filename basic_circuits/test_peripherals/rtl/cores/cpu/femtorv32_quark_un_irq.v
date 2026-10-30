@@ -103,15 +103,24 @@ module FemtoRV32(
    /***************************************************************************/
 
 
-   reg [31:0] rs1;
-   reg [31:0] rs2;
+   reg [31:0] rs1_ram;
+   reg [31:0] rs2_ram;
+   reg rs1_zero;
+   reg rs2_zero;
+   wire [31:0] rs1 = rs1_zero ? 32'd0 : rs1_ram;
+   wire [31:0] rs2 = rs2_zero ? 32'd0 : rs2_ram;
    
    reg [31:0] registerFile [31:0];
 
-   // Escritura en posedge, al final del ciclo EXECUTE o WAIT_ALU_OR_MEM.
-   // x0 se mantiene en 0 escribiéndolo en cada ciclo.
    always @(posedge clk) begin
-     registerFile[0] <= 32'b0;
+     if (reset && state == WAIT_INSTR && !mem_rbusy) begin
+       rs1_ram <= registerFile[mem_rdata[19:15]];
+       rs2_ram <= registerFile[mem_rdata[24:20]];
+     end
+   end
+
+   // Escritura en posedge, al final del ciclo EXECUTE o WAIT_ALU_OR_MEM.
+   always @(posedge clk) begin
      if (writeBack && rdId != 0)
        registerFile[rdId] <= writeBackData;
    end
@@ -383,8 +392,8 @@ module FemtoRV32(
          state     <= WAIT_ALU_OR_MEM;   // espera !mem_wbusy antes de arrancar
          PC        <= RESET_ADDR[ADDR_WIDTH-1:0];
          instr     <= NOP;
-         rs1       <= 32'b0;
-         rs2       <= 32'b0;
+         rs1_zero  <= 1'b1;
+         rs2_zero  <= 1'b1;
          mem_wmask <= 4'b0000;
          mstatus   <= 1'b0;              // interrupciones deshabilitadas
          mtvec     <= {ADDR_WIDTH{1'b0}};
@@ -401,8 +410,8 @@ module FemtoRV32(
 
             WAIT_INSTR: begin
                if (!mem_rbusy) begin     // puede tardar (flash SPI)
-                  rs1   <= registerFile[mem_rdata[19:15]];
-                  rs2   <= registerFile[mem_rdata[24:20]];
+                  rs1_zero <= (mem_rdata[19:15] == 5'd0);
+                  rs2_zero <= (mem_rdata[24:20] == 5'd0);
                   instr <= mem_rdata[31:2];
                   state <= EXECUTE;
                end

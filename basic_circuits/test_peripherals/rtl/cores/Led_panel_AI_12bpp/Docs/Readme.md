@@ -4,7 +4,7 @@
 
 Implementación de los bloques de texto propuestos en `hub75_text_memory_diagramas.html`: dos RAM de caracteres, dos ROM de fuente, selección de bit, selección de color, paletas y mezcla independiente para las dos mitades del panel.
 
-**`text_overlay` está integrado en `led_panel_4k.v`, entre la memoria de imagen y `mux_led`.** El Makefile incluye los nuevos módulos. No se modificaron `ctrl_lp4k.v`, los contadores, `memory_V2.v`, `mux_led.v` ni las restricciones de pines. No se implementa una CPU, un periférico MMIO ni un cruce de dominios de reloj.
+**`text_overlay` está integrado en `led_panel_4k.v`, entre la memoria de imagen y `mux_led`.** Se conservan `ctrl_lp4k.v`, los contadores, `memory_V2.v` y `mux_led.v`. La integración posterior añade un wrapper MMIO, conexión al femtoRV y restricciones HUB75: [periférico femtoRV y adaptación a iCEBreaker](femtorv-peripheral.md).
 
 `text_overlay.v` reúne únicamente el generador y la mezcla. Permite probar o integrar la composición sin alterar el algoritmo BCM.
 
