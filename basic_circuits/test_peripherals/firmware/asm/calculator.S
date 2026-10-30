@@ -6,8 +6,8 @@
 calculator:
 
 loopM:	
-   li   sp,0x2000
-   li   sp,0x2000
+   li   sp,0x1000
+   li   sp,0x1000
 
 
     la    t0, isr           # mtvec <- dirección de la rutina de interrupción

@@ -49,7 +49,7 @@ firmware.elf: $(OBJECTS) bram.ld
 	chmod -x $@
 	
 firmware.hex: firmware.elf firmware.lst firmware.bin
-	../firmware_words_src/firmware_words firmware.elf -ram 16384 -max_addr 16384  -out firmware.hex
+	../firmware_words_src/firmware_words firmware.elf -ram 4096 -max_addr 4096  -out firmware.hex
 	cp firmware.hex ../../rtl
 	cp firmware_flash.hex ../../rtl
 
@@ -67,7 +67,7 @@ clean:
 # Generar bram.ld directamente desde Makefile
 bram.ld:
 	@echo "MEMORY {"                         >  bram.ld
-	@echo "   BRAM (RWX) : ORIGIN = 0x0000, LENGTH = 0x4000  /* 6kB RAM */" >> bram.ld
+	@echo "   BRAM (RWX) : ORIGIN = 0x0000, LENGTH = 0x1000  /* 4 KiB RAM */" >> bram.ld
 	@echo "}"                                >> bram.ld
 	@echo "SECTIONS"                         >> bram.ld
 	@echo "{"                                >> bram.ld
