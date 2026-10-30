@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2670" height="1400" viewBox="0 80 2670 1400">
+<title>Periférico de texto y sprites · registros e interfaz femtoRV</title>
+<desc>Propuesta con dirección, dato y WE persistentes, siguiendo los CSRStorage conectados a ws2812_periph en colorlight_5a_75e.v. Los dos WE son registros escritos por software, no pulsos del bus. Direcciones de registros propuestas, no tomadas del mapa LiteX. No representa RTL implementado.</desc>
+<defs>
+ <marker id="g" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8 Z" fill="#247347"/></marker>
+ <marker id="b" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8 Z" fill="#38679b"/></marker>
+ <marker id="k" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L7 4 L0 8 Z" fill="#222"/></marker>
+ <style>
+ text{font-family:Arial,Helvetica,sans-serif;fill:#151515;font-size:21px}
+ .title{font-size:29px;font-weight:bold}.head{font-size:24px;font-weight:bold}.small{font-size:18px}.code{font-family:monospace;font-size:20px}
+ .green{fill:#247347}.blue{fill:#38679b}
+ .reg{fill:#e1f1ee;stroke:#333;stroke-width:1.5}.dec{fill:#d8e6f1;stroke:#333;stroke-width:1.5}.core{fill:#dce5ee;stroke:#333;stroke-width:1.5}.addr{fill:#faf8dd;stroke:#333;stroke-width:1.2}
+ .gw{fill:none;stroke:#247347;stroke-width:3;marker-end:url(#g)}.bw{fill:none;stroke:#38679b;stroke-width:2;marker-end:url(#b)}.kw{fill:none;stroke:#222;stroke-width:1.8;marker-end:url(#k)}
+ .gj{fill:none;stroke:#247347;stroke-width:3}.bj{fill:none;stroke:#38679b;stroke-width:2}
+ </style>
+</defs>
+<rect width="2670" height="1480" fill="white"/>
+<rect x="580" y="95" width="1650" height="1260" fill="white" stroke="#333" stroke-width="2"/>
+<text x="1420" y="132" class="head">peripheral_led_panel · periférico completo</text>
+<rect x="1700" y="150" width="500" height="1175" fill="#f6f8fa" stroke="#617487" stroke-width="1.5"/>
+<text x="1720" y="177" class="small">led_panel_4k · controlador HUB75</text>
+
+<rect x="25" y="105" width="465" height="920" fill="white" stroke="#222" stroke-width="1.5"/>
+<text x="42" y="140" class="head">femtoRV · ASM</text>
+<text x="42" y="177" class="code">LED_BASE: pendiente de asignar</text>
+<g class="code green">
+ <text x="42" y="217" class="code green">.equ TEXT_ADDR,   0x04</text>
+ <text x="42" y="249" class="code green">.equ TEXT_DATA,   0x08</text>
+ <text x="42" y="281" class="code green">.equ SPRITE_ADDR, 0x0C</text>
+ <text x="42" y="313" class="code green">.equ SPRITE_DATA, 0x10</text>
+ <text x="42" y="345" class="code green">.equ TEXT_WE,     0x14</text>
+ <text x="42" y="377" class="code green">.equ SPRITE_WE,   0x18</text>
+</g>
+<text x="42" y="425" class="code">li t0, LED_BASE</text>
+<text x="42" y="457" class="code green">sw zero, TEXT_WE(t0)</text>
+<text x="42" y="489" class="code green">sw zero, TEXT_ADDR(t0)</text>
+<text x="42" y="521" class="code">li t2, 0x07C1</text>
+<text x="42" y="553" class="code green">sw t2, TEXT_DATA(t0)</text>
+<text x="42" y="585" class="code">li t1, 1</text>
+<text x="42" y="617" class="code green">sw t1, TEXT_WE(t0)</text>
+<text x="42" y="649" class="small">[espera: cubrir captura en negedge clk1]</text>
+<text x="42" y="681" class="code green">sw zero, TEXT_WE(t0)</text>
+<text x="42" y="729" class="code green">sw zero, SPRITE_WE(t0)</text>
+<text x="42" y="761" class="code green">sw zero, SPRITE_ADDR(t0)</text>
+<text x="42" y="793" class="code">li t2, 0x02201008</text>
+<text x="42" y="825" class="code green">sw t2, SPRITE_DATA(t0)</text>
+<text x="42" y="857" class="code green">sw t1, SPRITE_WE(t0)</text>
+<text x="42" y="889" class="small">[espera: cubrir captura en negedge clk1]</text>
+<text x="42" y="921" class="code green">sw zero, SPRITE_WE(t0)</text>
+<text x="42" y="965" class="small">Espera dimensionada según los relojes.</text>
+<text x="42" y="997" class="small">Dirección y dato estables mientras WE=1.</text>
+
+<rect x="845" y="150" width="440" height="475" fill="none" stroke="#38679b" stroke-dasharray="3 4"/>
+<text x="865" y="181" class="head">Registros de escritura</text>
+<rect x="970" y="220" width="290" height="65" class="reg"/>
+<text x="1115" y="260" text-anchor="middle">TEXT_ADDR [5:0]</text>
+<rect x="970" y="320" width="290" height="65" class="reg"/>
+<text x="1115" y="360" text-anchor="middle">TEXT_DATA [14:0]</text>
+<rect x="970" y="420" width="290" height="65" class="reg"/>
+<text x="1115" y="460" text-anchor="middle">SPRITE_ADDR [2:0]</text>
+<rect x="970" y="520" width="290" height="65" class="reg"/>
+<text x="1115" y="560" text-anchor="middle">SPRITE_DATA [25:0]</text>
+
+<text x="555" y="117" class="head green">d_in[31:0]</text>
+<path d="M550 135 H815 V540" class="gj"/>
+<path d="M815 235 H970" class="gw"/>
+<path d="M815 335 H970" class="gw"/>
+<path d="M815 435 H970" class="gw"/>
+<path d="M815 535 H970" class="gw"/>
+
+<rect x="610" y="680" width="205" height="225" class="dec"/>
+<text x="712" y="763" text-anchor="middle" class="head">Address</text>
+<text x="712" y="798" text-anchor="middle" class="head">decoder</text>
+<text x="712" y="846" text-anchor="middle" class="small">cs + addr[4:0]</text>
+<path d="M525 735 H610" class="kw"/>
+<path d="M525 865 H610" class="kw"/>
+<path d="M712 680 V265 H970" class="kw"/>
+<path d="M735 680 V365 H970" class="kw"/>
+<path d="M758 680 V465 H970" class="kw"/>
+<path d="M781 680 V565 H970" class="kw"/>
+<text x="851" y="258" class="small">s[0] &amp; wr</text>
+<text x="851" y="358" class="small">s[1] &amp; wr</text>
+<text x="851" y="458" class="small">s[2] &amp; wr</text>
+<text x="851" y="558" class="small">s[3] &amp; wr</text>
+
+<rect x="880" y="680" width="370" height="315" fill="white" stroke="#333"/>
+<text x="900" y="710" class="head">Selección de registros</text>
+<rect x="895" y="728" width="265" height="32" class="addr"/><text x="905" y="751" class="small">s[0] · TEXT_ADDR</text><text x="1170" y="751" class="small">0x04</text>
+<rect x="895" y="770" width="265" height="32" class="addr"/><text x="905" y="793" class="small">s[1] · TEXT_DATA</text><text x="1170" y="793" class="small">0x08</text>
+<rect x="895" y="812" width="265" height="32" class="addr"/><text x="905" y="835" class="small">s[2] · SPRITE_ADDR</text><text x="1170" y="835" class="small">0x0C</text>
+<rect x="895" y="854" width="265" height="32" class="addr"/><text x="905" y="877" class="small">s[3] · SPRITE_DATA</text><text x="1170" y="877" class="small">0x10</text>
+<rect x="895" y="896" width="265" height="32" class="addr"/><text x="905" y="919" class="small">s[4] · TEXT_WE</text><text x="1170" y="919" class="small">0x14</text>
+<rect x="895" y="938" width="265" height="32" class="addr"/><text x="905" y="961" class="small">s[5] · SPRITE_WE</text><text x="1170" y="961" class="small">0x18</text>
+
+<rect x="1340" y="700" width="260" height="65" class="reg"/>
+<text x="1470" y="740" text-anchor="middle">TEXT_WE [0]</text>
+<rect x="1340" y="800" width="260" height="65" class="reg"/>
+<text x="1470" y="840" text-anchor="middle">SPRITE_WE [0]</text>
+<text x="1340" y="903" class="small">WE persistentes · reset = 0</text>
+<path d="M815 135 H1315 V715 H1340" class="gw"/>
+<path d="M1315 715 V815 H1340" class="gw"/>
+<path d="M680 905 V1025 H1280 V750 H1340" class="kw"/>
+<path d="M705 905 V1045 H1295 V850 H1340" class="kw"/>
+<text x="1340" y="788" class="small">Carga TEXT_WE: s[4] &amp; wr</text>
+<text x="1340" y="938" class="small">Carga SPRITE_WE: s[5] &amp; wr</text>
+
+<rect x="1710" y="180" width="450" height="300" class="core"/>
+<text x="1935" y="220" text-anchor="middle" class="head">text_overlay</text>
+<rect x="1740" y="250" width="185" height="100" class="reg"/>
+<text x="1832" y="290" text-anchor="middle">RAM texto</text><text x="1832" y="323" text-anchor="middle" class="small">64 × 15 bits</text>
+<rect x="1945" y="250" width="185" height="100" fill="white" stroke="#333"/>
+<text x="2037" y="290" text-anchor="middle">Fuente + paletas</text><text x="2037" y="323" text-anchor="middle" class="small">Inicializadas</text>
+<rect x="1740" y="375" width="390" height="75" class="addr"/>
+<text x="1935" y="404" text-anchor="middle">Mezcla · text_mix</text>
+<text x="1935" y="433" text-anchor="middle" class="small">Sprite &gt; texto &gt; imagen</text>
+<rect x="1710" y="530" width="450" height="300" class="core"/>
+<text x="1935" y="570" text-anchor="middle" class="head">sprite_engine</text>
+<rect x="1740" y="600" width="185" height="100" class="reg"/>
+<text x="1832" y="640" text-anchor="middle">Descriptores</text><text x="1832" y="673" text-anchor="middle" class="small">8 × 26 bits</text>
+<rect x="1945" y="600" width="185" height="100" fill="white" stroke="#333"/>
+<text x="2037" y="640" text-anchor="middle">Patrones + paletas</text><text x="2037" y="673" text-anchor="middle" class="small">Inicializados</text>
+<text x="1935" y="780" text-anchor="middle" class="small">CPU sustituye a sprite_demo</text>
+<path d="M1260 252 H1710" class="gw"/>
+<path d="M1260 352 H1710" class="gw"/>
+<path d="M1260 452 H1660 V570 H1710" class="gw"/>
+<path d="M1260 552 H1640 V650 H1710" class="gw"/>
+<path d="M1600 732 H1680 V390 H1710" class="bw"/>
+<path d="M1600 832 H1695 V730 H1710" class="bw"/>
+
+<rect x="1710" y="860" width="450" height="120" class="reg"/>
+<text x="1935" y="899" text-anchor="middle" class="head">Imagen · memory</text>
+<text x="1935" y="934" text-anchor="middle">2048 × 24 bits · image.hex</text>
+<text x="1935" y="963" text-anchor="middle" class="small">Inicializada desde archivo · sin escritura CPU</text>
+<rect x="1710" y="1010" width="450" height="280" class="core"/>
+<text x="1935" y="1050" text-anchor="middle" class="head">Barrido y salida HUB75</text>
+<rect x="1740" y="1075" width="390" height="50" class="addr"/>
+<text x="1935" y="1108" text-anchor="middle">ctrl_lp4k · FSM</text>
+<rect x="1740" y="1140" width="185" height="115" class="addr"/>
+<text x="1832" y="1176" text-anchor="middle">Contadores</text>
+<text x="1832" y="1208" text-anchor="middle" class="small">Fila / columna</text>
+<text x="1832" y="1237" text-anchor="middle" class="small">Índice / retardo</text>
+<rect x="1945" y="1140" width="185" height="115" class="addr"/>
+<text x="2037" y="1176" text-anchor="middle">BCM + mux_led</text>
+<text x="2037" y="1208" text-anchor="middle" class="small">Temporización</text>
+<text x="2037" y="1237" text-anchor="middle" class="small">Planos RGB</text>
+<path d="M2230 650 H2350" class="kw"/>
+<rect x="2350" y="500" width="280" height="300" fill="#f6f8fa" stroke="#333" stroke-width="1.5"/>
+<text x="2490" y="600" text-anchor="middle" class="head">Panel físico</text>
+<text x="2490" y="640" text-anchor="middle">HUB75 · 64 × 64</text>
+<text x="2490" y="680" text-anchor="middle">RGB444</text>
+<text x="25" y="1410" class="code">TEXT_DATA[14:0] = {fondo[3:0], frente[3:0], carácter[6:0]}</text>
+<text x="25" y="1455" class="code">SPRITE_DATA[25:0] = {enable, color[3:0], patrón[4:0], Y[7:0], X[7:0]}</text>
+</svg>

@@ -1,0 +1,18 @@
+PERIPHERAL_BUILD_DIR = build/peripheral
+PERIPHERAL_OBJS = perip_led_panel.v led_panel_4k.v ctrl_lp4k.v count.v memory_V2.v comp.v lsr_led.v mux_led.v
+PERIPHERAL_OBJS += text_ram.v font_rom.v text_palette.v text_color.v text_memory.v text_mix.v text_overlay.v
+PERIPHERAL_OBJS += sprite_demo.v sprite_table.v sprite_detector.v sprite_select.v sprite_half.v sprite_rom.v sprite_collision.v sprite_engine.v
+
+.PHONY: test_peripheral check_peripheral view_peripheral
+
+test_peripheral:
+	mkdir -p $(PERIPHERAL_BUILD_DIR)
+	iverilog -g2012 -Wall -s perip_led_panel_TB -o $(PERIPHERAL_BUILD_DIR)/perip_led_panel_TB perip_led_panel_TB.v $(PERIPHERAL_OBJS)
+	vvp $(PERIPHERAL_BUILD_DIR)/perip_led_panel_TB
+
+check_peripheral:
+	mkdir -p $(PERIPHERAL_BUILD_DIR)
+	yosys -Q -T -l $(PERIPHERAL_BUILD_DIR)/check.log -p 'read_verilog $(PERIPHERAL_OBJS); hierarchy -check -top peripheral_led_panel; proc; opt; check -assert'
+
+view_peripheral: test_peripheral perip_led_panel.gtkw
+	gtkwave perip_led_panel.gtkw

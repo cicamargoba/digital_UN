@@ -1,4 +1,6 @@
-module led_panel_4k(clk , rst , init, LP_CLK, LATCH, NOE, ROW, RGB0, RGB1);
+module led_panel_4k(clk , rst , init, LP_CLK, LATCH, NOE, ROW, RGB0, RGB1,
+                    cpu_text_we, cpu_text_addr, cpu_text_data,
+                    cpu_sprite_we, cpu_sprite_addr, cpu_sprite_data);
 
     input         rst;
     input         clk;
@@ -9,6 +11,12 @@ module led_panel_4k(clk , rst , init, LP_CLK, LATCH, NOE, ROW, RGB0, RGB1);
     output  [4:0] ROW;
     output  [2:0] RGB0;
     output  [2:0] RGB1;
+    input         cpu_text_we;
+    input   [5:0] cpu_text_addr;
+    input  [14:0] cpu_text_data;
+    input         cpu_sprite_we;
+    input   [2:0] cpu_sprite_addr;
+    input  [25:0] cpu_sprite_data;
 
 
     wire w_ZR;
@@ -42,6 +50,7 @@ parameter HALF_SCREEN = NUM_PIXELS/2;
 parameter BIT_DEPTH = 4;
 parameter TOTAL_BIT_DEPTH = 3*BIT_DEPTH;
 parameter DELAY = 20;
+parameter CPU_CONTROL = 0;
 parameter TEXT_FONT_FILE = "font8x8.mem";
 parameter TEXT_PALETTE_FILE = "pal16.mem";
 parameter TEXT_TOP_INIT_FILE = "text_demo_top.mem";
@@ -99,10 +108,19 @@ reg [4:0] clk_counter;
     lsr_led #(.init_value(DELAY), .width(10)) lsr_led0( .clk(clk1), .load(w_LD), .shift(w_SHD), .s_A(delay));
     comp_4k #(.width(10) ) compa(.in1(delay), .in2(count_delay), .out(w_ZD));
     memory  #(.size(NUM_PIXELS/2 -1), .width( $clog2(NUM_PIXELS)-2 ) ) mem0 (.clk(clk1), .address(PIX_ADDR), .rd(1'b1), .rdata(mem_data));
-    sprite_demo #(.INIT_FILE(SPRITE_INIT_FILE)) SPRITE_DEMO (
-        .clk(clk1), .rst(rst), .we(sprite_we), .waddr(sprite_waddr),
-        .wdata(sprite_wdata), .ready(sprite_ready)
-    );
+    generate
+        if (CPU_CONTROL) begin: CPU_WRITES
+            assign sprite_we = cpu_sprite_we & ~rst;
+            assign sprite_waddr = cpu_sprite_addr;
+            assign sprite_wdata = cpu_sprite_data;
+            assign sprite_ready = 1'b1;
+        end else begin: DEMO_WRITES
+            sprite_demo #(.INIT_FILE(SPRITE_INIT_FILE)) SPRITE_DEMO (
+                .clk(clk1), .rst(rst), .we(sprite_we), .waddr(sprite_waddr),
+                .wdata(sprite_wdata), .ready(sprite_ready)
+            );
+        end
+    endgenerate
     sprite_engine #(
         .PATTERN_FILE(SPRITE_PATTERN_FILE),
         .PALETTE_FILE(SPRITE_PALETTE_FILE)
@@ -121,9 +139,9 @@ reg [4:0] clk_counter;
         .clk      (clk1),
         .pix_addr (PIX_ADDR[10:0]),
         .img      (mem_data),
-        .we       (1'b0),
-        .waddr    (6'd0),
-        .wdata    (15'd0),
+        .we       (CPU_CONTROL ? (cpu_text_we & ~rst) : 1'b0),
+        .waddr    (CPU_CONTROL ? cpu_text_addr : 6'd0),
+        .wdata    (CPU_CONTROL ? cpu_text_data : 15'd0),
         .spr      (sprite_data),
         .spr_on0  (sprite_on0),
         .spr_on1  (sprite_on1),

@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="810" viewBox="0 110 1800 810">
+  <title>femtoRV · periférico HUB75 sin LiteX</title>
+  <desc>Arquitectura propuesta con registros persistentes de dirección, dato y WE, siguiendo la conexión CSRStorage de ws2812_periph en colorlight_5a_75e.v. No incluye un bloque de entrega de escrituras. El software mantiene datos estables y WE activo durante la captura en clk1. Imagen, fuentes, patrones y paletas conservan su inicialización desde archivos. No representa RTL implementado.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0 L8 4 L0 8 Z" fill="#344454"/></marker>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#17212b}
+      .title{font-size:28px;font-weight:bold}
+      .heading{font-size:21px;font-weight:bold}
+      .label{font-size:18px;font-weight:bold}
+      .body{font-size:17px}
+      .small{font-size:15px;fill:#455463}
+      .code{font-family:monospace;font-size:16px}
+      .outline{fill:#ffffff;stroke:#344454;stroke-width:2}
+      .group{fill:#f6f8fa;stroke:#617487;stroke-width:1.6}
+      .ram{fill:#f6eeee;stroke:#617487;stroke-width:1.4}
+      .logic{fill:#edf3f8;stroke:#617487;stroke-width:1.4}
+      .ctl{fill:#fcfbe2;stroke:#617487;stroke-width:1.4}
+      .bus{fill:none;stroke:#344454;stroke-width:2.4;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1800" height="1120" fill="#ffffff"/>
+
+  <rect x="35" y="125" width="260" height="580" class="outline"/>
+  <text x="55" y="160" class="heading">CPU</text>
+  <rect x="55" y="195" width="220" height="110" class="logic"/>
+  <text x="165" y="239" text-anchor="middle" class="label">femtoRV</text>
+  <text x="165" y="271" text-anchor="middle" class="body">Programa de aplicación</text>
+  <rect x="55" y="330" width="220" height="110" class="group"/>
+  <text x="165" y="374" text-anchor="middle" class="label">Bus de datos</text>
+  <text x="165" y="406" text-anchor="middle" class="body">Accesos MMIO</text>
+  <rect x="55" y="465" width="220" height="110" class="ctl"/>
+  <text x="165" y="509" text-anchor="middle" class="label">Selección periférica</text>
+  <text x="165" y="541" text-anchor="middle" class="body">Decodificación de base</text>
+
+  <path d="M295 400 H335" class="bus"/>
+
+  <rect x="335" y="125" width="1140" height="660" class="outline"/>
+  <text x="355" y="160" class="heading">peripheral_led_panel · periférico completo</text>
+  <g transform="translate(0,60)">
+  <rect x="355" y="125" width="340" height="580" class="group"/>
+  <text x="375" y="160" class="heading">Interfaz MMIO y registros</text>
+  <rect x="375" y="195" width="300" height="100" class="logic"/>
+  <text x="525" y="236" text-anchor="middle" class="label">Interfaz de bus</text>
+  <text x="525" y="268" text-anchor="middle" class="body">Decodificador de registros</text>
+  <rect x="375" y="320" width="300" height="145" class="ram"/>
+  <text x="525" y="356" text-anchor="middle" class="label">Registros persistentes</text>
+  <text x="525" y="390" text-anchor="middle" class="code">TEXT_ADDR / TEXT_DATA</text>
+  <text x="525" y="423" text-anchor="middle" class="code">SPRITE_ADDR / SPRITE_DATA</text>
+  <rect x="375" y="490" width="300" height="155" class="ctl"/>
+  <text x="525" y="527" text-anchor="middle" class="label">Habilitaciones persistentes</text>
+  <text x="525" y="560" text-anchor="middle" class="code">TEXT_WE / SPRITE_WE</text>
+  <text x="525" y="590" text-anchor="middle" class="small">Controladas por software · reset = 0</text>
+  <text x="525" y="620" text-anchor="middle" class="small">WE activo durante captura en clk1</text>
+
+  <path d="M695 400 H755" class="bus"/>
+
+  <rect x="755" y="125" width="700" height="580" class="outline"/>
+  <text x="775" y="160" class="heading">led_panel_4k · controlador existente + puertos CPU</text>
+  <rect x="775" y="195" width="315" height="175" class="group"/>
+  <text x="795" y="225" class="label">Texto · text_overlay</text>
+  <rect x="790" y="245" width="130" height="100" class="ram"/>
+  <text x="855" y="282" text-anchor="middle" class="label">RAM texto</text>
+  <text x="855" y="315" text-anchor="middle" class="body">64 × 15 bits</text>
+  <rect x="935" y="245" width="140" height="100" class="logic"/>
+  <text x="1005" y="282" text-anchor="middle" class="label">Fuente / color</text>
+  <text x="1005" y="315" text-anchor="middle" class="small">ROM + paletas</text>
+
+  <rect x="1110" y="195" width="325" height="175" class="group"/>
+  <text x="1130" y="225" class="label">Sprites · sprite_engine</text>
+  <rect x="1125" y="245" width="140" height="100" class="ram"/>
+  <text x="1195" y="282" text-anchor="middle" class="label">Descriptores</text>
+  <text x="1195" y="315" text-anchor="middle" class="body">8 × 26 bits</text>
+  <rect x="1280" y="245" width="140" height="100" class="logic"/>
+  <text x="1350" y="282" text-anchor="middle" class="label">Patrón / color</text>
+  <text x="1350" y="315" text-anchor="middle" class="small">ROM + paletas</text>
+
+  <rect x="775" y="395" width="315" height="110" class="ram"/>
+  <text x="932" y="435" text-anchor="middle" class="label">Imagen · memory</text>
+  <text x="932" y="466" text-anchor="middle" class="body">2048 × 24 bits · image.hex</text>
+  <text x="932" y="491" text-anchor="middle" class="small">Sin escritura desde la CPU</text>
+  <rect x="1110" y="395" width="325" height="110" class="logic"/>
+  <text x="1272" y="435" text-anchor="middle" class="label">Mezcla · text_mix</text>
+  <text x="1272" y="472" text-anchor="middle" class="body">Sprite &gt; texto &gt; imagen</text>
+
+  <rect x="775" y="530" width="660" height="140" class="group"/>
+  <text x="795" y="560" class="label">Barrido y salida · sin cambios funcionales propuestos</text>
+  <rect x="790" y="580" width="195" height="65" class="ctl"/>
+  <text x="887" y="619" text-anchor="middle" class="body">FSM + contadores</text>
+  <rect x="1005" y="580" width="195" height="65" class="ctl"/>
+  <text x="1102" y="619" text-anchor="middle" class="body">Temporización BCM</text>
+  <rect x="1220" y="580" width="200" height="65" class="logic"/>
+  <text x="1320" y="619" text-anchor="middle" class="body">Mux de planos</text>
+  </g>
+
+  <path d="M1475 460 H1515" class="bus"/>
+  <rect x="1515" y="125" width="250" height="580" class="outline"/>
+  <text x="1535" y="160" class="heading">SALIDA</text>
+  <rect x="1535" y="270" width="210" height="220" class="group"/>
+  <text x="1640" y="355" text-anchor="middle" class="label">Panel HUB75</text>
+  <text x="1640" y="395" text-anchor="middle" class="body">64 × 64 píxeles</text>
+  <text x="1640" y="430" text-anchor="middle" class="body">RGB444</text>
+
+  <text x="35" y="840" class="code">TEXT_DATA[14:0] = {fondo[3:0], frente[3:0], carácter[6:0]}</text>
+  <text x="35" y="885" class="code">SPRITE_DATA[25:0] = {enable, color[3:0], patrón[4:0], Y[7:0], X[7:0]}</text>
+</svg>
