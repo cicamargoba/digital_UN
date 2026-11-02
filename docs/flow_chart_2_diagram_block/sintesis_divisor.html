@@ -1,0 +1,482 @@
+<title>Síntesis del divisor</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: cabecera con escenas → lienzo SVG (hoja de esquemático) → panel de narración y controles → traza de simulación */
+:root{
+  --paper:#f2f4f7; --sheet:#fbfcfd; --grid:#e4e8ee; --ink:#1b2231; --muted:#5a6477; --line:#2b3346;
+  --accent:#2c56c9; --on:#d9381e; --sig:#a8296a; --pill:#ffffff;
+  --f-gray:#c9cbcf; --f-pink:#fbbccb; --f-lblue:#acd8e6; --f-lav:#e4e6f8; --f-white:#ffffff; --f-yellow:#fff04a; --f-green:#98ec92;
+  --f-reg:#f8898a; --f-sum:#e4e6f8; --f-cnt:#6cb83a; --f-cmpy:#fdf9a8; --f-ctrl:#fbf6c9;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --cond:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0f141c; --sheet:#141a24; --grid:#1d2533; --ink:#e3e8f1; --muted:#97a3b8; --line:#c5cede;
+  --accent:#7ea4ff; --on:#ff6a4d; --sig:#ff86c2; --pill:#141a24;
+  --f-gray:#454a54; --f-pink:#74344c; --f-lblue:#22556a; --f-lav:#383b5a; --f-white:#1b2230; --f-yellow:#6a6114; --f-green:#2a672b;
+  --f-reg:#843333; --f-sum:#383b5a; --f-cnt:#2f6417; --f-cmpy:#57531f; --f-ctrl:#3d3a1c; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#0f141c; --sheet:#141a24; --grid:#1d2533; --ink:#e3e8f1; --muted:#97a3b8; --line:#c5cede;
+  --accent:#7ea4ff; --on:#ff6a4d; --sig:#ff86c2; --pill:#141a24;
+  --f-gray:#454a54; --f-pink:#74344c; --f-lblue:#22556a; --f-lav:#383b5a; --f-white:#1b2230; --f-yellow:#6a6114; --f-green:#2a672b;
+  --f-reg:#843333; --f-sum:#383b5a; --f-cnt:#2f6417; --f-cmpy:#57531f; --f-ctrl:#3d3a1c; color-scheme:dark }
+
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 32px;display:grid;gap:16px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px}
+h1{font-family:var(--cond);font-weight:700;font-size:clamp(24px,3.2vw,34px);margin:0;letter-spacing:.01em;text-wrap:balance}
+.sub{margin:2px 0 0;color:var(--muted);font-family:var(--mono);font-size:12.5px}
+.scenes{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.scenes button{font:500 12.5px var(--mono);color:var(--muted);background:transparent;border:1px solid var(--grid);border-radius:4px;padding:5px 9px;cursor:pointer}
+.scenes button[aria-current="true"]{color:var(--sheet);background:var(--ink);border-color:var(--ink)}
+.scenes button:focus-visible,.ctl button:focus-visible,.sim input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stagewrap{overflow-x:auto;background:var(--sheet);border:1px solid var(--grid);border-radius:6px;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+#stage{display:block;width:100%;min-width:820px;height:auto}
+.panel{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 28px;align-items:start}
+@media (max-width:760px){.panel{grid-template-columns:minmax(0,1fr)}}
+.eyebrow{font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0}
+.panel h2{font-family:var(--cond);font-weight:700;font-size:22px;margin:2px 0 6px;text-wrap:balance}
+.panel p{margin:0;max-width:68ch}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ctl button{font:600 14px var(--sans);border:1px solid var(--line);background:var(--sheet);color:var(--ink);border-radius:4px;padding:8px 14px;cursor:pointer;min-height:40px}
+.ctl button.primary{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.ctl button:disabled{opacity:.4;cursor:default}
+.count{font:12.5px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums;width:100%}
+[hidden]{display:none!important}
+.sim{display:grid;gap:10px;border-top:1px solid var(--grid);padding-top:14px}
+.sim .row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.sim label{font:500 13px var(--mono)}
+.sim input{width:64px;font:15px var(--mono);padding:5px 6px;border:1px solid var(--line);border-radius:4px;background:var(--sheet);color:var(--ink)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;font:13px var(--mono);font-variant-numeric:tabular-nums;min-width:640px;width:100%}
+th,td{text-align:left;padding:4px 10px;border-bottom:1px solid var(--grid);white-space:nowrap}
+th{color:var(--muted);font-weight:600}
+tr.cur td{background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.hint{font:12.5px var(--mono);color:var(--muted)}
+
+svg text{font-family:var(--sans);font-size:14px;fill:var(--ink)}
+svg .b{font-weight:600}
+svg .mono{font-family:var(--mono)}
+svg .sm{font-size:11.5px}
+svg .lbl{font-family:var(--mono);font-size:11.5px;fill:var(--muted)}
+svg .sig{fill:var(--sig);font-family:var(--mono);font-size:12px}
+svg .ttl{font-family:var(--cond);font-weight:700;font-size:15px}
+svg .port{font-family:var(--mono);font-size:11px;fill:var(--ink)}
+svg .ann{font-family:var(--mono);font-size:11.5px;fill:var(--on);font-weight:600}
+svg .one{fill:var(--on);font-weight:600}
+.w,.t{fill:none;stroke:var(--line);stroke-width:1.6}
+.bus{fill:none;stroke:var(--line);stroke-width:3}
+.shape{stroke:var(--line);stroke-width:2}
+.f-gray{fill:var(--f-gray)} .f-pink{fill:var(--f-pink)} .f-lblue{fill:var(--f-lblue)} .f-lav{fill:var(--f-lav)}
+.f-white{fill:var(--f-white)} .f-yellow{fill:var(--f-yellow)} .f-green{fill:var(--f-green)} .f-reg{fill:var(--f-reg)}
+.f-sum{fill:var(--f-sum)} .f-cnt{fill:var(--f-cnt)} .f-cmpy{fill:var(--f-cmpy)} .f-ctrl{fill:var(--f-ctrl)}
+.ahp{fill:var(--line)} .ahm{fill:var(--accent)}
+.map{fill:none;stroke:var(--accent);stroke-width:1.8;stroke-dasharray:6 5;animation:flow 1.1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-22}}
+.pill rect{fill:var(--pill);stroke:var(--on);stroke-width:1.4}
+.pill text{font-family:var(--mono);font-size:11.5px;fill:var(--on);font-weight:600}
+.pill .opx{fill:var(--ink);font-weight:400}
+.pill.in rect{stroke:var(--sig)} .pill.in text{fill:var(--sig)}
+.pill.none rect{stroke:var(--muted);stroke-dasharray:3 3} .pill.none text{fill:var(--muted)}
+.el{opacity:0;transition:opacity .55s ease;pointer-events:none}
+.el.on{opacity:1}
+.hl .shape{stroke:var(--accent);stroke-width:4}
+text.hl{fill:var(--accent)!important;font-weight:700}
+.tr.hl path{stroke:var(--accent);stroke-width:3}
+.tr.hl text{fill:var(--accent);font-weight:700}
+text.act{fill:var(--on)!important;font-weight:700}
+.state.active .shape{stroke:var(--on);stroke-width:5}
+#fsm{transition:transform 1s cubic-bezier(.6,0,.2,1),opacity .55s ease}
+#fsm.collapsed{transform:translate(-201px,137px) scale(.54)}
+@media (prefers-reduced-motion:reduce){ .el,#fsm{transition:none} .map{animation:none} }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Síntesis del divisor</h1>
+      <p class="sub">diagrama de flujo → ruta de datos → FSM → diagrama de bloques</p>
+    </div>
+    <ul class="scenes" id="scenes"></ul>
+  </header>
+
+  <div class="stagewrap">
+  <svg id="stage" viewBox="0 0 1200 640" role="img" aria-label="Animación de síntesis del divisor">
+    <defs>
+      <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path class="ahp" d="M0,0 L10,5 L0,10z"/></marker>
+      <marker id="ahm" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path class="ahm" d="M0,0 L10,5 L0,10z"/></marker>
+    </defs>
+
+    <!-- ===== Diagrama de flujo ===== -->
+    <g id="fc" class="el on">
+      <path class="w" d="M250,78 V90" marker-end="url(#ah)"/>
+      <path class="w" d="M170,118 H130 V45 H148" marker-end="url(#ah)"/><text x="138" y="110" class="sm">SI</text>
+      <path class="w" d="M250,144 V170" marker-end="url(#ah)"/><text x="258" y="160" class="sm">NO</text>
+      <path class="w" d="M250,252 V278" marker-end="url(#ah)"/>
+      <path class="w" d="M160,318 H130 V378" marker-end="url(#ah)"/><text x="138" y="308" class="sm">NO</text>
+      <path class="w" d="M340,318 H400 V398" marker-end="url(#ah)"/><text x="350" y="308" class="sm">SI</text>
+      <path class="w" d="M130,452 V480 H250"/>
+      <path class="w" d="M400,436 V480 H250"/>
+      <path class="w" d="M250,480 V500" marker-end="url(#ah)"/>
+      <path class="w" d="M340,540 H388" marker-end="url(#ah)"/><text x="350" y="530" class="sm">SI</text>
+      <path class="w" d="M160,540 H40 V160 H246" marker-end="url(#ah)"/><text x="130" y="530" class="sm">NO</text>
+
+      <g id="fc-ini"><rect class="shape f-gray" x="150" y="12" width="200" height="66" rx="30"/>
+        <text x="250" y="32" text-anchor="middle" class="b">INICIO</text>
+        <text x="250" y="50" text-anchor="middle" class="mono sm">Load DV, DR</text>
+        <text x="250" y="66" text-anchor="middle" class="mono sm">count=N, A=0</text></g>
+      <g id="fc-start"><polygon class="shape f-white" points="170,118 250,92 330,118 250,144"/>
+        <text x="250" y="123" text-anchor="middle" class="mono">START=0?</text></g>
+      <g id="fc-sh"><rect class="shape f-pink" x="150" y="172" width="200" height="40"/>
+        <text x="250" y="197" text-anchor="middle" class="mono">{A,DV} &lt;&lt; 1</text></g>
+      <g id="fc-dec"><rect class="shape f-pink" x="150" y="212" width="200" height="40"/>
+        <text x="250" y="237" text-anchor="middle" class="mono">count --</text></g>
+      <g id="fc-cmp"><polygon class="shape f-lblue" points="160,318 250,280 340,318 250,356"/>
+        <text x="250" y="323" text-anchor="middle" class="mono">A &lt; DR ?</text></g>
+      <g id="fc-dv1"><rect class="shape f-lav" x="60" y="380" width="140" height="36"/>
+        <text x="130" y="403" text-anchor="middle" class="mono">DVo = 1</text></g>
+      <g id="fc-sub"><rect class="shape f-lav" x="60" y="416" width="140" height="36"/>
+        <text x="130" y="439" text-anchor="middle" class="mono">A = A - DR</text></g>
+      <g id="fc-dv0"><rect class="shape f-white" x="330" y="400" width="140" height="36"/>
+        <text x="400" y="423" text-anchor="middle" class="mono">DVo = 0</text></g>
+      <g id="fc-z"><polygon class="shape f-yellow" points="160,540 250,502 340,540 250,578"/>
+        <text x="250" y="545" text-anchor="middle" class="mono">count=0?</text></g>
+      <g id="fc-done"><rect class="shape f-green" x="390" y="522" width="110" height="36" rx="18"/>
+        <text x="445" y="545" text-anchor="middle" class="b">DONE</text></g>
+    </g>
+
+    <!-- Señales de control: operación → señal -->
+    <g id="co-ini" class="el pill"><rect x="358" y="12" width="196" height="62" rx="4"/>
+      <text x="366" y="29"><tspan class="opx">Load DV</tspan> → LD_DV</text>
+      <text x="366" y="47"><tspan class="opx">A=0</tspan> → RST_A</text>
+      <text x="366" y="65"><tspan class="opx">count=N</tspan> → Reset</text></g>
+    <g id="co-sh" class="el pill"><rect x="358" y="180" width="112" height="24" rx="4"/>
+      <text x="366" y="196"><tspan class="opx">&lt;&lt;1</tspan> → SH</text></g>
+    <g id="co-dec" class="el pill"><rect x="358" y="220" width="112" height="24" rx="4"/>
+      <text x="366" y="236"><tspan class="opx">count--</tspan> → DEC</text></g>
+    <g id="co-dv1" class="el pill"><rect x="206" y="386" width="96" height="24" rx="4"/>
+      <text x="214" y="402"><tspan class="opx">DVo=1</tspan> → DV0</text></g>
+    <g id="co-lda" class="el pill"><rect x="206" y="422" width="96" height="24" rx="4"/>
+      <text x="214" y="438"><tspan class="opx">A−DR</tspan> → LDA</text></g>
+    <g id="co-dv0" class="el pill none"><rect x="476" y="406" width="104" height="24" rx="4"/>
+      <text x="484" y="422">sin señal</text></g>
+    <g id="co-done" class="el pill"><rect x="506" y="528" width="80" height="24" rx="4"/>
+      <text x="514" y="544">→ DONE</text></g>
+    <g id="co-start" class="el pill in"><rect x="338" y="107" width="84" height="22" rx="4"/>
+      <text x="346" y="122">lee START</text></g>
+    <g id="co-msb" class="el pill in"><rect x="54" y="272" width="70" height="22" rx="4"/>
+      <text x="62" y="287">lee MSB</text></g>
+    <g id="co-z" class="el pill in"><rect x="60" y="560" width="58" height="22" rx="4"/>
+      <text x="68" y="575">lee Z</text></g>
+
+    <!-- ===== Bloque de control ===== -->
+    <g id="ctrl" class="el">
+      <rect class="shape f-ctrl" x="110" y="100" width="340" height="380" rx="4"/>
+      <text x="126" y="124" class="ttl">Control</text>
+      <path class="bus" d="M62,170 H106" marker-end="url(#ah)"/><text id="i-start" x="56" y="175" text-anchor="end" class="mono b">START</text>
+      <path class="w" d="M62,330 H106" marker-end="url(#ah)"/><text id="i-msb" x="56" y="334" text-anchor="end" class="sig">MSB</text>
+      <path class="w" d="M62,370 H106" marker-end="url(#ah)"/><text id="i-z" x="56" y="374" text-anchor="end" class="sig">Z</text>
+      <path class="w" d="M450,150 H490" marker-end="url(#ah)"/><text id="o-sh" x="496" y="154" class="lbl">SH</text>
+      <path class="w" d="M450,190 H490" marker-end="url(#ah)"/><text id="o-init" x="496" y="194" class="lbl">INIT</text>
+      <path class="w" d="M450,230 H490" marker-end="url(#ah)"/><text id="o-lda" x="496" y="234" class="lbl">LDA</text>
+      <path class="w" d="M450,270 H490" marker-end="url(#ah)"/><text id="o-dv0" x="496" y="274" class="lbl">DV0</text>
+      <path class="w" d="M450,310 H490" marker-end="url(#ah)"/><text id="o-dec" x="496" y="314" class="lbl">DEC</text>
+      <path class="bus" d="M280,480 V516" marker-end="url(#ah)"/><text id="o-done" x="280" y="536" text-anchor="middle" class="mono b">DONE</text>
+    </g>
+
+    <g id="fsm" class="el">
+      <g id="fs-start" class="el">
+        <g id="t-s0" class="tr"><path class="t" d="M665,100 C645,45 735,45 715,100" marker-end="url(#ah)"/><text x="690" y="48" text-anchor="middle" class="mono sm">START=0</text></g>
+        <g id="t-s1" class="tr"><path class="t" d="M690,202 V396" marker-end="url(#ah)"/><text x="700" y="300" text-anchor="start" class="mono sm">START=1</text></g>
+        <g id="st-START" class="state"><ellipse class="shape f-gray" cx="690" cy="150" rx="95" ry="52"/>
+          <text x="690" y="130" text-anchor="middle" class="b">START</text>
+          <text x="690" y="148" text-anchor="middle" class="mono sm"><tspan>DONE=0</tspan> <tspan>LDA=0</tspan></text>
+          <text x="690" y="164" text-anchor="middle" class="mono sm"><tspan class="one">INIT=1</tspan> <tspan>DV0=0</tspan></text>
+          <text x="690" y="180" text-anchor="middle" class="mono sm"><tspan>SH=0</tspan> <tspan>DEC=0</tspan></text></g>
+      </g>
+      <g id="fs-sd" class="el">
+        <g id="t-sd" class="tr"><path class="t" d="M750,410 L918,192" marker-end="url(#ah)"/></g>
+        <g id="st-SHIFT_DEC" class="state"><ellipse class="shape f-pink" cx="690" cy="450" rx="95" ry="52"/>
+          <text x="690" y="430" text-anchor="middle" class="b">SHIFT_DEC</text>
+          <text x="690" y="448" text-anchor="middle" class="mono sm"><tspan>DONE=0</tspan> <tspan>LDA=0</tspan></text>
+          <text x="690" y="464" text-anchor="middle" class="mono sm"><tspan>INIT=0</tspan> <tspan>DV0=0</tspan></text>
+          <text x="690" y="480" text-anchor="middle" class="mono sm"><tspan class="one">SH=1</tspan> <tspan class="one">DEC=1</tspan></text></g>
+      </g>
+      <g id="fs-check" class="el">
+        <g id="t-msb0" class="tr"><path class="t" d="M980,202 V396" marker-end="url(#ah)"/><text x="970" y="300" text-anchor="end" class="mono sm">MSB=0</text></g>
+        <g id="t-m1z0" class="tr"><path class="t" d="M940,198 L774,424" marker-end="url(#ah)"/><text x="868" y="334" text-anchor="start" class="mono sm">MSB=1, Z=0</text></g>
+        <g id="t-m1z1" class="tr"><path class="t" d="M1050,187 L1060,255" marker-end="url(#ah)"/><text x="1070" y="224" text-anchor="start" class="mono sm">MSB=1, Z=1</text></g>
+        <g id="st-CHECK" class="state"><ellipse class="shape f-lblue" cx="980" cy="150" rx="95" ry="52"/>
+          <text x="980" y="130" text-anchor="middle" class="b">CHECK</text>
+          <text x="980" y="148" text-anchor="middle" class="mono sm"><tspan>DONE=0</tspan> <tspan>LDA=0</tspan></text>
+          <text x="980" y="164" text-anchor="middle" class="mono sm"><tspan>INIT=0</tspan> <tspan>DV0=0</tspan></text>
+          <text x="980" y="180" text-anchor="middle" class="mono sm"><tspan>SH=0</tspan> <tspan>DEC=0</tspan></text></g>
+      </g>
+      <g id="fs-add" class="el">
+        <g id="t-az0" class="tr"><path class="t" d="M885,450 H787" marker-end="url(#ah)"/><text x="836" y="440" text-anchor="middle" class="mono sm">Z=0</text></g>
+        <g id="t-az1" class="tr"><path class="t" d="M1052,413 L1062,345" marker-end="url(#ah)"/><text x="1072" y="385" text-anchor="start" class="mono sm">Z=1</text></g>
+        <g id="st-ADD" class="state"><ellipse class="shape f-lav" cx="980" cy="450" rx="95" ry="52"/>
+          <text x="980" y="430" text-anchor="middle" class="b">ADD</text>
+          <text x="980" y="448" text-anchor="middle" class="mono sm"><tspan>DONE=0</tspan> <tspan class="one">LDA=1</tspan></text>
+          <text x="980" y="464" text-anchor="middle" class="mono sm"><tspan>INIT=0</tspan> <tspan class="one">DV0=1</tspan></text>
+          <text x="980" y="480" text-anchor="middle" class="mono sm"><tspan>SH=0</tspan> <tspan>DEC=0</tspan></text></g>
+      </g>
+      <g id="fs-end1" class="el">
+        <g id="t-end" class="tr"><path class="t" d="M1160,262 V24 H800 C780,24 770,60 765,116" marker-end="url(#ah)"/></g>
+        <g id="st-END1" class="state"><ellipse class="shape f-green" cx="1105" cy="300" rx="80" ry="52"/>
+          <text x="1105" y="280" text-anchor="middle" class="b">END1</text>
+          <text x="1105" y="298" text-anchor="middle" class="mono sm"><tspan class="one">DONE=1</tspan> <tspan>LDA=0</tspan></text>
+          <text x="1105" y="314" text-anchor="middle" class="mono sm"><tspan>INIT=0</tspan> <tspan>DV0=0</tspan></text>
+          <text x="1105" y="330" text-anchor="middle" class="mono sm"><tspan>SH=0</tspan> <tspan>DEC=0</tspan></text></g>
+      </g>
+    </g>
+
+    <!-- ===== Ruta de datos ===== -->
+    <g id="dp-wires" class="el">
+      <path class="bus" d="M905,30 V78" marker-end="url(#ah)"/><text x="905" y="22" text-anchor="middle" class="ttl">DV</text>
+      <path class="bus" d="M690,176 V258" marker-end="url(#ah)"/><text x="698" y="222" class="lbl">A</text>
+      <path class="bus" d="M750,208 V258" marker-end="url(#ah)"/><text x="750" y="202" text-anchor="middle" class="ttl">DR</text>
+      <path class="bus" d="M960,176 V204 H1118" marker-end="url(#ah)"/><text x="1128" y="209" class="ttl">R</text>
+      <path class="w" d="M720,362 H620 V60 H740 V78" marker-end="url(#ah)"/>
+      <path class="bus" d="M830,455 H878" marker-end="url(#ah)"/>
+      <path class="w" d="M1010,455 H1048" marker-end="url(#ah)"/><text id="n-z" x="1054" y="459" class="sig">Z</text>
+      <path class="w" d="M600,158 H638" marker-end="url(#ah)"/><text id="n-lda" x="596" y="162" text-anchor="end" class="lbl">LDA</text>
+      <path class="w" d="M1060,118 H1024" marker-end="url(#ah)"/><text id="n-dv0" x="1064" y="122" class="lbl">DV0</text>
+      <path class="w" d="M1060,138 H1024" marker-end="url(#ah)"/><text id="n-init" x="1064" y="142" class="lbl">INIT</text>
+      <path class="w" d="M1060,158 H1024" marker-end="url(#ah)"/><text id="n-sh" x="1064" y="162" class="lbl">SH</text>
+      <path class="w" d="M600,456 H658" marker-end="url(#ah)"/><text id="n-cinit" x="596" y="460" text-anchor="end" class="lbl">INIT</text>
+      <path class="w" d="M600,474 H658" marker-end="url(#ah)"/><text id="n-dec" x="596" y="478" text-anchor="end" class="lbl">DEC</text>
+    </g>
+    <g id="dp-msb" class="el">
+      <path class="w" d="M720,340 V362 H804" marker-end="url(#ah)"/><circle cx="720" cy="362" r="3.5" class="ahp"/>
+      <text id="n-msb" x="810" y="366" class="sig">MSB</text>
+    </g>
+    <g id="dp-reg" class="el"><rect class="shape f-reg" x="640" y="80" width="382" height="96"/>
+      <path class="w" d="M790,80 V176"/>
+      <text x="652" y="102" class="ttl">A</text><text id="v-a" x="672" y="102" class="mono sm b"></text>
+      <text x="802" y="102" class="ttl">DV</text><text id="v-dv" x="830" y="102" class="mono sm b"></text>
+      <text id="p-loada" x="652" y="162" class="port el">Load_A</text>
+      <text id="p-dv0" x="1012" y="122" text-anchor="end" class="port el">DV0</text>
+      <text id="p-ldrst" x="1012" y="142" text-anchor="end" class="port el">LD_DV/RST_A</text>
+      <text id="p-shift" x="1012" y="162" text-anchor="end" class="port el">SHIFT_A,DV</text>
+      <text id="a-lda" x="700" y="162" class="el ann">A ← A − DR</text>
+      <text id="a-dv0" x="802" y="122" class="el ann">DV[0] ← 1</text>
+      <text id="a-init" x="802" y="142" class="el ann">carga DV, A ← 0</text>
+      <text id="a-sh" x="802" y="162" class="el ann">{A,DV} &lt;&lt; 1</text>
+    </g>
+    <g id="dp-sum" class="el"><rect class="shape f-sum" x="660" y="260" width="120" height="80"/>
+      <text x="670" y="278" class="ttl">Sumador c2</text>
+      <text x="670" y="298" class="mono sm">A − DR</text>
+      <text id="v-sum" x="772" y="330" text-anchor="end" class="mono sm b"></text></g>
+    <g id="dp-cnt" class="el"><rect class="shape f-cnt" x="660" y="420" width="170" height="66"/>
+      <text x="672" y="440" class="ttl">Contador desc.</text><text id="v-cnt" x="822" y="440" text-anchor="end" class="mono sm b"></text>
+      <text id="p-reset" x="672" y="460" class="port el">Reset</text>
+      <text id="p-dec" x="672" y="478" class="port el">DEC</text>
+      <text id="a-reset" x="716" y="460" class="el ann">count ← N</text>
+      <text id="a-dec" x="716" y="478" class="el ann">count ← count−1</text></g>
+    <g id="dp-cmp" class="el"><rect class="shape f-cmpy" x="880" y="425" width="130" height="60"/>
+      <text x="890" y="443" class="ttl">Comparador</text>
+      <text x="890" y="460" class="mono sm">¿count = 0?</text>
+      <text id="v-z" x="1002" y="477" text-anchor="end" class="mono sm b"></text></g>
+
+    <!-- Correspondencias flujo → ruta de datos -->
+    <path id="m-sh" class="map el" d="M352,192 C480,192 520,110 636,110" marker-end="url(#ahm)"/>
+    <path id="m-dec" class="map el" d="M352,232 C500,232 520,440 656,440" marker-end="url(#ahm)"/>
+    <path id="m-z" class="map el" d="M260,575 C450,630 900,630 945,488" marker-end="url(#ahm)"/>
+    <path id="m-cmp" class="map el" d="M342,318 C480,318 540,300 656,300" marker-end="url(#ahm)"/>
+    <path id="m-sub" class="map el" d="M202,434 C260,434 280,470 330,470 L520,470 C580,470 600,340 656,330" marker-end="url(#ahm)"/>
+    <path id="m-dv1" class="map el" d="M202,398 C260,398 280,382 330,382 L870,382 C915,382 930,300 930,180" marker-end="url(#ahm)"/>
+    <g id="m-ini" class="el">
+      <path class="map" d="M352,40 C500,40 540,95 636,95" marker-end="url(#ahm)"/>
+      <path class="map" d="M352,58 C560,58 560,456 656,456" marker-end="url(#ahm)"/>
+    </g>
+    <!-- Correspondencias flujo → FSM -->
+    <path id="c-start" class="map el" d="M352,45 C470,45 480,150 593,150" marker-end="url(#ahm)"/>
+    <path id="c-sd" class="map el" d="M352,212 C470,212 480,450 593,450" marker-end="url(#ahm)"/>
+    <path id="c-check" class="map el" d="M342,318 C420,318 440,265 560,265 L800,265 C850,265 870,215 890,190" marker-end="url(#ahm)"/>
+    <path id="c-add" class="map el" d="M202,434 C300,434 300,610 600,610 L940,610 C965,610 975,560 978,504" marker-end="url(#ahm)"/>
+    <path id="c-end" class="map el" d="M502,540 C540,540 540,590 620,590 L1060,590 C1100,590 1105,400 1105,354" marker-end="url(#ahm)"/>
+  </svg>
+  </div>
+
+  <section class="panel" aria-live="polite">
+    <div>
+      <p class="eyebrow" id="eyebrow"></p>
+      <h2 id="stitle"></h2>
+      <p id="stext"></p>
+    </div>
+    <div class="ctl">
+      <button id="bprev" type="button">◀ Anterior</button>
+      <button id="bnext" type="button" class="primary">Siguiente ▶</button>
+      <button id="bplay" type="button">Reproducir</button>
+      <button id="bfirst" type="button">Inicio</button>
+      <span class="count" id="count"></span>
+    </div>
+  </section>
+
+  <section class="sim" id="simpanel" hidden>
+    <div class="row">
+      <label for="inDV">Dividendo DV =</label><input id="inDV" type="number" min="0" max="15" value="13">
+      <label for="inDR">Divisor DR =</label><input id="inDR" type="number" min="1" max="15" value="3">
+      <span class="hint">N = 4 · DV y DR de 4 bits · A de 5 bits · Siguiente avanza un ciclo de reloj</span>
+    </div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Ciclo</th><th>Estado</th><th>A</th><th>DV</th><th>count</th><th>A − DR</th><th>MSB</th><th>Z</th><th>Salidas activas</th></tr></thead>
+      <tbody id="trace"></tbody>
+    </table></div>
+  </section>
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const ALL_EL = Array.from(document.querySelectorAll('.el')).map(e => e.id).filter(Boolean);
+  const SCENES = ['Algoritmo','Ruta de datos','Interconexión','Control','Síntesis','Ejecución'];
+  const DP = ['dp-reg','dp-sum','dp-msb','dp-cnt','dp-cmp','dp-wires'];
+  const CO = ['co-ini','co-sh','co-dec','co-dv1','co-lda','co-dv0','co-done','co-start','co-msb','co-z'];
+  const N = 4;
+
+  const base = [
+    {sc:1, t:'El algoritmo', d:'División por restauración. En cada iteración se corre {A,DV} a la izquierda y se decrementa count. Si A ≥ DR, se resta DR de A y el bit del cociente vale 1; si A < DR, el bit vale 0. Tras N iteraciones, DV contiene el cociente y A el residuo. Antes de empezar, el algoritmo espera la orden START.',
+      add:['fc'], hl:[]},
+    {sc:2, t:'{A,DV} << 1 → registro de corrimiento', d:'A y DV forman un solo registro de 2N bits que se corre a la izquierda: el bit más significativo de DV entra en A y en DV[0] entra un 0. Sus entradas de control se deciden después, al revisar todo lo que se hace con A y con DV.',
+      add:['dp-reg'], tmp:['m-sh'], hl:['fc-sh','dp-reg']},
+    {sc:2, t:'count-- → contador descendente', d:'El número de iteraciones se lleva con un contador descendente.',
+      add:['dp-cnt'], tmp:['m-dec'], hl:['fc-dec','dp-cnt']},
+    {sc:2, t:'¿Qué se hace con count?', d:'count = N en INICIO y count-- en el lazo. Por eso el contador necesita una entrada Reset, que ejecuta count ← N, y una entrada DEC, que ejecuta count ← count − 1.',
+      add:['p-reset','p-dec','a-reset','a-dec'], hl:['fc-ini','fc-dec','p-reset','p-dec']},
+    {sc:2, t:'count=0? → comparador', d:'La decisión sobre el contador se resuelve con un comparador con cero. Su salida es Z. No modifica ninguna variable, así que no tiene entradas de control.',
+      add:['dp-cmp'], tmp:['m-z'], hl:['fc-z','dp-cmp']},
+    {sc:2, t:'A < DR? → restador', d:'La comparación se hace restando: el sumador en complemento a 2 calcula A − DR. Si el resultado es negativo, su bit más significativo (MSB) vale 1, es decir, A < DR. El mismo resultado sirve para A = A − DR. DR no tiene registro: es una entrada directa del sumador.',
+      add:['dp-sum','dp-msb'], tmp:['m-cmp'], hl:['fc-cmp','fc-sub','dp-sum','dp-msb']},
+    {sc:2, t:'¿Qué se hace con A y con DV?', d:'Se revisan las cuatro operaciones sobre el registro. Load DV y A = 0 (INICIO) requieren LD_DV/RST_A. {A,DV} << 1 requiere SHIFT_A,DV. A = A − DR requiere Load_A, que carga el resultado del sumador en A. DVo = 1 requiere DV0, que pone en 1 el bit 0. DVo = 0 no requiere entrada: el corrimiento ya dejó un 0.',
+      add:['p-ldrst','p-shift','p-loada','p-dv0','a-init','a-sh','a-lda','a-dv0'], hl:['fc-ini','fc-sh','fc-sub','fc-dv1','fc-dv0','p-ldrst','p-shift','p-loada','p-dv0']},
+    {sc:3, t:'Interconexión del camino de datos', d:'A alimenta el sumador junto con DR. El resultado del sumador regresa a A (realimentación) y su MSB va al control. El contador alimenta el comparador, que genera Z. DV es la salida R con el cociente. Las entradas de control quedan como señales con nombre: LDA, DV0, INIT, SH y DEC.',
+      add:['dp-wires'], hl:[]},
+    {sc:4, t:'INICIO → INIT', d:'Variable = valor externo se traduce en LOAD, y variable = 0 en RESET. Load DV activa LD_DV, A=0 activa RST_A y count=N activa el Reset del contador. Las tres ocurren en el mismo paso, así que comparten una señal: INIT.',
+      add:['co-ini','a-init','a-reset'], hl:['fc-ini','n-init','n-cinit','p-ldrst','p-reset']},
+    {sc:4, t:'Corrimiento → SH, decremento → DEC', d:'Variable = operación se traduce en la señal de esa operación. {A,DV} << 1 activa SHIFT_A,DV mediante SH, y count-- activa DEC en el contador. Ocurren en el mismo paso, pero en periféricos distintos, así que son dos señales.',
+      add:['co-sh','co-dec','a-sh','a-dec'], hl:['fc-sh','fc-dec','n-sh','n-dec','p-shift','p-dec']},
+    {sc:4, t:'DVo = 1 → DV0, A = A − DR → LDA', d:'DVo = 1 activa la entrada DV0, que pone en 1 el bit 0 de DV. A = A − DR activa Load_A mediante LDA, que carga en A el resultado del sumador.',
+      add:['co-dv1','co-lda','a-dv0','a-lda'], hl:['fc-dv1','fc-sub','n-dv0','n-lda','p-dv0','p-loada']},
+    {sc:4, t:'DVo = 0 → ninguna señal', d:'DVo = 0 no genera señal: después del corrimiento, DV[0] ya vale 0, así que basta con no activar DV0.',
+      add:['co-dv0'], hl:['fc-dv0']},
+    {sc:4, t:'DONE → salida del sistema', d:'DONE no actúa sobre el camino de datos. Es una salida que avisa que R contiene el cociente y A el residuo.',
+      add:['co-done'], hl:['fc-done']},
+    {sc:4, t:'Decisiones → entradas del control', d:'Las decisiones no ordenan operaciones, sino que consultan señales. START=0? lee la entrada externa START. A < DR? lee el MSB del sumador, y count=0? lee la salida Z del comparador.',
+      add:['co-start','co-msb','co-z'], hl:['fc-start','fc-cmp','fc-z','n-msb','n-z']},
+    {sc:4, t:'INICIO y START=0? → START', d:'Cada bloque de acción se convierte en un estado, y sus asignaciones se convierten en las salidas del estado. INICIO es el estado START, con INIT=1. START=0? no crea estado: START=0 lo mantiene en START y START=1 lo lleva a SHIFT_DEC.',
+      add:['fsm','fs-start'], rm:DP.concat(CO), tmp:['c-start'], hl:['fc-ini','fc-start','st-START','t-s0','t-s1']},
+    {sc:4, t:'Corrimiento y decremento → SHIFT_DEC', d:'{A,DV} << 1 y count-- ocurren en el mismo paso: forman el estado SHIFT_DEC, con SH=1 y DEC=1. Al terminar pasa sin condición a CHECK.',
+      add:['fs-sd'], tmp:['c-sd'], hl:['fc-sh','fc-dec','st-SHIFT_DEC','t-sd']},
+    {sc:4, t:'A < DR? → CHECK', d:'La decisión A < DR? se evalúa en un estado propio, CHECK, sin salidas activas. La rama NO (MSB=0) va a ADD. La rama SI lleva a DVo = 0, que no tiene salidas, así que pasa directo a count=0?: MSB=1, Z=0 vuelve a SHIFT_DEC y MSB=1, Z=1 termina en END1.',
+      add:['fs-check'], tmp:['c-check'], hl:['fc-cmp','fc-dv0','st-CHECK','t-msb0','t-m1z0','t-m1z1']},
+    {sc:4, t:'DVo = 1 y A = A − DR → ADD', d:'DVo = 1 y A = A − DR ocurren en el mismo paso: forman el estado ADD, con DV0=1 y LDA=1. Después sigue count=0?: Z=0 vuelve a SHIFT_DEC y Z=1 va a END1.',
+      add:['fs-add'], tmp:['c-add'], hl:['fc-dv1','fc-sub','st-ADD','t-az0','t-az1']},
+    {sc:4, t:'count=0? → transiciones', d:'count=0? no crea estado. Se evalúa en el último estado de cada rama, por eso aparece dos veces: en las salidas de CHECK con MSB=1 y en las salidas de ADD.',
+      add:[], hl:['fc-z','t-m1z0','t-m1z1','t-az0','t-az1']},
+    {sc:4, t:'DONE → END1', d:'DONE es el estado END1, con DONE=1. De ahí regresa a START para esperar una nueva orden.',
+      add:['fs-end1'], tmp:['c-end'], hl:['fc-done','st-END1','t-end']},
+    {sc:4, t:'Flujo y máquina de control', d:'Cada estado conserva el color de su bloque en el flujo. Los bloques de acción que ocurren en el mismo paso forman un estado. Cada decisión se convierte en transiciones, salvo A < DR?, que necesita su propio estado CHECK.',
+      add:[], hl:[]},
+    {sc:5, t:'FSM → bloque Control', d:'La FSM se encapsula en el bloque Control. Sus salidas SH, INIT, LDA, DV0, DEC y DONE manejan el camino de datos. Sus entradas son START y las señales MSB y Z. El resultado es el diagrama de bloques del divisor.',
+      add:['ctrl'].concat(DP), rm:['fc'], hl:[], collapse:true},
+    {sc:6, t:'Ejecución ciclo a ciclo', d:'Simulación de DV ÷ DR con N = 4 en el hardware sintetizado. En cada ciclo se resaltan el estado activo, las señales en 1 y el contenido de los registros. Cambie DV y DR en el panel inferior.',
+      add:[], hl:[], collapse:true}
+  ];
+
+  let vis = new Set();
+  base.forEach(s => { (s.rm||[]).forEach(x => vis.delete(x)); (s.add||[]).forEach(x => vis.add(x)); s.vis = new Set([...vis, ...(s.tmp||[])]); });
+  const FINAL_VIS = base[base.length-1].vis;
+  const hlIds = [...new Set(base.flatMap(s => s.hl))];
+
+  // ---- Simulación ----
+  const bn = (v,n) => v.toString(2).padStart(n,'0');
+  function trace(dv, dr){
+    let st='START', A=null, D=null, C=null; const rows=[];
+    for(let c=0;c<64;c++){
+      const diff = A===null?null:A-dr, msb = diff===null?null:(diff<0?1:0), z = C===null?null:(C===0?1:0);
+      const r = {c,st,A,D,C,diff,msb,z,INIT:st==='START',SH:st==='SHIFT_DEC',DEC:st==='SHIFT_DEC',LDA:st==='ADD',DV0:st==='ADD',DONE:st==='END1'};
+      let ns;
+      if(st==='START'){ r.msg='INIT=1: en el flanco DV carga '+dv+', A queda en 0 y el contador carga N='+N+'. Con START=1 pasa a SHIFT_DEC.'; A=0; D=dv; C=N; ns='SHIFT_DEC'; }
+      else if(st==='SHIFT_DEC'){ const w=(A<<N)|D, w2=(w<<1)&((1<<(2*N+1))-1); const nA=w2>>N, nD=w2&((1<<N)-1);
+        r.msg='SH=1 y DEC=1: en el flanco {A,DV} se corre a la izquierda: A = '+A+' → '+nA+', DV = '+bn(D,N)+' → '+bn(nD,N)+'. count = '+C+' → '+(C-1)+'.'; A=nA; D=nD; C=C-1; ns='CHECK'; }
+      else if(st==='CHECK'){ ns = msb===0?'ADD':(z?'END1':'SHIFT_DEC');
+        r.msg='A − DR = '+A+' − '+dr+' = '+diff+' → MSB='+msb+'. '+(msb===0?'A ≥ DR: va a ADD.':(z?'A < DR y count = 0: DVo queda en 0 y termina en END1.':'A < DR y count ≠ 0: DVo queda en 0 y vuelve a SHIFT_DEC.')); }
+      else if(st==='ADD'){ ns = z?'END1':'SHIFT_DEC'; r.msg='LDA=1 y DV0=1: en el flanco A = '+diff+' y DV[0] = 1. Z='+z+' → '+ns+'.'; A=diff; D=D|1; }
+      else { r.msg='DONE=1. Cociente R = DV = '+D+', residuo A = '+A+'. Comprobación: '+dv+' = '+dr+' × '+D+' + '+A+'.'; rows.push(r); break; }
+      rows.push(r); st=ns;
+    }
+    return rows;
+  }
+  function clamp(v,lo){ v=parseInt(v,10); if(isNaN(v)) v=lo; return Math.max(lo,Math.min(15,v)); }
+
+  let rows=[], steps=[], idx=0, timer=null;
+  function build(){
+    const dv=clamp($('inDV').value,0), dr=clamp($('inDR').value,1);
+    $('inDV').value=dv; $('inDR').value=dr;
+    rows = trace(dv,dr);
+    steps = base.concat(rows.map((r,i) => ({sc:6, sim:r, i, collapse:true, vis:FINAL_VIS, hl:[], t:'Ciclo '+r.c+' · '+r.st, d:r.msg})));
+  }
+
+  const SIG = {
+    SH:['o-sh','n-sh','p-shift'], DEC:['o-dec','n-dec','p-dec'], INIT:['o-init','n-init','n-cinit','p-ldrst','p-reset','i-start'],
+    LDA:['o-lda','n-lda','p-loada'], DV0:['o-dv0','n-dv0','p-dv0'], DONE:['o-done'], msb:['i-msb','n-msb'], z:['i-z','n-z']
+  };
+  const sigIds = [...new Set(Object.values(SIG).flat())];
+  const STATES = ['START','SHIFT_DEC','CHECK','ADD','END1'];
+
+  function render(){
+    const s = steps[idx];
+    ALL_EL.forEach(id => $(id).classList.toggle('on', s.vis.has(id)));
+    const hl = new Set(s.hl||[]);
+    hlIds.forEach(id => $(id).classList.toggle('hl', hl.has(id)));
+    $('fsm').classList.toggle('collapsed', !!s.collapse);
+    const r = s.sim;
+    STATES.forEach(n => $('st-'+n).classList.toggle('active', !!r && r.st===n));
+    const act = new Set();
+    if(r) Object.keys(SIG).forEach(k => { if(r[k]) SIG[k].forEach(x => act.add(x)); });
+    sigIds.forEach(id => $(id).classList.toggle('act', act.has(id)));
+    const dash = '—';
+    $('v-a').textContent = r ? '= '+(r.A===null?dash:bn(r.A,N+1)+' ('+r.A+')') : '';
+    $('v-dv').textContent = r ? '= '+(r.D===null?dash:bn(r.D,N)+' ('+r.D+')') : '';
+    $('v-sum').textContent = r ? (r.diff===null?dash:r.diff+' · MSB='+r.msb) : '';
+    $('v-cnt').textContent = r ? '= '+(r.C===null?dash:r.C) : '';
+    $('v-z').textContent = r ? 'Z = '+(r.z===null?dash:r.z) : '';
+
+    $('eyebrow').textContent = 'Escena '+s.sc+' · '+SCENES[s.sc-1];
+    $('stitle').textContent = s.t; $('stext').textContent = s.d;
+    $('count').textContent = 'Paso '+(idx+1)+' de '+steps.length;
+    $('bprev').disabled = idx===0; $('bnext').disabled = idx===steps.length-1;
+    document.querySelectorAll('#scenes button').forEach((bt,i) => bt.setAttribute('aria-current', String(i+1===s.sc)));
+
+    const simOn = s.sc===6; $('simpanel').hidden = !simOn;
+    if(simOn){
+      const upto = r ? s.i : -1, f = v => v===null?dash:v;
+      $('trace').innerHTML = rows.slice(0,upto+1).map((x,i) => {
+        const outs = ['INIT','SH','DEC','LDA','DV0','DONE'].filter(k => x[k]).join(', ') || dash;
+        return '<tr'+(i===upto?' class="cur"':'')+'><td>'+x.c+'</td><td>'+x.st+'</td><td>'+(x.A===null?dash:bn(x.A,N+1)+' ('+x.A+')')+'</td><td>'+(x.D===null?dash:bn(x.D,N)+' ('+x.D+')')+'</td><td>'+f(x.C)+'</td><td>'+f(x.diff)+'</td><td>'+f(x.msb)+'</td><td>'+f(x.z)+'</td><td>'+outs+'</td></tr>';
+      }).join('') || '<tr><td colspan="9">Pulse Siguiente para ejecutar el primer ciclo.</td></tr>';
+    }
+  }
+  function go(n){ idx=Math.max(0,Math.min(steps.length-1,n)); render(); }
+  function stop(){ if(timer){ clearInterval(timer); timer=null; $('bplay').textContent='Reproducir'; } }
+  SCENES.forEach((n,i) => { const li=document.createElement('li'), bt=document.createElement('button');
+    bt.type='button'; bt.textContent=(i+1)+' '+n; bt.addEventListener('click', () => { stop(); go(steps.findIndex(s => s.sc===i+1)); });
+    li.appendChild(bt); $('scenes').appendChild(li); });
+  $('bnext').addEventListener('click', () => { stop(); go(idx+1); });
+  $('bprev').addEventListener('click', () => { stop(); go(idx-1); });
+  $('bfirst').addEventListener('click', () => { stop(); go(0); });
+  $('bplay').addEventListener('click', () => { if(timer){ stop(); return; } if(idx===steps.length-1) go(0);
+    $('bplay').textContent='Pausa'; timer=setInterval(() => { if(idx>=steps.length-1){ stop(); return; } go(idx+1); }, 3200); });
+  document.addEventListener('keydown', e => { if(e.target.tagName==='INPUT') return;
+    if(e.key==='ArrowRight'||e.key===' '){ e.preventDefault(); stop(); go(idx+1); }
+    if(e.key==='ArrowLeft'){ e.preventDefault(); stop(); go(idx-1); } });
+  ['inDV','inDR'].forEach(id => $(id).addEventListener('change', () => { stop(); build(); go(base.length-1); }));
+  build(); render();
+})();
+</script>

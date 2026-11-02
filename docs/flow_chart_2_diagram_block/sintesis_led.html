@@ -1,0 +1,599 @@
+<title>Síntesis del driver de panel LED</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: cabecera con escenas → lienzo SVG (hoja de esquemático) → panel de narración y controles → traza de simulación */
+:root{
+  --paper:#f2f4f7; --sheet:#fbfcfd; --grid:#e4e8ee; --ink:#1b2231; --muted:#5a6477; --line:#2b3346;
+  --accent:#2c56c9; --on:#d9381e; --sig:#a8296a; --pill:#ffffff;
+  --f-gray:#c9cbcf; --f-pink:#fbbccb; --f-lblue:#acd8e6; --f-lav:#e4e6f8; --f-white:#ffffff; --f-yellow:#fff04a; --f-green:#98ec92;
+  --f-reg:#f8898a; --f-sum:#e4e6f8; --f-cnt:#6cb83a; --f-cmpy:#fdf9a8; --f-ctrl:#fbf6c9;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --cond:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0f141c; --sheet:#141a24; --grid:#1d2533; --ink:#e3e8f1; --muted:#97a3b8; --line:#c5cede;
+  --accent:#7ea4ff; --on:#ff6a4d; --sig:#ff86c2; --pill:#141a24;
+  --f-gray:#454a54; --f-pink:#74344c; --f-lblue:#22556a; --f-lav:#383b5a; --f-white:#1b2230; --f-yellow:#6a6114; --f-green:#2a672b;
+  --f-reg:#843333; --f-sum:#383b5a; --f-cnt:#2f6417; --f-cmpy:#57531f; --f-ctrl:#3d3a1c; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#0f141c; --sheet:#141a24; --grid:#1d2533; --ink:#e3e8f1; --muted:#97a3b8; --line:#c5cede;
+  --accent:#7ea4ff; --on:#ff6a4d; --sig:#ff86c2; --pill:#141a24;
+  --f-gray:#454a54; --f-pink:#74344c; --f-lblue:#22556a; --f-lav:#383b5a; --f-white:#1b2230; --f-yellow:#6a6114; --f-green:#2a672b;
+  --f-reg:#843333; --f-sum:#383b5a; --f-cnt:#2f6417; --f-cmpy:#57531f; --f-ctrl:#3d3a1c; color-scheme:dark }
+
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 32px;display:grid;gap:16px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px}
+h1{font-family:var(--cond);font-weight:700;font-size:clamp(24px,3.2vw,34px);margin:0;letter-spacing:.01em;text-wrap:balance}
+.sub{margin:2px 0 0;color:var(--muted);font-family:var(--mono);font-size:12.5px}
+.scenes{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.scenes button{font:500 12.5px var(--mono);color:var(--muted);background:transparent;border:1px solid var(--grid);border-radius:4px;padding:5px 9px;cursor:pointer}
+.scenes button[aria-current="true"]{color:var(--sheet);background:var(--ink);border-color:var(--ink)}
+.scenes button:focus-visible,.ctl button:focus-visible,.sim input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stagewrap{overflow-x:auto;background:var(--sheet);border:1px solid var(--grid);border-radius:6px;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+#stage{display:block;width:100%;min-width:820px;height:auto}
+.panel{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 28px;align-items:start}
+@media (max-width:760px){.panel{grid-template-columns:minmax(0,1fr)}}
+.eyebrow{font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0}
+.panel h2{font-family:var(--cond);font-weight:700;font-size:22px;margin:2px 0 6px;text-wrap:balance}
+.panel p{margin:0;max-width:68ch}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ctl button{font:600 14px var(--sans);border:1px solid var(--line);background:var(--sheet);color:var(--ink);border-radius:4px;padding:8px 14px;cursor:pointer;min-height:40px}
+.ctl button.primary{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.ctl button:disabled{opacity:.4;cursor:default}
+.count{font:12.5px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums;width:100%}
+[hidden]{display:none!important}
+.sim{display:grid;gap:10px;border-top:1px solid var(--grid);padding-top:14px}
+.sim .row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.sim label{font:500 13px var(--mono)}
+.sim input{width:64px;font:15px var(--mono);padding:5px 6px;border:1px solid var(--line);border-radius:4px;background:var(--sheet);color:var(--ink)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;font:13px var(--mono);font-variant-numeric:tabular-nums;min-width:640px;width:100%}
+th,td{text-align:left;padding:4px 10px;border-bottom:1px solid var(--grid);white-space:nowrap}
+th{color:var(--muted);font-weight:600}
+tr.cur td{background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.hint{font:12.5px var(--mono);color:var(--muted)}
+
+svg text{font-family:var(--sans);font-size:14px;fill:var(--ink)}
+svg .b{font-weight:600}
+svg .mono{font-family:var(--mono)}
+svg .sm{font-size:11.5px}
+svg .lbl{font-family:var(--mono);font-size:11.5px;fill:var(--muted)}
+svg .sig{fill:var(--sig);font-family:var(--mono);font-size:12px}
+svg .ttl{font-family:var(--cond);font-weight:700;font-size:15px}
+svg .port{font-family:var(--mono);font-size:11px;fill:var(--ink)}
+svg .ann{font-family:var(--mono);font-size:11.5px;fill:var(--on);font-weight:600}
+svg .one{fill:var(--on);font-weight:600}
+.w,.t{fill:none;stroke:var(--line);stroke-width:1.6}
+.bus{fill:none;stroke:var(--line);stroke-width:3}
+.shape{stroke:var(--line);stroke-width:2}
+.f-gray{fill:var(--f-gray)} .f-pink{fill:var(--f-pink)} .f-lblue{fill:var(--f-lblue)} .f-lav{fill:var(--f-lav)}
+.f-white{fill:var(--f-white)} .f-yellow{fill:var(--f-yellow)} .f-green{fill:var(--f-green)} .f-reg{fill:var(--f-reg)}
+.f-sum{fill:var(--f-sum)} .f-cnt{fill:var(--f-cnt)} .f-cmpy{fill:var(--f-cmpy)} .f-ctrl{fill:var(--f-ctrl)}
+.ahp{fill:var(--line)} .ahm{fill:var(--accent)}
+.map{fill:none;stroke:var(--accent);stroke-width:1.8;stroke-dasharray:6 5;animation:flow 1.1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-22}}
+.pill rect{fill:var(--pill);stroke:var(--on);stroke-width:1.4}
+.pill text{font-family:var(--mono);font-size:11.5px;fill:var(--on);font-weight:600}
+.pill .opx{fill:var(--ink);font-weight:400}
+.pill.in rect{stroke:var(--sig)} .pill.in text{fill:var(--sig)}
+.pill.none rect{stroke:var(--muted);stroke-dasharray:3 3} .pill.none text{fill:var(--muted)}
+.el{opacity:0;transition:opacity .55s ease;pointer-events:none}
+.el.on{opacity:1}
+.hl .shape{stroke:var(--accent);stroke-width:4}
+text.hl{fill:var(--accent)!important;font-weight:700}
+.tr.hl path{stroke:var(--accent);stroke-width:3}
+.tr.hl text{fill:var(--accent);font-weight:700}
+text.act{fill:var(--on)!important;font-weight:700}
+.state.active .shape{stroke:var(--on);stroke-width:5}
+#fsm{transition:transform 1s cubic-bezier(.6,0,.2,1),opacity .55s ease}
+#fsm.collapsed{transform:translate(-238px,98px) scale(.58)}
+@media (prefers-reduced-motion:reduce){ .el,#fsm{transition:none} .map{animation:none} }
+
+:root{--l-ini:#fdfbe1;--l-px:#cde8bf;--l-col:#f0c9f7;--l-zc:#fcdcdc;--l-wh:#ffffff;--l-row:#dde9d5;--l-start:#dedcd8;--l-gp:#8ff0a4;--l-ic:#eeaefb;--l-y:#f8ef72;--l-cnt:#fdd9d9;--l-mem:#fcfadc;--l-cmp:#dde9d5;--l-pan:#e9edf3;--led-off:#20242c;}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){--l-ini:#45421f;--l-px:#2f5225;--l-col:#5a2d63;--l-zc:#6a3434;--l-wh:#1b2230;--l-row:#2e4a2c;--l-start:#3b3a37;--l-gp:#25643a;--l-ic:#5c2e66;--l-y:#625a1a;--l-cnt:#6a3a3a;--l-mem:#4a4626;--l-cmp:#2e4a2c;--l-pan:#262c37;--led-off:#0b0d11;} }
+:root[data-theme="dark"]{--l-ini:#45421f;--l-px:#2f5225;--l-col:#5a2d63;--l-zc:#6a3434;--l-wh:#1b2230;--l-row:#2e4a2c;--l-start:#3b3a37;--l-gp:#25643a;--l-ic:#5c2e66;--l-y:#625a1a;--l-cnt:#6a3a3a;--l-mem:#4a4626;--l-cmp:#2e4a2c;--l-pan:#262c37;--led-off:#0b0d11;}
+.l-ini{fill:var(--l-ini)} .l-px{fill:var(--l-px)} .l-col{fill:var(--l-col)} .l-zc{fill:var(--l-zc)} .l-wh{fill:var(--l-wh)}
+.l-row{fill:var(--l-row)} .l-start{fill:var(--l-start)} .l-gp{fill:var(--l-gp)} .l-ic{fill:var(--l-ic)} .l-y{fill:var(--l-y)}
+.l-cnt{fill:var(--l-cnt)} .l-mem{fill:var(--l-mem)} .l-cmp{fill:var(--l-cmp)} .l-pan{fill:var(--l-pan)}
+svg .xs{font-size:10.5px}
+.chk{display:flex;gap:6px;align-items:center;font:13px var(--mono)}
+.chk input{width:auto}
+.leds{display:flex;flex-wrap:wrap;gap:20px 32px;align-items:flex-start}
+.leds figure{margin:0;display:grid;gap:6px}
+.leds figcaption{font:600 12px var(--mono);color:var(--muted)}
+.grid{display:grid;gap:3px;padding:6px;background:#0b0d11;border-radius:4px;width:max-content}
+.cell{width:16px;height:16px;border-radius:50%;background:var(--led-off)}
+.grid.sr .cell,.grid.lt .cell{border-radius:2px}
+.rowtag{font:11px var(--mono);color:var(--muted)}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Síntesis del driver de panel LED</h1>
+      <p class="sub">HUB75 · 8 colores por pixel · diagrama de flujo → ruta de datos → FSM → diagrama de bloques</p>
+    </div>
+    <ul class="scenes" id="scenes"></ul>
+  </header>
+  <div class="stagewrap">
+  <svg id="stage" viewBox="0 0 1200 780" role="img" aria-label="Animación de síntesis del driver de panel LED">
+    <defs>
+      <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path class="ahp" d="M0,0 L10,5 L0,10z"/></marker>
+      <marker id="ahm" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path class="ahm" d="M0,0 L10,5 L0,10z"/></marker>
+    </defs>
+
+    <g id="fc" class="el on">
+      <path class="w" d="M200,40 V56" marker-end="url(#ah)"/>
+      <path class="w" d="M200,188 V214" marker-end="url(#ah)"/>
+      <path class="w" d="M200,276 V294" marker-end="url(#ah)"/>
+      <path class="w" d="M200,326 V344" marker-end="url(#ah)"/>
+      <path class="w" d="M120,380 H20 V204 H196" marker-end="url(#ah)"/><text x="26" y="300" class="sm">NO</text>
+      <path class="w" d="M280,380 H440 V404" marker-end="url(#ah)"/><text x="292" y="372" class="sm">YES</text>
+      <path class="w" d="M440,458 V476" marker-end="url(#ah)"/>
+      <path class="w" d="M440,512 V528" marker-end="url(#ah)"/>
+      <path class="w" d="M530,560 H560 V468 H444" marker-end="url(#ah)"/><text x="538" y="552" class="sm">NO</text>
+      <path class="w" d="M440,590 V606" marker-end="url(#ah)"/><text x="448" y="602" class="sm">SI</text>
+      <path class="w" d="M440,676 V696" marker-end="url(#ah)"/>
+      <path class="w" d="M370,726 H8 V50 H196" marker-end="url(#ah)"/><text x="14" y="420" class="sm">YES</text>
+      <path class="w" d="M510,726 H586 V204 H204" marker-end="url(#ah)"/><text x="530" y="718" class="sm">NO</text>
+      <g id="fc-st"><rect class="shape l-wh" x="120" y="8" width="160" height="32" rx="16"/>
+        <text x="200" y="29" text-anchor="middle">Led Matrix</text></g>
+      <g id="fc-ini"><rect class="shape l-ini" x="70" y="58" width="260" height="130" rx="3"/>
+        <text x="200" y="76" text-anchor="middle" class="mono sm">ROW = 0, COL = 0</text>
+        <text x="200" y="93" text-anchor="middle" class="mono sm">PIX_ADDR = {ROW&lt;&lt;6, COL}</text>
+        <text x="200" y="110" text-anchor="middle" class="mono sm">LATCH = 0</text>
+        <text x="200" y="127" text-anchor="middle" class="mono sm">PX_CLK_EN = 0</text>
+        <text x="200" y="144" text-anchor="middle" class="mono sm">nOE = 1</text>
+        <text x="200" y="161" text-anchor="middle" class="mono sm">delay = DELAY</text>
+        <text x="200" y="178" text-anchor="middle" class="mono sm">count_delay = 0</text></g>
+      <g id="fc-px"><rect class="shape l-px" x="40" y="216" width="320" height="60" rx="3"/>
+        <text x="200" y="234" text-anchor="middle" class="mono sm">PX_CLK_EN = 1</text>
+        <text x="200" y="251" text-anchor="middle" class="mono xs">R0=data_r0, G0=data_g0, B0=data_b0</text>
+        <text x="200" y="268" text-anchor="middle" class="mono xs">R1=data_r1, G1=data_g1, B1=data_b1</text></g>
+      <g id="fc-col"><rect class="shape l-col" x="140" y="296" width="120" height="30" rx="3"/>
+        <text x="200" y="316" text-anchor="middle" class="mono">COL++</text></g>
+      <g id="fc-zc"><polygon class="shape l-zc" points="120,380 200,346 280,380 200,414"/>
+        <text x="200" y="378" text-anchor="middle" class="mono sm">col == 64 (0)</text>
+        <text x="200" y="393" text-anchor="middle" class="mono sm">?</text></g>
+      <g id="fc-lat"><rect class="shape l-wh" x="370" y="406" width="140" height="52"/>
+        <text x="440" y="421" text-anchor="middle" class="mono sm">PX_CLK_EN = 0</text>
+        <text x="440" y="437" text-anchor="middle" class="mono sm">latch = 1</text>
+        <text x="440" y="453" text-anchor="middle" class="mono sm">nOE = 0</text></g>
+      <g id="fc-dly"><rect class="shape l-wh" x="370" y="478" width="140" height="34" rx="10"/>
+        <text x="440" y="492" text-anchor="middle" class="mono sm">latch = 0</text>
+        <text x="440" y="507" text-anchor="middle" class="mono sm">count_delay ++</text></g>
+      <g id="fc-zd"><polygon class="shape l-wh" points="350,560 440,530 530,560 440,590"/>
+        <text x="440" y="558" text-anchor="middle" class="mono xs">count_delay = delay</text>
+        <text x="440" y="572" text-anchor="middle" class="mono xs">?</text></g>
+      <g id="fc-row"><rect class="shape l-row" x="370" y="608" width="140" height="68" rx="3"/>
+        <text x="440" y="623" text-anchor="middle" class="mono sm">count_delay = 0</text>
+        <text x="440" y="638" text-anchor="middle" class="mono sm">COL = 0 *</text>
+        <text x="440" y="653" text-anchor="middle" class="mono sm">nOE = 1</text>
+        <text x="440" y="668" text-anchor="middle" class="mono sm">ROW++</text></g>
+      <g id="fc-zr"><polygon class="shape l-wh" points="370,726 440,698 510,726 440,754"/>
+        <text x="440" y="724" text-anchor="middle" class="mono sm">ROW = 32</text>
+        <text x="440" y="738" text-anchor="middle" class="mono sm">?</text></g>
+    </g>
+
+    <g id="co-ini" class="el pill"><rect x="338" y="58" width="242" height="92" rx="4"/>
+      <text x="346" y="75"><tspan class="opx">ROW=0</tspan> → RST_R=0</text>
+      <text x="346" y="92"><tspan class="opx">COL=0</tspan> → RST_C=0</text>
+      <text x="346" y="109"><tspan class="opx">count_delay=0</tspan> → RST_D=0</text>
+      <text x="346" y="126"><tspan class="opx">LATCH=0, PX_CLK_EN=0</tspan> → salidas</text>
+      <text x="346" y="143"><tspan class="opx">nOE=1</tspan> → salida</text></g>
+    <g id="co-px" class="el pill"><rect x="368" y="216" width="212" height="44" rx="4"/>
+      <text x="376" y="233"><tspan class="opx">PX_CLK_EN=1</tspan> → PX_CLK_EN</text>
+      <text x="376" y="251"><tspan class="opx">R0…B1 = data</tspan> → MEMORY</text></g>
+    <g id="co-col" class="el pill"><rect x="268" y="300" width="110" height="22" rx="4"/>
+      <text x="276" y="315"><tspan class="opx">COL++</tspan> → INC_C</text></g>
+    <g id="co-lat" class="el pill"><rect x="150" y="420" width="212" height="44" rx="4"/>
+      <text x="158" y="437"><tspan class="opx">latch=1</tspan> → LATCH=1</text>
+      <text x="158" y="455"><tspan class="opx">nOE=0</tspan> → nOE=0 (enciende)</text></g>
+    <g id="co-dly" class="el pill"><rect x="150" y="474" width="212" height="44" rx="4"/>
+      <text x="158" y="491"><tspan class="opx">latch=0</tspan> → LATCH=0</text>
+      <text x="158" y="509"><tspan class="opx">count_delay++</tspan> → INC_D</text></g>
+    <g id="co-row" class="el pill"><rect x="120" y="606" width="242" height="72" rx="4"/>
+      <text x="128" y="623"><tspan class="opx">count_delay=0</tspan> → RST_D=0</text>
+      <text x="128" y="640"><tspan class="opx">COL=0</tspan> → RST_C=0</text>
+      <text x="128" y="657"><tspan class="opx">nOE=1</tspan> → nOE=1 (apaga)</text>
+      <text x="128" y="674"><tspan class="opx">ROW++</tspan> → INC_R</text></g>
+    <g id="co-zc" class="el pill in"><rect x="34" y="318" width="70" height="22" rx="4"/>
+      <text x="42" y="333">lee ZC</text></g>
+    <g id="co-zd" class="el pill in"><rect x="312" y="582" width="58" height="22" rx="4"/>
+      <text x="318" y="597">lee ZD</text></g>
+    <g id="co-zr" class="el pill in"><rect x="290" y="740" width="70" height="22" rx="4"/>
+      <text x="298" y="755">lee ZR</text></g>
+
+    <g id="ctrl" class="el">
+      <rect class="shape l-mem" x="100" y="80" width="360" height="560" rx="4"/>
+      <text x="114" y="102" class="ttl">CONTROL</text>
+      <path class="w" d="M84,150 H98" marker-end="url(#ah)"/><text id="i-zc" x="78" y="154" text-anchor="end" class="sig">ZC</text>
+      <path class="w" d="M84,190 H98" marker-end="url(#ah)"/><text id="i-zr" x="78" y="194" text-anchor="end" class="sig">ZR</text>
+      <path class="w" d="M84,230 H98" marker-end="url(#ah)"/><text id="i-zd" x="78" y="234" text-anchor="end" class="sig">ZD</text>
+      <path class="bus" d="M84,270 H98" marker-end="url(#ah)"/><text id="i-init" x="78" y="275" text-anchor="end" class="mono b">INIT</text>
+      <path class="w" d="M460,120 H496" marker-end="url(#ah)"/><text id="o-rstr" x="502" y="124" class="lbl">RST_R</text>
+      <path class="w" d="M460,164 H496" marker-end="url(#ah)"/><text id="o-rstc" x="502" y="168" class="lbl">RST_C</text>
+      <path class="w" d="M460,208 H496" marker-end="url(#ah)"/><text id="o-rstd" x="502" y="212" class="lbl">RST_D</text>
+      <path class="w" d="M460,252 H496" marker-end="url(#ah)"/><text id="o-latch" x="502" y="256" class="lbl">LATCH</text>
+      <path class="w" d="M460,296 H496" marker-end="url(#ah)"/><text id="o-noe" x="502" y="300" class="lbl">nOE</text>
+      <path class="w" d="M460,340 H496" marker-end="url(#ah)"/><text id="o-pxclk" x="502" y="344" class="lbl">PX_CLK_EN</text>
+      <path class="w" d="M460,384 H496" marker-end="url(#ah)"/><text id="o-incr" x="502" y="388" class="lbl">INC_R</text>
+      <path class="w" d="M460,428 H496" marker-end="url(#ah)"/><text id="o-incc" x="502" y="432" class="lbl">INC_C</text>
+      <path class="w" d="M460,472 H496" marker-end="url(#ah)"/><text id="o-incd" x="502" y="476" class="lbl">INC_D</text>
+    </g>
+
+    <g id="fsm" class="el">
+      <g id="fs-start" class="el">
+        <g id="t-i0" class="tr"><path class="t" d="M1068,132 C1050,70 1140,70 1118,134" marker-end="url(#ah)"/><text x="1150" y="92" text-anchor="start" class="mono sm">INIT=0</text></g>
+        <g id="t-i1" class="tr"><path class="t" d="M1085,250 V358" marker-end="url(#ah)"/><text x="1095" y="308" text-anchor="start" class="mono sm">INIT=1</text></g>
+        <g id="st-START" class="state"><ellipse class="shape l-start" cx="1085" cy="190" rx="104" ry="60"/>
+          <text x="1085" y="168" text-anchor="middle" class="b sm">START</text>
+          <text x="1085" y="186" text-anchor="middle" class="mono xs"><tspan class="one">RST_R=0</tspan> <tspan class="one">RST_C=0</tspan> <tspan class="one">RST_D=0</tspan></text>
+          <text x="1085" y="202" text-anchor="middle" class="mono xs"><tspan>INC_R=0</tspan> <tspan>INC_C=0</tspan> <tspan>INC_D=0</tspan></text>
+          <text x="1085" y="218" text-anchor="middle" class="mono xs"><tspan>LATCH=0</tspan> <tspan>nOE=1</tspan> <tspan>PX_CLK_EN=0</tspan></text></g>
+      </g>
+      <g id="fs-gp" class="el">
+        <g id="t-gp" class="tr"><path class="t" d="M1082,480 L1070,588" marker-end="url(#ah)"/></g>
+        <g id="st-GET_PIXEL" class="state"><ellipse class="shape l-gp" cx="1085" cy="420" rx="104" ry="60"/>
+          <text x="1085" y="398" text-anchor="middle" class="b sm">GET_PIXEL</text>
+          <text x="1085" y="416" text-anchor="middle" class="mono xs"><tspan>RST_R=1</tspan> <tspan>RST_C=1</tspan> <tspan>RST_D=1</tspan></text>
+          <text x="1085" y="432" text-anchor="middle" class="mono xs"><tspan>INC_R=0</tspan> <tspan>INC_C=0</tspan> <tspan>INC_D=0</tspan></text>
+          <text x="1085" y="448" text-anchor="middle" class="mono xs"><tspan>LATCH=0</tspan> <tspan>nOE=1</tspan> <tspan>PX_CLK_EN=0</tspan></text></g>
+      </g>
+      <g id="fs-ic" class="el">
+        <g id="t-zc0" class="tr"><path class="t" d="M1150,612 C1215,590 1215,690 1150,688" marker-end="url(#ah)"/><text x="1168" y="742" text-anchor="middle" class="mono sm">ZC=0</text></g>
+        <g id="t-zc1" class="tr"><path class="t" d="M956,656 L924,676" marker-end="url(#ah)"/><text x="940" y="640" text-anchor="middle" class="mono sm">ZC=1</text></g>
+        <g id="st-INC_COL" class="state"><ellipse class="shape l-ic" cx="1060" cy="650" rx="104" ry="60"/>
+          <text x="1060" y="628" text-anchor="middle" class="b sm">INC_COL</text>
+          <text x="1060" y="646" text-anchor="middle" class="mono xs"><tspan>RST_R=1</tspan> <tspan>RST_C=1</tspan> <tspan>RST_D=1</tspan></text>
+          <text x="1060" y="662" text-anchor="middle" class="mono xs"><tspan>INC_R=0</tspan> <tspan class="one">INC_C=1</tspan> <tspan>INC_D=0</tspan></text>
+          <text x="1060" y="678" text-anchor="middle" class="mono xs"><tspan>LATCH=0</tspan> <tspan>nOE=1</tspan> <tspan class="one">PX_CLK_EN=1</tspan></text></g>
+      </g>
+      <g id="fs-sr" class="el">
+        <g id="t-sr" class="tr"><path class="t" d="M770,632 L726,532" marker-end="url(#ah)"/></g>
+        <g id="st-SEND_ROW" class="state"><ellipse class="shape l-wh" cx="820" cy="690" rx="104" ry="60"/>
+          <text x="820" y="668" text-anchor="middle" class="b sm">SEND_ROW</text>
+          <text x="820" y="686" text-anchor="middle" class="mono xs"><tspan>RST_R=1</tspan> <tspan>RST_C=1</tspan> <tspan>RST_D=1</tspan></text>
+          <text x="820" y="702" text-anchor="middle" class="mono xs"><tspan>INC_R=0</tspan> <tspan>INC_C=0</tspan> <tspan>INC_D=0</tspan></text>
+          <text x="820" y="718" text-anchor="middle" class="mono xs"><tspan class="one">LATCH=1</tspan> <tspan class="one">nOE=0</tspan> <tspan>PX_CLK_EN=0</tspan></text></g>
+      </g>
+      <g id="fs-dr" class="el">
+        <g id="t-zd0" class="tr"><path class="t" d="M640,518 C600,585 690,595 680,532" marker-end="url(#ah)"/><text x="618" y="598" text-anchor="middle" class="mono sm">ZD=0</text></g>
+        <g id="t-zd1" class="tr"><path class="t" d="M700,408 V292" marker-end="url(#ah)"/><text x="710" y="354" text-anchor="start" class="mono sm">ZD=1</text></g>
+        <g id="st-DELAY_ROW" class="state"><ellipse class="shape l-y" cx="700" cy="470" rx="104" ry="60"/>
+          <text x="700" y="448" text-anchor="middle" class="b sm">DELAY_ROW</text>
+          <text x="700" y="466" text-anchor="middle" class="mono xs"><tspan>RST_R=1</tspan> <tspan>RST_C=1</tspan> <tspan>RST_D=1</tspan></text>
+          <text x="700" y="482" text-anchor="middle" class="mono xs"><tspan>INC_R=0</tspan> <tspan>INC_C=0</tspan> <tspan class="one">INC_D=1</tspan></text>
+          <text x="700" y="498" text-anchor="middle" class="mono xs"><tspan>LATCH=0</tspan> <tspan class="one">nOE=0</tspan> <tspan>PX_CLK_EN=0</tspan></text></g>
+      </g>
+      <g id="fs-ir" class="el">
+        <g id="t-ir" class="tr"><path class="t" d="M762,182 L788,150" marker-end="url(#ah)"/></g>
+        <g id="st-INC_ROW" class="state"><ellipse class="shape l-y" cx="700" cy="230" rx="104" ry="60"/>
+          <text x="700" y="208" text-anchor="middle" class="b sm">INC_ROW</text>
+          <text x="700" y="226" text-anchor="middle" class="mono xs"><tspan>RST_R=1</tspan> <tspan class="one">RST_C=0</tspan> <tspan class="one">RST_D=0</tspan></text>
+          <text x="700" y="242" text-anchor="middle" class="mono xs"><tspan class="one">INC_R=1</tspan> <tspan>INC_C=0</tspan> <tspan>INC_D=0</tspan></text>
+          <text x="700" y="258" text-anchor="middle" class="mono xs"><tspan>LATCH=0</tspan> <tspan>nOE=1</tspan> <tspan>PX_CLK_EN=0</tspan></text></g>
+      </g>
+      <g id="fs-rf" class="el">
+        <g id="t-zr1" class="tr"><path class="t" d="M952,104 L1004,150" marker-end="url(#ah)"/><text x="990" y="112" text-anchor="start" class="mono sm">ZR=1</text></g>
+        <g id="t-zr0" class="tr"><path class="t" d="M900,148 L1006,378" marker-end="url(#ah)"/><text x="930" y="270" text-anchor="start" class="mono sm">ZR=0</text></g>
+        <g id="st-READY_FRAME" class="state"><ellipse class="shape l-y" cx="850" cy="90" rx="104" ry="60"/>
+          <text x="850" y="68" text-anchor="middle" class="b sm">READY_FRAME</text>
+          <text x="850" y="86" text-anchor="middle" class="mono xs"><tspan>RST_R=1</tspan> <tspan>RST_C=1</tspan> <tspan>RST_D=1</tspan></text>
+          <text x="850" y="102" text-anchor="middle" class="mono xs"><tspan>INC_R=0</tspan> <tspan>INC_C=0</tspan> <tspan>INC_D=0</tspan></text>
+          <text x="850" y="118" text-anchor="middle" class="mono xs"><tspan>LATCH=0</tspan> <tspan>nOE=1</tspan> <tspan>PX_CLK_EN=0</tspan></text></g>
+      </g>
+    </g>
+<g id="dp-rcnt" class="el">
+      <rect class="shape l-cnt" x="650" y="50" width="150" height="60"/>
+      <text x="740" y="70" text-anchor="middle" class="ttl">Count ROW</text><text id="v-row" x="740" y="102" text-anchor="middle" class="mono sm b"></text>
+      <text id="p-rstr" x="656" y="74" class="port el">RST</text><text id="p-incr" x="656" y="96" class="port el">INC</text>
+      <g id="w-rstr" class="el"><path class="w" d="M604,70 H648" marker-end="url(#ah)"/><text id="n-rstr" x="606" y="66" class="lbl xs">RST_R</text></g>
+      <g id="w-incr" class="el"><path class="w" d="M604,92 H648" marker-end="url(#ah)"/><text id="n-incr" x="606" y="88" class="lbl xs">INC_R</text></g>
+      <text id="a-rstr" x="650" y="126" class="el ann">RST_R=0: ROW ← 0</text><text id="a-incr" x="650" y="141" class="el ann">INC_R: ROW ← ROW+1</text></g><g id="dp-ccnt" class="el">
+      <rect class="shape l-cnt" x="650" y="200" width="150" height="60"/>
+      <text x="740" y="220" text-anchor="middle" class="ttl">Count COL</text><text id="v-col" x="740" y="252" text-anchor="middle" class="mono sm b"></text>
+      <text id="p-rstc" x="656" y="224" class="port el">RST</text><text id="p-incc" x="656" y="246" class="port el">INC</text>
+      <g id="w-rstc" class="el"><path class="w" d="M604,220 H648" marker-end="url(#ah)"/><text id="n-rstc" x="606" y="216" class="lbl xs">RST_C</text></g>
+      <g id="w-incc" class="el"><path class="w" d="M604,242 H648" marker-end="url(#ah)"/><text id="n-incc" x="606" y="238" class="lbl xs">INC_C</text></g>
+      <text id="a-rstc" x="650" y="276" class="el ann">RST_C=0: COL ← 0</text><text id="a-incc" x="650" y="291" class="el ann">INC_C: COL ← COL+1</text></g><g id="dp-dcnt" class="el">
+      <rect class="shape l-cnt" x="650" y="470" width="150" height="60"/>
+      <text x="740" y="490" text-anchor="middle" class="ttl">Count DELAY</text><text id="v-d" x="740" y="522" text-anchor="middle" class="mono sm b"></text>
+      <text id="p-rstd" x="656" y="494" class="port el">RST</text><text id="p-incd" x="656" y="516" class="port el">INC</text>
+      <g id="w-rstd" class="el"><path class="w" d="M604,490 H648" marker-end="url(#ah)"/><text id="n-rstd" x="606" y="486" class="lbl xs">RST_D</text></g>
+      <g id="w-incd" class="el"><path class="w" d="M604,512 H648" marker-end="url(#ah)"/><text id="n-incd" x="606" y="508" class="lbl xs">INC_D</text></g>
+      <text id="a-rstd" x="650" y="546" class="el ann">RST_D=0: count_delay ← 0</text><text id="a-incd" x="650" y="561" class="el ann">INC_D: count_delay ← +1</text></g>
+    <g id="dp-zr" class="el"><path class="w" d="M800,96 H828" marker-end="url(#ah)"/><text id="n-zr" x="832" y="100" class="sig">ZR</text></g>
+    <g id="dp-zc" class="el"><path class="w" d="M800,246 H828" marker-end="url(#ah)"/><text id="n-zc" x="832" y="250" class="sig">ZC</text></g>
+    <g id="dp-addr" class="el">
+      <path class="bus" d="M800,66 H860 V150 H926" marker-end="url(#ah)"/><circle cx="860" cy="66" r="4" class="ahp"/>
+      <path class="bus" d="M800,216 H860 V150"/>
+      <text x="806" y="60" class="lbl xs">[10:6]</text><text x="806" y="210" class="lbl xs">[5:0]</text>
+      <text x="868" y="142" class="lbl xs">PIX_ADDR</text><text id="v-addr" x="868" y="170" class="mono xs b"></text>
+    </g>
+    <g id="dp-mem" class="el">
+      <rect class="shape l-mem" x="928" y="110" width="150" height="110"/>
+      <text x="1003" y="140" text-anchor="middle" class="ttl">MEMORY</text>
+      <text x="1003" y="158" text-anchor="middle" class="mono xs">2048 × 6 bits</text>
+      <text id="v-mem" x="1003" y="200" text-anchor="middle" class="mono xs b"></text>
+      <path class="bus" d="M1078,140 H1170 V296" marker-end="url(#ah)"/><text x="1084" y="134" class="lbl xs">R0G0B0</text>
+      <path class="bus" d="M1078,196 H1140 V296" marker-end="url(#ah)"/><text x="1084" y="190" class="lbl xs">R1G1B1</text>
+    </g>
+    <g id="dp-row" class="el">
+      <path class="bus" d="M860,66 H1190 V296" marker-end="url(#ah)"/><text x="1000" y="60" class="lbl xs">ROW (ABCDE)</text>
+    </g>
+    <g id="dp-cmp" class="el">
+      <path class="bus" d="M800,500 H858" marker-end="url(#ah)"/>
+      <rect class="shape l-cmp" x="860" y="470" width="140" height="80"/>
+      <text x="930" y="496" text-anchor="middle" class="ttl">COMP</text>
+      <text x="930" y="514" text-anchor="middle" class="mono xs">count_delay = DELAY</text>
+      <path class="w" d="M930,600 V552" marker-end="url(#ah)"/><text x="930" y="614" text-anchor="middle" class="mono sm">DELAY</text>
+      <path class="w" d="M1000,536 H1038" marker-end="url(#ah)"/><text id="n-zd" x="1042" y="540" class="sig">ZD</text>
+      <text id="v-zd" x="992" y="532" text-anchor="end" class="mono xs b"></text>
+    </g>
+    <g id="dp-pan" class="el">
+      <rect class="shape l-pan" x="1050" y="298" width="146" height="160" rx="3"/>
+      <text x="1123" y="318" text-anchor="middle" class="ttl">Panel HUB75</text>
+      <text x="1058" y="338" class="port">R1G1B1 · R0G0B0</text>
+      <text x="1058" y="354" class="port">A B C D E</text>
+      <text id="p-clk" x="1058" y="404" class="port el">CLK</text>
+      <text id="p-lat" x="1058" y="426" class="port el">LAT</text>
+      <text id="p-oe" x="1058" y="448" class="port el">OE</text>
+      <g id="w-pxclk" class="el"><path class="w" d="M1010,400 H1048" marker-end="url(#ah)"/><text id="n-pxclk" x="1006" y="404" text-anchor="end" class="lbl">PX_CLK_EN</text></g>
+      <g id="w-latch" class="el"><path class="w" d="M1010,422 H1048" marker-end="url(#ah)"/><text id="n-latch" x="1006" y="426" text-anchor="end" class="lbl">LATCH</text></g>
+      <g id="w-noe" class="el"><path class="w" d="M1010,444 H1048" marker-end="url(#ah)"/><text id="n-noe" x="1006" y="448" text-anchor="end" class="lbl">nOE</text></g>
+      <text id="a-pxclk" x="1196" y="476" text-anchor="end" class="el ann">CLK: desplaza un pixel</text>
+      <text id="a-latch" x="1196" y="491" text-anchor="end" class="el ann">LAT: copia la fila</text>
+      <text id="a-noe" x="1196" y="506" text-anchor="end" class="el ann">nOE=0: enciende la fila</text>
+    </g>
+
+    <path id="m-row" class="map el" d="M330,76 C470,76 520,70 602,70" marker-end="url(#ahm)"/>
+    <path id="m-row2" class="map el" d="M510,672 C600,672 560,92 602,92" marker-end="url(#ahm)"/>
+    <path id="m-col" class="map el" d="M260,311 C420,311 470,240 602,240" marker-end="url(#ahm)"/>
+    <path id="m-addr" class="map el" d="M330,93 C560,93 760,180 864,176" marker-end="url(#ahm)"/>
+    <path id="m-mem" class="map el" d="M360,246 C600,246 760,290 940,224" marker-end="url(#ahm)"/>
+    <path id="m-dly" class="map el" d="M510,500 C560,500 560,512 602,512" marker-end="url(#ahm)"/>
+    <path id="m-zd" class="map el" d="M530,566 C640,620 820,600 880,556" marker-end="url(#ahm)"/>
+    <path id="m-zc" class="map el" d="M280,386 C480,386 700,280 832,260" marker-end="url(#ahm)"/>
+    <path id="m-zr" class="map el" d="M510,730 C620,730 600,130 830,108" marker-end="url(#ahm)"/>
+    <path id="m-pan" class="map el" d="M510,432 C700,432 900,400 1000,412" marker-end="url(#ahm)"/>
+    <path id="c-start" class="map el" d="M330,120 C600,120 800,200 978,190" marker-end="url(#ahm)"/>
+    <path id="c-gp" class="map el" d="M360,230 C600,230 800,420 978,420" marker-end="url(#ahm)"/>
+    <path id="c-ic" class="map el" d="M260,320 C500,330 600,770 960,700" marker-end="url(#ahm)"/>
+    <path id="c-sr" class="map el" d="M510,440 C620,440 640,700 714,694" marker-end="url(#ahm)"/>
+    <path id="c-dr" class="map el" d="M510,496 C560,496 570,470 594,470" marker-end="url(#ahm)"/>
+    <path id="c-ir" class="map el" d="M510,640 C575,640 560,250 594,236" marker-end="url(#ahm)"/>
+    <path id="c-rf" class="map el" d="M510,726 C600,726 590,20 760,40" marker-end="url(#ahm)"/>
+
+  </svg>
+  </div>
+
+  <section class="panel" aria-live="polite">
+    <div><p class="eyebrow" id="eyebrow"></p><h2 id="stitle"></h2><p id="stext"></p></div>
+    <div class="ctl">
+      <button id="bprev" type="button">◀ Anterior</button>
+      <button id="bnext" type="button" class="primary">Siguiente ▶</button>
+      <button id="bplay" type="button">Reproducir</button>
+      <button id="bfirst" type="button">Inicio</button>
+      <span class="count" id="count"></span>
+    </div>
+  </section>
+
+  <section class="sim" id="simpanel" hidden>
+    <div class="row">
+      <label class="chk" for="fixZC"><input id="fixZC" type="checkbox"> ZC = acarreo (COL = última columna)</label>
+      <span class="hint">Panel reducido: 8 columnas · 4 pares de filas (8×8) · DELAY = 2 · Siguiente avanza un ciclo de reloj</span>
+    </div>
+    <div class="leds">
+      <figure><figcaption>Imagen en MEMORY</figcaption><div class="grid" id="g-mem"></div></figure>
+      <figure><figcaption>Registro de desplazamiento del panel</figcaption><div class="grid sr" id="g-sr"></div></figure>
+      <figure><figcaption>Latch del panel</figcaption><div class="grid lt" id="g-lt"></div></figure>
+      <figure><figcaption>Panel (filas encendidas con nOE = 0)</figcaption><div class="grid" id="g-pan"></div></figure>
+    </div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Ciclo</th><th>Estado</th><th>ROW</th><th>COL</th><th>count_delay</th><th>ZC</th><th>ZD</th><th>ZR</th><th>Señales activas</th></tr></thead>
+      <tbody id="trace"></tbody>
+    </table></div>
+  </section>
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const ALL_EL = Array.from(document.querySelectorAll('.el')).map(e => e.id).filter(Boolean);
+  const SCENES = ['Algoritmo','Ruta de datos','Interconexión','Control','Síntesis','Ejecución'];
+  const DP = ['dp-rcnt','dp-ccnt','dp-dcnt','dp-zr','dp-zc','dp-addr','dp-mem','dp-row','dp-cmp','dp-pan'];
+  const CO = ['co-ini','co-px','co-col','co-lat','co-dly','co-row','co-zc','co-zd','co-zr'];
+  const COLS = 8, ROWS = 4, DELAY = 2;
+  const CTLW = ['w-rstr','w-incr','w-rstc','w-incc','w-rstd','w-incd','w-pxclk','w-latch','w-noe'];
+  const SIGS = ['RST_R','RST_C','RST_D','INC_R','INC_C','INC_D','LATCH','nOE','PX_CLK_EN'];
+  const ACT = {RST_R:0,RST_C:0,RST_D:0,INC_R:1,INC_C:1,INC_D:1,LATCH:1,nOE:0,PX_CLK_EN:1};
+  const OUT = {"START": [0, 0, 0, 0, 0, 0, 0, 1, 0], "GET_PIXEL": [1, 1, 1, 0, 0, 0, 0, 1, 0], "INC_COL": [1, 1, 1, 0, 1, 0, 0, 1, 1], "SEND_ROW": [1, 1, 1, 0, 0, 0, 1, 0, 0], "DELAY_ROW": [1, 1, 1, 0, 0, 1, 0, 0, 0], "INC_ROW": [1, 0, 0, 1, 0, 0, 0, 1, 0], "READY_FRAME": [1, 1, 1, 0, 0, 0, 0, 1, 0]};
+
+  const base = [
+    {sc:1, t:'El algoritmo', d:'El driver recorre el panel fila por fila. Para cada fila envía 64 pixeles en serie con el reloj de pixel; cada dirección de memoria entrega dos pixeles, uno de la mitad superior (R0G0B0) y otro de la inferior (R1G1B1). Luego copia la fila al latch (latch = 1), la enciende (nOE = 0) durante DELAY ciclos y pasa a la siguiente. Tras 32 filas comienza un nuevo cuadro. Cada color es un bit, así que hay 8 colores por pixel.',
+      add:['fc'], hl:[]},
+    {sc:2, t:'ROW → contador de filas', d:'ROW se implementa con un contador de 5 bits. Sus bits son las líneas de dirección A B C D E del panel. Sus entradas de control se deciden al revisar qué se hace con ROW.',
+      add:['dp-rcnt','dp-row'], tmp:['m-row','m-row2'], hl:['fc-ini','fc-row','dp-rcnt']},
+    {sc:2, t:'¿Qué se hace con ROW?', d:'ROW = 0 en la inicialización y ROW++ al terminar cada fila. Por eso el contador necesita una entrada RST (ROW ← 0) y una entrada INC (ROW ← ROW + 1).',
+      add:['p-rstr','p-incr','a-rstr','a-incr'], hl:['fc-ini','fc-row','p-rstr','p-incr']},
+    {sc:2, t:'COL → contador de columnas', d:'COL se implementa con un contador de 6 bits.',
+      add:['dp-ccnt'], tmp:['m-col'], hl:['fc-ini','fc-col','fc-row','dp-ccnt']},
+    {sc:2, t:'¿Qué se hace con COL?', d:'COL = 0 en la inicialización y al cambiar de fila, y COL++ después de cada pixel. Por eso el contador necesita RST (COL ← 0) e INC (COL ← COL + 1).',
+      add:['p-rstc','p-incc','a-rstc','a-incc'], hl:['fc-ini','fc-col','fc-row','p-rstc','p-incc']},
+    {sc:2, t:'PIX_ADDR = {ROW<<6, COL} → cables', d:'La dirección no necesita hardware: es la concatenación de los dos contadores, ROW en los bits [10:6] y COL en los bits [5:0].',
+      add:['dp-addr'], tmp:['m-addr'], hl:['fc-ini','dp-addr']},
+    {sc:2, t:'R0…B1 = data → MEMORY', d:'Los datos de color salen de una memoria de 2048 × 6 bits direccionada por PIX_ADDR. Cada palabra contiene el pixel de la mitad superior y el de la mitad inferior. Solo se lee, así que no tiene entradas de control.',
+      add:['dp-mem'], tmp:['m-mem'], hl:['fc-px','dp-mem']},
+    {sc:2, t:'count_delay → contador y comparador', d:'count_delay se implementa con un tercer contador. La decisión count_delay = delay? se resuelve con un comparador contra la constante DELAY; su salida es ZD.',
+      add:['dp-dcnt','dp-cmp'], tmp:['m-dly','m-zd'], hl:['fc-dly','fc-zd','dp-dcnt','dp-cmp']},
+    {sc:2, t:'¿Qué se hace con count_delay?', d:'count_delay = 0 en la inicialización y al cambiar de fila, y count_delay++ durante el retardo. Por eso el contador necesita RST (count_delay ← 0) e INC (count_delay ← count_delay + 1).',
+      add:['p-rstd','p-incd','a-rstd','a-incd'], hl:['fc-ini','fc-dly','fc-row','p-rstd','p-incd']},
+    {sc:2, t:'col == 64? y ROW = 32? → ZC y ZR', d:'El contador de 6 bits vuelve a 0 después de 63, y el de 5 bits después de 31. Por eso col == 64 equivale a COL = 0 (ZC) y ROW = 32 equivale a ROW = 0 (ZR).',
+      add:['dp-zc','dp-zr'], tmp:['m-zc','m-zr'], hl:['fc-zc','fc-zr','n-zc','n-zr']},
+    {sc:2, t:'Panel HUB75', d:'El panel recibe los datos R0G0B0 y R1G1B1 y la dirección de fila ABCDE. Sus entradas de control se deciden al revisar qué se hace con el panel.',
+      add:['dp-pan'], tmp:['m-pan'], hl:['dp-pan']},
+    {sc:2, t:'¿Qué se hace con el panel?', d:'PX_CLK_EN = 1 desplaza un pixel en el registro del panel: necesita CLK. latch = 1 copia la fila desplazada: necesita LAT. nOE = 0 enciende la fila y nOE = 1 la apaga: necesita OE (activa en bajo). Estas asignaciones no pasan por el camino de datos: son salidas directas del control.',
+      add:['p-clk','p-lat','p-oe','a-pxclk','a-latch','a-noe'], hl:['fc-ini','fc-px','fc-lat','fc-row','p-clk','p-lat','p-oe']},
+    {sc:3, t:'Interconexión del camino de datos', d:'Los contadores ROW y COL forman PIX_ADDR, que direcciona la memoria. La memoria entrega R0G0B0 y R1G1B1 al panel, y ROW selecciona la fila (ABCDE). El contador de retardo alimenta el comparador. Las entradas de control quedan como señales con nombre: RST_R, RST_C, RST_D, INC_R, INC_C e INC_D.',
+      add:CTLW, hl:[]},
+    {sc:4, t:'Inicialización → RST = 0', d:'Variable = 0 se traduce en RESET. Los RST de los contadores son activos en bajo: RST_R = 0, RST_C = 0 y RST_D = 0 ponen en cero ROW, COL y count_delay. LATCH = 0, PX_CLK_EN = 0 y nOE = 1 son salidas directas. PIX_ADDR y delay no generan señal.',
+      add:['co-ini','a-rstr','a-rstc','a-rstd'], hl:['fc-ini','n-rstr','n-rstc','n-rstd','p-rstr','p-rstc','p-rstd']},
+    {sc:4, t:'Bloque de pixel → PX_CLK_EN', d:'PX_CLK_EN = 1 habilita el reloj del panel, que desplaza el pixel actual. Los datos R0…B1 no generan señal: la memoria los entrega para la dirección actual.',
+      add:['co-px','a-pxclk'], hl:['fc-px','n-pxclk','p-clk']},
+    {sc:4, t:'COL++ → INC_C', d:'Variable = operación se traduce en la señal de esa operación: COL++ activa INC_C.',
+      add:['co-col','a-incc'], hl:['fc-col','n-incc','p-incc']},
+    {sc:4, t:'Envío de la fila → LATCH y nOE', d:'latch = 1 activa LATCH, que copia al latch del panel los 64 pixeles desplazados. nOE = 0 enciende la fila seleccionada por ABCDE.',
+      add:['co-lat','a-latch','a-noe'], hl:['fc-lat','n-latch','n-noe','p-lat','p-oe']},
+    {sc:4, t:'Retardo → INC_D', d:'count_delay++ activa INC_D. latch = 0 desactiva LATCH. La fila sigue encendida (nOE = 0) mientras se cuenta el retardo.',
+      add:['co-dly','a-incd'], hl:['fc-dly','n-incd','p-incd']},
+    {sc:4, t:'Siguiente fila → INC_R, RST_C, RST_D', d:'ROW++ activa INC_R. count_delay = 0 y COL = 0 activan RST_D = 0 y RST_C = 0. nOE = 1 apaga la fila antes de cambiar la dirección.',
+      add:['co-row'], hl:['fc-row','n-incr','n-rstc','n-rstd','p-incr','p-rstc','p-rstd']},
+    {sc:4, t:'Decisiones → entradas del control', d:'Las tres decisiones consultan señales del camino de datos: col == 64? lee ZC, count_delay = delay? lee ZD y ROW = 32? lee ZR.',
+      add:['co-zc','co-zd','co-zr'], hl:['fc-zc','fc-zd','fc-zr','n-zc','n-zd','n-zr']},
+    {sc:4, t:'Inicialización → START', d:'El bloque inicial es el estado START, con los tres RST en 0. El lazo INIT = 0 y la transición INIT = 1 no tienen bloque en el flujo.',
+      add:['fsm','fs-start'], rm:DP.concat(CO), tmp:['c-start'], hl:['fc-ini','st-START','t-i0','t-i1']},
+    {sc:4, t:'Entrada al bloque de pixel → GET_PIXEL', d:'GET_PIXEL libera los RST y da un ciclo para que la memoria entregue el pixel de la dirección actual. En la FSM, PX_CLK_EN todavía vale 0 en este estado.',
+      add:['fs-gp'], tmp:['c-gp'], hl:['fc-px','st-GET_PIXEL','t-gp']},
+    {sc:4, t:'Pixel y COL++ → INC_COL', d:'El bloque de pixel y COL++ forman un solo estado, INC_COL, con PX_CLK_EN = 1 e INC_C = 1: en cada ciclo se desplaza un pixel y se avanza la columna. La decisión col == 64? se convierte en el lazo ZC = 0 y en la salida ZC = 1.',
+      add:['fs-ic'], tmp:['c-ic'], hl:['fc-px','fc-col','fc-zc','st-INC_COL','t-zc0','t-zc1']},
+    {sc:4, t:'Envío de la fila → SEND_ROW', d:'El bloque latch = 1, nOE = 0 es el estado SEND_ROW, con LATCH = 1 y nOE = 0.',
+      add:['fs-sr'], tmp:['c-sr'], hl:['fc-lat','st-SEND_ROW','t-sr']},
+    {sc:4, t:'Retardo → DELAY_ROW', d:'El bloque latch = 0, count_delay++ y su lazo forman DELAY_ROW, con INC_D = 1 y nOE = 0. La decisión count_delay = delay? se convierte en el lazo ZD = 0 y en la salida ZD = 1.',
+      add:['fs-dr'], tmp:['c-dr'], hl:['fc-dly','fc-zd','st-DELAY_ROW','t-zd0','t-zd1']},
+    {sc:4, t:'Siguiente fila → INC_ROW', d:'El bloque de la siguiente fila es INC_ROW, con INC_R = 1, RST_C = 0, RST_D = 0 y nOE = 1.',
+      add:['fs-ir'], tmp:['c-ir'], hl:['fc-row','st-INC_ROW','t-ir']},
+    {sc:4, t:'ROW = 32? → READY_FRAME', d:'ROW acaba de cambiar en INC_ROW, así que la decisión se evalúa en el ciclo siguiente, en su propio estado READY_FRAME. ZR = 1 vuelve a START (nuevo cuadro) y ZR = 0 va a GET_PIXEL (siguiente fila).',
+      add:['fs-rf'], tmp:['c-rf'], hl:['fc-zr','st-READY_FRAME','t-zr0','t-zr1']},
+    {sc:4, t:'Flujo y máquina de control', d:'Cada bloque de acción es un estado. Las decisiones col == 64? y count_delay = delay? son lazos sobre un estado (INC_COL y DELAY_ROW). ROW = 32? necesita su propio estado (READY_FRAME), y GET_PIXEL agrega un ciclo de acceso a memoria.',
+      add:[], hl:[]},
+    {sc:5, t:'FSM → bloque CONTROL', d:'La FSM se encapsula en el bloque CONTROL. Sus salidas RST_R, RST_C, RST_D, INC_R, INC_C e INC_D manejan los contadores; LATCH, nOE y PX_CLK_EN van al panel. Sus entradas son INIT, ZC, ZR y ZD.',
+      add:['ctrl'].concat(DP), rm:['fc'], hl:[], collapse:true},
+    {sc:6, t:'Ejecución ciclo a ciclo', d:'Simulación de un cuadro en un panel reducido de 8×8 (8 columnas, 4 pares de filas, DELAY = 2), tal como están la FSM y el diagrama de bloques. Se muestran la imagen en memoria, el registro de desplazamiento del panel, el latch y las filas encendidas.',
+      add:[], hl:[], collapse:true}
+  ];
+
+  let vis = new Set();
+  base.forEach(s => { (s.rm||[]).forEach(x => vis.delete(x)); (s.add||[]).forEach(x => vis.add(x)); s.vis = new Set([...vis, ...(s.tmp||[])]); });
+  const FINAL_VIS = base[base.length-1].vis;
+  const hlIds = [...new Set(base.flatMap(s => s.hl))];
+
+  // imagen: mitad superior barras 0..7, mitad inferior barras invertidas
+  const IMG = Array.from({length:2*ROWS}, (_,y) => Array.from({length:COLS}, (_,x) => y<ROWS ? x : 7-x));
+  const RGB = c => 'rgb('+((c&4)?255:28)+','+((c&2)?230:28)+','+((c&1)?255:34)+')';
+
+  function trace(fix){
+    let st='START', ROW=0, COL=0, D=0;
+    let sr=[Array(COLS).fill(0),Array(COLS).fill(0)], lt=[Array(COLS).fill(0),Array(COLS).fill(0)];
+    const shown = Array.from({length:2*ROWS}, () => Array(COLS).fill(0));
+    const rows=[];
+    for(let c=0;c<400;c++){
+      const o = Object.fromEntries(SIGS.map((k,i) => [k, OUT[st][i]]));
+      const zc = fix ? (COL===COLS-1?1:0) : (COL===0?1:0), zd = D===DELAY?1:0, zr = ROW===0?1:0;
+      const addr = (ROW<<6)|COL, top = IMG[ROW][COL], bot = IMG[ROW+ROWS][COL];
+      const lit = o.nOE===0 ? ROW : null;
+      if(lit!==null){ shown[lit] = lt[0].slice(); shown[lit+ROWS] = lt[1].slice(); }
+      const r = {c, st, ROW, COL, D, zc, zd, zr, o, addr, top, bot, sr:sr.map(a=>a.slice()), lt:lt.map(a=>a.slice()), lit, shown:shown.map(a=>a.slice())};
+      let ns, msg;
+      if(st==='START'){ msg='RST_R = RST_C = RST_D = 0: los tres contadores quedan en 0. Con INIT = 1 pasa a GET_PIXEL.'; ROW=0; COL=0; D=0; ns='GET_PIXEL'; }
+      else if(st==='GET_PIXEL'){ msg='La memoria entrega el pixel de PIX_ADDR = {'+ROW+', '+COL+'}: superior '+top+', inferior '+bot+'.'; ns='INC_COL'; }
+      else if(st==='INC_COL'){
+        sr = [sr[0].slice(1).concat([top]), sr[1].slice(1).concat([bot])];
+        ns = zc ? 'SEND_ROW' : 'INC_COL';
+        msg='PX_CLK_EN = 1: en el flanco el panel desplaza el pixel de la columna '+COL+' (colores '+top+' y '+bot+'). INC_C: COL = '+COL+' → '+((COL+1)%COLS)+'. ZC = '+zc+' → '+ns+'.'+(!fix && zc && COL===0 ? ' ZC se evalúa con COL antes del flanco, y COL ya valía 0 al entrar: solo se desplazó una columna.' : '');
+        COL=(COL+1)%COLS; }
+      else if(st==='SEND_ROW'){ lt=[sr[0].slice(), sr[1].slice()]; msg='LATCH = 1: el latch copia el registro de desplazamiento. nOE = 0: se encienden las filas '+ROW+' y '+(ROW+ROWS)+'.'; ns='DELAY_ROW'; }
+      else if(st==='DELAY_ROW'){ ns = zd ? 'INC_ROW' : 'DELAY_ROW'; msg='nOE = 0: la fila sigue encendida. INC_D: count_delay = '+D+' → '+(D+1)+'. ZD = '+zd+' → '+ns+'.'; D=D+1; }
+      else if(st==='INC_ROW'){ msg='nOE = 1 apaga la fila. INC_R: ROW = '+ROW+' → '+((ROW+1)%ROWS)+'. RST_C = 0 y RST_D = 0 ponen COL y count_delay en 0.'; ROW=(ROW+1)%ROWS; COL=0; D=0; ns='READY_FRAME'; }
+      else if(st==='READY_FRAME'){ ns = zr ? 'START' : 'GET_PIXEL'; msg='ZR = '+zr+' (ROW = '+ROW+') → '+(zr?'START: el cuadro terminó.':'GET_PIXEL: siguiente fila.'); }
+      r.msg = msg; rows.push(r);
+      if(st==='READY_FRAME' && zr) break;
+      st = ns;
+    }
+    return rows;
+  }
+
+  let rows=[], steps=[], idx=0, timer=null;
+  function build(){
+    rows = trace($('fixZC').checked);
+    steps = base.concat(rows.map((r,i) => ({sc:6, sim:r, i, collapse:true, vis:FINAL_VIS, hl:[], t:'Ciclo '+r.c+' · '+r.st, d:r.msg})));
+  }
+  const SIG = {
+    RST_R:['o-rstr','n-rstr','p-rstr'], RST_C:['o-rstc','n-rstc','p-rstc'], RST_D:['o-rstd','n-rstd','p-rstd'],
+    INC_R:['o-incr','n-incr','p-incr'], INC_C:['o-incc','n-incc','p-incc'], INC_D:['o-incd','n-incd','p-incd'],
+    LATCH:['o-latch','n-latch','p-lat'], nOE:['o-noe','n-noe','p-oe'], PX_CLK_EN:['o-pxclk','n-pxclk','p-clk']
+  };
+  const sigIds = [...new Set(Object.values(SIG).flat().concat(['i-zc','n-zc','i-zd','n-zd','i-zr','n-zr','i-init']))];
+  const STATES = Object.keys(OUT);
+
+  function grid(id, data, opt){
+    const g=$(id); g.style.gridTemplateColumns='repeat('+COLS+', 16px)';
+    g.innerHTML = data.map((row,y) => row.map(c => {
+      const on = !opt || opt(y);
+      return '<div class="cell" style="background:'+(on===false?'var(--led-off)':RGB(c))+';opacity:'+(on===0.35?0.35:1)+'"></div>';
+    }).join('')).join('');
+  }
+  function render(){
+    const s = steps[idx];
+    ALL_EL.forEach(id => $(id).classList.toggle('on', s.vis.has(id)));
+    const hl = new Set(s.hl||[]);
+    hlIds.forEach(id => $(id).classList.toggle('hl', hl.has(id)));
+    $('fsm').classList.toggle('collapsed', !!s.collapse);
+    const r = s.sim;
+    STATES.forEach(n => $('st-'+n).classList.toggle('active', !!r && r.st===n));
+    const act = new Set();
+    if(r){ SIGS.forEach(k => { if(r.o[k]===ACT[k]) SIG[k].forEach(x => act.add(x)); });
+      if(r.zc) ['i-zc','n-zc'].forEach(x => act.add(x));
+      if(r.zd) ['i-zd','n-zd'].forEach(x => act.add(x));
+      if(r.zr) ['i-zr','n-zr'].forEach(x => act.add(x));
+      if(r.st==='START') act.add('i-init'); }
+    sigIds.forEach(id => $(id).classList.toggle('act', act.has(id)));
+    $('v-row').textContent = r ? 'ROW = '+r.ROW : '';
+    $('v-col').textContent = r ? 'COL = '+r.COL : '';
+    $('v-d').textContent = r ? 'count_delay = '+r.D : '';
+    $('v-addr').textContent = r ? '{'+r.ROW+', '+r.COL+'}' : '';
+    $('v-mem').textContent = r ? 'sup '+r.top.toString(2).padStart(3,'0')+' · inf '+r.bot.toString(2).padStart(3,'0') : '';
+    $('v-zd').textContent = r ? 'ZD = '+r.zd : '';
+
+    $('eyebrow').textContent = 'Escena '+s.sc+' · '+SCENES[s.sc-1];
+    $('stitle').textContent = s.t; $('stext').textContent = s.d;
+    $('count').textContent = 'Paso '+(idx+1)+' de '+steps.length;
+    $('bprev').disabled = idx===0; $('bnext').disabled = idx===steps.length-1;
+    document.querySelectorAll('#scenes button').forEach((bt,i) => bt.setAttribute('aria-current', String(i+1===s.sc)));
+    const simOn = s.sc===6; $('simpanel').hidden = !simOn;
+    if(simOn){
+      const blank = [Array(COLS).fill(0),Array(COLS).fill(0)];
+      grid('g-mem', IMG);
+      grid('g-sr', r ? r.sr : blank);
+      grid('g-lt', r ? r.lt : blank);
+      const sh = r ? r.shown : IMG.map(a => a.map(() => 0));
+      grid('g-pan', sh, y => r && r.lit!==null && (y===r.lit || y===r.lit+ROWS) ? true : 0.35);
+      const upto = r ? s.i : -1;
+      $('trace').innerHTML = rows.slice(0,upto+1).map((x,i) => {
+        const a = SIGS.filter(k => x.o[k]===ACT[k]).map(k => k+'='+ACT[k]).join(', ') || '—';
+        return '<tr'+(i===upto?' class="cur"':'')+'><td>'+x.c+'</td><td>'+x.st+'</td><td>'+x.ROW+'</td><td>'+x.COL+'</td><td>'+x.D+'</td><td>'+x.zc+'</td><td>'+x.zd+'</td><td>'+x.zr+'</td><td>'+a+'</td></tr>';
+      }).join('') || '<tr><td colspan="9">Pulse Siguiente para ejecutar el primer ciclo.</td></tr>';
+    }
+  }
+  function go(n){ idx=Math.max(0,Math.min(steps.length-1,n)); render(); }
+  function stop(){ if(timer){ clearInterval(timer); timer=null; $('bplay').textContent='Reproducir'; } }
+  SCENES.forEach((n,i) => { const li=document.createElement('li'), bt=document.createElement('button');
+    bt.type='button'; bt.textContent=(i+1)+' '+n; bt.addEventListener('click', () => { stop(); go(steps.findIndex(s => s.sc===i+1)); });
+    li.appendChild(bt); $('scenes').appendChild(li); });
+  $('bnext').addEventListener('click', () => { stop(); go(idx+1); });
+  $('bprev').addEventListener('click', () => { stop(); go(idx-1); });
+  $('bfirst').addEventListener('click', () => { stop(); go(0); });
+  $('bplay').addEventListener('click', () => { if(timer){ stop(); return; } if(idx===steps.length-1) go(0);
+    $('bplay').textContent='Pausa'; timer=setInterval(() => { if(idx>=steps.length-1){ stop(); return; } go(idx+1); }, idx>=base.length-1?700:3200); });
+  document.addEventListener('keydown', e => { if(e.target.tagName==='INPUT') return;
+    if(e.key==='ArrowRight'||e.key===' '){ e.preventDefault(); stop(); go(idx+1); }
+    if(e.key==='ArrowLeft'){ e.preventDefault(); stop(); go(idx-1); } });
+  $('fixZC').addEventListener('change', () => { stop(); build(); go(base.length-1); });
+  build(); render();
+})();
+</script>

@@ -50,3 +50,8 @@ clean:
 
 
 #cd ../build/fpgbc_plat/software/libc && rm -rf * && make -f /Work/CAD/litex/litex/litex/soc/software/libc/Makefile LIBC_MODE=full
+#En /Work/CAD/litex/litex/litex/soc/software/libc/Makefile, cambia la línea 6, LIBC_MODE ?= full, por:
+
+#override LIBC_MODE = full
+
+#PREFIX=/Work/CAD/gowin SRC=/Work/CAD/gowin/src GOWIN_DEVICES=GW2A-18C ./install_gowin_oss.sh

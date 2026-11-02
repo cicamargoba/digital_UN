@@ -1,0 +1,576 @@
+<title>Síntesis del conversor BCD</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: cabecera con escenas → lienzo SVG (hoja de esquemático) → panel de narración y controles → traza de simulación */
+:root{
+  --paper:#f2f4f7; --sheet:#fbfcfd; --grid:#e4e8ee; --ink:#1b2231; --muted:#5a6477; --line:#2b3346;
+  --accent:#2c56c9; --on:#d9381e; --sig:#a8296a; --pill:#ffffff;
+  --f-gray:#c9cbcf; --f-pink:#fbbccb; --f-lblue:#acd8e6; --f-lav:#e4e6f8; --f-white:#ffffff; --f-yellow:#fff04a; --f-green:#98ec92;
+  --f-reg:#f8898a; --f-sum:#e4e6f8; --f-cnt:#6cb83a; --f-cmpy:#fdf9a8; --f-ctrl:#fbf6c9;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --cond:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0f141c; --sheet:#141a24; --grid:#1d2533; --ink:#e3e8f1; --muted:#97a3b8; --line:#c5cede;
+  --accent:#7ea4ff; --on:#ff6a4d; --sig:#ff86c2; --pill:#141a24;
+  --f-gray:#454a54; --f-pink:#74344c; --f-lblue:#22556a; --f-lav:#383b5a; --f-white:#1b2230; --f-yellow:#6a6114; --f-green:#2a672b;
+  --f-reg:#843333; --f-sum:#383b5a; --f-cnt:#2f6417; --f-cmpy:#57531f; --f-ctrl:#3d3a1c; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#0f141c; --sheet:#141a24; --grid:#1d2533; --ink:#e3e8f1; --muted:#97a3b8; --line:#c5cede;
+  --accent:#7ea4ff; --on:#ff6a4d; --sig:#ff86c2; --pill:#141a24;
+  --f-gray:#454a54; --f-pink:#74344c; --f-lblue:#22556a; --f-lav:#383b5a; --f-white:#1b2230; --f-yellow:#6a6114; --f-green:#2a672b;
+  --f-reg:#843333; --f-sum:#383b5a; --f-cnt:#2f6417; --f-cmpy:#57531f; --f-ctrl:#3d3a1c; color-scheme:dark }
+
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 32px;display:grid;gap:16px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px}
+h1{font-family:var(--cond);font-weight:700;font-size:clamp(24px,3.2vw,34px);margin:0;letter-spacing:.01em;text-wrap:balance}
+.sub{margin:2px 0 0;color:var(--muted);font-family:var(--mono);font-size:12.5px}
+.scenes{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.scenes button{font:500 12.5px var(--mono);color:var(--muted);background:transparent;border:1px solid var(--grid);border-radius:4px;padding:5px 9px;cursor:pointer}
+.scenes button[aria-current="true"]{color:var(--sheet);background:var(--ink);border-color:var(--ink)}
+.scenes button:focus-visible,.ctl button:focus-visible,.sim input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stagewrap{overflow-x:auto;background:var(--sheet);border:1px solid var(--grid);border-radius:6px;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+#stage{display:block;width:100%;min-width:820px;height:auto}
+.panel{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 28px;align-items:start}
+@media (max-width:760px){.panel{grid-template-columns:minmax(0,1fr)}}
+.eyebrow{font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0}
+.panel h2{font-family:var(--cond);font-weight:700;font-size:22px;margin:2px 0 6px;text-wrap:balance}
+.panel p{margin:0;max-width:68ch}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ctl button{font:600 14px var(--sans);border:1px solid var(--line);background:var(--sheet);color:var(--ink);border-radius:4px;padding:8px 14px;cursor:pointer;min-height:40px}
+.ctl button.primary{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.ctl button:disabled{opacity:.4;cursor:default}
+.count{font:12.5px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums;width:100%}
+[hidden]{display:none!important}
+.sim{display:grid;gap:10px;border-top:1px solid var(--grid);padding-top:14px}
+.sim .row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.sim label{font:500 13px var(--mono)}
+.sim input{width:64px;font:15px var(--mono);padding:5px 6px;border:1px solid var(--line);border-radius:4px;background:var(--sheet);color:var(--ink)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;font:13px var(--mono);font-variant-numeric:tabular-nums;min-width:640px;width:100%}
+th,td{text-align:left;padding:4px 10px;border-bottom:1px solid var(--grid);white-space:nowrap}
+th{color:var(--muted);font-weight:600}
+tr.cur td{background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.hint{font:12.5px var(--mono);color:var(--muted)}
+
+svg text{font-family:var(--sans);font-size:14px;fill:var(--ink)}
+svg .b{font-weight:600}
+svg .mono{font-family:var(--mono)}
+svg .sm{font-size:11.5px}
+svg .lbl{font-family:var(--mono);font-size:11.5px;fill:var(--muted)}
+svg .sig{fill:var(--sig);font-family:var(--mono);font-size:12px}
+svg .ttl{font-family:var(--cond);font-weight:700;font-size:15px}
+svg .port{font-family:var(--mono);font-size:11px;fill:var(--ink)}
+svg .ann{font-family:var(--mono);font-size:11.5px;fill:var(--on);font-weight:600}
+svg .one{fill:var(--on);font-weight:600}
+.w,.t{fill:none;stroke:var(--line);stroke-width:1.6}
+.bus{fill:none;stroke:var(--line);stroke-width:3}
+.shape{stroke:var(--line);stroke-width:2}
+.f-gray{fill:var(--f-gray)} .f-pink{fill:var(--f-pink)} .f-lblue{fill:var(--f-lblue)} .f-lav{fill:var(--f-lav)}
+.f-white{fill:var(--f-white)} .f-yellow{fill:var(--f-yellow)} .f-green{fill:var(--f-green)} .f-reg{fill:var(--f-reg)}
+.f-sum{fill:var(--f-sum)} .f-cnt{fill:var(--f-cnt)} .f-cmpy{fill:var(--f-cmpy)} .f-ctrl{fill:var(--f-ctrl)}
+.ahp{fill:var(--line)} .ahm{fill:var(--accent)}
+.map{fill:none;stroke:var(--accent);stroke-width:1.8;stroke-dasharray:6 5;animation:flow 1.1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-22}}
+.pill rect{fill:var(--pill);stroke:var(--on);stroke-width:1.4}
+.pill text{font-family:var(--mono);font-size:11.5px;fill:var(--on);font-weight:600}
+.pill .opx{fill:var(--ink);font-weight:400}
+.pill.in rect{stroke:var(--sig)} .pill.in text{fill:var(--sig)}
+.pill.none rect{stroke:var(--muted);stroke-dasharray:3 3} .pill.none text{fill:var(--muted)}
+.el{opacity:0;transition:opacity .55s ease;pointer-events:none}
+.el.on{opacity:1}
+.hl .shape{stroke:var(--accent);stroke-width:4}
+text.hl{fill:var(--accent)!important;font-weight:700}
+.tr.hl path{stroke:var(--accent);stroke-width:3}
+.tr.hl text{fill:var(--accent);font-weight:700}
+text.act{fill:var(--on)!important;font-weight:700}
+.state.active .shape{stroke:var(--on);stroke-width:5}
+#fsm{transition:transform 1s cubic-bezier(.6,0,.2,1),opacity .55s ease}
+#fsm.collapsed{transform:translate(-209px,128px) scale(.55)}
+@media (prefers-reduced-motion:reduce){ .el,#fsm{transition:none} .map{animation:none} }
+
+:root{--b-white:#ffffff;--b-pink:#ffd6d8;--b-yel:#f2e94e;--b-lg:#dde9d5;--b-start:#f8ef72;--b-sd:#9ac1f1;--b-a2:#8ff0a4;--b-add:#e0a5a5;--b-end:#d8b6dc;--b-reg:#c4ecfb;--b-sum:#dde9d5;--b-cnt:#fdd9d9;--b-rg:#fcfadc;--b-mux:#dde9d5;--sel:#8b4fe8;}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){--b-white:#1b2230;--b-pink:#6a3a40;--b-yel:#5f5a14;--b-lg:#2e4a2c;--b-start:#625a1a;--b-sd:#2c4f80;--b-a2:#25643a;--b-add:#6a3a3a;--b-end:#56385c;--b-reg:#21485a;--b-sum:#2e4a2c;--b-cnt:#6a3a3a;--b-rg:#4a4626;--b-mux:#2e4a2c;--sel:#b48cff;} }
+:root[data-theme="dark"]{--b-white:#1b2230;--b-pink:#6a3a40;--b-yel:#5f5a14;--b-lg:#2e4a2c;--b-start:#625a1a;--b-sd:#2c4f80;--b-a2:#25643a;--b-add:#6a3a3a;--b-end:#56385c;--b-reg:#21485a;--b-sum:#2e4a2c;--b-cnt:#6a3a3a;--b-rg:#4a4626;--b-mux:#2e4a2c;--sel:#b48cff;}
+.b-white{fill:var(--b-white)} .b-pink{fill:var(--b-pink)} .b-yel{fill:var(--b-yel)} .b-lg{fill:var(--b-lg)}
+.b-start{fill:var(--b-start)} .b-sd{fill:var(--b-sd)} .b-a2{fill:var(--b-a2)} .b-add{fill:var(--b-add)} .b-end{fill:var(--b-end)}
+.b-reg{fill:var(--b-reg)} .b-sum{fill:var(--b-sum)} .b-cnt{fill:var(--b-cnt)} .b-rg{fill:var(--b-rg)} .b-mux{fill:var(--b-mux)}
+.selw{fill:none;stroke:var(--sel);stroke-width:1.6} svg .selt{fill:var(--sel);font-family:var(--mono);font-size:12px;font-weight:600}
+svg .xs{font-size:10.5px}
+.chk{display:flex;gap:6px;align-items:center;font:13px var(--mono)}
+.chk input{width:auto}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Síntesis del conversor BCD</h1>
+      <p class="sub">bin_to_bcd · diagrama de flujo → ruta de datos → FSM → diagrama de bloques</p>
+    </div>
+    <ul class="scenes" id="scenes"></ul>
+  </header>
+  <div class="stagewrap">
+  <svg id="stage" viewBox="0 0 1200 680" role="img" aria-label="Animación de síntesis del conversor binario a BCD">
+    <defs>
+      <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path class="ahp" d="M0,0 L10,5 L0,10z"/></marker>
+      <marker id="ahm" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path class="ahm" d="M0,0 L10,5 L0,10z"/></marker>
+    </defs>
+
+    <g id="fc" class="el on">
+      <path class="w" d="M300,48 V66" marker-end="url(#ah)"/>
+      <path class="w" d="M300,116 V136" marker-end="url(#ah)"/>
+      <path class="w" d="M300,186 V204" marker-end="url(#ah)"/>
+      <path class="w" d="M220,232 H170" marker-end="url(#ah)"/><text x="190" y="225" class="sm">SI</text>
+      <path class="w" d="M300,258 V280 M80,280 H515"/><text x="308" y="273" class="sm">NO</text>
+      <path class="w" d="M8,460 H588 V128 H304" marker-end="url(#ah)"/>
+      <g id="fc-st"><rect class="shape b-white" x="190" y="8" width="220" height="40" rx="20"/>
+        <text x="300" y="25" text-anchor="middle" class="mono sm b">bin_to_bcd</text>
+        <text x="300" y="41" text-anchor="middle" class="mono sm">Input A′ (16 bits)</text></g>
+      <g id="fc-ini"><rect class="shape b-white" x="200" y="68" width="200" height="48" rx="3"/>
+        <text x="300" y="88" text-anchor="middle" class="mono b">A = {A″,A′}</text>
+        <text x="300" y="106" text-anchor="middle" class="mono">count = N</text></g>
+      <g id="fc-sh"><rect class="shape b-pink" x="200" y="138" width="200" height="48" rx="3"/>
+        <text x="300" y="158" text-anchor="middle" class="mono b">A = A &lt;&lt; 1</text>
+        <text x="300" y="176" text-anchor="middle" class="mono b">count = count − 1</text></g>
+      <g id="fc-z"><polygon class="shape b-white" points="220,232 300,206 380,232 300,258"/>
+        <text x="300" y="237" text-anchor="middle" class="mono">count == 0?</text></g>
+      <g id="fc-end"><rect class="shape b-white" x="70" y="216" width="98" height="32" rx="16"/>
+        <text x="119" y="237" text-anchor="middle" class="mono">end</text></g>
+      <path class="w" d="M80,280 V296" marker-end="url(#ah)"/>
+      <path class="w" d="M80,362 V392" marker-end="url(#ah)"/><text x="86" y="380" class="sm">SI</text>
+      <path class="w" d="M14,330 H8 V460"/><text x="10" y="350" class="sm" text-anchor="start">NO</text>
+      <path class="w" d="M80,436 V460"/>
+      <g id="fc-c0"><polygon class="shape b-yel" points="14,330 80,298 146,330 80,362"/>
+        <text x="80" y="327" text-anchor="middle" class="mono sm">A[31:28]</text>
+        <text x="80" y="342" text-anchor="middle" class="mono sm">&gt; 4 ?</text></g>
+      <g id="fc-a0"><rect class="shape b-lg" x="22" y="394" width="116" height="42" rx="3"/>
+        <text x="80" y="411" text-anchor="middle" class="mono sm">A[31:28] =</text>
+        <text x="80" y="428" text-anchor="middle" class="mono sm">A[31:28] + 3</text></g>
+      <path class="w" d="M225,280 V296" marker-end="url(#ah)"/>
+      <path class="w" d="M225,362 V392" marker-end="url(#ah)"/><text x="231" y="380" class="sm">SI</text>
+      <path class="w" d="M159,330 H153 V460"/><text x="155" y="350" class="sm" text-anchor="start">NO</text>
+      <path class="w" d="M225,436 V460"/>
+      <g id="fc-c1"><polygon class="shape b-yel" points="159,330 225,298 291,330 225,362"/>
+        <text x="225" y="327" text-anchor="middle" class="mono sm">A[27:24]</text>
+        <text x="225" y="342" text-anchor="middle" class="mono sm">&gt; 4 ?</text></g>
+      <g id="fc-a1"><rect class="shape b-lg" x="167" y="394" width="116" height="42" rx="3"/>
+        <text x="225" y="411" text-anchor="middle" class="mono sm">A[27:24] =</text>
+        <text x="225" y="428" text-anchor="middle" class="mono sm">A[27:24] + 3</text></g>
+      <path class="w" d="M370,280 V296" marker-end="url(#ah)"/>
+      <path class="w" d="M370,362 V392" marker-end="url(#ah)"/><text x="376" y="380" class="sm">SI</text>
+      <path class="w" d="M304,330 H298 V460"/><text x="300" y="350" class="sm" text-anchor="start">NO</text>
+      <path class="w" d="M370,436 V460"/>
+      <g id="fc-c2"><polygon class="shape b-yel" points="304,330 370,298 436,330 370,362"/>
+        <text x="370" y="327" text-anchor="middle" class="mono sm">A[23:20]</text>
+        <text x="370" y="342" text-anchor="middle" class="mono sm">&gt; 4 ?</text></g>
+      <g id="fc-a2"><rect class="shape b-lg" x="312" y="394" width="116" height="42" rx="3"/>
+        <text x="370" y="411" text-anchor="middle" class="mono sm">A[23:20] =</text>
+        <text x="370" y="428" text-anchor="middle" class="mono sm">A[23:20] + 3</text></g>
+      <path class="w" d="M515,280 V296" marker-end="url(#ah)"/>
+      <path class="w" d="M515,362 V392" marker-end="url(#ah)"/><text x="521" y="380" class="sm">SI</text>
+      <path class="w" d="M449,330 H443 V460"/><text x="445" y="350" class="sm" text-anchor="start">NO</text>
+      <path class="w" d="M515,436 V460"/>
+      <g id="fc-c3"><polygon class="shape b-yel" points="449,330 515,298 581,330 515,362"/>
+        <text x="515" y="327" text-anchor="middle" class="mono sm">A[19:16]</text>
+        <text x="515" y="342" text-anchor="middle" class="mono sm">&gt; 4 ?</text></g>
+      <g id="fc-a3"><rect class="shape b-lg" x="457" y="394" width="116" height="42" rx="3"/>
+        <text x="515" y="411" text-anchor="middle" class="mono sm">A[19:16] =</text>
+        <text x="515" y="428" text-anchor="middle" class="mono sm">A[19:16] + 3</text></g>
+    </g>
+
+    <g id="co-ini" class="el pill"><rect x="408" y="68" width="172" height="46" rx="4"/>
+      <text x="416" y="86"><tspan class="opx">A={A″,A′}</tspan> → LD</text>
+      <text x="416" y="104"><tspan class="opx">count=N</tspan> → LD</text></g>
+    <g id="co-sh" class="el pill"><rect x="408" y="138" width="172" height="46" rx="4"/>
+      <text x="416" y="156"><tspan class="opx">A&lt;&lt;1</tspan> → SH</text>
+      <text x="416" y="174"><tspan class="opx">count−1</tspan> → SH</text></g>
+    <g id="co-z" class="el pill in"><rect x="388" y="221" width="58" height="22" rx="4"/>
+      <text x="396" y="236">lee Z</text></g>
+    <g id="co-end" class="el pill"><rect x="70" y="252" width="80" height="22" rx="4"/>
+      <text x="78" y="267">→ DONE</text></g>
+    <g id="co-cmp" class="el pill"><rect x="8" y="472" width="577" height="24" rx="4"/>
+      <text x="16" y="488"><tspan class="opx">A[i] &gt; 4 ?  (las 4 a la vez)</tspan> → SEL=1 (−5), LD_MSB</text></g>
+    <g id="co-add" class="el pill"><rect x="8" y="500" width="577" height="24" rx="4"/>
+      <text x="16" y="516"><tspan class="opx">A[i] = A[i] + 3  (solo donde A[i] &gt; 4)</tspan> → SEL=0 (+3), OE</text></g>
+
+    <g id="ctrl" class="el">
+      <rect class="shape b-rg" x="110" y="100" width="340" height="380" rx="4"/>
+      <text x="126" y="124" class="ttl">CONTROL</text>
+      <path class="bus" d="M62,170 H106" marker-end="url(#ah)"/><text id="i-init" x="56" y="175" text-anchor="end" class="mono b">INIT</text>
+      <path class="bus" d="M84,330 H106" marker-end="url(#ah)"/><text id="i-msb" x="78" y="334" text-anchor="end" class="sig">MSB[3:0]</text>
+      <path class="w" d="M62,370 H106" marker-end="url(#ah)"/><text id="i-z" x="56" y="374" text-anchor="end" class="sig">Z</text>
+      <path class="w" d="M450,140 H490" marker-end="url(#ah)"/><text id="o-sh" x="496" y="144" class="lbl">SH</text>
+      <path class="w" d="M450,180 H490" marker-end="url(#ah)"/><text id="o-sel" x="496" y="184" class="lbl">SEL</text>
+      <path class="w" d="M450,220 H490" marker-end="url(#ah)"/><text id="o-ldmsb" x="496" y="224" class="lbl">LD_MSB</text>
+      <path class="w" d="M450,260 H490" marker-end="url(#ah)"/><text id="o-oe" x="496" y="264" class="lbl">OE (add)</text>
+      <path class="w" d="M450,300 H490" marker-end="url(#ah)"/><text id="o-ld" x="496" y="304" class="lbl">LD</text>
+      <path class="bus" d="M280,480 V516" marker-end="url(#ah)"/><text id="o-done" x="280" y="536" text-anchor="middle" class="mono b">DONE</text>
+    </g>
+
+    <g id="fsm" class="el">
+      <g id="fs-start" class="el">
+        <g id="t-i0" class="tr"><path class="t" d="M665,58 C645,5 735,5 715,58" marker-end="url(#ah)"/><text x="640" y="26" text-anchor="end" class="mono sm">init=0</text></g>
+        <g id="t-i1" class="tr"><path class="t" d="M690,166 V272" marker-end="url(#ah)"/><text x="700" y="224" text-anchor="start" class="mono sm">init=1</text></g>
+        <g id="st-START" class="state"><ellipse class="shape b-start" cx="690" cy="110" rx="92" ry="56"/>
+          <text x="690" y="90" text-anchor="middle" class="b">START</text>
+          <text x="690" y="109" text-anchor="middle" class="mono sm"><tspan>done=0</tspan> <tspan>sh=0</tspan></text>
+          <text x="690" y="125" text-anchor="middle" class="mono sm"><tspan class="one">ld=1</tspan> <tspan>sel=0</tspan></text>
+          <text x="690" y="141" text-anchor="middle" class="mono sm"><tspan>ld_msb=0</tspan> <tspan>add=0</tspan></text></g>
+      </g>
+      <g id="fs-sd" class="el">
+        <g id="t-z0" class="tr"><path class="t" d="M758,292 L842,226" marker-end="url(#ah)"/><text x="812" y="250" text-anchor="start" class="mono sm">Z=0</text></g>
+        <g id="t-z1" class="tr"><path class="t" d="M690,386 V502" marker-end="url(#ah)"/><text x="700" y="450" text-anchor="start" class="mono sm">Z=1</text></g>
+        <g id="st-SHIFT_DEC" class="state"><ellipse class="shape b-sd" cx="690" cy="330" rx="92" ry="56"/>
+          <text x="690" y="310" text-anchor="middle" class="b">SHIFT_DEC</text>
+          <text x="690" y="329" text-anchor="middle" class="mono sm"><tspan>done=0</tspan> <tspan class="one">sh=1</tspan></text>
+          <text x="690" y="345" text-anchor="middle" class="mono sm"><tspan>ld=0</tspan> <tspan class="one">sel=1</tspan></text>
+          <text x="690" y="361" text-anchor="middle" class="mono sm"><tspan class="one">ld_msb=1</tspan> <tspan>add=0</tspan></text></g>
+      </g>
+      <g id="fs-check" class="el">
+        <g id="t-cl" class="tr"><path class="t" d="M990,228 L1034,282" marker-end="url(#ah)"/></g>
+        <g id="st-CHECK" class="state"><ellipse class="shape b-white" cx="920" cy="190" rx="92" ry="56"/>
+          <text x="920" y="170" text-anchor="middle" class="b">CHECK</text>
+          <text x="920" y="189" text-anchor="middle" class="mono sm"><tspan>done=0</tspan> <tspan>sh=0</tspan></text>
+          <text x="920" y="205" text-anchor="middle" class="mono sm"><tspan>ld=0</tspan> <tspan class="one">sel=1</tspan></text>
+          <text x="920" y="221" text-anchor="middle" class="mono sm"><tspan class="one">ld_msb=1</tspan> <tspan>add=0</tspan></text></g>
+      </g>
+      <g id="fs-a2" class="el">
+        <g id="t-la" class="tr"><path class="t" d="M1044,380 L992,428" marker-end="url(#ah)"/></g>
+        <g id="st-LOAD_A2" class="state"><ellipse class="shape b-a2" cx="1090" cy="330" rx="92" ry="56"/>
+          <text x="1090" y="310" text-anchor="middle" class="b">LOAD_A2</text>
+          <text x="1090" y="329" text-anchor="middle" class="mono sm"><tspan>done=0</tspan> <tspan>sh=0</tspan></text>
+          <text x="1090" y="345" text-anchor="middle" class="mono sm"><tspan>ld=0</tspan> <tspan>sel=0</tspan></text>
+          <text x="1090" y="361" text-anchor="middle" class="mono sm"><tspan>ld_msb=0</tspan> <tspan class="one">add=1</tspan></text></g>
+      </g>
+      <g id="fs-add" class="el">
+        <g id="t-as" class="tr"><path class="t" d="M846,438 L770,372" marker-end="url(#ah)"/></g>
+        <g id="st-ADD" class="state"><ellipse class="shape b-add" cx="920" cy="470" rx="92" ry="56"/>
+          <text x="920" y="450" text-anchor="middle" class="b">ADD</text>
+          <text x="920" y="469" text-anchor="middle" class="mono sm"><tspan>done=0</tspan> <tspan>sh=0</tspan></text>
+          <text x="920" y="485" text-anchor="middle" class="mono sm"><tspan>ld=0</tspan> <tspan>sel=0</tspan></text>
+          <text x="920" y="501" text-anchor="middle" class="mono sm"><tspan>ld_msb=0</tspan> <tspan>add=0</tspan></text></g>
+      </g>
+      <g id="fs-end1" class="el">
+        <g id="st-END1" class="state"><ellipse class="shape b-end" cx="690" cy="560" rx="92" ry="56"/>
+          <text x="690" y="540" text-anchor="middle" class="b">END1</text>
+          <text x="690" y="559" text-anchor="middle" class="mono sm"><tspan class="one">done=1</tspan> <tspan>sh=0</tspan></text>
+          <text x="690" y="575" text-anchor="middle" class="mono sm"><tspan>ld=0</tspan> <tspan>sel=0</tspan></text>
+          <text x="690" y="591" text-anchor="middle" class="mono sm"><tspan>ld_msb=0</tspan> <tspan>add=0</tspan></text></g>
+      </g>
+    </g>
+
+    <g id="dp-reg" class="el">
+      <path class="bus" d="M1060,22 V76" marker-end="url(#ah)"/><text x="1060" y="16" text-anchor="middle" class="ttl">Op_A</text>
+      <rect class="shape b-reg" x="640" y="80" width="490" height="56"/>
+      <path class="w" d="M728,80 V136"/>
+      <text x="684" y="99" text-anchor="middle" class="mono xs b">A″[31:28]</text>
+      <text id="v-d0" x="684" y="126" text-anchor="middle" class="mono sm b"></text><path class="w" d="M816,80 V136"/>
+      <text x="772" y="99" text-anchor="middle" class="mono xs b">A″[27:24]</text>
+      <text id="v-d1" x="772" y="126" text-anchor="middle" class="mono sm b"></text><path class="w" d="M904,80 V136"/>
+      <text x="860" y="99" text-anchor="middle" class="mono xs b">A″[23:20]</text>
+      <text id="v-d2" x="860" y="126" text-anchor="middle" class="mono sm b"></text><path class="w" d="M992,80 V136"/>
+      <text x="948" y="99" text-anchor="middle" class="mono xs b">A″[19:16]</text>
+      <text id="v-d3" x="948" y="126" text-anchor="middle" class="mono sm b"></text>
+      <text x="1000" y="98" class="ttl">LSR</text><text id="v-lsr" x="1000" y="126" class="mono sm b"></text>
+      <text id="p-sh" x="1122" y="96" text-anchor="end" class="port el">SH</text>
+      <text id="p-lda2" x="1122" y="113" text-anchor="end" class="port el">LDA2[3:0]</text>
+      <text id="p-ld" x="1122" y="130" text-anchor="end" class="port el">LD</text>
+      <g id="w-rsh" class="el"><path class="w" d="M1196,92 H1133" marker-end="url(#ah)"/><text id="n-sh" x="1150" y="88" class="lbl">SH</text></g>
+      <g id="w-rld" class="el"><path class="w" d="M1196,126 H1133" marker-end="url(#ah)"/><text id="n-ld" x="1150" y="122" class="lbl">LD</text></g>
+      <text id="a-sh" x="1006" y="160" class="el ann">SH: {A″,LSR} ≪ 1</text>
+      <text id="a-ld" x="1006" y="176" class="el ann">LD: A″ ← 0, LSR ← Op_A</text>
+      <text id="a-lda2" x="1006" y="192" class="el ann">LDA2[i]: A″[i] ← suma</text>
+    </g>
+    <g id="dp-cnt" class="el">
+      <rect class="shape b-cnt" x="640" y="470" width="150" height="60"/>
+      <text x="652" y="489" class="ttl">Count</text><text id="v-cnt" x="782" y="489" text-anchor="end" class="mono sm b"></text>
+      <text id="p-cld" x="652" y="507" class="port el">LD</text><text id="p-csh" x="652" y="523" class="port el">SH</text>
+      <g id="w-cld" class="el"><path class="w" d="M604,503 H638" marker-end="url(#ah)"/><text id="n-cld" x="606" y="499" class="lbl xs">LD</text></g>
+      <g id="w-csh" class="el"><path class="w" d="M604,519 H638" marker-end="url(#ah)"/><text id="n-csh" x="606" y="533" class="lbl xs">SH</text></g>
+      <path class="w" d="M790,500 H828" marker-end="url(#ah)"/><text id="n-z" x="834" y="504" class="sig">Z</text>
+      <text id="v-z" x="782" y="523" text-anchor="end" class="mono sm b"></text>
+      <text id="a-cld" x="640" y="548" class="el ann">LD: count ← N</text>
+      <text id="a-csh" x="640" y="564" class="el ann">SH: count ← count − 1 · Z = (count == 0)</text>
+    </g>
+    <g id="dp-sum" class="el">
+      <path class="bus" d="M684,136 V248" marker-end="url(#ah)"/><text x="689" y="152" class="mono xs b">MIL</text><path class="bus" d="M772,136 V248" marker-end="url(#ah)"/><text x="777" y="152" class="mono xs b">CENT</text><path class="bus" d="M860,136 V248" marker-end="url(#ah)"/><text x="865" y="152" class="mono xs b">DEC</text><path class="bus" d="M948,136 V248" marker-end="url(#ah)"/><text x="953" y="152" class="mono xs b">UNID</text>
+      <g id="mux0"><text x="707" y="178" text-anchor="middle" class="mono xs b">3</text><text x="729" y="178" text-anchor="middle" class="mono xs b">−5</text>
+      <path class="w" d="M708,182 V199 M728,182 V199"/>
+      <polygon class="shape b-mux" points="698,200 738,200 730,218 706,218"/>
+      <path class="w" d="M718,218 V248" marker-end="url(#ah)"/>
+      <path class="selw" d="M734,209 H744 V232"/></g><g id="mux1"><text x="795" y="178" text-anchor="middle" class="mono xs b">3</text><text x="817" y="178" text-anchor="middle" class="mono xs b">−5</text>
+      <path class="w" d="M796,182 V199 M816,182 V199"/>
+      <polygon class="shape b-mux" points="786,200 826,200 818,218 794,218"/>
+      <path class="w" d="M806,218 V248" marker-end="url(#ah)"/>
+      <path class="selw" d="M822,209 H832 V232"/></g><g id="mux2"><text x="883" y="178" text-anchor="middle" class="mono xs b">3</text><text x="905" y="178" text-anchor="middle" class="mono xs b">−5</text>
+      <path class="w" d="M884,182 V199 M904,182 V199"/>
+      <polygon class="shape b-mux" points="874,200 914,200 906,218 882,218"/>
+      <path class="w" d="M894,218 V248" marker-end="url(#ah)"/>
+      <path class="selw" d="M910,209 H920 V232"/></g><g id="mux3"><text x="971" y="178" text-anchor="middle" class="mono xs b">3</text><text x="993" y="178" text-anchor="middle" class="mono xs b">−5</text>
+      <path class="w" d="M972,182 V199 M992,182 V199"/>
+      <polygon class="shape b-mux" points="962,200 1002,200 994,218 970,218"/>
+      <path class="w" d="M982,218 V248" marker-end="url(#ah)"/>
+      <path class="selw" d="M998,209 H1008 V232"/></g>
+      <g id="w-sel" class="el"><path class="selw" d="M744,232 H1000"/><text id="n-sel" x="1004" y="236" class="selt">SEL</text></g>
+      <text id="a-sel" x="1004" y="252" class="el ann">SEL=1: −5 · SEL=0: +3</text>
+      <rect class="shape b-sum" x="676" y="250" width="70" height="36" rx="2"/>
+      <text x="711" y="265" text-anchor="middle" class="mono xs b">SUM_C2</text>
+      <text id="v-s0" x="711" y="280" text-anchor="middle" class="mono xs b"></text>
+      <path class="w" d="M711,286 V306"/><rect class="shape b-sum" x="764" y="250" width="70" height="36" rx="2"/>
+      <text x="799" y="265" text-anchor="middle" class="mono xs b">SUM_C2</text>
+      <text id="v-s1" x="799" y="280" text-anchor="middle" class="mono xs b"></text>
+      <path class="w" d="M799,286 V306"/><rect class="shape b-sum" x="852" y="250" width="70" height="36" rx="2"/>
+      <text x="887" y="265" text-anchor="middle" class="mono xs b">SUM_C2</text>
+      <text id="v-s2" x="887" y="280" text-anchor="middle" class="mono xs b"></text>
+      <path class="w" d="M887,286 V306"/><rect class="shape b-sum" x="940" y="250" width="70" height="36" rx="2"/>
+      <text x="975" y="265" text-anchor="middle" class="mono xs b">SUM_C2</text>
+      <text id="v-s3" x="975" y="280" text-anchor="middle" class="mono xs b"></text>
+      <path class="w" d="M975,286 V306"/>
+    </g>
+    <g id="dp-fb" class="el">
+      <path class="bus" d="M975,306 H620 V62 H948"/>
+      <path class="w" d="M684,62 V78" marker-end="url(#ah)"/><path class="w" d="M772,62 V78" marker-end="url(#ah)"/><path class="w" d="M860,62 V78" marker-end="url(#ah)"/><path class="w" d="M948,62 V78" marker-end="url(#ah)"/>
+      <text x="626" y="56" class="lbl">sumas → A″[i]</text>
+    </g>
+    <g id="dp-rg" class="el">
+      <path class="bus" d="M975,306 H900 V360 H938" marker-end="url(#ah)"/><circle cx="900" cy="306" r="4" class="ahp"/>
+      <text id="n-msb" x="906" y="336" class="sig">MSB[3:0]</text>
+      <rect class="shape b-rg" x="940" y="344" width="140" height="70"/>
+      <text x="1000" y="362" class="ttl">REG</text><text id="v-reg" x="1072" y="404" text-anchor="end" class="mono sm b"></text>
+      <text id="p-in" x="948" y="364" class="port">IN</text>
+      <text id="p-rld" x="948" y="384" class="port el">LD</text>
+      <text id="p-oe" x="948" y="404" class="port el">OE</text>
+      <g id="w-ldmsb" class="el"><path class="w" d="M880,380 H938" marker-end="url(#ah)"/><text id="n-ldmsb" x="876" y="384" text-anchor="end" class="lbl">LD_MSB</text></g>
+      <g id="w-oe" class="el"><path class="w" d="M880,400 H938" marker-end="url(#ah)"/><text id="n-oe" x="876" y="404" text-anchor="end" class="lbl">OE</text></g>
+      <path class="bus" d="M1080,380 H1165 V109 H1133" marker-end="url(#ah)"/><text id="n-ldv" x="1088" y="372" class="lbl">LD[3:0]</text>
+      <text id="a-rld" x="900" y="434" class="el ann">LD_MSB: REG ← MSB[3:0]</text>
+      <text id="a-oe" x="900" y="450" class="el ann">OE: LD[3:0] → LDA2[3:0]</text>
+    </g>
+
+    <g id="m-reg" class="el"><path class="map" d="M400,92 C520,92 540,104 636,104" marker-end="url(#ahm)"/>
+      <path class="map" d="M400,158 C520,158 540,124 636,124" marker-end="url(#ahm)"/></g>
+    <g id="m-cnt" class="el"><path class="map" d="M400,176 C520,176 560,503 600,503" marker-end="url(#ahm)"/></g>
+    <path id="m-z" class="map el" d="M380,232 C520,232 700,330 712,466" marker-end="url(#ahm)"/>
+    <path id="m-cmp" class="map el" d="M581,330 C620,330 640,268 672,268" marker-end="url(#ahm)"/>
+    <path id="m-rg" class="map el" d="M575,345 C700,430 840,420 936,394" marker-end="url(#ahm)"/>
+    <path id="m-add" class="map el" d="M573,412 C640,412 650,300 676,290" marker-end="url(#ahm)"/>
+    <path id="c-start" class="map el" d="M400,92 C500,92 520,110 596,110" marker-end="url(#ahm)"/>
+    <path id="c-sd" class="map el" d="M400,162 C500,162 520,330 596,330" marker-end="url(#ahm)"/>
+    <path id="c-z" class="map el" d="M380,232 C480,232 560,440 684,444" marker-end="url(#ahm)"/>
+    <path id="c-check" class="map el" d="M520,282 C580,282 600,222 700,222 L824,196" marker-end="url(#ahm)"/>
+    <path id="c-a2" class="map el" d="M573,436 C600,660 1050,660 1088,390" marker-end="url(#ahm)"/>
+    <path id="c-end" class="map el" d="M100,250 C30,300 0,560 120,560 L596,560" marker-end="url(#ahm)"/>
+
+  </svg>
+  </div>
+
+  <section class="panel" aria-live="polite">
+    <div><p class="eyebrow" id="eyebrow"></p><h2 id="stitle"></h2><p id="stext"></p></div>
+    <div class="ctl">
+      <button id="bprev" type="button">◀ Anterior</button>
+      <button id="bnext" type="button" class="primary">Siguiente ▶</button>
+      <button id="bplay" type="button">Reproducir</button>
+      <button id="bfirst" type="button">Inicio</button>
+      <span class="count" id="count"></span>
+    </div>
+  </section>
+
+  <section class="sim" id="simpanel" hidden>
+    <div class="row">
+      <label for="inA">Op_A =</label><input id="inA" type="number" min="0" max="31" value="23">
+      <label class="chk" for="fixN"><input id="fixN" type="checkbox"> Count carga N−1</label>
+      <span class="hint">N = 5 · Op_A de 5 bits · 4 dígitos BCD · Siguiente avanza un ciclo de reloj</span>
+    </div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Ciclo</th><th>Estado</th><th>A″ (MIL CENT DEC UNID)</th><th>LSR</th><th>count</th><th>Z</th><th>REG</th><th>Salidas activas</th></tr></thead>
+      <tbody id="trace"></tbody>
+    </table></div>
+  </section>
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const ALL_EL = Array.from(document.querySelectorAll('.el')).map(e => e.id).filter(Boolean);
+  const SCENES = ['Algoritmo','Ruta de datos','Interconexión','Control','Síntesis','Ejecución'];
+  const DP = ['dp-reg','dp-cnt','dp-sum','dp-fb','dp-rg'];
+  const CO = ['co-ini','co-sh','co-z','co-end','co-cmp','co-add'];
+  const C4 = ['fc-c0','fc-c1','fc-c2','fc-c3'], A4 = ['fc-a0','fc-a1','fc-a2','fc-a3'];
+  const N = 5;
+  const CTLW = ['w-rsh','w-rld','w-cld','w-csh','w-sel','w-ldmsb','w-oe'];
+
+  const base = [
+    {sc:1, t:'El algoritmo', d:'Conversión de binario a BCD por desplazar y sumar 3 (double dabble). En cada iteración se corre A una posición a la izquierda. Antes del siguiente corrimiento, cada dígito BCD mayor que 4 recibe +3, para que al duplicarse genere el acarreo decimal correcto. Tras N corrimientos, A″ contiene el número en BCD.',
+      add:['fc'], hl:[]},
+    {sc:2, t:'A = {A″,A′} y A << 1 → registro de corrimiento', d:'A″ (cuatro dígitos BCD: MIL, CENT, DEC, UNID) y LSR (que recibe Op_A) forman un solo registro de corrimiento a la izquierda. Sus entradas de control se deciden después, al revisar todo lo que se hace con A.',
+      add:['dp-reg'], tmp:['m-reg'], hl:['fc-ini','fc-sh','dp-reg']},
+    {sc:2, t:'count → contador', d:'count se implementa con un contador descendente.',
+      add:['dp-cnt'], tmp:['m-cnt'], hl:['fc-ini','fc-sh','dp-cnt']},
+    {sc:2, t:'¿Qué se hace con count?', d:'count = N en la inicialización y count = count − 1 en el lazo. Por eso el contador necesita una entrada LD (count ← N) y una entrada SH de decremento (count ← count − 1).',
+      add:['p-cld','p-csh','a-cld','a-csh'], hl:['fc-ini','fc-sh','p-cld','p-csh']},
+    {sc:2, t:'count == 0? → salida Z', d:'La decisión sobre el contador es su salida Z, que vale 1 cuando count = 0.',
+      add:[], tmp:['m-z'], hl:['fc-z','n-z']},
+    {sc:2, t:'A[i] > 4 ? → cuatro sumadores', d:'Las cuatro decisiones son independientes, así que se resuelven en paralelo con un SUM_C2 por dígito. El mux elige −5 y se calcula dígito − 5: el bit de acarreo (MSB) vale 1 cuando el dígito es mayor que 4.',
+      add:['dp-sum'], tmp:['m-cmp'], hl:C4.concat(['dp-sum'])},
+    {sc:2, t:'Resultados de las decisiones → REG', d:'Los cuatro resultados MSB[3:0] se guardan en REG. Las decisiones no se resuelven en el control: quedan almacenadas en el camino de datos.',
+      add:['dp-rg'], tmp:['m-rg'], hl:C4.concat(['dp-rg'])},
+    {sc:2, t:'A[i] = A[i] + 3 → mismo sumador', d:'La suma +3 usa los mismos SUM_C2: el mux elige 3. El resultado regresa a cada dígito de A″. Solo se cargan los dígitos que cumplieron la condición: REG entrega LD[3:0] a las cargas LDA2[3:0].',
+      add:['dp-fb'], tmp:['m-add'], hl:A4.concat(['dp-sum','dp-fb','p-lda2'])},
+    {sc:2, t:'¿Qué se hace con A?', d:'A = {A″,A′} en la inicialización requiere LD (A″ ← 0, LSR ← Op_A). A = A << 1 requiere SH. A[i] = A[i] + 3 requiere una carga individual por dígito, LDA2[i], que escribe en A″[i] el resultado de su SUM_C2.',
+      add:['p-ld','p-sh','p-lda2','a-ld','a-sh','a-lda2'], hl:['fc-ini','fc-sh'].concat(A4,['p-ld','p-sh','p-lda2'])},
+    {sc:2, t:'¿Qué se hace con REG?', d:'REG guarda los cuatro resultados de las comparaciones, así que necesita LD. Esos resultados solo deben habilitar la carga de A″ durante la suma, así que necesita OE para entregarlos como LD[3:0].',
+      add:['p-rld','p-oe','a-rld','a-oe'], hl:C4.concat(A4,['p-rld','p-oe'])},
+    {sc:3, t:'Interconexión del camino de datos', d:'Cada dígito de A″ alimenta su SUM_C2 junto con la salida de su mux (3 o −5, según SEL). Las sumas regresan a A″ y sus bits MSB van a REG, cuya salida LD[3:0] habilita la carga de cada dígito. El contador genera Z. Las entradas de control quedan como señales con nombre: SH, LD, SEL, LD_MSB y OE.',
+      add:CTLW, hl:[]},
+    {sc:4, t:'Inicialización → LD', d:'A = {A″,A′} carga Op_A en LSR y pone A″ en 0. count = N carga el contador. Las dos ocurren en el mismo paso, así que comparten la señal LD.',
+      add:['co-ini','a-ld','a-cld'], hl:['fc-ini','n-ld','n-cld','p-ld','p-cld']},
+    {sc:4, t:'Corrimiento y decremento → SH', d:'A << 1 activa el SH del registro y count − 1 activa el SH (decremento) del contador. Ocurren en el mismo paso, así que comparten la señal SH.',
+      add:['co-sh','a-sh','a-csh'], hl:['fc-sh','n-sh','n-csh','p-sh','p-csh']},
+    {sc:4, t:'A[i] > 4 ? → SEL = 1 y LD_MSB', d:'Para evaluar las cuatro decisiones, SEL = 1 hace que los muxes entreguen −5, y LD_MSB guarda en REG los cuatro resultados. Aquí las decisiones se traducen en señales que ordenan la comparación, no en entradas del control.',
+      add:['co-cmp','a-sel','a-rld'], hl:C4.concat(['n-sel','n-ldmsb','p-rld'])},
+    {sc:4, t:'A[i] = A[i] + 3 → SEL = 0 y OE', d:'SEL = 0 hace que los muxes entreguen +3. OE (la salida add de la FSM) pasa LD[3:0] de REG a LDA2[3:0], así que solo se cargan los dígitos que eran mayores que 4.',
+      add:['co-add','a-oe','a-lda2'], hl:A4.concat(['n-sel','n-oe','n-ldv','p-oe','p-lda2'])},
+    {sc:4, t:'end → DONE', d:'end es la salida DONE, que avisa que A″ contiene el resultado en BCD.',
+      add:['co-end'], hl:['fc-end']},
+    {sc:4, t:'count == 0? → entrada Z', d:'La única decisión que llega al control como entrada de transición es count == 0?, que lee la salida Z del contador. MSB[3:0] también llega al control, pero la FSM no la usa.',
+      add:['co-z'], hl:['fc-z','n-z','n-msb']},
+    {sc:4, t:'Inicialización → START', d:'El bloque inicial es el estado START, con ld = 1. El lazo init = 0 y la transición init = 1 no tienen bloque en el flujo: la máquina espera la orden init antes de comenzar.',
+      add:['fsm','fs-start'], rm:DP.concat(CO), tmp:['c-start'], hl:['fc-ini','st-START','t-i0','t-i1']},
+    {sc:4, t:'Corrimiento → SHIFT_DEC', d:'A << 1 y count − 1 forman el estado SHIFT_DEC, con sh = 1. En la FSM este estado también activa sel = 1 y ld_msb = 1, que no aparecen en este bloque del flujo.',
+      add:['fs-sd'], tmp:['c-sd'], hl:['fc-sh','st-SHIFT_DEC']},
+    {sc:4, t:'count == 0? → transiciones Z', d:'count == 0? no crea estado: se convierte en las transiciones de SHIFT_DEC. Z = 0 continúa a CHECK y Z = 1 termina en END1.',
+      add:[], tmp:['c-z'], hl:['fc-z','t-z0','t-z1']},
+    {sc:4, t:'Las cuatro decisiones → CHECK', d:'Las cuatro decisiones A[i] > 4 ? se evalúan a la vez en un solo estado, CHECK, con sel = 1 y ld_msb = 1. No generan ramas en la FSM: CHECK pasa siempre a LOAD_A2, porque el resultado de cada decisión queda en REG.',
+      add:['fs-check'], tmp:['c-check'], hl:C4.concat(['st-CHECK','t-cl'])},
+    {sc:4, t:'Las cuatro sumas → LOAD_A2', d:'Las cuatro sumas condicionales ocurren en un solo estado, LOAD_A2, con sel = 0 y add = 1. REG decide qué dígitos se cargan.',
+      add:['fs-a2'], tmp:['c-a2'], hl:A4.concat(['st-LOAD_A2','t-la'])},
+    {sc:4, t:'ADD → regreso a SHIFT_DEC', d:'El estado ADD no tiene salidas activas ni bloque en el flujo. Corresponde al regreso del lazo hacia el corrimiento: ADD pasa a SHIFT_DEC.',
+      add:['fs-add'], hl:['st-ADD','t-as']},
+    {sc:4, t:'end → END1', d:'end es el estado END1, con done = 1.',
+      add:['fs-end1'], tmp:['c-end'], hl:['fc-end','st-END1']},
+    {sc:4, t:'Flujo y máquina de control', d:'El flujo tiene ocho decisiones y sumas, pero la FSM solo seis estados: las operaciones paralelas sobre los cuatro dígitos se agrupan en CHECK y LOAD_A2, y sus condiciones se resuelven en el camino de datos con REG.',
+      add:[], hl:[]},
+    {sc:5, t:'FSM → bloque CONTROL', d:'La FSM se encapsula en el bloque CONTROL. Sus salidas SH, SEL, LD_MSB, OE (add), LD y DONE manejan el camino de datos. Sus entradas son INIT, Z y MSB[3:0].',
+      add:['ctrl'].concat(DP), rm:['fc'], hl:[], collapse:true},
+    {sc:6, t:'Ejecución ciclo a ciclo', d:'Simulación de la conversión de Op_A (N = 5) en el hardware sintetizado, tal como están la FSM y el diagrama de bloques. En cada ciclo se resaltan el estado activo, las señales en 1 y el contenido de los registros. Cambie Op_A en el panel inferior.',
+      add:[], hl:[], collapse:true}
+  ];
+
+  let vis = new Set();
+  base.forEach(s => { (s.rm||[]).forEach(x => vis.delete(x)); (s.add||[]).forEach(x => vis.add(x)); s.vis = new Set([...vis, ...(s.tmp||[])]); });
+  const FINAL_VIS = base[base.length-1].vis;
+  const hlIds = [...new Set(base.flatMap(s => s.hl))];
+
+  const bn = (v,n) => v.toString(2).padStart(n,'0');
+  const OUTS = {START:{ld:1}, SHIFT_DEC:{sh:1,sel:1,ld_msb:1}, CHECK:{sel:1,ld_msb:1}, LOAD_A2:{add:1}, ADD:{}, END1:{done:1}};
+  const bcdStr = d => d.slice().reverse().map(x => bn(x,4)).join(' ');
+  const bcdVal = d => d[3]*1000 + d[2]*100 + d[1]*10 + d[0];
+
+  function trace(op, fix){
+    let st='START', D=null, Lr=null, C=null, R=null, shifts=0; const rows=[];
+    for(let c=0;c<200;c++){
+      const o = OUTS[st], z = C===null?null:(C===0?1:0);
+      const sums = D===null?null:D.map(d => o.sel ? d+11 : d+3);
+      const r = {c, st, D:D&&D.slice(), Lr, C, z, R, sums, sel:!!o.sel, o};
+      let ns;
+      if(st==='START'){ D=[0,0,0,0]; Lr=op; C= fix?N-1:N; R=0;
+        r.msg='ld=1: en el flanco A″ = 0, LSR carga Op_A = '+op+' ('+bn(op,N)+') y count = '+C+'. Con init = 1 pasa a SHIFT_DEC.'; ns='SHIFT_DEC'; }
+      else if(st==='SHIFT_DEC'){
+        const nR = sums.reduce((a,s,i) => a | ((s>>4)&1)<<i, 0);
+        const w = (bcdBits(D)<<N) | Lr, w2 = w<<1;
+        const nL = w2 & ((1<<N)-1), hi = (w2>>N) & 0xFFFF;
+        const nD = [hi&15,(hi>>4)&15,(hi>>8)&15,(hi>>12)&15];
+        shifts++;
+        ns = z ? 'END1' : 'CHECK';
+        r.msg='sh=1: en el flanco {A″,LSR} se corre a la izquierda (corrimiento '+shifts+') y count = '+C+' → '+(C-1)+'. sel=1 y ld_msb=1 también cargan REG. Z = '+z+' (count = '+C+' antes del flanco) → '+ns+'.';
+        D=nD; Lr=nL; C=C-1; R=nR; }
+      else if(st==='CHECK'){
+        const nR = sums.reduce((a,s,i) => a | ((s>>4)&1)<<i, 0);
+        r.msg='sel=1: cada SUM_C2 calcula dígito − 5. ld_msb=1: REG ← MSB[3:0] = '+bn(nR,4)+' (1 donde el dígito es mayor que 4).'; R=nR; ns='LOAD_A2'; }
+      else if(st==='LOAD_A2'){
+        const nD = D.map((d,i) => (R>>i)&1 ? (d+3)&15 : d);
+        r.msg='sel=0 y add=1 (OE): LDA2[3:0] = '+bn(R,4)+'. En el flanco los dígitos marcados reciben +3: A″ = '+bcdStr(nD)+'.'; D=nD; ns='ADD'; }
+      else if(st==='ADD'){ r.msg='ADD: sin salidas activas. Pasa a SHIFT_DEC.'; ns='SHIFT_DEC'; }
+      else {
+        const v = bcdVal(D), ok = v===op;
+        r.msg='done=1. A″ = '+bcdStr(D)+' = '+v+' en BCD. Se hicieron '+shifts+' corrimientos. '+(ok?'Coincide con Op_A = '+op+'.':'No coincide con Op_A = '+op+': SHIFT_DEC evalúa Z con el valor de count anterior al flanco, así que la FSM hace N+1 corrimientos. Active «Count carga N−1» para comparar.');
+        rows.push(r); break; }
+      rows.push(r); st=ns;
+    }
+    return rows;
+  }
+  function bcdBits(d){ return d[0] | d[1]<<4 | d[2]<<8 | d[3]<<12; }
+
+  let rows=[], steps=[], idx=0, timer=null;
+  function build(){
+    let v=parseInt($('inA').value,10); if(isNaN(v)) v=0; v=Math.max(0,Math.min(31,v)); $('inA').value=v;
+    rows = trace(v, $('fixN').checked);
+    steps = base.concat(rows.map((r,i) => ({sc:6, sim:r, i, collapse:true, vis:FINAL_VIS, hl:[], t:'Ciclo '+r.c+' · '+r.st, d:r.msg})));
+  }
+  const SIG = {
+    sh:['o-sh','n-sh','n-csh','p-sh','p-csh'], ld:['o-ld','n-ld','n-cld','p-ld','p-cld','i-init'],
+    sel:['o-sel','n-sel'], ld_msb:['o-ldmsb','n-ldmsb','p-rld'], add:['o-oe','n-oe','p-oe','n-ldv','p-lda2'],
+    done:['o-done']
+  };
+  const sigIds = [...new Set(Object.values(SIG).flat().concat(['i-z','n-z','i-msb','n-msb']))];
+  const STATES = ['START','SHIFT_DEC','CHECK','LOAD_A2','ADD','END1'];
+
+  function render(){
+    const s = steps[idx];
+    ALL_EL.forEach(id => $(id).classList.toggle('on', s.vis.has(id)));
+    const hl = new Set(s.hl||[]);
+    hlIds.forEach(id => $(id).classList.toggle('hl', hl.has(id)));
+    $('fsm').classList.toggle('collapsed', !!s.collapse);
+    const r = s.sim;
+    STATES.forEach(n => $('st-'+n).classList.toggle('active', !!r && r.st===n));
+    const act = new Set();
+    if(r){ Object.keys(SIG).forEach(k => { if(r.o[k]) SIG[k].forEach(x => act.add(x)); });
+      if(r.z) ['i-z','n-z'].forEach(x => act.add(x));
+      if(r.sums && r.sel && r.sums.some(v => v>>4)) ['i-msb','n-msb'].forEach(x => act.add(x)); }
+    sigIds.forEach(id => $(id).classList.toggle('act', act.has(id)));
+    const d='—';
+    for(let i=0;i<4;i++){
+      $('v-d'+i).textContent = r ? (r.D===null?d:bn(r.D[3-i],4)+' ('+r.D[3-i]+')') : '';
+      $('v-s'+i).textContent = r ? (r.sums===null?d:(r.sel?'MSB='+((r.sums[3-i]>>4)&1):'= '+(r.sums[3-i]&15))) : '';
+    }
+    $('v-lsr').textContent = r ? (r.Lr===null?d:bn(r.Lr,N)) : '';
+    $('v-cnt').textContent = r ? '= '+(r.C===null?d:r.C) : '';
+    $('v-z').textContent = r ? 'Z = '+(r.z===null?d:r.z) : '';
+    $('v-reg').textContent = r ? (r.R===null?d:bn(r.R,4)) : '';
+
+    $('eyebrow').textContent = 'Escena '+s.sc+' · '+SCENES[s.sc-1];
+    $('stitle').textContent = s.t; $('stext').textContent = s.d;
+    $('count').textContent = 'Paso '+(idx+1)+' de '+steps.length;
+    $('bprev').disabled = idx===0; $('bnext').disabled = idx===steps.length-1;
+    document.querySelectorAll('#scenes button').forEach((bt,i) => bt.setAttribute('aria-current', String(i+1===s.sc)));
+    const simOn = s.sc===6; $('simpanel').hidden = !simOn;
+    if(simOn){
+      const upto = r ? s.i : -1, g = v => v===null?d:v;
+      $('trace').innerHTML = rows.slice(0,upto+1).map((x,i) => {
+        const outs = ['done','sh','ld','sel','ld_msb','add'].filter(k => x.o[k]).join(', ') || d;
+        return '<tr'+(i===upto?' class="cur"':'')+'><td>'+x.c+'</td><td>'+x.st+'</td><td>'+(x.D===null?d:bcdStr(x.D))+'</td><td>'+(x.Lr===null?d:bn(x.Lr,N))+'</td><td>'+g(x.C)+'</td><td>'+g(x.z)+'</td><td>'+(x.R===null?d:bn(x.R,4))+'</td><td>'+outs+'</td></tr>';
+      }).join('') || '<tr><td colspan="8">Pulse Siguiente para ejecutar el primer ciclo.</td></tr>';
+    }
+  }
+  function go(n){ idx=Math.max(0,Math.min(steps.length-1,n)); render(); }
+  function stop(){ if(timer){ clearInterval(timer); timer=null; $('bplay').textContent='Reproducir'; } }
+  SCENES.forEach((n,i) => { const li=document.createElement('li'), bt=document.createElement('button');
+    bt.type='button'; bt.textContent=(i+1)+' '+n; bt.addEventListener('click', () => { stop(); go(steps.findIndex(s => s.sc===i+1)); });
+    li.appendChild(bt); $('scenes').appendChild(li); });
+  $('bnext').addEventListener('click', () => { stop(); go(idx+1); });
+  $('bprev').addEventListener('click', () => { stop(); go(idx-1); });
+  $('bfirst').addEventListener('click', () => { stop(); go(0); });
+  $('bplay').addEventListener('click', () => { if(timer){ stop(); return; } if(idx===steps.length-1) go(0);
+    $('bplay').textContent='Pausa'; timer=setInterval(() => { if(idx>=steps.length-1){ stop(); return; } go(idx+1); }, 3200); });
+  document.addEventListener('keydown', e => { if(e.target.tagName==='INPUT') return;
+    if(e.key==='ArrowRight'||e.key===' '){ e.preventDefault(); stop(); go(idx+1); }
+    if(e.key==='ArrowLeft'){ e.preventDefault(); stop(); go(idx-1); } });
+  ['inA','fixN'].forEach(id => $(id).addEventListener('change', () => { stop(); build(); go(base.length-1); }));
+  build(); render();
+})();
+</script>
