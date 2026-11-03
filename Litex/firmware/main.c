@@ -47,7 +47,7 @@ static int read_int(void)
 int main(void)
 {
 	int a,b,c;
-	printf("Testing verilog hw multiplier \n");
+	printf("Testing HW multiplier on FPGBC\n");
 	while(1) {
         printf("Ingrese A: ");
         a = read_int();

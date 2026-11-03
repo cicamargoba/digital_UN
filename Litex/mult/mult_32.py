@@ -35,4 +35,12 @@ mem_write 0xf0000008 0
 mem_read  0xf000000C 
 
 
+
+
+mem_write 0x82000000 200
+mem_write 0x82000004 400
+mem_write 0x82000008 1
+mem_write 0x82000008 0
+mem_read  0x8200000C 
+
 '''
