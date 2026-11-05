@@ -1,0 +1,388 @@
+<title>Del código C a la RAM</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: cabecera con escenas → lienzo SVG (hoja de esquemático) → panel de narración y controles → traza de simulación */
+:root{
+  --paper:#f2f4f7; --sheet:#fbfcfd; --grid:#e4e8ee; --ink:#1b2231; --muted:#5a6477; --line:#2b3346;
+  --accent:#2c56c9; --on:#d9381e; --sig:#a8296a; --pill:#ffffff;
+  --f-gray:#c9cbcf; --f-pink:#fbbccb; --f-lblue:#acd8e6; --f-lav:#e4e6f8; --f-white:#ffffff; --f-yellow:#fff04a; --f-green:#98ec92;
+  --f-reg:#f8898a; --f-sum:#e4e6f8; --f-cnt:#6cb83a; --f-cmpy:#fdf9a8; --f-ctrl:#fbf6c9;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --cond:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0f141c; --sheet:#141a24; --grid:#1d2533; --ink:#e3e8f1; --muted:#97a3b8; --line:#c5cede;
+  --accent:#7ea4ff; --on:#ff6a4d; --sig:#ff86c2; --pill:#141a24;
+  --f-gray:#454a54; --f-pink:#74344c; --f-lblue:#22556a; --f-lav:#383b5a; --f-white:#1b2230; --f-yellow:#6a6114; --f-green:#2a672b;
+  --f-reg:#843333; --f-sum:#383b5a; --f-cnt:#2f6417; --f-cmpy:#57531f; --f-ctrl:#3d3a1c; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#0f141c; --sheet:#141a24; --grid:#1d2533; --ink:#e3e8f1; --muted:#97a3b8; --line:#c5cede;
+  --accent:#7ea4ff; --on:#ff6a4d; --sig:#ff86c2; --pill:#141a24;
+  --f-gray:#454a54; --f-pink:#74344c; --f-lblue:#22556a; --f-lav:#383b5a; --f-white:#1b2230; --f-yellow:#6a6114; --f-green:#2a672b;
+  --f-reg:#843333; --f-sum:#383b5a; --f-cnt:#2f6417; --f-cmpy:#57531f; --f-ctrl:#3d3a1c; color-scheme:dark }
+
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 32px;display:grid;gap:16px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px}
+h1{font-family:var(--cond);font-weight:700;font-size:clamp(24px,3.2vw,34px);margin:0;letter-spacing:.01em;text-wrap:balance}
+.sub{margin:2px 0 0;color:var(--muted);font-family:var(--mono);font-size:12.5px}
+.scenes{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.scenes button{font:500 12.5px var(--mono);color:var(--muted);background:transparent;border:1px solid var(--grid);border-radius:4px;padding:5px 9px;cursor:pointer}
+.scenes button[aria-current="true"]{color:var(--sheet);background:var(--ink);border-color:var(--ink)}
+.scenes button:focus-visible,.ctl button:focus-visible,.sim input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stagewrap{overflow-x:auto;background:var(--sheet);border:1px solid var(--grid);border-radius:6px;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+#stage{display:block;width:100%;min-width:820px;height:auto}
+.panel{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 28px;align-items:start}
+@media (max-width:760px){.panel{grid-template-columns:minmax(0,1fr)}}
+.eyebrow{font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0}
+.panel h2{font-family:var(--cond);font-weight:700;font-size:22px;margin:2px 0 6px;text-wrap:balance}
+.panel p{margin:0;max-width:68ch}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ctl button{font:600 14px var(--sans);border:1px solid var(--line);background:var(--sheet);color:var(--ink);border-radius:4px;padding:8px 14px;cursor:pointer;min-height:40px}
+.ctl button.primary{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.ctl button:disabled{opacity:.4;cursor:default}
+.count{font:12.5px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums;width:100%}
+[hidden]{display:none!important}
+.sim{display:grid;gap:10px;border-top:1px solid var(--grid);padding-top:14px}
+.sim .row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.sim label{font:500 13px var(--mono)}
+.sim input{width:64px;font:15px var(--mono);padding:5px 6px;border:1px solid var(--line);border-radius:4px;background:var(--sheet);color:var(--ink)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;font:13px var(--mono);font-variant-numeric:tabular-nums;min-width:640px;width:100%}
+th,td{text-align:left;padding:4px 10px;border-bottom:1px solid var(--grid);white-space:nowrap}
+th{color:var(--muted);font-weight:600}
+tr.cur td{background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.hint{font:12.5px var(--mono);color:var(--muted)}
+
+svg text{font-family:var(--sans);font-size:14px;fill:var(--ink)}
+svg .b{font-weight:600}
+svg .mono{font-family:var(--mono)}
+svg .sm{font-size:11.5px}
+svg .lbl{font-family:var(--mono);font-size:11.5px;fill:var(--muted)}
+svg .sig{fill:var(--sig);font-family:var(--mono);font-size:12px}
+svg .ttl{font-family:var(--cond);font-weight:700;font-size:15px}
+svg .port{font-family:var(--mono);font-size:11px;fill:var(--ink)}
+svg .ann{font-family:var(--mono);font-size:11.5px;fill:var(--on);font-weight:600}
+svg .one{fill:var(--on);font-weight:600}
+.w,.t{fill:none;stroke:var(--line);stroke-width:1.6}
+.bus{fill:none;stroke:var(--line);stroke-width:3}
+.shape{stroke:var(--line);stroke-width:2}
+.f-gray{fill:var(--f-gray)} .f-pink{fill:var(--f-pink)} .f-lblue{fill:var(--f-lblue)} .f-lav{fill:var(--f-lav)}
+.f-white{fill:var(--f-white)} .f-yellow{fill:var(--f-yellow)} .f-green{fill:var(--f-green)} .f-reg{fill:var(--f-reg)}
+.f-sum{fill:var(--f-sum)} .f-cnt{fill:var(--f-cnt)} .f-cmpy{fill:var(--f-cmpy)} .f-ctrl{fill:var(--f-ctrl)}
+.ahp{fill:var(--line)} .ahm{fill:var(--accent)}
+.map{fill:none;stroke:var(--accent);stroke-width:1.8;stroke-dasharray:6 5;animation:flow 1.1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-22}}
+.pill rect{fill:var(--pill);stroke:var(--on);stroke-width:1.4}
+.pill text{font-family:var(--mono);font-size:11.5px;fill:var(--on);font-weight:600}
+.pill .opx{fill:var(--ink);font-weight:400}
+.pill.in rect{stroke:var(--sig)} .pill.in text{fill:var(--sig)}
+.pill.none rect{stroke:var(--muted);stroke-dasharray:3 3} .pill.none text{fill:var(--muted)}
+.el{opacity:0;transition:opacity .55s ease;pointer-events:none}
+.el.on{opacity:1}
+.hl .shape{stroke:var(--accent);stroke-width:4}
+text.hl{fill:var(--accent)!important;font-weight:700}
+.tr.hl path{stroke:var(--accent);stroke-width:3}
+.tr.hl text{fill:var(--accent);font-weight:700}
+text.act{fill:var(--on)!important;font-weight:700}
+.state.active .shape{stroke:var(--on);stroke-width:5}
+#fsm{transition:transform 1s cubic-bezier(.6,0,.2,1),opacity .55s ease}
+#fsm.collapsed{transform:translate(-201px,137px) scale(.54)}
+@media (prefers-reduced-motion:reduce){ .el,#fsm{transition:none} .map{animation:none} }
+
+:root{--c-regc:#c9f6fb;--c-rowc:#fdfbd6;--acc2:#2f5fa8;--grn:#0e7d12;--org:#ef7d1a;--wrc:#1f8a6a;--adc:#8b1010;--c-cpu:#e6ebf3;--c-dec:#d2e6f5;--c-mult:#b6c7de;--c-mux:#e6e4fb;--tag:#fff4cc;--actc:#d9381e;--pbox:#8a96ab}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){--c-regc:#1f4b55;--c-rowc:#3f3b1d;--acc2:#7ea4ff;--grn:#4fd17a;--org:#f0a45a;--wrc:#5fd3b0;--adc:#ff7a7a;--c-cpu:#232a36;--c-dec:#21405a;--c-mult:#2c3e5c;--c-mux:#363a5a;--tag:#4a3f12;--actc:#ff6a4d;--pbox:#6b7891}}
+:root[data-theme="dark"]{--c-regc:#1f4b55;--c-rowc:#3f3b1d;--acc2:#7ea4ff;--grn:#4fd17a;--org:#f0a45a;--wrc:#5fd3b0;--adc:#ff7a7a;--c-cpu:#232a36;--c-dec:#21405a;--c-mult:#2c3e5c;--c-mux:#363a5a;--tag:#4a3f12;--actc:#ff6a4d;--pbox:#6b7891}
+.c-cpu{fill:var(--c-cpu)} .c-dec{fill:var(--c-dec)} .c-mult{fill:var(--c-mult)} .c-mux{fill:var(--c-mux)} .c-reg{fill:var(--c-regc)} .c-row{fill:var(--c-rowc)} .c-gate{fill:var(--sheet)}
+.w2{fill:none;stroke:var(--acc2);stroke-width:2.2} .bus.g,.w.g{stroke:var(--grn)} .bus.o,.w.o{stroke:var(--org)} .w.t{stroke:var(--wrc)} .bus.r{stroke:var(--adc)}
+svg .dinc{fill:var(--grn)} svg .wrc{fill:var(--wrc)} svg .adc{fill:var(--adc)} svg .outc{fill:var(--org)}
+.gate{fill:var(--sheet)} .tag{fill:var(--tag);stroke:var(--line);stroke-width:1} svg .tagt{font-family:var(--mono);font-size:10.5px;font-weight:600}
+.pbox{fill:none;stroke:var(--pbox);stroke-width:1.4;stroke-dasharray:6 4} svg .pboxt{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+svg .xs{font-size:10.5px} svg .mut{fill:var(--muted)} svg .val{fill:var(--accent)} svg .multt{font-size:16px}
+.act > path{stroke-width:5!important;filter:drop-shadow(0 0 4px var(--actc))}
+#hw.running > g:not(.act):not(#mult):not(#tbl):not(#regbox):not(#muxbox){opacity:.22}
+#hw.running #tbl > g:not(.act){opacity:.3}
+#hw > g{transition:opacity .3s ease}
+.act > text.lbl{font-weight:700;text-decoration:underline}
+g.act .shape{stroke:var(--actc);stroke-width:3}
+text.act{fill:var(--actc)!important;font-weight:700}
+.leftcol{display:grid;gap:10px;min-width:0}
+.stage2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:14px;align-items:start}
+@media (max-width:980px){.stage2{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--sheet);border:1px solid var(--grid);border-radius:6px}
+.hwwrap{padding:8px;overflow-x:auto} #hw{display:block;width:100%;min-width:720px;height:auto}
+.codecol{display:grid;gap:10px;min-width:0} .codecol .card{min-width:0;overflow:hidden}
+.regs{display:flex;flex-wrap:wrap;gap:4px 14px;padding:8px 12px;font:12.5px var(--mono);font-variant-numeric:tabular-nums}
+.regs b{color:var(--muted);font-weight:600}
+.regs .cur{width:100%;color:var(--accent);font-weight:600}
+.filetab{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;border-bottom:1px solid var(--grid);font:600 12.5px var(--mono)}
+.filetab span:last-child{font-weight:500;color:var(--muted)}
+.code{margin:0;padding:6px 0;font:11.5px/1.5 var(--mono);background:var(--paper);overflow:auto;border-radius:0 0 6px 6px}
+.code .ln{display:block;white-space:pre;padding-right:10px}
+.code .ln::before{content:attr(data-n);display:inline-block;width:2.6em;padding-right:.8em;text-align:right;color:var(--muted);opacity:.6}
+.code .ln.hl{background:color-mix(in srgb,var(--accent) 18%,transparent)}
+.code .kw{color:#7b2ec2;font-weight:600} .code .num{color:#b5520c} .code .dir{color:#1f7a5a;font-weight:600}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .code .kw{color:#c39bff} :root:not([data-theme="light"]) .code .num{color:#f0a45a} :root:not([data-theme="light"]) .code .dir{color:#5fd3a5}}
+:root[data-theme="dark"] .code .kw{color:#c39bff} :root[data-theme="dark"] .code .num{color:#f0a45a} :root[data-theme="dark"] .code .dir{color:#5fd3a5}
+.view{display:none} .view.on{display:block}
+.tbl{width:100%;border-collapse:collapse;font:13px var(--mono)}
+.tbl th,.tbl td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--grid);white-space:nowrap}
+.tbl th{color:var(--muted);font-weight:600}
+.tbl tr.hl td{background:color-mix(in srgb,var(--accent) 16%,transparent)}
+.tblwrap{overflow-x:auto}
+.wtag{color:#1f8a4c;font-weight:600} .rtag{color:#c2670f;font-weight:600}
+
+.c-cpu2{fill:#fdfbd0} .c-blk{fill:#e6e6fa} .c-map{fill:#2a9d96} .c-uartm{fill:#8cc8f5} .c-ramm{fill:#fdfbd6} .c-mapbg{fill:#e2e2e2}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .c-cpu2{fill:#45421f} :root:not([data-theme="light"]) .c-blk{fill:#2c2f4a} :root:not([data-theme="light"]) .c-map{fill:#1f6e69} :root:not([data-theme="light"]) .c-uartm{fill:#2b5b80} :root:not([data-theme="light"]) .c-ramm{fill:#3f3b1d} :root:not([data-theme="light"]) .c-mapbg{fill:#262c37}}
+:root[data-theme="dark"] .c-cpu2{fill:#45421f} :root[data-theme="dark"] .c-blk{fill:#2c2f4a} :root[data-theme="dark"] .c-map{fill:#1f6e69} :root[data-theme="dark"] .c-uartm{fill:#2b5b80} :root[data-theme="dark"] .c-ramm{fill:#3f3b1d} :root[data-theme="dark"] .c-mapbg{fill:#262c37}
+.bus.bl,.w.bl{stroke:#1f3fd6} svg .rdc{fill:#1f3fd6}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .bus.bl{stroke:#7ea4ff} }
+:root[data-theme="dark"] .bus.bl{stroke:#7ea4ff}
+.w.or,.bus.or{stroke:var(--org)}
+svg .mapt{font-family:var(--sans);font-size:13px;font-weight:600;fill:#ffffff}
+svg .mapa{font-family:var(--mono);font-size:11.5px;font-weight:600}
+svg .mapf{font-family:var(--mono);font-size:9.5px;fill:var(--muted)}
+.dim{opacity:.13!important}
+#focus{display:block;width:100%;height:auto} #focus[hidden]{display:none!important}
+#soc g{transition:opacity .35s ease}
+.act > path{stroke-width:5!important;filter:drop-shadow(0 0 4px var(--actc))}
+g.act > rect.shape, g.act > polygon.shape{stroke:var(--actc);stroke-width:3}
+.socbox{fill:none;stroke:var(--pbox);stroke-width:1.2;stroke-dasharray:3 3}
+svg .mapdark{fill:var(--ink)}
+
+.gone{opacity:0!important;pointer-events:none}
+.c-regc2{fill:#c9f6fb} .c-rowc2{fill:#fdfbd6}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .c-regc2{fill:#1f4b55} :root:not([data-theme="light"]) .c-rowc2{fill:#3f3b1d} }
+:root[data-theme="dark"] .c-regc2{fill:#1f4b55} :root[data-theme="dark"] .c-rowc2{fill:#3f3b1d}
+#soc g{transition:opacity .7s ease}
+
+.mmap{display:grid;gap:4px;padding:8px}
+.mrow{display:grid;grid-template-columns:76px minmax(0,1fr);gap:0 10px;align-items:center;padding:5px 8px;border-radius:3px;border:2px solid transparent;transition:opacity .35s ease}
+.mrow .mname{grid-row:span 2;font:600 13px var(--sans);text-align:center;padding:6px 0;border-radius:2px;color:#fff;background:#2a9d96}
+.mrow.uart .mname{background:#5aa9e6} .mrow.ram .mname{background:#fdfbd6;color:#1b2231;border:1px solid var(--line)}
+.mrow .maddr{font:600 12.5px var(--mono)} .mrow .mfile{font:11px var(--mono);color:var(--muted);overflow-wrap:anywhere}
+.mrow.act{border-color:var(--actc);background:color-mix(in srgb,var(--actc) 8%,transparent)}
+.mrow.dim{opacity:.18!important}
+
+.c-src{fill:#ffffff} .c-obj{fill:#e7ecf8} .c-tool{fill:#e1e1ea} .c-elf{fill:#f2f2f2}
+.c-text{fill:#b8c9df} .c-rod{fill:#b8c9df} .c-data{fill:#aecd8e} .c-bss{fill:#f7f39a} .c-hex{fill:#ffffff}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .c-src{fill:#1b2230} :root:not([data-theme="light"]) .c-obj{fill:#26304a} :root:not([data-theme="light"]) .c-tool{fill:#2c2f3d} :root:not([data-theme="light"]) .c-elf{fill:#232833} :root:not([data-theme="light"]) .c-text,:root:not([data-theme="light"]) .c-rod{fill:#2e4566} :root:not([data-theme="light"]) .c-data{fill:#3b5a26} :root:not([data-theme="light"]) .c-bss{fill:#5c5718} :root:not([data-theme="light"]) .c-hex{fill:#1b2230}}
+:root[data-theme="dark"] .c-src{fill:#1b2230} :root[data-theme="dark"] .c-obj{fill:#26304a} :root[data-theme="dark"] .c-tool{fill:#2c2f3d} :root[data-theme="dark"] .c-elf{fill:#232833} :root[data-theme="dark"] .c-text,:root[data-theme="dark"] .c-rod{fill:#2e4566} :root[data-theme="dark"] .c-data{fill:#3b5a26} :root[data-theme="dark"] .c-bss{fill:#5c5718} :root[data-theme="dark"] .c-hex{fill:#1b2230}
+.el{opacity:0;transition:opacity .5s ease} .el.on{opacity:1}
+.flow{fill:none;stroke:var(--line);stroke-width:1.6}
+svg .fname{font-family:var(--mono);font-size:11px;font-weight:600}
+svg .tool1{font-family:var(--sans);font-size:14px} svg .tool2{font-family:var(--mono);font-size:12px;font-weight:600}
+svg .secn{font-family:var(--mono);font-size:12px;font-weight:600} svg .seca{font-family:var(--mono);font-size:10px;fill:var(--muted)}
+.view{display:none} .view.on{display:block}
+.hexg{display:grid;grid-template-columns:auto auto auto minmax(0,1fr);gap:0 12px;font:11.5px/1.55 var(--mono);padding:6px 10px;max-height:520px;overflow:auto}
+.hexg div{white-space:nowrap} .hexg .h{color:var(--muted);font-weight:600}
+.hexg .row{display:contents} .hexg .cur > div{background:color-mix(in srgb,var(--actc) 14%,transparent)}
+.s-text{color:#3b5f99} .s-rodata{color:#3b5f99} .s-data{color:#3e7d22} .s-bss{color:#9a8a00}
+.hexg .dimrow > div{opacity:.25}
+.symtab{width:100%;border-collapse:collapse;font:12.5px var(--mono)} .symtab td,.symtab th{padding:4px 10px;border-bottom:1px solid var(--grid);text-align:left} .symtab th{color:var(--muted)}
+.symtab tr.hl td{background:color-mix(in srgb,var(--accent) 16%,transparent)}
+</style>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Del código C a la RAM</h1>
+      <p class="sub">flujo SW–HW · hw_mult → gcc → ld → firmware.elf → firmware.hex → bram.v</p>
+    </div>
+    <ul class="scenes" id="scenes"></ul>
+  </header>
+  <div class="stage2">
+    <div class="leftcol"><div class="card hwwrap"><svg id="flow" viewBox="0 0 860 700" role="img" aria-label="Flujo de software a hardware">
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path class="ahp" d="M0,0 L10,5 L0,10z"/></marker></defs>
+  <rect x="6" y="6" width="848" height="456" rx="4" class="socbox"/><text x="16" y="454" class="ttl">firmware/</text>
+  <rect x="6" y="472" width="848" height="222" rx="4" class="socbox"/><text x="846" y="686" text-anchor="end" class="ttl">rtl/SOC.v</text>
+
+  <g id="f-hw" class="el"><path class="shape c-src" d="M20,70 H128 L140,82 V104 H20 Z"/><path class="w" d="M128,70 V82 H140"/>
+      <text x="80.0" y="91.0" text-anchor="middle" class="fname">hwmath.c</text></g>
+  <g id="f-main" class="el"><path class="shape c-src" d="M20,116 H128 L140,128 V150 H20 Z"/><path class="w" d="M128,116 V128 H140"/>
+      <text x="80.0" y="137.0" text-anchor="middle" class="fname">main.c</text></g>
+  <g id="f-start" class="el"><path class="shape c-src" d="M20,162 H128 L140,174 V196 H20 Z"/><path class="w" d="M128,162 V174 H140"/>
+      <text x="80.0" y="183.0" text-anchor="middle" class="fname">start.S</text></g>
+  <g id="f-h" class="el"><path class="shape c-src" d="M200,14 H298 L310,26 V44 H200 Z"/><path class="w" d="M298,14 V26 H310"/>
+      <text x="255.0" y="33.0" text-anchor="middle" class="fname">femtorv32.h</text></g>
+  <g id="a-src" class="el"><path class="flow" d="M140,87 H170 V133 M140,133 H186 M140,179 H170 V133" marker-end="url(#ah)"/><path class="flow" d="M255,44 V78" marker-end="url(#ah)"/></g>
+  <g id="t-gcc" class="el"><rect class="shape c-tool" x="190" y="80" width="130" height="106" rx="2"/><text x="255" y="126" text-anchor="middle" class="tool1">Compilador</text><text x="255" y="146" text-anchor="middle" class="tool2">gcc -c</text></g>
+  <g id="a-gcc" class="el"><path class="flow" d="M320,87 H352 M320,133 H352 M320,179 H352" marker-end="url(#ah)"/></g>
+  <g id="o-hw" class="el"><path class="shape c-obj" d="M354,70 H446 L458,82 V104 H354 Z"/><path class="w" d="M446,70 V82 H458"/>
+      <text x="406.0" y="91.0" text-anchor="middle" class="fname">hwmath.o</text></g>
+  <g id="o-main" class="el"><path class="shape c-obj" d="M354,116 H446 L458,128 V150 H354 Z"/><path class="w" d="M446,116 V128 H458"/>
+      <text x="406.0" y="137.0" text-anchor="middle" class="fname">main.o</text></g>
+  <g id="o-start" class="el"><path class="shape c-obj" d="M354,162 H446 L458,174 V196 H354 Z"/><path class="w" d="M446,162 V174 H458"/>
+      <text x="406.0" y="183.0" text-anchor="middle" class="fname">start.o</text></g>
+  <g id="f-ld" class="el"><path class="shape c-src" d="M500,14 H592 L604,26 V44 H500 Z"/><path class="w" d="M592,14 V26 H604"/>
+      <text x="552.0" y="33.0" text-anchor="middle" class="fname">bram.ld</text></g>
+  <g id="a-obj" class="el"><path class="flow" d="M458,87 H476 V133 M458,133 H492 M458,179 H476 V133" marker-end="url(#ah)"/><path class="flow" d="M552,44 V78" marker-end="url(#ah)"/></g>
+  <g id="t-ld" class="el"><rect class="shape c-tool" x="496" y="80" width="130" height="106" rx="2"/><text x="561" y="126" text-anchor="middle" class="tool1">Enlazador</text><text x="561" y="146" text-anchor="middle" class="tool2">ld (gcc -T)</text></g>
+  <g id="a-ld" class="el"><path class="flow" d="M626,133 H668" marker-end="url(#ah)"/></g>
+  <g id="elf" class="el"><path class="shape c-elf" d="M670,92 H776 L790,106 V176 H670 Z"/><path class="w" d="M776,92 V106 H790"/><text x="730" y="132" text-anchor="middle" class="ttl">ELF</text><text x="730" y="168" text-anchor="middle" class="fname">firmware.elf</text></g>
+  <g id="a-elf" class="el"><path class="flow" d="M730,176 V196" marker-end="url(#ah)"/></g>
+  <g id="sec-text" class="el"><rect class="shape c-text" x="670" y="198" width="120" height="34"/><text x="730" y="214" text-anchor="middle" class="secn">.text</text><text x="730" y="227" text-anchor="middle" class="seca">0x00 · 116 B</text></g>
+  <g id="sec-rod" class="el"><rect class="shape c-rod" x="670" y="232" width="120" height="34"/><text x="730" y="248" text-anchor="middle" class="secn">.rodata</text><text x="730" y="261" text-anchor="middle" class="seca">0x74 · 4 B</text></g>
+  <g id="sec-data" class="el"><rect class="shape c-data" x="670" y="266" width="120" height="34"/><text x="730" y="282" text-anchor="middle" class="secn">.data</text><text x="730" y="295" text-anchor="middle" class="seca">0x78 · 4 B</text></g>
+  <g id="sec-bss" class="el"><rect class="shape c-bss" x="670" y="300" width="120" height="34"/><text x="730" y="316" text-anchor="middle" class="secn">.bss</text><text x="730" y="329" text-anchor="middle" class="seca">0x7C · 4 B</text></g>
+  <g id="a-sec" class="el"><path class="flow" d="M730,334 V354" marker-end="url(#ah)"/></g>
+  <g id="t-words" class="el"><rect class="shape c-tool" x="664" y="356" width="132" height="28" rx="2"/><text x="730" y="375" text-anchor="middle" class="tool2">firmware_words</text></g>
+  <g id="a-words" class="el"><path class="flow" d="M730,384 V398" marker-end="url(#ah)"/></g>
+  <g id="hex" class="el"><path class="shape c-hex" d="M664,400 H784 L796,412 V440 H664 Z"/><path class="w" d="M784,400 V412 H796"/>
+      <text x="730.0" y="424.0" text-anchor="middle" class="fname">firmware.hex</text></g>
+
+  <g id="soc-ram" class="el">
+    <g id="a-readmem"><path class="bus" d="M796,420 H836 V600 H742" marker-end="url(#ah)" style="stroke:var(--line)"/><text x="840" y="520" class="lbl b" transform="rotate(90 840 520)">$readmemh</text></g>
+    <g id="ram"><rect class="shape c-ramm" x="600" y="540" width="140" height="120" rx="2"/><text x="670" y="564" text-anchor="middle" class="ttl">RAM</text><text x="670" y="582" text-anchor="middle" class="mono xs">cores/bram/bram.v</text>
+      <text x="610" y="606" class="mono xs mut">initial begin</text><text x="616" y="620" class="mono xs mut">$readmemh(</text><text x="622" y="634" class="mono xs mut">"firmware.hex",MEM);</text><text x="610" y="648" class="mono xs mut">end</text></g>
+    <g id="cpu"><rect class="shape c-cpu2" x="40" y="520" width="170" height="140" rx="2"/>
+      <text x="202" y="544" text-anchor="end" class="port b">mem_rdata[31:0]</text><text x="202" y="574" text-anchor="end" class="port b">mem_addr[31:0]</text><text x="202" y="604" text-anchor="end" class="port b">rd</text>
+      <text x="52" y="640" class="ttl" style="font-size:18px">RV32I</text><text id="v-pc" x="52" y="656" class="mono xs b val"></text></g>
+    <g id="b-addr"><path class="bus r" d="M210,570 H420 V580 H598" marker-end="url(#ah)"/><text id="v-addr" x="332" y="564" class="mono xs b adc"></text></g>
+    <g id="b-dec"><path class="w" style="stroke:var(--adc)" d="M300,570 V506 H338" marker-end="url(#ah)"/></g>
+    <g id="dec"><rect class="shape c-dec" x="340" y="486" width="80" height="40" rx="2"/><text x="380" y="504" text-anchor="middle" class="xs b">Address</text><text x="380" y="517" text-anchor="middle" class="xs b">decoder</text></g>
+    <g id="b-cs"><path class="w" d="M420,506 H560 V560 H598" marker-end="url(#ah)"/><text id="v-cs" x="430" y="500" class="mono xs b val">cs0</text></g>
+    <g id="b-rd"><path class="w or" d="M210,600 H598" marker-end="url(#ah)"/><text id="v-rd" x="226" y="596" class="mono xs b outc"></text></g>
+    <g id="b-dout"><path class="bus bl" d="M600,640 H480" marker-end="url(#ah)"/></g>
+    <g id="mux"><polygon class="shape c-mux" points="440,610 478,624 478,666 440,680"/><text x="460" y="648" text-anchor="middle" class="mono xs b">1</text></g>
+    <g id="b-rdata"><path class="bus bl" d="M440,645 H260 V540 H212" marker-end="url(#ah)"/><text id="v-rdata" x="268" y="626" class="mono xs b rdc"></text></g>
+  </g>
+</svg></div></div>
+    <div class="codecol">
+      <div class="card view" id="v-file"><div class="filetab"><span id="fname"></span><span id="fkind"></span></div><pre class="code" id="fbox"></pre></div>
+      <div class="card view" id="v-sym"><div class="filetab"><span>firmware.elf · tabla de símbolos</span><span>nm -n</span></div>
+        <table class="symtab"><thead><tr><th>Dirección</th><th>Símbolo</th><th>Sección</th></tr></thead><tbody id="symbody"></tbody></table></div>
+      <div class="card view" id="v-hex"><div class="filetab"><span id="hexname">firmware.hex</span><span id="hexkind">32 palabras</span></div><div class="hexg" id="hexg"></div></div>
+    </div>
+  </div>
+  <section class="panel" aria-live="polite">
+    <div><p class="eyebrow" id="eyebrow"></p><h2 id="stitle"></h2><p id="stext"></p></div>
+    <div class="ctl">
+      <button id="bprev" type="button">◀ Anterior</button>
+      <button id="bnext" type="button" class="primary">Siguiente ▶</button>
+      <button id="bplay" type="button">Reproducir</button>
+      <button id="bfirst" type="button">Inicio</button>
+      <span class="count" id="count"></span>
+    </div>
+  </section>
+</div>
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const FILES = {"hwmath.c": "#include <femtorv32.h>\n\n#define MULT_BASE  0x420000\n\n/* Mult register offsets (word-aligned) */\n#define MULT_A       0x04\n#define MULT_B       0x08\n#define MULT_INIT    0x0C\n#define MULT_RESULT  0x10\n#define MULT_DONE    0x14\n\nuint32_t hw_mult(uint16_t a, uint16_t b) {\n    volatile uint32_t *mult = (volatile uint32_t *)MULT_BASE;\n\n    mult[MULT_A/4]    = a;\n    mult[MULT_B/4]    = b;\n    mult[MULT_INIT/4] = 1;  /* assert init */\n    mult[MULT_INIT/4] = 0;  /* deassert init */\n    while (!(mult[MULT_DONE/4] & 1))\n        ;\n    return mult[MULT_RESULT/4];\n}", "main.c": "#include <femtorv32.h>\n\nuint32_t hw_mult(uint16_t a, uint16_t b);\n\nconst uint16_t operandos[2] = {5, 3};   /* constante   -> .rodata */\nuint32_t llamadas = 1;                   /* inicializada -> .data  */\nuint32_t resultado;                      /* sin valor    -> .bss   */\n\nint main(void) {\n    resultado = hw_mult(operandos[0], operandos[1]);\n    llamadas++;\n    while (1)\n        ;\n}", "start.S": ".section .text\n.globl _start\n_start:\n    li   sp, 0x400        /* pila al final de la BRAM */\n    call main\n1:  j    1b", "bram.ld": "MEMORY\n{\n   BRAM (RWX) : ORIGIN = 0x0000, LENGTH = 0x400   /* 1 KB */\n}\nSECTIONS\n{\n    .text   : { . = ALIGN(4); start.o (.text) *(.text*) } >BRAM\n    .rodata : { . = ALIGN(4); *(.rodata* .srodata*) } >BRAM\n    .data   : { . = ALIGN(4); *(.data* .sdata*) } >BRAM\n    .bss    : { . = ALIGN(4); *(.bss* .sbss*) } >BRAM\n    /DISCARD/ : { *(.comment) *(.riscv.attributes) }\n}", "femtorv32.h": "#include <stdint.h>", "hwmath.o": "00000000 <hw_mult>:\n   0:\t00420637          \tlui\ta2,0x420\n   4:\t00a62223          \tsw\ta0,4(a2) # 420004 <.L2+0x41ffdc>\n   8:\t004206b7          \tlui\ta3,0x420\n   c:\t004207b7          \tlui\ta5,0x420\n  10:\t00b6a423          \tsw\ta1,8(a3) # 420008 <.L2+0x41ffe0>\n  14:\t00100713          \tli\ta4,1\n  18:\t00e7a623          \tsw\ta4,12(a5) # 42000c <.L2+0x41ffe4>\n  1c:\t00420737          \tlui\ta4,0x420\n  20:\t0007a623          \tsw\tzero,12(a5)\n  24:\t01470713          \taddi\ta4,a4,20 # 420014 <.L2+0x41ffec>\n\n00000028 <.L2>:\n  28:\t00072783          \tlw\ta5,0(a4)\n  2c:\t0017f793          \tandi\ta5,a5,1\n  30:\tfe078ce3          \tbeqz\ta5,28 <.L2>\n  34:\t004207b7          \tlui\ta5,0x420\n  38:\t0107a503          \tlw\ta0,16(a5) # 420010 <.L2+0x41ffe8>\n  3c:\t00008067          \tret", "main.o": "00000000 <main>:\n   0:\tff010113          \taddi\tsp,sp,-16\n   4:\t00300593          \tli\ta1,3\n   8:\t00500513          \tli\ta0,5\n   c:\t00112623          \tsw\tra,12(sp)\n  10:\t00000097          \tauipc\tra,0x0\n\t\t\t10: R_RISCV_CALL_PLT\thw_mult\n\t\t\t10: R_RISCV_RELAX\t*ABS*\n  14:\t000080e7          \tjalr\tra # 10 <main+0x10>\n  18:\t00000737          \tlui\ta4,0x0\n\t\t\t18: R_RISCV_HI20\tllamadas\n\t\t\t18: R_RISCV_RELAX\t*ABS*\n  1c:\t00072783          \tlw\ta5,0(a4) # 0 <main>\n\t\t\t1c: R_RISCV_LO12_I\tllamadas\n\t\t\t1c: R_RISCV_RELAX\t*ABS*\n  20:\t000006b7          \tlui\ta3,0x0\n\t\t\t20: R_RISCV_HI20\tresultado\n\t\t\t20: R_RISCV_RELAX\t*ABS*\n  24:\t00a6a023          \tsw\ta0,0(a3) # 0 <main>\n\t\t\t24: R_RISCV_LO12_S\tresultado\n\t\t\t24: R_RISCV_RELAX\t*ABS*\n  28:\t00178793          \taddi\ta5,a5,1\n  2c:\t00f72023          \tsw\ta5,0(a4)\n\t\t\t2c: R_RISCV_LO12_S\tllamadas\n\t\t\t2c: R_RISCV_RELAX\t*ABS*\n\n00000030 <.L2>:\n  30:\t0000006f          \tj\t30 <.L2>\n\t\t\t30: R_RISCV_JAL\t.L2", "start.o": "00000000 <_start>:\n   0:\t40000113          \tli\tsp,1024\n   4:\t00000097          \tauipc\tra,0x0\n\t\t\t4: R_RISCV_CALL_PLT\tmain\n\t\t\t4: R_RISCV_RELAX\t*ABS*\n   8:\t000080e7          \tjalr\tra # 4 <_start+0x4>\n\n0000000c <.L1^B1>:\n   c:\t0000006f          \tj\tc <.L1^B1>\n\t\t\tc: R_RISCV_JAL\t.L1^B1"}, ROWS = [{"a": 0, "w": "40000113", "s": ".text", "sym": "_start", "n": "li sp,1024"}, {"a": 4, "w": "008000ef", "s": ".text", "sym": "", "n": "jal c <main>"}, {"a": 8, "w": "0000006f", "s": ".text", "sym": "", "n": "j 8 <_start+0x8>"}, {"a": 12, "w": "ff010113", "s": ".text", "sym": "main", "n": "addi sp,sp,-16"}, {"a": 16, "w": "00300593", "s": ".text", "sym": "", "n": "li a1,3"}, {"a": 20, "w": "00500513", "s": ".text", "sym": "", "n": "li a0,5"}, {"a": 24, "w": "00112623", "s": ".text", "sym": "", "n": "sw ra,12(sp)"}, {"a": 28, "w": "018000ef", "s": ".text", "sym": "", "n": "jal 34 <hw_mult>"}, {"a": 32, "w": "07802783", "s": ".text", "sym": "", "n": "lw a5,120(zero) # 78 <llamadas>"}, {"a": 36, "w": "06a02e23", "s": ".text", "sym": "", "n": "sw a0,124(zero) # 7c <resultado>"}, {"a": 40, "w": "00178793", "s": ".text", "sym": "", "n": "addi a5,a5,1"}, {"a": 44, "w": "06f02c23", "s": ".text", "sym": "", "n": "sw a5,120(zero) # 78 <llamadas>"}, {"a": 48, "w": "0000006f", "s": ".text", "sym": "", "n": "j 30 <main+0x24>"}, {"a": 52, "w": "00420637", "s": ".text", "sym": "hw_mult", "n": "lui a2,0x420"}, {"a": 56, "w": "00a62223", "s": ".text", "sym": "", "n": "sw a0,4(a2) # 420004 <resultado+0x41ff88>"}, {"a": 60, "w": "004206b7", "s": ".text", "sym": "", "n": "lui a3,0x420"}, {"a": 64, "w": "004207b7", "s": ".text", "sym": "", "n": "lui a5,0x420"}, {"a": 68, "w": "00b6a423", "s": ".text", "sym": "", "n": "sw a1,8(a3) # 420008 <resultado+0x41ff8c>"}, {"a": 72, "w": "00100713", "s": ".text", "sym": "", "n": "li a4,1"}, {"a": 76, "w": "00e7a623", "s": ".text", "sym": "", "n": "sw a4,12(a5) # 42000c <resultado+0x41ff90>"}, {"a": 80, "w": "00420737", "s": ".text", "sym": "", "n": "lui a4,0x420"}, {"a": 84, "w": "0007a623", "s": ".text", "sym": "", "n": "sw zero,12(a5)"}, {"a": 88, "w": "01470713", "s": ".text", "sym": "", "n": "addi a4,a4,20 # 420014 <resultado+0x41ff98>"}, {"a": 92, "w": "00072783", "s": ".text", "sym": "", "n": "lw a5,0(a4)"}, {"a": 96, "w": "0017f793", "s": ".text", "sym": "", "n": "andi a5,a5,1"}, {"a": 100, "w": "fe078ce3", "s": ".text", "sym": "", "n": "beqz a5,5c <hw_mult+0x28>"}, {"a": 104, "w": "004207b7", "s": ".text", "sym": "", "n": "lui a5,0x420"}, {"a": 108, "w": "0107a503", "s": ".text", "sym": "", "n": "lw a0,16(a5) # 420010 <resultado+0x41ff94>"}, {"a": 112, "w": "00008067", "s": ".text", "sym": "", "n": "ret"}, {"a": 116, "w": "00030005", "s": ".rodata", "sym": "operandos", "n": "operandos = {5, 3}"}, {"a": 120, "w": "00000001", "s": ".data", "sym": "llamadas", "n": "llamadas = 1"}, {"a": 124, "w": "00000000", "s": ".bss", "sym": "resultado", "n": "resultado (= 0)"}];
+  const SCENES = ['Código','Compilación','Enlazado','firmware.hex','RAM'];
+  const SYMS = [['0x00','_start','.text'],['0x0C','main','.text'],['0x34','hw_mult','.text'],['0x74','operandos','.rodata'],['0x78','llamadas','.data'],['0x7C','resultado','.bss']];
+  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function hiLine(l){
+    let h = esc(l);
+    h = h.replace(/(#include|#define|\.section|\.globl|MEMORY|SECTIONS|\/DISCARD\/)/g,'<span class="dir">$1</span>');
+    h = h.replace(/(\/\*.*?\*\/)/g,'<span class="cm">$1</span>');
+    h = h.replace(/\b(R_RISCV_[A-Z0-9_]+)\b/g,'<span class="num">$1</span>');
+    return h.replace(/\b(uint32_t|uint16_t|const|volatile|while|return|int|void)\b/g,'<span class="kw">$1</span>');
+  }
+  function showFile(name, kind, hl){
+    $('fname').textContent = name; $('fkind').textContent = kind;
+    const set = Array.isArray(hl) ? new Set(hl) : null;
+    $('fbox').innerHTML = FILES[name].split('\n').map((l,i) => {
+      const h = set ? set.has(i+1) : (hl instanceof RegExp && hl.test(l));
+      return '<span class="ln'+(h?' hl':'')+'" data-n="'+(i+1)+'">'+(hiLine(l)||' ')+'</span>'; }).join('');
+  }
+  function showHex(cur, onlySec, mode){
+    $('hexname').textContent = mode==='ram' ? 'RAM (contenido inicial = firmware.hex)' : 'firmware.hex';
+    $('hexkind').textContent = mode==='ram' ? 'MEM[0..31]' : '32 palabras';
+    $('hexg').innerHTML = '<div class="h">'+(mode==='ram'?'dir.':'dir.')+'</div><div class="h">palabra</div><div class="h">sección</div><div class="h">contenido</div>' +
+      ROWS.map(r => { const c = (cur!==null && r.a===cur) ? ' cur' : '', d = (onlySec && r.s!==onlySec) ? ' dimrow' : '';
+        return '<div class="row'+c+d+'"><div>'+('0x'+r.a.toString(16).toUpperCase().padStart(2,'0'))+'</div><div>'+r.w+'</div><div class="s-'+r.s.slice(1)+'">'+r.s+'</div><div>'+(r.sym?'<b>'+r.sym+'</b> ':'')+esc(r.n)+'</div></div>'; }).join('');
+    const el = $('hexg').querySelector('.cur'); if(el){ const top = el.firstChild.offsetTop - 60; $('hexg').scrollTop = Math.max(0, top); }
+  }
+
+  const S = [
+    {sc:1, add:['f-hw'], hl:['f-hw'], v:['file','hwmath.c','C',/./], t:'hwmath.c: la función que usa el periférico',
+     d:'El punto de partida es el código en C que ya conocemos: hw_mult escribe A, B e init en las direcciones del multiplicador, espera done y lee el resultado.'},
+    {sc:1, add:['f-main'], hl:['f-main'], v:['file','main.c','C',[5,6,7,9,10,11]], t:'main.c: el programa',
+     d:'main llama a hw_mult con los operandos y guarda el resultado. Sus tres variables globales sirven para ver después a qué sección del ejecutable va cada tipo de dato: una constante, una variable inicializada y una sin valor inicial.'},
+    {sc:1, add:['f-start'], hl:['f-start'], v:['file','start.S','ensamblador',[3,4,5,6]], t:'start.S: el arranque',
+     d:'Sin sistema operativo, alguien debe preparar la ejecución. _start inicializa el puntero de pila al final de la BRAM (0x400), llama a main y, si main retornara, se queda en un lazo.'},
+    {sc:1, add:['f-h'], hl:['f-h'], v:['file','femtorv32.h','C',[1]], t:'femtorv32.h: el encabezado',
+     d:'Los encabezados no se compilan por separado: el preprocesador los copia dentro de cada .c. Aquí aportan los tipos uint16_t y uint32_t. En este ejemplo es un femtorv32.h mínimo que solo incluye <stdint.h>.'},
+    {sc:2, add:['a-src','t-gcc','a-gcc','o-hw'], hl:['f-hw','t-gcc','o-hw'], v:['file','hwmath.o','objdump -d',/lui|sw|lw/], t:'gcc -c hwmath.c → hwmath.o',
+     d:'gcc compila cada archivo por separado y produce un objeto con código de máquina RV32I. Sus direcciones empiezan en 0 porque todavía no sabe dónde quedará en memoria. hwmath.o tiene 64 bytes de .text; las direcciones 0x42000X del periférico ya aparecen como constantes.'},
+    {sc:2, add:['o-main'], hl:['f-main','t-gcc','o-main'], v:['file','main.o','objdump -dr',/R_RISCV/], t:'gcc -c main.c → main.o',
+     d:'main.o no puede saber dónde está hw_mult ni dónde quedarán llamadas y resultado: deja la instrucción con un hueco y una reubicación (R_RISCV_CALL_PLT, R_RISCV_HI20, R_RISCV_LO12) para que el enlazador la complete. Sus secciones son .text.startup (main, 52 B), .srodata, .sdata y .sbss (4 B cada una).'},
+    {sc:2, add:['o-start'], hl:['f-start','t-gcc','o-start'], v:['file','start.o','objdump -dr',/R_RISCV|li|jalr|auipc/], t:'gcc -c start.S → start.o',
+     d:'start.S ya está en ensamblador: el ensamblador lo convierte en start.o (16 B de .text). La llamada a main también queda pendiente de reubicación.'},
+    {sc:3, add:['f-ld','a-obj','t-ld'], hl:['f-ld','t-ld'], v:['file','bram.ld','script del enlazador',[3,7,8,9,10]], t:'bram.ld: dónde va cada cosa',
+     d:'El script del enlazador describe la memoria (BRAM: desde 0x0000, 0x400 = 1 KB) y el orden de las secciones. start.o (.text) va primero para que _start quede en 0x0000, la dirección en la que la CPU empieza después del reset. Luego van .text, .rodata, .data y .bss.'},
+    {sc:3, add:['a-ld','elf'], hl:['t-ld','elf','o-hw','o-main','o-start'], v:['sym'], t:'ld → firmware.elf',
+     d:'El enlazador une los tres objetos, asigna una dirección a cada símbolo y completa las reubicaciones: la llamada a hw_mult queda como jal 0x34 y llamadas se lee en 0x78. El resultado es firmware.elf, un ejecutable con el código, los datos y la información de cada sección.'},
+    {sc:3, add:['a-elf','sec-text'], hl:['sec-text'], v:['hex',null,'.text'], t:'.text: el código',
+     d:'.text contiene las instrucciones de _start (0x00), main (0x0C) y hw_mult (0x34): 116 bytes, 29 instrucciones. Es de solo lectura y ejecución.'},
+    {sc:3, add:['sec-rod'], hl:['sec-rod'], v:['hex',0x74,'.rodata'], t:'.rodata: constantes',
+     d:'.rodata guarda los datos constantes: operandos = {5, 3} en 0x74, dos valores de 16 bits en una palabra. Con -O2 el compilador usó los valores directamente (li a0,5 y li a1,3), pero la constante sigue en el ejecutable porque es global.'},
+    {sc:3, add:['sec-data'], hl:['sec-data'], v:['hex',0x78,'.data'], t:'.data: variables con valor inicial',
+     d:'.data guarda las variables globales inicializadas: llamadas = 1 en 0x78. Su valor inicial forma parte del archivo, así que llega a la RAM antes de que el programa arranque.'},
+    {sc:3, add:['sec-bss'], hl:['sec-bss'], v:['hex',0x7C,'.bss'], t:'.bss: variables sin valor inicial',
+     d:'.bss reserva espacio para las globales sin valor inicial: resultado en 0x7C. En el ELF no ocupa bytes, solo se indica su tamaño (NOBITS); el lenguaje C exige que empiece en 0. En este firmware.hex esa palabra va como 00000000.'},
+    {sc:4, add:['a-sec','t-words','a-words','hex'], hl:['t-words','hex'], v:['hex',null,null], t:'firmware_words → firmware.hex',
+     d:'firmware_words toma la imagen de memoria del ELF y la escribe como texto: una palabra de 32 bits en hexadecimal por línea, en el formato que lee $readmemh. La línea n es la dirección 4·n. Los bytes de cada palabra están en orden little endian: operandos = {5, 3} se lee 00030005.'},
+    {sc:5, add:['soc-ram'], hl:['a-readmem','ram'], v:['hex',null,null,'ram'], t:'$readmemh: el firmware entra a la RAM',
+     d:'bram.v carga firmware.hex con $readmemh dentro de un initial. En simulación lo hace al empezar. En síntesis, yosys convierte esas palabras en el contenido inicial de la BRAM y el bitstream lo lleva a la FPGA: al configurarla, la memoria de programa ya contiene el firmware.'},
+    {sc:5, fetch:0x00, v:['hex',0x00,null,'ram'], t:'Reset: la CPU lee la primera instrucción',
+     d:'Después del reset, el PC de femtorv32 vale 0x0000. La CPU pone esa dirección en mem_addr y activa rd; el decodificador activa cs0, la RAM entrega MEM[0] = 40000113 y el multiplexor la lleva por la entrada 1 a mem_rdata: li sp, 1024.'},
+    {sc:5, fetch:0x04, v:['hex',0x04,null,'ram'], t:'0x04: jal main',
+     d:'La CPU lee 0x04: jal main salta a 0x0C. Cada instrucción se busca igual, por el mismo bus y con cs0.'},
+    {sc:5, fetch:0x1C, v:['hex',0x1C,null,'ram'], t:'0x1C: jal hw_mult',
+     d:'main carga 5 y 3 en a0 y a1 y en 0x1C salta a hw_mult (0x34): la dirección que el enlazador completó.'},
+    {sc:5, fetch:0x38, v:['hex',0x38,null,'ram'], t:'0x38: la primera escritura al multiplicador',
+     d:'En 0x38 está sw a0, 4(a2): la instrucción sale de la RAM, pero su escritura va a 0x420004 con cs3. Desde aquí sigue la secuencia de accesos al multiplicador de la animación anterior.'},
+    {sc:5, fetch:0x20, data:0x78, v:['hex',0x78,null,'ram'], t:'De vuelta en main: lectura de .data',
+     d:'Al volver, main lee llamadas en 0x78. Es una lectura de datos en la RAM, también con cs0: el valor 1 que llegó desde .data.'},
+    {sc:5, fetch:0x24, data:0x7C, wr:15, v:['hex',0x7C,null,'ram'], t:'Escritura de resultado en .bss',
+     d:'sw a0, 124(zero) guarda 15 en resultado (0x7C, en .bss). Así, el firmware que salió de main.c usa las cuatro secciones: código en .text, constantes en .rodata, datos iniciales en .data y variables en .bss.'},
+  ];
+  let vis = new Set(); S.forEach(s => { (s.add||[]).forEach(k => vis.add(k)); s.vis = new Set(vis); });
+  const EL = Array.from(document.querySelectorAll('#flow .el')).map(e => e.id);
+  const ALLG = Array.from(document.querySelectorAll('#flow g[id]')).map(e => e.id);
+  let idx = 0, timer = null;
+  function render(){
+    const s = S[idx];
+    EL.forEach(id => $(id).classList.toggle('on', s.vis.has(id)));
+    const act = new Set(s.hl||[]);
+    const ex = s.fetch!==undefined;
+    if(ex) ['cpu','b-addr','b-dec','dec','b-cs','b-rd','ram','b-dout','mux','b-rdata'].forEach(k => act.add(k));
+    ALLG.forEach(id => $(id).classList.toggle('act', act.has(id)));
+    const a = ex ? (s.data!==undefined ? s.data : s.fetch) : null;
+    $('v-pc').textContent = ex ? 'PC = 0x'+s.fetch.toString(16).toUpperCase().padStart(2,'0') : '';
+    $('v-addr').textContent = ex ? '= 0x'+a.toString(16).toUpperCase().padStart(8,'0') : '';
+    $('v-rd').textContent = ex ? (s.wr!==undefined ? 'wr = 1' : 'rd = 1') : '';
+    const row = ex ? ROWS.find(r => r.a===a) : null;
+    $('v-rdata').textContent = ex && s.wr===undefined ? '= '+row.w : '';
+    ['file','sym','hex'].forEach(v => $('v-'+v).classList.toggle('on', s.v[0]===v));
+    if(s.v[0]==='file') showFile(s.v[1], s.v[2], s.v[3]);
+    if(s.v[0]==='sym') $('symbody').innerHTML = SYMS.map(r => '<tr class="hl"><td>'+r[0]+'</td><td>'+r[1]+'</td><td class="s-'+r[2].slice(1)+'">'+r[2]+'</td></tr>').join('');
+    if(s.v[0]==='hex') showHex(s.v[1], s.v[2], s.v[3]);
+    $('eyebrow').textContent = 'Escena '+s.sc+' · '+SCENES[s.sc-1];
+    $('stitle').textContent = s.t; $('stext').textContent = s.d;
+    $('count').textContent = 'Paso '+(idx+1)+' de '+S.length;
+    $('bprev').disabled = idx===0; $('bnext').disabled = idx===S.length-1;
+    document.querySelectorAll('#scenes button').forEach((bt,i) => bt.setAttribute('aria-current', String(i+1===s.sc)));
+  }
+  function go(n){ idx = Math.max(0, Math.min(S.length-1, n)); render(); }
+  function stop(){ if(timer){ clearInterval(timer); timer=null; $('bplay').textContent='Reproducir'; } }
+  SCENES.forEach((n,i) => { const li=document.createElement('li'), bt=document.createElement('button');
+    bt.type='button'; bt.textContent=(i+1)+' '+n; bt.addEventListener('click', () => { stop(); go(S.findIndex(s => s.sc===i+1)); });
+    li.appendChild(bt); $('scenes').appendChild(li); });
+  $('bnext').addEventListener('click', () => { stop(); go(idx+1); });
+  $('bprev').addEventListener('click', () => { stop(); go(idx-1); });
+  $('bfirst').addEventListener('click', () => { stop(); go(0); });
+  $('bplay').addEventListener('click', () => { if(timer){ stop(); return; } if(idx===S.length-1) go(0);
+    $('bplay').textContent='Pausa'; timer=setInterval(() => { if(idx>=S.length-1){ stop(); return; } go(idx+1); }, 4000); });
+  document.addEventListener('keydown', e => {
+    if(e.key==='ArrowRight'||e.key===' '){ e.preventDefault(); stop(); go(idx+1); }
+    if(e.key==='ArrowLeft'){ e.preventDefault(); stop(); go(idx-1); } });
+  render();
+})();
+</script>
