@@ -38,6 +38,23 @@ static void write_sprite(uint32_t slot, uint32_t descriptor)
     SPRITE_WE = 0u;
 }
 
+static void show_score(const char digits[4])
+{
+    for (uint32_t i = 0u; i < 4u; ++i)
+        write_text(4u + i, (15u << TEXT_FOREGROUND_SHIFT) | (uint32_t)digits[i]);
+}
+
+static void add_ten_points(char digits[4])
+{
+    for (int i = 2; i >= 0; --i) {
+        if (digits[i] != '9') {
+            ++digits[i];
+            break;
+        }
+        digits[i] = '0';
+    }
+}
+
 int main(void)
 {
     TEXT_WE = 0u;
@@ -49,18 +66,36 @@ int main(void)
     for (uint32_t slot = 0u; slot < 8u; ++slot)
         write_sprite(slot, 0u);
 
-    const char *message = "HOLA TU";
-    for (uint32_t i = 0u; i < 7u; ++i)
-        write_text(10u + i, (15u << 7) | (uint32_t)message[i]);
+    const char *message = "PTS ";
+    for (uint32_t i = 0u; i < 4u; ++i)
+        write_text(i, (15u << TEXT_FOREGROUND_SHIFT) | (uint32_t)message[i]);
+    char score[4] = {'0', '0', '0', '0'};
+    show_score(score);
 
-    write_sprite(1u, sprite_descriptor(28u, 24u, 4u, 10u));
+    write_sprite(0u, sprite_descriptor(12u, 12u, 0u, 14u));
     write_sprite(2u, sprite_descriptor(28u, 56u, 1u, 6u));
 
     int x = 0;
     int direction = 1;
+    int projectile_y = 53;
+    unsigned int reload_frames = 0u;
     for (;;) {
-        write_sprite(0u, sprite_descriptor((uint32_t)x, 40u, 0u, 14u));
-        write_sprite(2u, sprite_descriptor((uint32_t)x*2, 56u, 1u, 6u));
+        write_sprite(1u, sprite_descriptor((uint32_t)x, 24u, 4u, 10u));
+        if (projectile_y >= 9) {
+            write_sprite(3u, sprite_descriptor(31u, (uint32_t)projectile_y, 2u, 12u));
+            projectile_y -= 2;
+        } else {
+            write_sprite(3u, 0u);
+            if (reload_frames == 0u) {
+                add_ten_points(score);
+                show_score(score);
+            }
+            ++reload_frames;
+            if (reload_frames == 4u) {
+                projectile_y = 53;
+                reload_frames = 0u;
+            }
+        }
         wait_iterations(PANEL_FRAME_DELAY);
         x += direction;
         if (x == 56)

@@ -90,9 +90,29 @@
 #define PANEL_BASE 0x00470000u
 #define PANEL_REG(offset) (*(volatile uint32_t *)(PANEL_BASE + (offset)))
 #define TEXT_ADDR PANEL_REG(0x04u)   /* R/W [5:0]: celda de texto, 0..63. */
-#define TEXT_DATA PANEL_REG(0x08u)   /* R/W [14:0]: caracter, frente y fondo. */
+#define TEXT_DATA PANEL_REG(0x08u)
+/* TEXT_DATA, registro R/W de 32 bits:
+ * [6:0]   Codigo de caracter de 7 bits: selecciona uno de los 128 glifos.
+ * [10:7]  Indice de color de frente (0..15), usado donde el glifo vale 1.
+ * [14:11] Indice de color de fondo (0..15), usado donde el glifo vale 0.
+ *         Fondo 0: pixel transparente donde el glifo vale 0.
+ * [31:15] No implementados: ignorados al escribir; cero al leer.
+ * Formacion: (fondo << 11) | (frente << 7) | caracter.
+ */
 #define SPRITE_ADDR PANEL_REG(0x0cu) /* R/W [2:0]: slot de descriptor, 0..7. */
-#define SPRITE_DATA PANEL_REG(0x10u) /* R/W [25:0]: descriptor completo. */
+#define SPRITE_DATA PANEL_REG(0x10u)
+/* SPRITE_DATA, registro R/W de 32 bits:
+ * [7:0]   X: coordenada horizontal del pixel superior izquierdo.
+ * [15:8]  Y: coordenada vertical del pixel superior izquierdo.
+ *         X e Y: complemento a dos de 8 bits; negativos permiten recorte.
+ * [20:16] Indice del patron de 8x8 pixeles en la ROM (0..31).
+ * [24:21] Indice de color en la paleta de sprites (0..15).
+ * [25]    Habilitacion: 1 = sprite activo; 0 = sprite deshabilitado.
+ * [31:26] No implementados: ignorados al escribir; cero al leer.
+ * Formacion: (enable << 25) | (color << 21) | (patron << 16) |
+ *            ((Y & 0xffu) << 8) | (X & 0xffu).
+ * SPRITE_ADDR selecciona el slot; no forma parte del descriptor.
+ */
 #define TEXT_WE PANEL_REG(0x14u)     /* R/W bit 0: habilita escritura de texto. */
 #define SPRITE_WE PANEL_REG(0x18u)   /* R/W bit 0: habilita escritura de sprites. */
 
