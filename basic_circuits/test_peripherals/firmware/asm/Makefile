@@ -81,3 +81,17 @@ bram.ld:
 
 
 #export PATH=$PATH:/home/carlos/Embedded/litex_work/learn-fpga/FemtoRV/FIRMWARE/TOOLCHAIN/riscv64-unknown-elf-gcc-8.3.0-2020.04.0-x86_64-linux-ubuntu14/bin/
+
+PANEL_BUILD_DIR ?= build/panel
+PANEL_FRAME_DELAY ?= 100000
+
+.PHONY: panel_firmware
+
+panel_firmware:
+	mkdir -p "$(PANEL_BUILD_DIR)"
+	$(AS) -march=rv32i -mabi=ilp32 --defsym PANEL_FRAME_DELAY=$(PANEL_FRAME_DELAY) -o "$(PANEL_BUILD_DIR)/panel_test.o" panel_test.S
+	printf '%s\n' 'MEMORY { BRAM (rwx) : ORIGIN = 0, LENGTH = 0x1000 }' 'SECTIONS { .text : { *(.text*) *(.rodata*) } > BRAM .data : { *(.data*) } > BRAM .bss : { *(.bss*) *(COMMON) } > BRAM /DISCARD/ : { *(.riscv.attributes) *(.comment) } }' > "$(PANEL_BUILD_DIR)/panel.ld"
+	$(LD) -m elf32lriscv -T "$(PANEL_BUILD_DIR)/panel.ld" -e _start -Map "$(PANEL_BUILD_DIR)/panel.map" -o "$(PANEL_BUILD_DIR)/panel.elf" "$(PANEL_BUILD_DIR)/panel_test.o"
+	$(OBJDUMP) -d "$(PANEL_BUILD_DIR)/panel.elf" > "$(PANEL_BUILD_DIR)/panel.lst"
+	../firmware_words_src/firmware_words "$(PANEL_BUILD_DIR)/panel.elf" -ram 4096 -max_addr 4096 -out "$(PANEL_BUILD_DIR)/firmware.hex"
+	cp "$(PANEL_BUILD_DIR)/firmware.hex" ../../rtl/firmware.hex

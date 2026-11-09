@@ -86,3 +86,23 @@ Pruebas realizadas el 29 de octubre de 2026:
 - SoC actual tras síntesis y **empaquetado únicamente**: **3584/5280 LC**, **28/30 RAM4K**, **20 IO** y **8/8 recursos globales**. No es una comprobación de colocación, ruteo ni timing.
 
 No se ha validado físicamente esta integración ni programado la placa en este trabajo. Siguen pendientes el firmware de prueba para 4 KiB, la colocación/ruteo y la validación del panel en hardware.
+
+## Firmware de prueba del panel — 2026-11-09
+
+`firmware/asm/panel_test.S`, relativo a `test_peripherals/`, inicializa la pila en `0x1000`, borra las 64 celdas de texto y los ocho descriptores y escribe **HOLA** en las celdas 10…13, con frente blanco y fondo transparente. El sprite 0 usa el patrón 0, color 14, Y=40 y recorre X=0…56 de ida y vuelta. El resto de sprites queda deshabilitado. La imagen, fuentes, patrones, paletas y RTL no se modifican.
+
+El target `panel_firmware` del Makefile de ensamblador genera su propio linker y ELF en `build/panel/`, limita la memoria a 4 KiB y copia el resultado a `rtl/firmware.hex`. No modifica la fuente ni los targets de la calculadora. El firmware ocupa **276 bytes (69 palabras)**, sin datos ni pila dinámica en esta prueba. No utiliza UART ni habilita interrupciones. Con la toolchain disponible se compiló usando `CROSS=riscv64-unknown-elf`, con ISA RV32I y ABI ILP32.
+
+`PANEL_FRAME_DELAY=100000` es el retardo de movimiento de la versión para la placa. Se utilizó `PANEL_FRAME_DELAY=16` para simular el recorrido completo mediante `panel_firmware_TB.v`, compilado como top con las fuentes del SoC y ejecutado desde el directorio RTL. La prueba comprueba HOLA, los pasos de una columna, los cambios de dirección, la deshabilitación del resto de sprites, la conservación de la imagen y la ausencia de accesos fuera de la BRAM. La simulación acelerada aprobó **29183 comprobaciones y 115 posiciones del sprite**. Después se regeneró e instaló la imagen con retardo normal. El argumento `+UPDATES=1` permite comprobar el arranque de esa imagen sin esperar el recorrido completo.
+
+El `firmware.hex` actual corresponde a esta prueba; la advertencia histórica de exceso de memoria de la calculadora no describe esta imagen. El bitstream todavía debe reconstruirse para incorporar el firmware nuevo. No se programó la placa ni se validó físicamente el resultado en este paso.
+
+### Ampliación a tres sprites
+
+El firmware mantiene el sprite 0 móvil en Y=40 y añade dos descriptores fijos: un invasor en el slot 1, patrón 4, color 10, posición (28,24), y un cañón en el slot 2, patrón 1 existente, color 6, posición (28,56). El patrón 4 de `sprite_demo_patterns.mem` utiliza las ocho filas `18 3C 7E DB FF 24 5A A5`, tomadas del invasor de `sprites.mem`. No se modifica el patrón de la nave ni la paleta. Los slots 3…7 siguen deshabilitados. Las tres cajas de 8×8 están separadas verticalmente durante todo el recorrido de la nave; el testbench comprueba los descriptores adicionales, el patrón del invasor y la ausencia de colisiones.
+
+### Port a C
+
+La misma prueba está en `firmware/c/panel_test.c`, con arranque `panel_start.S`, linker `panel_linker.ld` de 4 KiB y target `panel_firmware` del Makefile C. El ASM se conserva como referencia. El flujo C copia su resultado a `rtl/firmware.hex` y no necesita los periféricos matemáticos ni la librería de impresión. Véase [la documentación del flujo C](../../../../firmware/c/README.md). Tras generar esa imagen, hay que reconstruir el bitstream; compilar C no actualiza por sí solo la flash de la placa.
+
+La variante C fue modificada posteriormente por Carlos para mostrar **HOLA TU** y mover también el cañón en X=2*x; el retardo de escritura de sprites es de 10 iteraciones. Se conserva sin cambiar esos valores. `panel_firmware_TB.v` sigue comprobando la escena anterior de HOLA y cañón fijo y no acredita la variante modificada. `peripheral_registers.h` centraliza ahora el mapa de UART, periféricos matemáticos, BCD y panel, con explicación de campos y ejemplos; centralizarlo no cambió los objetos compilados de la variante C actual ni de `hwmath.c`.

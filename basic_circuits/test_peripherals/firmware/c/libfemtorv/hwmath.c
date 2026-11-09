@@ -11,31 +11,7 @@
  */
 
 #include <femtorv32.h>
-
-#define SQRT_BASE  0x410000
-#define MULT_BASE  0x420000
-#define DIV_BASE   0x430000
-
-
-/* Mult register offsets (word-aligned) */
-#define MULT_A       0x04
-#define MULT_B       0x08
-#define MULT_INIT    0x0C
-#define MULT_RESULT  0x10
-#define MULT_DONE    0x14
-
-/* Div register offsets (word-aligned, 32-bit) */
-#define DIV_A        0x04
-#define DIV_B        0x08
-#define DIV_INIT     0x0C
-#define DIV_DONE     0x14
-#define DIV_RESULT   0x10
-
-/* Sqrt register offsets (word-aligned) */
-#define SQRT_A       0x04
-#define SQRT_INIT    0x0C
-#define SQRT_RESULT  0x10
-#define SQRT_DONE    0x14
+#include "include/peripheral_registers.h"
 
 /*
  * hw_mult: multiplicacion sin signo 16x16 -> 32 bits

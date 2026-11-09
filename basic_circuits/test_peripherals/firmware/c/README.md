@@ -2,6 +2,20 @@
 
 Firmware en C para el procesador femtoRV32 (RISC-V RV32I, sin multiply/divide hardware). Usa una librería estática `libfemtorv.a` con funciones de I/O, timing y sistema.
 
+## Prueba HUB75 en C
+
+`panel_test.c` parte de la prueba de `firmware/asm/panel_test.S`. La variante C actual de Carlos limpia texto y descriptores, escribe **HOLA TU** en las celdas 10…16 y muestra tres sprites. El slot 0 se mueve entre X=0 y X=56 en Y=40; el invasor del slot 1 queda en (28,24), patrón 4 y color 10; el cañón del slot 2 utiliza patrón 1, color 6, Y=56 y X=2*x. Cuando X supera 63 queda fuera de pantalla; no se limita a 56. Se conserva esta elección de prueba, al igual que el retardo de escritura de sprite de 10 iteraciones. No modifica la imagen ni utiliza UART, multiplicador, divisor o conversiones BCD.
+
+El mapa de registros y la explicación de cada campo están en `libfemtorv/include/peripheral_registers.h`, utilizado por `panel_test.c` y `hwmath.c`. El testbench `panel_firmware_TB.v` conserva como referencia la escena anterior **HOLA con cañón fijo**: sus comprobaciones no validan esta variante C modificada. Las pruebas de 115 posiciones documentadas anteriormente corresponden a esa escena anterior. La extracción de macros al header sí se comprobó sobre la variante actual: los objetos compilados de panel y hwmath permanecieron idénticos.
+
+El target **`panel_firmware`** genera `build/panel/panel.elf`, su mapa y desensamblado, y copia `build/panel/firmware.hex` a `rtl/firmware.hex`. Compila RV32I/ILP32 con `-Os` y acceso MMIO `volatile` a la base `0x00470000`. `TEXT_WE` y `SPRITE_WE` se mantienen activos durante una espera de software antes de desactivarse.
+
+Este target tiene un arranque y linker específicos: `panel_start.S` inicializa SP en `0x1000`, GP y BSS; `panel_linker.ld` limita la BRAM a **4 KiB** y reserva al menos 256 bytes para pila. No utiliza el arranque ni el linker genéricos de los otros ejemplos, que conservan configuraciones de memoria distintas. Tampoco requiere enlazar `libfemtorv.a` o `libgcc`.
+
+`PANEL_FRAME_DELAY` vale 100000 para la placa. Para la simulación acelerada puede compilarse con valor 16 y `PANEL_BUILD_DIR=build/panel_sim`, y utilizar el testbench `rtl/cores/Led_panel_AI_12bpp/panel_firmware_TB.v` como top con las fuentes del SoC. El testbench acepta `+UPDATES=1` para comprobar solamente el arranque con retardo normal. Después de simular con retardo reducido, regenerar el firmware con el valor normal antes de construir el bitstream. El retardo C usa un contador `volatile`: conserva la secuencia funcional, pero no pretende tener exactamente la misma duración que el bucle ASM.
+
+El target por defecto sigue siendo el ejemplo `test_printf`; para preparar el panel se debe seleccionar `panel_firmware`. Este paso no graba la placa: requiere reconstruir posteriormente el SoC y su bitstream.
+
 ## Estructura del directorio
 
 ```
