@@ -18,7 +18,8 @@ module load_data #(
     parameter config3     = 16'h40f7,
     parameter config4     = 16'h0040,
     parameter num_drivers = 7,     // NUM_DRVS = NUM_COLS/16 - 1
-    parameter bit_depth   = 4
+    parameter bit_depth   = 4,
+    parameter cfg_delay   = 10     // inter-register delay for ctrl_cfg
 )(
     input        clk,
     input        rst,
@@ -59,7 +60,7 @@ lsr_config #( .width(width), .config0(config0), .config1(config1),
 
 count_l    #( .width(4))   count_l0( .clk(clk), .start(st_lat), .load(latches), .zero(clk_en_latch), .done(done_latch));
 
-ctrl_cfg   #(.NUM_DRVS(num_drivers), .DELAY(10)) ctr_cfg0(
+ctrl_cfg   #(.NUM_DRVS(num_drivers), .DELAY(cfg_delay)) ctr_cfg0(
                     .clk(clk), .rst(rst), .send_config(send_config),
                     .latches(latches), .st_lat(st_lat), .done_latch(done_latch),
                     .ld_cfg(ld_cfg), .sh_cfg(sh_cfg), .done_configure(done_configure),

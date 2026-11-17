@@ -16,10 +16,7 @@ module pwm_led_panel(clk , rst , init, LP_CLK, LATCH, NOE, ROW, RGB0, RGB1);
 // ======== Caracteristicas de la matriz ========
 parameter NUM_COLS        = 128;
 parameter NUM_ROWS        = 64;
-parameter NUM_PIXELS      = NUM_COLS*NUM_ROWS*16;   // 20000h 1FFFF
-parameter HALF_SCREEN     = NUM_PIXELS/2;
 parameter BIT_DEPTH       = 4;
-parameter TOTAL_BIT_DEPTH = 3*BIT_DEPTH;
 parameter DELAY           = 20;
 parameter NUM_DRVS        = NUM_COLS/16 - 1;   // 128 cols -> 8 chips -> 7
 // ---- Seleccion de chip: 1 = FM6363, 0 = FM6353 ----
@@ -33,9 +30,6 @@ parameter [15:0] CFG4 = IS_FM6363 ? 16'h5a70 : 16'h0040;
 parameter GCLK_ROW        = IS_FM6363 ? 73 : 137;
 // ----------------------------------------------
 
-wire [11:0] PIX_ADDR;
-wire [23:0] mem_data;
-
 initial begin
   clk1 = 0;
   clk_counter = 0;
@@ -45,7 +39,6 @@ end
 //       TEST
 //////////////////////
 
-wire [5:0] PIXEL_DATA;
 wire [5:0] CFG_DATA;
 
 
@@ -60,31 +53,28 @@ assign {RGB0,RGB1}  = CFG_DATA;
 //////////////////////
 
 
-wire [2:0] tmp_rgb;
-wire tmp_noe;
 wire tmp_latch;
-
 
 wire done_configure;
 wire vs_done;
 
 assign LATCH = tmp_latch;
-assign NOE = tmp_noe;
+// NOE is driven directly by display0's gclk port below.
 
 reg [4:0] clk_counter;
    always @(posedge clk) begin
-      //if (~rst) begin
-      //  clk_counter <= 0;
-      //  clk1        <= 0;
-      //end else 
-      //begin
+      if (~rst) begin
+        clk_counter <= 0;
+        clk1        <= 0;
+      end
+      else begin
          if(clk_counter == 2) begin
             clk1    <= ~clk1;
             clk_counter <= 0;
          end
          else
             clk_counter <= clk_counter + 1;
-      //end
+      end
    end
 
 
@@ -93,7 +83,7 @@ reg [4:0] clk_counter;
    show_data   #(.pulses_off (27), .pulses_on(GCLK_ROW), .hdr_pulses(3))
                display0 (.clk(clk1), .rst(~rst), .init(init_show), .vs_done(vs_done), .outc(ROW), .gclk(NOE));
    load_data   #(.width(128), .config0(CFG0), .config1(CFG1), .config2(CFG2), .config3(CFG3), .config4(CFG4),
-                  .num_drivers(NUM_DRVS), .bit_depth(BIT_DEPTH))
+                  .num_drivers(NUM_DRVS), .bit_depth(BIT_DEPTH), .cfg_delay(DELAY))
                load0   (.clk(~clk1), .rst(~rst), .out_data({CFG_DATA}), .latch_out(tmp_latch), .dclk(LP_CLK),
                .send_config(send_config), .done_configure(done_configure), .vs_done(vs_done),
                .send_data(send_data), .done_data(done_data));
@@ -109,7 +99,7 @@ reg [3:0] state;
 
 always @(posedge clk1) begin
   if(~rst) begin
-    state        = START;
+    state        <= START;
     send_config  <= 0;
   end
   else begin
@@ -118,14 +108,14 @@ always @(posedge clk1) begin
          send_config <= 1;
          send_data   <= 0;
          init_show   <= 0;
-         state        = SEND_CONFIG;
+         state        <= SEND_CONFIG;
       end
 
       SEND_CONFIG:begin
          send_config <= 0;
          send_data   <= 0;
          init_show   <= 0;
-         state        = LOOP;
+         state        <= LOOP;
       end
 
       LOOP:begin
@@ -133,16 +123,16 @@ always @(posedge clk1) begin
          send_data   <= 0;
          init_show   <= 0;
          if(done_configure)
-            state = SEND_DATA;
+            state <= SEND_DATA;
          else
-            state = LOOP;
+            state <= LOOP;
       end
 
       SEND_DATA:begin
          send_config <= 0;
          send_data   <= 1;
          init_show   <= 0;
-         state       = LOOP_SEND;
+         state       <= LOOP_SEND;
       end
 
       LOOP_SEND:begin
@@ -150,11 +140,11 @@ always @(posedge clk1) begin
          send_data   <= 0;
          if(done_data) begin
             init_show <= 1;
-            state = SHOW_DATA;
+            state <= SHOW_DATA;
          end
          else begin
             init_show <= 0;
-            state = LOOP_SEND;
+            state <= LOOP_SEND;
          end
       end
 
@@ -163,9 +153,9 @@ always @(posedge clk1) begin
          send_data   <= 1;      // keep reloading the frame buffer
          init_show   <= 0;
          if(done_data)
-            state = LOOP_SEND;  // frame sent; next pass reloads it
+            state <= LOOP_SEND;  // frame sent; next pass reloads it
          else
-            state = SHOW_DATA;
+            state <= SHOW_DATA;
       end
 
 //init_show
