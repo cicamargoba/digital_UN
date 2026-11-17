@@ -10,6 +10,7 @@
 # Synthesis / PnR outputs
 *.json
 *.svg
+!Docs/*.svg
 *.asc
 *bin
 *rpt

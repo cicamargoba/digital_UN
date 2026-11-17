@@ -16,6 +16,24 @@ COMM_OBJS += out_lsr.v
 COMM_OBJS += memory.v
 COMM_OBJS += mux_led.v
 
+# DP3365S / DP32xx-33xx variant - see Docs/dp3365s_arquitectura_blocks.svg
+DP3365_TARGET = pwm_led_panel_dp3365
+DP3365_OBJS  = pwm_led_panel_dp3365.v
+DP3365_OBJS += show_data_dp3365.v
+DP3365_OBJS += load_data_dp3365.v
+DP3365_OBJS += reg_wr_dp3365.v
+DP3365_OBJS += pixel_seq_dp3365.v
+DP3365_OBJS += row_pulse_gen.v
+DP3365_OBJS += count.v
+DP3365_OBJS += count_l.v
+DP3365_OBJS += out_lsr.v
+DP3365_OBJS += memory.v
+
+sim_dp3365:
+	rm -f a.out $(DP3365_TARGET)_TB.vcd
+	iverilog -DBENCH -o a.out $(DP3365_TARGET)_TB.v $(DP3365_OBJS)
+	vvp a.out
+	gtkwave $(DP3365_TARGET)_TB.vcd &
 
 
 

@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2180" height="1330" viewBox="-80 0 2180 1330">
+  <title>PWM_LED_panel_AI adaptado a DP3365S — diagrama de bloques</title>
+  <desc>Bloques funcionales del controlador HUB75 objetivo para DP3365S. CONTROL, los contadores de fila/columna y la cadena de desplazamiento se conservan del diseño FM6363/FM6353. El bloque de escritura de registros y el generador del pulso ROW son nuevos: reemplazan el conteo de pulsos de NOE y la palabra de configuración concatenada.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0 L8 4 L0 8 Z" fill="#161616"/></marker>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#111111}
+      .title{font-size:27px;font-weight:700}
+      .name{font-size:23px;font-weight:700}
+      .label{font-size:18px;font-weight:700}
+      .small{font-size:16px}
+      .code{font-family:monospace;font-size:16px}
+      .zero{fill:#b42a2a;font-size:18px;font-weight:700}
+      .ctl{fill:#fcfbe2;stroke:#111111;stroke-width:2}
+      .count{fill:#f9dedd;stroke:#111111;stroke-width:2}
+      .cmp{fill:#e1ecd7;stroke:#111111;stroke-width:2}
+      .outer{fill:#ffffff;stroke:#111111;stroke-width:2}
+      .new{fill:#edf2f7;stroke:#111111;stroke-width:2}
+      .wire{fill:none;stroke:#111111;stroke-width:2;marker-end:url(#arrow)}
+      .bus{fill:none;stroke:#111111;stroke-width:3;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect x="-80" y="0" width="2180" height="1330" fill="#ffffff"/>
+  <text x="70" y="36" class="title">PWM_LED_panel_AI adaptado a DP3365S · diagrama de bloques</text>
+  <text x="70" y="60" class="small">Amarillo/rosa = se conserva del diseño FM6363/FM6353 · verde = mux/comparador · azul grisáceo = nuevo (protocolo DP3365S)</text>
+
+  <!-- Legend -->
+  <rect x="1500" y="18" width="24" height="24" class="ctl"/><text x="1532" y="36" class="small">Control / memoria / shift (conservado)</text>
+  <rect x="1500" y="50" width="24" height="24" class="count"/><text x="1532" y="68" class="small">Contadores (conservados)</text>
+  <rect x="1830" y="18" width="24" height="24" class="cmp"/><text x="1862" y="36" class="small">Mux</text>
+  <rect x="1830" y="50" width="24" height="24" class="new"/><text x="1862" y="68" class="small">Nuevo</text>
+
+  <!-- ============ CONTROL ============ -->
+  <rect x="90" y="110" width="280" height="430" class="ctl"/>
+  <text x="230" y="320" text-anchor="middle" class="name">CONTROL</text>
+  <text x="230" y="348" text-anchor="middle" class="small">FSM orquestadora</text>
+  <text x="230" y="368" text-anchor="middle" class="small">(misma forma: config→datos)</text>
+
+  <text x="55" y="162" text-anchor="end" class="small">INIT</text><path d="M60 167 H90" class="wire"/>
+  <text x="55" y="242" text-anchor="end" class="zero">ZROW</text><path d="M60 247 H90" class="wire"/>
+  <text x="55" y="322" text-anchor="end" class="zero">ZCH</text><path d="M60 327 H90" class="wire"/>
+  <text x="55" y="402" text-anchor="end" class="zero">DONE_CFG</text><path d="M60 407 H90" class="wire"/>
+  <text x="55" y="482" text-anchor="end" class="zero">DONE_PIX</text><path d="M60 487 H90" class="wire"/>
+
+  <path d="M370 150 H430" class="wire"/><text x="380" y="142" class="small">RST_ROW</text>
+  <path d="M370 195 H430" class="wire"/><text x="380" y="187" class="small">INC_ROW</text>
+  <path d="M370 265 H430" class="wire"/><text x="380" y="257" class="small">RST_CH</text>
+  <path d="M370 310 H430" class="wire"/><text x="380" y="302" class="small">INC_CH</text>
+  <path d="M370 355 H430" class="wire"/><text x="380" y="347" class="small">SEL_CFG/PIX</text>
+  <path d="M370 400 H430" class="wire"/><text x="380" y="392" class="small">LD_PIX / SH_PIX</text>
+  <path d="M370 445 H430" class="wire"/><text x="380" y="437" class="small">EN_ROWPULSE</text>
+  <path d="M370 490 H430" class="wire"/><text x="380" y="482" class="small">START_REGWR</text>
+
+  <!-- ============ COUNT ROW ============ -->
+  <rect x="430" y="150" width="230" height="85" class="count"/>
+  <text x="545" y="185" text-anchor="middle" class="name">Count ROW</text>
+  <text x="545" y="210" text-anchor="middle" class="small">0 .. 63</text>
+  <path d="M660 172 H700" class="wire"/><text x="668" y="164" class="small">ROW</text>
+
+  <!-- ============ COUNT CH ============ -->
+  <rect x="430" y="265" width="230" height="85" class="count"/>
+  <text x="545" y="300" text-anchor="middle" class="name">Count CH</text>
+  <text x="545" y="325" text-anchor="middle" class="small">0 .. CHIPS-1</text>
+  <path d="M660 307 H700" class="wire"/><text x="668" y="299" class="small">CH</text>
+
+  <path d="M700 172 V307" class="bus"/>
+  <path d="M700 250 H790" class="bus"/>
+  <text x="705" y="235" class="small">ADDR {ROW,CH}</text>
+
+  <!-- physical ROW[4:0] routed around the top, clear channel at y=100 -->
+  <path d="M545 150 V100 H1920 V650" class="bus"/>
+  <text x="900" y="92" class="small">ROW[4:0] → decodificador de fila del panel (externo, igual)</text>
+
+  <!-- ============ MEMORY ============ -->
+  <rect x="790" y="150" width="220" height="200" class="ctl"/>
+  <text x="900" y="245" text-anchor="middle" class="name">MEMORY</text>
+  <text x="900" y="272" text-anchor="middle" class="small">framebuffer</text>
+  <text x="900" y="296" text-anchor="middle" class="small">gris ≤16 bit × 6 canales</text>
+  <text x="900" y="318" text-anchor="middle" class="small">(R0 G0 B0 R1 G1 B1)</text>
+  <path d="M1010 250 H1040" class="bus"/>
+
+  <!-- ============ MUX cfg/pix ============ -->
+  <polygon points="1040,220 1130,235 1130,265 1040,280" class="cmp"/>
+  <text x="1085" y="245" text-anchor="middle" class="label">MUX</text>
+  <text x="1085" y="263" text-anchor="middle" class="small">cfg/pix</text>
+  <path d="M1130 250 H1160" class="bus"/>
+
+  <!-- ============ SHIFT_REG x6 ============ -->
+  <rect x="1160" y="150" width="260" height="200" class="ctl"/>
+  <text x="1290" y="225" text-anchor="middle" class="name">SHIFT_REG ×6</text>
+  <text x="1290" y="252" text-anchor="middle" class="small">R0 G0 B0 R1 G1 B1</text>
+  <text x="1290" y="275" text-anchor="middle" class="small">16 bit, MSB primero</text>
+  <text x="1290" y="298" text-anchor="middle" class="small">(igual mecanismo que hoy)</text>
+
+  <path d="M1220 350 V600" class="bus"/><text x="1225" y="618" class="small">SDI</text>
+  <path d="M1300 350 V600" class="bus"/><text x="1305" y="618" class="small">DCLK</text>
+  <path d="M1380 350 V600" class="bus"/><text x="1385" y="618" class="small">LE</text>
+
+  <!-- ============ NUEVO: protocolo de registro / fila ============ -->
+  <rect x="1480" y="110" width="560" height="440" class="outer"/>
+  <text x="1510" y="138" class="label">Nuevo: protocolo de registro y fila del DP3365S</text>
+
+  <rect x="1510" y="150" width="240" height="80" class="count"/>
+  <text x="1630" y="183" text-anchor="middle" class="name">Count REG</text>
+  <text x="1630" y="206" text-anchor="middle" class="small">0 .. 12 (índice de registro)</text>
+
+  <rect x="1510" y="250" width="240" height="140" class="new"/>
+  <text x="1630" y="283" text-anchor="middle" class="name">REG_WRITE_SEQ</text>
+  <text x="1630" y="306" text-anchor="middle" class="small">PRE_ACT → WR_CFG</text>
+  <text x="1630" y="328" text-anchor="middle" class="small">SDI = {addr[7:0],data[7:0]}</text>
+  <text x="1630" y="350" text-anchor="middle" class="small">× ~13 registros</text>
+  <text x="1630" y="372" text-anchor="middle" class="small">nuevo — antes: ctrl_cfg.v + lsr_config.v</text>
+
+  <rect x="1780" y="150" width="240" height="80" class="count"/>
+  <text x="1900" y="183" text-anchor="middle" class="name">Count W</text>
+  <text x="1900" y="206" text-anchor="middle" class="small">ancho de pulso (igual mecanismo)</text>
+
+  <rect x="1780" y="250" width="240" height="140" class="new"/>
+  <text x="1900" y="283" text-anchor="middle" class="name">ROW_PULSE_GEN</text>
+  <text x="1900" y="306" text-anchor="middle" class="small">DRV_ROW: W12 en fila 0</text>
+  <text x="1900" y="328" text-anchor="middle" class="small">de cada grupo, W4 el resto</text>
+  <text x="1900" y="350" text-anchor="middle" class="small">nuevo — antes: show_data.v</text>
+  <text x="1900" y="372" text-anchor="middle" class="small">+ ctrl_show.v (contaba NOE)</text>
+
+  <!-- SDI de configuración hacia el MUX, ruteado por debajo -->
+  <path d="M1630 390 V560 H1085 V280" class="bus"/>
+  <text x="1470" y="578" class="small">SDI de config. ({addr,data}) hacia el MUX</text>
+
+  <!-- DRV_ROW hacia el borde de salida -->
+  <path d="M1900 390 V600" class="bus"/><text x="1905" y="618" class="small">DRV_ROW</text>
+
+  <!-- ============ decodificador de fila del panel ============ -->
+  <rect x="1780" y="650" width="280" height="90" class="ctl"/>
+  <text x="1920" y="685" text-anchor="middle" class="name">Decodificador de fila</text>
+  <text x="1920" y="708" text-anchor="middle" class="small">externo al panel — ROW[4:0], igual</text>
+
+  <!-- ============ pines de salida hacia la cadena DP3365S ============ -->
+  <text x="1160" y="605" class="label">→ a la cadena de chips DP3365S (SDI, DCLK, LE, ROW)</text>
+
+  <!-- ============ Elementos conservados ============ -->
+  <rect x="90" y="780" width="1950" height="140" class="outer"/>
+  <text x="115" y="814" class="label">Elementos conservados del diseño original</text>
+  <text x="115" y="844" class="small">CONTROL, Count ROW/CH, SHIFT_REG ×6 (equivalente a out_lsr.v) y el decodificador de fila externo no cambian de rol.</text>
+  <text x="115" y="870" class="small">MEMORY conserva su función de framebuffer; solo crece el ancho de palabra (de 1 bit por plano a gris de hasta 16 bit por canal).</text>
+  <text x="115" y="896" class="small">Lo que desaparece: ya no hace falta seleccionar plano BCM bit a bit — el DP3365S hace el PWM/BCM internamente.</text>
+
+  <!-- ============ Correspondencia de señales ============ -->
+  <rect x="90" y="940" width="1950" height="330" fill="#fafafa" stroke="#111111" stroke-width="1.5"/>
+  <text x="115" y="976" class="label">Correspondencia con el RTL actual</text>
+  <text x="115" y="1010" class="code">CONTROL → pwm_led_panel.v (misma FSM de alto nivel). Count ROW/Count CH → generalización de los contadores de show_data.v.</text>
+  <text x="115" y="1038" class="code">MEMORY → memory.v (igual módulo, ancho de dato mayor). SHIFT_REG ×6 → out_lsr.v × 6 (sin cambios, igual que hoy).</text>
+  <text x="115" y="1066" class="code">REG_WRITE_SEQ → nuevo módulo; reemplaza ctrl_cfg.v (FSM por ancho de LE) y lsr_config.v (registro circular de 5 words).</text>
+  <text x="115" y="1094" class="code">ROW_PULSE_GEN → nuevo módulo; reemplaza show_data.v + ctrl_show.v (que contaban pulsos de NOE=GCLK por plano BCM).</text>
+  <text x="115" y="1122" class="code">Count W y Count REG reutilizan el mecanismo de count.v / count_l.v (contador + comparador a cero) ya existente.</text>
+  <text x="115" y="1150" class="code">PRE_ACT=14, VSYNC=3, WR_CFG=5, DATA_LATCH=1 (anchos de LE) — confirmados en el datasheet DP3365S_Rev1.0_EN.</text>
+  <text x="115" y="1178" class="code">ROW del DP3365S (pulso W12/W4 hacia el chip) ≠ ROW[4:0] del panel (dirección física de fila) — señales distintas, incluido el mismo nombre en el datasheet.</text>
+  <text x="115" y="1206" class="code">SEL_CFG/PIX selecciona entre REG_WRITE_SEQ (fase de configuración) y MEMORY (fase de datos) como fuente del MUX hacia SHIFT_REG ×6.</text>
+  <text x="115" y="1252" class="small">Estilo: control/memoria/shift en amarillo claro (conservado), contadores en rosa (conservados), mux en verde, bloques nuevos en azul grisáceo.</text>
+</svg>
