@@ -1,0 +1,345 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2100" height="1950" viewBox="0 0 2100 1950">
+<rect width="2100" height="1950" fill="white"/>
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#263e4f"/></marker></defs>
+<text x="32" y="45" font-family="sans-serif" font-size="29" text-anchor="start" font-weight="bold" fill="#14212a">MIPI_LCD — TOP: control, memoria, transmisor y PHY</text>
+<text x="32" y="78" font-family="sans-serif" font-size="20" text-anchor="start" font-weight="normal" fill="#14212a">Un color por conexión; solo sus ramas repiten color. Trazo fino: 1 bit. Trazo grueso: bus o grupo de señales.</text>
+<rect x="25" y="130" width="850" height="650" fill="#fafcfd" stroke="#bdc7ce" stroke-width="1.2" stroke-dasharray="2,6"/>
+<text x="42" y="162" font-family="sans-serif" font-size="21" text-anchor="start" font-weight="bold" fill="#14212a">INIT_SEQUENCER</text>
+<rect x="370" y="185" width="290" height="270" fill="#dcecf3" stroke="#283e4c" stroke-width="2"/>
+<text x="382" y="227" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#566c96">RESET</text>
+<text x="382" y="272" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#245b9e">DONE_DELAY</text>
+<text x="382" y="317" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#6b52a2">OP[1:0]</text>
+<text x="382" y="342" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#58636e">LAST</text>
+<text x="382" y="362" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#4d70bf">DONE_TX</text>
+<text x="382" y="407" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#a4614b">READY</text>
+<text x="648" y="202" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#bd7434">PANEL_RST</text>
+<text x="648" y="227" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#287d8e">INIT_REQ</text>
+<text x="648" y="272" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#27834a">INC_A</text>
+<text x="648" y="317" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#c05a23">START_DELAY</text>
+<text x="648" y="362" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#2b9b82">INIT_DONE</text>
+<text x="648" y="407" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#6e8626">RST_ALL</text>
+<text x="515.0" y="437" font-family="sans-serif" font-size="24" text-anchor="middle" font-weight="bold" fill="#14212a">CTRL</text>
+<rect x="50" y="195" width="230" height="155" fill="#e6eedc" stroke="#283e4c" stroke-width="2"/>
+<text x="62" y="242" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#c05a23">START</text>
+<text x="62" y="292" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#14212a">DELAY_MS[7:0]</text>
+<text x="62" y="327" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#6e8626">RST</text>
+<text x="268" y="272" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#245b9e">DONE</text>
+<text x="165.0" y="332" font-family="sans-serif" font-size="24" text-anchor="middle" font-weight="bold" fill="#14212a">D_COUNT</text>
+<rect x="50" y="535" width="230" height="125" fill="#e6eedc" stroke="#283e4c" stroke-width="2"/>
+<text x="62" y="582" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#27834a">INC</text>
+<text x="62" y="622" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#6e8626">RST</text>
+<text x="268" y="582" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#a03b46">ADDR[A_AW-1:0]</text>
+<text x="165.0" y="642" font-family="sans-serif" font-size="24" text-anchor="middle" font-weight="bold" fill="#14212a">A_COUNT</text>
+<rect x="370" y="535" width="290" height="205" fill="#f3e5df" stroke="#283e4c" stroke-width="2"/>
+<text x="382" y="582" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#a03b46">ADDR</text>
+<text x="648" y="572" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#6b52a2">OP[1:0]</text>
+<text x="648" y="612" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#a84980">INIT_BYTE[7:0]</text>
+<text x="648" y="652" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#976a21">DELAY_MS[7:0]</text>
+<text x="648" y="692" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#58636e">LAST</text>
+<text x="515.0" y="722" font-family="sans-serif" font-size="24" text-anchor="middle" font-weight="bold" fill="#14212a">INIT_MEM</text>
+<rect x="970" y="185" width="460" height="1055" fill="#f5f3de" stroke="#283e4c" stroke-width="2"/>
+<text x="982" y="227" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#287d8e">INIT_REQ</text>
+<text x="982" y="612" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#a84980">INIT_BYTE[7:0]</text>
+<text x="982" y="692" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#58636e">INIT_LAST</text>
+<text x="982" y="997" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#7c8b57">VID_REQ (START)</text>
+<text x="982" y="1037" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#6a934a">VID_BYTE[7:0]</text>
+<text x="982" y="1077" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#80513e">VID_HDR[23:0]</text>
+<text x="1418" y="907" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#bd4d52">LP_P/N[2:0]</text>
+<text x="1418" y="997" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#446756">HS_BYTE0[7:0]</text>
+<text x="1418" y="1087" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#8e7f36">HS_BYTE1[7:0]</text>
+<text x="1418" y="1177" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#6e5f7d">HS_REQ / CLK_REQ</text>
+<g data-port-direction="out" data-side="left">
+<text x="982" y="457" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#4d70bf">INIT_DONE_TX</text>
+</g>
+<g data-port-direction="out" data-side="left">
+<text x="982" y="502" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#a4614b">INIT_READY</text>
+</g>
+<g data-port-direction="out" data-side="left">
+<text x="982" y="1127" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#427d9d">VID_READY</text>
+</g>
+<g data-port-direction="in" data-side="right">
+<text x="1418" y="857" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#467f79">READY / LOCK</text>
+</g>
+<text x="1200.0" y="1222" font-family="sans-serif" font-size="24" text-anchor="middle" font-weight="bold" fill="#14212a">MIPI_TX</text>
+<rect x="1550" y="820" width="400" height="420" fill="#f5f3de" stroke="#283e4c" stroke-width="2"/>
+<text x="1562" y="907" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#bd4d52">LP_P/N[2:0]</text>
+<text x="1562" y="997" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#446756">HS_BYTE0[7:0]</text>
+<text x="1562" y="1087" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#8e7f36">HS_BYTE1[7:0]</text>
+<text x="1562" y="1177" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#6e5f7d">HS_REQ / CLK_REQ</text>
+<text x="1938" y="922" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#8a536a">CLKP / CLKN</text>
+<text x="1938" y="1042" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#3a526f">D0P / D0N</text>
+<text x="1938" y="1162" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#a17859">D1P / D1N</text>
+<g data-port-direction="out" data-side="left">
+<text x="1562" y="857" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#467f79">READY / LOCK</text>
+</g>
+<text x="1750.0" y="1222" font-family="sans-serif" font-size="24" text-anchor="middle" font-weight="bold" fill="#14212a">PHY</text>
+<rect x="25" y="900" width="850" height="345" fill="#fafcfd" stroke="#bdc7ce" stroke-width="1.2" stroke-dasharray="2,6"/>
+<text x="42" y="932" font-family="sans-serif" font-size="21" text-anchor="start" font-weight="bold" fill="#14212a">VIDEO_SOURCE</text>
+<rect x="50" y="970" width="230" height="180" fill="#e6eedc" stroke="#283e4c" stroke-width="2"/>
+<text x="62" y="1017" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#2b9b82">ENABLE</text>
+<text x="268" y="997" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#7c8b57">VID_REQ (START)</text>
+<text x="268" y="1057" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#80513e">HDR[23:0]</text>
+<text x="165.0" y="1132" font-family="sans-serif" font-size="24" text-anchor="middle" font-weight="bold" fill="#14212a">VIDEO_TIMING</text>
+<rect x="370" y="970" width="185" height="180" fill="#f3e5df" stroke="#283e4c" stroke-width="2"/>
+<text x="382" y="1017" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#14212a">INC</text>
+<text x="543" y="1087" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#9964a0">ADDR</text>
+<text x="462.5" y="1132" font-family="sans-serif" font-size="24" text-anchor="middle" font-weight="bold" fill="#14212a">V_COUNT</text>
+<rect x="625" y="970" width="230" height="180" fill="#f5f3de" stroke="#283e4c" stroke-width="2"/>
+<text x="637" y="1087" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#9964a0">ADDR</text>
+<text x="843" y="1037" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#6a934a">BYTE[7:0]</text>
+<text x="740.0" y="1132" font-family="sans-serif" font-size="24" text-anchor="middle" font-weight="bold" fill="#14212a">VIDEO_MEM</text>
+<defs><marker id="arrow_245b9e" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#245b9e"/></marker></defs>
+<path d="M280,265 L370,265" class="wire-halo" fill="none" stroke="white" stroke-width="4.5"/>
+<path d="M280,265 L370,265" data-net="DONE_DELAY" data-bits="1" fill="none" stroke="#245b9e" stroke-width="2.1" marker-end="url(#arrow_245b9e)"><title>DONE_DELAY — 1 bit(s)</title></path>
+<defs><marker id="arrow_c05a23" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#c05a23"/></marker></defs>
+<path d="M660,310 L710,310 L710,175 L15,175 L15,235 L50,235" class="wire-halo" fill="none" stroke="white" stroke-width="4.5"/>
+<path d="M660,310 L710,310 L710,175 L15,175 L15,235 L50,235" data-net="START_DELAY" data-bits="1" fill="none" stroke="#c05a23" stroke-width="2.1" marker-end="url(#arrow_c05a23)"><title>START_DELAY — 1 bit(s)</title></path>
+<defs><marker id="arrow_27834a" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#27834a"/></marker></defs>
+<path d="M660,265 L745,265 L745,750 L10,750 L10,575 L50,575" class="wire-halo" fill="none" stroke="white" stroke-width="4.5"/>
+<path d="M660,265 L745,265 L745,750 L10,750 L10,575 L50,575" data-net="INC_A" data-bits="1" fill="none" stroke="#27834a" stroke-width="2.1" marker-end="url(#arrow_27834a)"><title>INC_A — 1 bit(s)</title></path>
+<defs><marker id="arrow_a03b46" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#a03b46"/></marker></defs>
+<path d="M280,575 L370,575" class="wire-halo" fill="none" stroke="white" stroke-width="7.6"/>
+<path d="M280,575 L370,575" data-net="INIT_ADDR" data-bits="A_AW" fill="none" stroke="#a03b46" stroke-width="5.2" marker-end="url(#arrow_a03b46)"><title>INIT_ADDR — A_AW bit(s)</title></path>
+<defs><marker id="arrow_6b52a2" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#6b52a2"/></marker></defs>
+<path d="M660,565 L795,565 L795,480 L330,480 L330,310 L370,310" class="wire-halo" fill="none" stroke="white" stroke-width="7.6"/>
+<path d="M660,565 L795,565 L795,480 L330,480 L330,310 L370,310" data-net="INIT_OP" data-bits="2" fill="none" stroke="#6b52a2" stroke-width="5.2" marker-end="url(#arrow_6b52a2)"><title>INIT_OP — 2 bit(s)</title></path>
+<defs><marker id="arrow_976a21" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#976a21"/></marker></defs>
+<path d="M660,645 L815,645 L815,500 L310,500 L310,285 L280,285" class="wire-halo" fill="none" stroke="white" stroke-width="7.6"/>
+<path d="M660,645 L815,645 L815,500 L310,500 L310,285 L280,285" data-net="DELAY_MS" data-bits="8" fill="none" stroke="#976a21" stroke-width="5.2" marker-end="url(#arrow_976a21)"><title>DELAY_MS — 8 bit(s)</title></path>
+<defs><marker id="arrow_287d8e" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#287d8e"/></marker></defs>
+<path d="M660,220 L970,220" class="wire-halo" fill="none" stroke="white" stroke-width="4.5"/>
+<path d="M660,220 L970,220" data-net="INIT_REQ" data-bits="1" fill="none" stroke="#287d8e" stroke-width="2.1" marker-end="url(#arrow_287d8e)"><title>INIT_REQ — 1 bit(s)</title></path>
+<defs><marker id="arrow_a84980" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#a84980"/></marker></defs>
+<path d="M660,605 L970,605" class="wire-halo" fill="none" stroke="white" stroke-width="7.6"/>
+<path d="M660,605 L970,605" data-net="INIT_BYTE" data-bits="8" fill="none" stroke="#a84980" stroke-width="5.2" marker-end="url(#arrow_a84980)"><title>INIT_BYTE — 8 bit(s)</title></path>
+<defs><marker id="arrow_58636e" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#58636e"/></marker></defs>
+<path d="M660,685 L830,685 L830,465 L350,465 L350,335 L370,335" class="wire-halo" fill="none" stroke="white" stroke-width="4.5"/>
+<path d="M660,685 L830,685 L830,465 L350,465 L350,335 L370,335" data-net="INIT_LAST" data-bits="1" fill="none" stroke="#58636e" stroke-width="2.1" marker-end="url(#arrow_58636e)"><title>INIT_LAST — 1 bit(s)</title></path>
+<path d="M660,685 L970,685" class="wire-halo" fill="none" stroke="white" stroke-width="4.5"/>
+<path d="M660,685 L970,685" data-net="INIT_LAST" data-bits="1" fill="none" stroke="#58636e" stroke-width="2.1" marker-end="url(#arrow_58636e)"><title>INIT_LAST — 1 bit(s)</title></path>
+<defs><marker id="arrow_6e8626" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#6e8626"/></marker></defs>
+<path d="M660,400 L700,400 L700,760 L35,760 L35,615 L50,615" class="wire-halo" fill="none" stroke="white" stroke-width="4.5"/>
+<path d="M660,400 L700,400 L700,760 L35,760 L35,615 L50,615" data-net="RST_ALL" data-bits="1" fill="none" stroke="#6e8626" stroke-width="2.1" marker-end="url(#arrow_6e8626)"><title>RST_ALL — 1 bit(s)</title></path>
+<path d="M35,760 L35,320 L50,320" class="wire-halo" fill="none" stroke="white" stroke-width="4.5"/>
+<path d="M35,760 L35,320 L50,320" data-net="RST_ALL" data-bits="1" fill="none" stroke="#6e8626" stroke-width="2.1" marker-end="url(#arrow_6e8626)"><title>RST_ALL — 1 bit(s)</title></path>
+<defs><marker id="arrow_4d70bf" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#4d70bf"/></marker></defs>
+<path d="M970,450 L900,450 L900,110 L315,110 L315,355 L370,355" class="wire-halo" fill="none" stroke="white" stroke-width="4.5"/>
+<path d="M970,450 L900,450 L900,110 L315,110 L315,355 L370,355" data-net="INIT_DONE_TX" data-bits="1" fill="none" stroke="#4d70bf" stroke-width="2.1" marker-end="url(#arrow_4d70bf)"><title>INIT_DONE_TX — 1 bit(s)</title></path>
+<defs><marker id="arrow_a4614b" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#a4614b"/></marker></defs>
+<path d="M970,495 L920,495 L920,815 L340,815 L340,400 L370,400" class="wire-halo" fill="none" stroke="white" stroke-width="4.5"/>
+<path d="M970,495 L920,495 L920,815 L340,815 L340,400 L370,400" data-net="INIT_READY" data-bits="1" fill="none" stroke="#a4614b" stroke-width="2.1" marker-end="url(#arrow_a4614b)"><title>INIT_READY — 1 bit(s)</title></path>
+<defs><marker id="arrow_2b9b82" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#2b9b82"/></marker></defs>
+<path d="M660,355 L770,355 L770,880 L15,880 L15,1010 L50,1010" class="wire-halo" fill="none" stroke="white" stroke-width="4.5"/>
+<path d="M660,355 L770,355 L770,880 L15,880 L15,1010 L50,1010" data-net="INIT_DONE" data-bits="1" fill="none" stroke="#2b9b82" stroke-width="2.1" marker-end="url(#arrow_2b9b82)"><title>INIT_DONE — 1 bit(s)</title></path>
+<defs><marker id="arrow_bd7434" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#bd7434"/></marker></defs>
+<path d="M660,195 L720,195 L720,95 L2060,95" class="wire-halo" fill="none" stroke="white" stroke-width="4.5"/>
+<path d="M660,195 L720,195 L720,95 L2060,95" data-net="PANEL_RST" data-bits="1" fill="none" stroke="#bd7434" stroke-width="2.1" marker-end="url(#arrow_bd7434)"><title>PANEL_RST — 1 bit(s)</title></path>
+<circle cx="830" cy="685" r="5" fill="#58636e"/>
+<circle cx="35" cy="760" r="5" fill="#6e8626"/>
+<text x="2060" y="85" font-family="sans-serif" font-size="18" text-anchor="end" font-weight="normal" fill="#14212a">PANEL_RST</text>
+<defs><marker id="arrow_80513e" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#80513e"/></marker></defs>
+<path d="M280,1050 L305,1050 L305,1195 L895,1195 L895,1070 L970,1070" class="wire-halo" fill="none" stroke="white" stroke-width="7.6"/>
+<path d="M280,1050 L305,1050 L305,1195 L895,1195 L895,1070 L970,1070" data-net="VID_HDR" data-bits="24" fill="none" stroke="#80513e" stroke-width="5.2" marker-end="url(#arrow_80513e)"><title>VID_HDR — 24 bit(s)</title></path>
+<defs><marker id="arrow_9964a0" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#9964a0"/></marker></defs>
+<path d="M555,1080 L625,1080" class="wire-halo" fill="none" stroke="white" stroke-width="7.6"/>
+<path d="M555,1080 L625,1080" data-net="VID_ADDR" data-bits="VID_AW" fill="none" stroke="#9964a0" stroke-width="5.2" marker-end="url(#arrow_9964a0)"><title>VID_ADDR — VID_AW bit(s)</title></path>
+<defs><marker id="arrow_6a934a" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#6a934a"/></marker></defs>
+<path d="M855,1030 L970,1030" class="wire-halo" fill="none" stroke="white" stroke-width="7.6"/>
+<path d="M855,1030 L970,1030" data-net="VID_BYTE" data-bits="8" fill="none" stroke="#6a934a" stroke-width="5.2" marker-end="url(#arrow_6a934a)"><title>VID_BYTE — 8 bit(s)</title></path>
+<defs><marker id="arrow_427d9d" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#427d9d"/></marker></defs>
+<path d="M970,1120 L950,1120 L950,1225 L460,1225 L460,1150" class="wire-halo" fill="none" stroke="white" stroke-width="4.5"/>
+<path d="M970,1120 L950,1120 L950,1225 L460,1225 L460,1150" data-net="VID_READY" data-bits="1" fill="none" stroke="#427d9d" stroke-width="2.1" marker-end="url(#arrow_427d9d)"><title>VID_READY — 1 bit(s)</title></path>
+<text x="478" y="1190" font-family="sans-serif" font-size="17" text-anchor="start" font-weight="normal" fill="#536775">avance al aceptar un byte</text>
+<defs><marker id="arrow_bd4d52" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#bd4d52"/></marker></defs>
+<path d="M1430,900 L1550,900" class="wire-halo" fill="none" stroke="white" stroke-width="7.6"/>
+<path d="M1430,900 L1550,900" data-net="LP_P_N" data-bits="6" fill="none" stroke="#bd4d52" stroke-width="5.2" marker-end="url(#arrow_bd4d52)"><title>LP_P_N — 6 bit(s)</title></path>
+<defs><marker id="arrow_446756" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#446756"/></marker></defs>
+<path d="M1430,990 L1550,990" class="wire-halo" fill="none" stroke="white" stroke-width="7.6"/>
+<path d="M1430,990 L1550,990" data-net="HS_BYTE0" data-bits="8" fill="none" stroke="#446756" stroke-width="5.2" marker-end="url(#arrow_446756)"><title>HS_BYTE0 — 8 bit(s)</title></path>
+<defs><marker id="arrow_8e7f36" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#8e7f36"/></marker></defs>
+<path d="M1430,1080 L1550,1080" class="wire-halo" fill="none" stroke="white" stroke-width="7.6"/>
+<path d="M1430,1080 L1550,1080" data-net="HS_BYTE1" data-bits="8" fill="none" stroke="#8e7f36" stroke-width="5.2" marker-end="url(#arrow_8e7f36)"><title>HS_BYTE1 — 8 bit(s)</title></path>
+<defs><marker id="arrow_6e5f7d" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#6e5f7d"/></marker></defs>
+<path d="M1430,1170 L1550,1170" class="wire-halo" fill="none" stroke="white" stroke-width="7.6"/>
+<path d="M1430,1170 L1550,1170" data-net="HS_REQ_CLK_REQ" data-bits="2" fill="none" stroke="#6e5f7d" stroke-width="5.2" marker-end="url(#arrow_6e5f7d)"><title>HS_REQ_CLK_REQ — 2 bit(s)</title></path>
+<defs><marker id="arrow_467f79" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#467f79"/></marker></defs>
+<path d="M1550,850 L1430,850" class="wire-halo" fill="none" stroke="white" stroke-width="7.6"/>
+<path d="M1550,850 L1430,850" data-net="PHY_READY_LOCK" data-bits="2" fill="none" stroke="#467f79" stroke-width="5.2" marker-end="url(#arrow_467f79)"><title>PHY_READY_LOCK — 2 bit(s)</title></path>
+<defs><marker id="arrow_8a536a" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#8a536a"/></marker></defs>
+<path d="M1950,915 L2060,915" class="wire-halo" fill="none" stroke="white" stroke-width="7.6"/>
+<path d="M1950,915 L2060,915" data-net="CLK_P_N" data-bits="2" fill="none" stroke="#8a536a" stroke-width="5.2" marker-end="url(#arrow_8a536a)"><title>CLK_P_N — 2 bit(s)</title></path>
+<defs><marker id="arrow_3a526f" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#3a526f"/></marker></defs>
+<path d="M1950,1035 L2060,1035" class="wire-halo" fill="none" stroke="white" stroke-width="7.6"/>
+<path d="M1950,1035 L2060,1035" data-net="D0_P_N" data-bits="2" fill="none" stroke="#3a526f" stroke-width="5.2" marker-end="url(#arrow_3a526f)"><title>D0_P_N — 2 bit(s)</title></path>
+<defs><marker id="arrow_a17859" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#a17859"/></marker></defs>
+<path d="M1950,1155 L2060,1155" class="wire-halo" fill="none" stroke="white" stroke-width="7.6"/>
+<path d="M1950,1155 L2060,1155" data-net="D1_P_N" data-bits="2" fill="none" stroke="#a17859" stroke-width="5.2" marker-end="url(#arrow_a17859)"><title>D1_P_N — 2 bit(s)</title></path>
+<defs><marker id="arrow_566c96" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#566c96"/></marker></defs>
+<path d="M50,110 L290,110 L290,220 L370,220" class="wire-halo" fill="none" stroke="white" stroke-width="4.5"/>
+<path d="M50,110 L290,110 L290,220 L370,220" data-net="RESET" data-bits="1" fill="none" stroke="#566c96" stroke-width="2.1" marker-end="url(#arrow_566c96)"><title>RESET — 1 bit(s)</title></path>
+<text x="50" y="100" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="normal" fill="#566c96">RESET</text>
+<circle cx="50" cy="110" r="4" fill="white" stroke="#566c96" stroke-width="2"/>
+<defs><marker id="arrow_7c8b57" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#7c8b57"/></marker></defs>
+<path d="M280,990 L315,990 L315,950 L915,950 L915,990 L970,990" class="wire-halo" fill="none" stroke="white" stroke-width="4.5"/>
+<path d="M280,990 L315,990 L315,950 L915,950 L915,990 L970,990" data-net="VID_REQ" data-bits="1" fill="none" stroke="#7c8b57" stroke-width="2.1" marker-end="url(#arrow_7c8b57)"><title>VID_REQ — 1 bit(s)</title></path>
+<rect x="30" y="1280" width="2040" height="215" fill="#f7fafc" stroke="#a1b1bd" stroke-width="2"/>
+<text x="50" y="1318" font-family="sans-serif" font-size="21" text-anchor="start" font-weight="normal" fill="#14212a">RESET externo activo en 1. RST_ALL reinicia A_COUNT/D_COUNT. INIT_DONE habilita VIDEO_TIMING; VID_REQ inicia el paquete.</text>
+<rect x="50" y="1340" width="230" height="50" fill="#ffffff" stroke="#a1b1bd" stroke-width="1"/>
+<text x="165.0" y="1361" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#14212a">OP[1:0]</text>
+<text x="165.0" y="1382" font-family="sans-serif" font-size="15" text-anchor="middle" font-weight="normal" fill="#14212a">bits 10:9 — 2 bits</text>
+<rect x="280" y="1340" width="160" height="50" fill="#ffffff" stroke="#a1b1bd" stroke-width="1"/>
+<text x="360.0" y="1361" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#14212a">LAST</text>
+<text x="360.0" y="1382" font-family="sans-serif" font-size="15" text-anchor="middle" font-weight="normal" fill="#14212a">bit 8 — 1 bit</text>
+<rect x="440" y="1340" width="300" height="50" fill="#ffffff" stroke="#a1b1bd" stroke-width="1"/>
+<text x="590.0" y="1361" font-family="sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#14212a">ARG[7:0]</text>
+<text x="590.0" y="1382" font-family="sans-serif" font-size="15" text-anchor="middle" font-weight="normal" fill="#14212a">bits 7:0 — 8 bits</text>
+<text x="780" y="1359" font-family="sans-serif" font-size="20" text-anchor="start" font-weight="bold" fill="#14212a">ROM propuesta: 223 posiciones de 11 bits; dirección de 8 bits.</text>
+<text x="780" y="1386" font-family="sans-serif" font-size="20" text-anchor="start" font-weight="normal" fill="#14212a">OP: 00=BYTE; 01=WAIT_MS; 10=END. WAIT: 07h→7 ms; 09h→9 ms; 41h→65 ms.</text>
+<text x="50" y="1421" font-family="sans-serif" font-size="21" text-anchor="start" font-weight="bold" fill="#14212a">LAST=1 identifica WAIT: no se transmite. Mantener su dirección; esperar INIT_DONE_TX antes de activar START_DELAY.</text>
+<text x="50" y="1454" font-family="sans-serif" font-size="20" text-anchor="start" font-weight="normal" fill="#14212a">INIT_BYTE=ARG[7:0]; DELAY_MS=ARG[7:0]. Inicialización lleva ECC/CRC en ROM; solo video los calcula. LP_TX añade 87.</text>
+<text x="50" y="1482" font-family="sans-serif" font-size="20" text-anchor="start" font-weight="normal" fill="#14212a">D_COUNT cuenta unidades de 1 ms; el divisor de reloj es independiente del argumento de 8 bits guardado en ROM.</text>
+<g id="init-frame-format">
+<rect x="1460" y="145" width="610" height="330" fill="#ffffff" stroke="#a1b1bd" stroke-width="1.3"/>
+<text x="1480" y="178" font-family="sans-serif" font-size="19" text-anchor="start" font-weight="bold" fill="#14212a">Trama de salida LPDT — inicialización por D0</text>
+<rect x="1480" y="200" width="65" height="52" fill="#f7fafc" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1512.5" y="221" font-family="sans-serif" font-size="13" text-anchor="middle" font-weight="bold" fill="#14212a">87</text>
+<text x="1512.5" y="242" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">8 bits</text>
+<rect x="1545" y="200" width="65" height="52" fill="#f7fafc" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1577.5" y="221" font-family="sans-serif" font-size="13" text-anchor="middle" font-weight="bold" fill="#14212a">DI</text>
+<text x="1577.5" y="242" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">8 bits</text>
+<rect x="1610" y="200" width="65" height="52" fill="#f7fafc" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1642.5" y="221" font-family="sans-serif" font-size="13" text-anchor="middle" font-weight="bold" fill="#14212a">WC_L</text>
+<text x="1642.5" y="242" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">8 bits</text>
+<rect x="1675" y="200" width="65" height="52" fill="#f7fafc" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1707.5" y="221" font-family="sans-serif" font-size="13" text-anchor="middle" font-weight="bold" fill="#14212a">WC_H</text>
+<text x="1707.5" y="242" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">8 bits</text>
+<rect x="1740" y="200" width="65" height="52" fill="#f7fafc" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1772.5" y="221" font-family="sans-serif" font-size="13" text-anchor="middle" font-weight="bold" fill="#14212a">ECC</text>
+<text x="1772.5" y="242" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">8 bits</text>
+<rect x="1805" y="200" width="150" height="52" fill="#f7fafc" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1880.0" y="221" font-family="sans-serif" font-size="13" text-anchor="middle" font-weight="bold" fill="#14212a">PAYLOAD</text>
+<text x="1880.0" y="242" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">N × 8 bits</text>
+<rect x="1955" y="200" width="95" height="52" fill="#f7fafc" stroke="#b8c4cd" stroke-width="1"/>
+<text x="2002.5" y="221" font-family="sans-serif" font-size="13" text-anchor="middle" font-weight="bold" fill="#14212a">CRC</text>
+<text x="2002.5" y="242" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">16 bits</text>
+<text x="1480" y="275" font-family="sans-serif" font-size="14" text-anchor="start" font-weight="normal" fill="#14212a">DI = DT(6) + VC(2); ECC = 6+2 ceros; WC = N bytes.</text>
+<text x="1480" y="300" font-family="sans-serif" font-size="14" text-anchor="start" font-weight="normal" fill="#14212a">Entrada: 11→10→00→01→00; 87; paquete DSI; salida a 11.</text>
+<text x="1480" y="327" font-family="sans-serif" font-size="17" text-anchor="start" font-weight="bold" fill="#14212a">ROM: paquete B0 00 con ECC y CRC incluidos</text>
+<rect x="1480.0" y="342" width="63.333333333333336" height="43" fill="#eaf0f4" stroke="#bac5cd" stroke-width="1"/>
+<text x="1511.6666666666667" y="360" font-family="sans-serif" font-size="15" text-anchor="middle" font-weight="bold" fill="#14212a">87</text>
+<text x="1511.6666666666667" y="378" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#14212a">8 bits</text>
+<rect x="1543.3333333333333" y="342" width="63.333333333333336" height="43" fill="#eaf0f4" stroke="#bac5cd" stroke-width="1"/>
+<text x="1575.0" y="360" font-family="sans-serif" font-size="15" text-anchor="middle" font-weight="bold" fill="#14212a">29</text>
+<text x="1575.0" y="378" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#14212a">8 bits</text>
+<rect x="1606.6666666666667" y="342" width="63.333333333333336" height="43" fill="#eaf0f4" stroke="#bac5cd" stroke-width="1"/>
+<text x="1638.3333333333335" y="360" font-family="sans-serif" font-size="15" text-anchor="middle" font-weight="bold" fill="#14212a">02</text>
+<text x="1638.3333333333335" y="378" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#14212a">8 bits</text>
+<rect x="1670.0" y="342" width="63.333333333333336" height="43" fill="#eaf0f4" stroke="#bac5cd" stroke-width="1"/>
+<text x="1701.6666666666667" y="360" font-family="sans-serif" font-size="15" text-anchor="middle" font-weight="bold" fill="#14212a">00</text>
+<text x="1701.6666666666667" y="378" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#14212a">8 bits</text>
+<rect x="1733.3333333333333" y="342" width="63.333333333333336" height="43" fill="#eaf0f4" stroke="#bac5cd" stroke-width="1"/>
+<text x="1765.0" y="360" font-family="sans-serif" font-size="15" text-anchor="middle" font-weight="bold" fill="#14212a">00</text>
+<text x="1765.0" y="378" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#14212a">8 bits</text>
+<rect x="1796.6666666666667" y="342" width="63.333333333333336" height="43" fill="#e6f0e9" stroke="#bac5cd" stroke-width="1"/>
+<text x="1828.3333333333335" y="360" font-family="sans-serif" font-size="15" text-anchor="middle" font-weight="bold" fill="#14212a">B0</text>
+<text x="1828.3333333333335" y="378" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#14212a">8 bits</text>
+<rect x="1860.0" y="342" width="63.333333333333336" height="43" fill="#e6f0e9" stroke="#bac5cd" stroke-width="1"/>
+<text x="1891.6666666666667" y="360" font-family="sans-serif" font-size="15" text-anchor="middle" font-weight="bold" fill="#14212a">00</text>
+<text x="1891.6666666666667" y="378" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#14212a">8 bits</text>
+<rect x="1923.3333333333333" y="342" width="63.333333333333336" height="43" fill="#f3eadc" stroke="#bac5cd" stroke-width="1"/>
+<text x="1955.0" y="360" font-family="sans-serif" font-size="15" text-anchor="middle" font-weight="bold" fill="#14212a">D6</text>
+<text x="1955.0" y="378" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#14212a">8 bits</text>
+<rect x="1986.6666666666667" y="342" width="63.333333333333336" height="43" fill="#f3eadc" stroke="#bac5cd" stroke-width="1"/>
+<text x="2018.3333333333335" y="360" font-family="sans-serif" font-size="15" text-anchor="middle" font-weight="bold" fill="#14212a">CA</text>
+<text x="2018.3333333333335" y="378" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#14212a">8 bits</text>
+<text x="1480" y="408" font-family="sans-serif" font-size="14" text-anchor="start" font-weight="normal" fill="#14212a">72 bits = 8 LPDT + 32 header + 16 payload + 16 CRC.</text>
+<text x="1480" y="445" font-family="sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#14212a">DCS corto: 87 | 05 | 29 | 03 | 1F = 40 bits; sin CRC.</text>
+</g>
+<g id="video-memory-format">
+<rect x="1460" y="495" width="610" height="300" fill="#ffffff" stroke="#a1b1bd" stroke-width="1.3"/>
+<text x="1480" y="527" font-family="sans-serif" font-size="18" text-anchor="start" font-weight="bold" fill="#14212a">Trama de la memoria de video — ejemplo RGB888</text>
+<text x="1480" y="553" font-family="sans-serif" font-size="15" text-anchor="start" font-weight="normal" fill="#14212a">VIDEO_MEM: un byte de 8 bits en cada dirección.</text>
+<rect x="1480" y="571" width="95" height="68" fill="#f4e5e5" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1527.5" y="590" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">ADDR 0</text>
+<text x="1527.5" y="614" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="bold" fill="#14212a">R0</text>
+<text x="1527.5" y="633" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">96h — 8 bits</text>
+<rect x="1575" y="571" width="95" height="68" fill="#e6f0e9" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1622.5" y="590" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">ADDR 1</text>
+<text x="1622.5" y="614" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="bold" fill="#14212a">G0</text>
+<text x="1622.5" y="633" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">3Ch — 8 bits</text>
+<rect x="1670" y="571" width="95" height="68" fill="#eaf0f4" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1717.5" y="590" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">ADDR 2</text>
+<text x="1717.5" y="614" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="bold" fill="#14212a">B0</text>
+<text x="1717.5" y="633" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">A5h — 8 bits</text>
+<rect x="1765" y="571" width="95" height="68" fill="#f4e5e5" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1812.5" y="590" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">ADDR 3</text>
+<text x="1812.5" y="614" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="bold" fill="#14212a">R1</text>
+<text x="1812.5" y="633" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">69h — 8 bits</text>
+<rect x="1860" y="571" width="95" height="68" fill="#e6f0e9" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1907.5" y="590" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">ADDR 4</text>
+<text x="1907.5" y="614" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="bold" fill="#14212a">G1</text>
+<text x="1907.5" y="633" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">C3h — 8 bits</text>
+<rect x="1955" y="571" width="95" height="68" fill="#eaf0f4" stroke="#b8c4cd" stroke-width="1"/>
+<text x="2002.5" y="590" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">ADDR 5</text>
+<text x="2002.5" y="614" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="bold" fill="#14212a">B1</text>
+<text x="2002.5" y="633" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">5Ah — 8 bits</text>
+<text x="1480" y="661" font-family="sans-serif" font-size="14" text-anchor="start" font-weight="normal" fill="#14212a">… R2, G2, B2 … hasta el último byte de la imagen.</text>
+<text x="1480" y="686" font-family="sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#14212a">VID_HDR[23:0] viene de VIDEO_TIMING; no ocupa VIDEO_MEM.</text>
+<rect x="1480" y="701" width="145" height="45" fill="#eaf0f4" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1552.5" y="719" font-family="sans-serif" font-size="13" text-anchor="middle" font-weight="bold" fill="#14212a">HDR DSI</text>
+<text x="1552.5" y="738" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">32 bits</text>
+<rect x="1625" y="701" width="300" height="45" fill="#e6f0e9" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1775.0" y="719" font-family="sans-serif" font-size="13" text-anchor="middle" font-weight="bold" fill="#14212a">VIDEO_MEM / píxeles</text>
+<text x="1775.0" y="738" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">WC × 8 bits</text>
+<rect x="1925" y="701" width="125" height="45" fill="#f3eadc" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1987.5" y="719" font-family="sans-serif" font-size="13" text-anchor="middle" font-weight="bold" fill="#14212a">CRC</text>
+<text x="1987.5" y="738" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#14212a">16 bits</text>
+<text x="1480" y="762" font-family="sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#14212a">HDR: DI(8)=tipo/canal; WC(16)=nº bytes; ECC(8)=protección.</text>
+<text x="1480" y="784" font-family="sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#14212a">VID_HDR=DI+WC; MIPI_TX añade ECC. V_COUNT cuenta bytes de píxel.</text>
+</g>
+<g id="video-frame-sequence">
+<rect x="30" y="1530" width="2040" height="380" fill="#ffffff" stroke="#a1b1bd" stroke-width="1.3"/>
+<text x="50" y="1568" font-family="sans-serif" font-size="25" text-anchor="start" font-weight="bold" fill="#14212a">Secuencia temporal del video — paquetes de líneas, blanking y cuadros</text>
+<rect x="130" y="1605" width="440" height="90" fill="#ffffff" stroke="#8ca1af" stroke-width="1.3"/>
+<text x="350" y="1634" font-family="sans-serif" font-size="21" text-anchor="middle" font-weight="bold" fill="#14212a">Cuadro n: línea 0</text>
+<rect x="130" y="1647" width="90" height="48" fill="#eaf0f4" stroke="#b8c4cd" stroke-width="1"/>
+<text x="175.0" y="1677" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="normal" fill="#14212a">HDR 32</text>
+<rect x="220" y="1647" width="260" height="48" fill="#e6f0e9" stroke="#b8c4cd" stroke-width="1"/>
+<text x="350.0" y="1677" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="normal" fill="#14212a">Píxeles: WC bytes</text>
+<rect x="480" y="1647" width="90" height="48" fill="#f3eadc" stroke="#b8c4cd" stroke-width="1"/>
+<text x="525.0" y="1677" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="normal" fill="#14212a">CRC 16</text>
+<rect x="570" y="1605" width="200" height="90" fill="#f2f4f6" stroke="#8ca1af" stroke-width="1.3"/>
+<text x="670" y="1642" font-family="sans-serif" font-size="18" text-anchor="middle" font-weight="normal" fill="#14212a">Sincronismo /</text>
+<text x="670" y="1672" font-family="sans-serif" font-size="18" text-anchor="middle" font-weight="normal" fill="#14212a">blanking H</text>
+<rect x="770" y="1605" width="440" height="90" fill="#ffffff" stroke="#8ca1af" stroke-width="1.3"/>
+<text x="990" y="1634" font-family="sans-serif" font-size="21" text-anchor="middle" font-weight="bold" fill="#14212a">Línea 1</text>
+<rect x="770" y="1647" width="90" height="48" fill="#eaf0f4" stroke="#b8c4cd" stroke-width="1"/>
+<text x="815.0" y="1677" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="normal" fill="#14212a">HDR 32</text>
+<rect x="860" y="1647" width="260" height="48" fill="#e6f0e9" stroke="#b8c4cd" stroke-width="1"/>
+<text x="990.0" y="1677" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="normal" fill="#14212a">Píxeles: WC bytes</text>
+<rect x="1120" y="1647" width="90" height="48" fill="#f3eadc" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1165.0" y="1677" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="normal" fill="#14212a">CRC 16</text>
+<rect x="1210" y="1605" width="200" height="90" fill="#f2f4f6" stroke="#8ca1af" stroke-width="1.3"/>
+<text x="1310" y="1642" font-family="sans-serif" font-size="18" text-anchor="middle" font-weight="normal" fill="#14212a">Sincronismo /</text>
+<text x="1310" y="1672" font-family="sans-serif" font-size="18" text-anchor="middle" font-weight="normal" fill="#14212a">blanking H</text>
+<text x="1460" y="1662" font-family="sans-serif" font-size="32" text-anchor="middle" font-weight="bold" fill="#14212a">…</text>
+<rect x="1510" y="1605" width="440" height="90" fill="#ffffff" stroke="#8ca1af" stroke-width="1.3"/>
+<text x="1730" y="1634" font-family="sans-serif" font-size="21" text-anchor="middle" font-weight="bold" fill="#14212a">Última línea activa</text>
+<rect x="1510" y="1647" width="90" height="48" fill="#eaf0f4" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1555.0" y="1677" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="normal" fill="#14212a">HDR 32</text>
+<rect x="1600" y="1647" width="260" height="48" fill="#e6f0e9" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1730.0" y="1677" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="normal" fill="#14212a">Píxeles: WC bytes</text>
+<rect x="1860" y="1647" width="90" height="48" fill="#f3eadc" stroke="#b8c4cd" stroke-width="1"/>
+<text x="1905.0" y="1677" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="normal" fill="#14212a">CRC 16</text>
+<path d="M1950,1650 H2020 V1715 H90 V1770 H130" fill="none" stroke="#384d5c" stroke-width="2" marker-end="url(#a)"/>
+<rect x="130" y="1735" width="600" height="70" fill="#f2f4f6" stroke="#8ca1af" stroke-width="1.3"/>
+<text x="430" y="1763" font-family="sans-serif" font-size="19" text-anchor="middle" font-weight="normal" fill="#14212a">Fin de cuadro: sincronismo / blanking vertical</text>
+<text x="430" y="1790" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="normal" fill="#14212a">No se leen píxeles de VIDEO_MEM en este intervalo</text>
+<path d="M730,1770 H800" fill="none" stroke="#384d5c" stroke-width="2" marker-end="url(#a)"/>
+<rect x="800" y="1735" width="1150" height="70" fill="#e6f0e9" stroke="#8ca1af" stroke-width="1.3"/>
+<text x="1375" y="1763" font-family="sans-serif" font-size="21" text-anchor="middle" font-weight="bold" fill="#14212a">Cuadro n+1: línea 0 → blanking H → línea 1 → …</text>
+<text x="1375" y="1790" font-family="sans-serif" font-size="17" text-anchor="middle" font-weight="normal" fill="#14212a">Se vuelve a recorrer la imagen con la temporización del nuevo cuadro</text>
+<text x="50" y="1843" font-family="sans-serif" font-size="21" text-anchor="start" font-weight="normal" fill="#14212a">VID_HDR[23:0] puede ser fijo para paquetes de píxeles con el mismo VC, formato y ancho; payload y CRC pueden cambiar.</text>
+<text x="50" y="1880" font-family="sans-serif" font-size="20" text-anchor="start" font-weight="normal" fill="#14212a">Sync/blanking dependen del modo DSI. Esquema propuesto: la imagen se recuperó por actividad; los paquetes HS aún no se han validado.</text>
+</g>
+</svg>

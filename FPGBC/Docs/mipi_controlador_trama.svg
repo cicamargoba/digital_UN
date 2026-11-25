@@ -1,0 +1,318 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="5630" viewBox="0 0 1600 5630">
+<rect x="0" y="0" width="1600" height="5630" fill="#ffffff" stroke="#ffffff"/>
+<text x="40" y="48" font-family="sans-serif" font-size="31" fill="#17212b" font-weight="bold">LCD MIPI DSI — formas de onda y trama para el controlador</text>
+<text x="40" y="83" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">Capturas MIPI_VIDEO_025_D0 / D1 · 2026-11-23 · Fs = 100 MHz · resolución temporal = 10 ns</text>
+<text x="40" y="115" font-family="sans-serif" font-size="19" fill="#445c70" font-weight="normal">MEDIDO = captura validada  |  ESTÁNDAR = formato de protocolo  |  REFERENCIA = driver local, no consola</text>
+<rect x="30" y="142" width="1540" height="48" fill="#eaf0f4" stroke="#b6c0ca"/>
+<text x="48" y="175" font-family="sans-serif" font-size="25" fill="#17212b" font-weight="bold">1. Barrido observado: cuadro y líneas</text>
+<text x="48" y="220" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">MEDIDO. El reloj no se usa para esta reconstrucción; la periodicidad se obtiene de la actividad de datos.</text>
+<rect x="220" y="241" width="580" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="230" y="275" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">Cuadro n: 743 periodos H</text>
+<rect x="800" y="241" width="580" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="810" y="275" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">Cuadro n+1: repetición</text>
+<path d="M220,329 H800 V329" fill="none" stroke="#586776" stroke-width="1"/>
+<path d="M220,324 H220 V334" fill="none" stroke="#586776" stroke-width="1"/>
+<path d="M800,324 H800 V334" fill="none" stroke="#586776" stroke-width="1"/>
+<text x="228" y="319" font-family="sans-serif" font-size="18" fill="#17212b" font-weight="normal">Tcuadro ≈ 15,751576 ms  /  63,4857 Hz</text>
+<text x="48" y="374" font-family="sans-serif" font-size="21" fill="#17212b" font-weight="normal">Detalle H</text>
+<rect x="220" y="350" width="440" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="230" y="384" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">Tráfico de línea n</text>
+<rect x="660" y="350" width="100" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="670" y="384" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">LP11</text>
+<rect x="760" y="350" width="440" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="770" y="384" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">Tráfico línea n+1</text>
+<rect x="1200" y="350" width="100" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="1210" y="384" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">LP11</text>
+<path d="M220,438 H760 V438" fill="none" stroke="#586776" stroke-width="1"/>
+<path d="M220,433 H220 V443" fill="none" stroke="#586776" stroke-width="1"/>
+<path d="M760,433 H760 V443" fill="none" stroke="#586776" stroke-width="1"/>
+<text x="228" y="428" font-family="sans-serif" font-size="18" fill="#17212b" font-weight="normal">TH ≈ 21,2 µs  /  fH ≈ 47,170 kHz</text>
+<text x="48" y="475" font-family="sans-serif" font-size="21" fill="#17212b" font-weight="normal">743 es el total de periodos, NO la altura activa. No se han separado VSA/VBP/VFP ni HSA/HBP/HFP.</text>
+<text x="48" y="508" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">Corrección de alineación: Tcuadro ≈ 1 575 157,6 muestras; usar 743 × 2120 acumula ~2,4 muestras/cuadro.</text>
+<rect x="30" y="535" width="1540" height="48" fill="#eaf0f4" stroke="#b6c0ca"/>
+<text x="48" y="568" font-family="sans-serif" font-size="25" fill="#17212b" font-weight="bold">2. Entrada HS en una línea: estados P/N observados</text>
+<text x="48" y="613" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">MEDIDO en D0, cerca de 4,504 s. Los niveles HS digitalizados NO equivalen a niveles LP ni a bits fiables.</text>
+<rect x="220" y="633" width="240" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="230" y="667" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">11 (220 ns)</text>
+<rect x="460" y="633" width="240" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="470" y="667" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">01 (100 ns)</text>
+<rect x="700" y="633" width="260" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="710" y="667" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">00 (~110 ns)</text>
+<rect x="960" y="633" width="560" height="54" fill="#f4f4f4" stroke="#b6c0ca"/>
+<text x="970" y="667" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">HS: SoT + paquetes + salida</text>
+<text x="48" y="754" font-family="monospace" font-size="21" fill="#17212b" font-weight="normal">D0P</text>
+<path d="M220,726 L300,726 L300,726 L380,726 L380,726 L460,726 L460,758 L540,758 L540,758 L620,758 L620,758 L700,758 L700,758 L780,758 L780,758 L860,758 L860,758 L940,758 L940,758 L1020,758 L1020,758 L1100,758 L1100,758 L1180,758 L1180,758 L1260,758 L1260,758 L1340,758 L1340,758 L1420,758 L1420,758 L1500,758" fill="none" stroke="#294d6c" stroke-width="3"/>
+<text x="48" y="817" font-family="monospace" font-size="21" fill="#17212b" font-weight="normal">D0N</text>
+<path d="M220,789 L300,789 L300,789 L380,789 L380,789 L460,789 L460,789 L540,789 L540,789 L620,789 L620,789 L700,789 L700,821 L780,821 L780,821 L860,821 L860,821 L940,821 L940,789 L1020,789 L1020,821 L1100,821 L1100,789 L1180,789 L1180,821 L1260,821 L1260,789 L1340,789 L1340,821 L1420,821 L1420,789 L1500,789" fill="none" stroke="#294d6c" stroke-width="3"/>
+<rect x="940" y="707" width="570" height="123" fill="#f4f4f4" stroke="#b6c0ca"/>
+<text x="960" y="744" font-family="sans-serif" font-size="22" fill="#17212b" font-weight="normal">HS: representación conceptual</text>
+<text x="960" y="780" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">No es la secuencia de bits recuperada</text>
+<text x="48" y="870" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">11→01→00 es compatible con entrada HS. El intervalo ~110 ns es solo el primer tramo 00 observado.</text>
+<text x="48" y="901" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">No usarlo como T_HS-PREPARE definitivo: faltan resolución y medición diferencial del comienzo de HS.</text>
+<rect x="30" y="928" width="1540" height="48" fill="#eaf0f4" stroke="#b6c0ca"/>
+<text x="48" y="961" font-family="sans-serif" font-size="25" fill="#17212b" font-weight="bold">3. Transmisión LP: escape, bits y retorno a reposo</text>
+<text x="48" y="1006" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">MEDIDO / VALIDADO. D0 transmite 18 mensajes; ECC correcto en los 18 y CRC correcto en los 16 largos.</text>
+<rect x="220" y="1026" width="100" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="230" y="1060" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">11</text>
+<rect x="320" y="1026" width="100" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="330" y="1060" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">10</text>
+<rect x="420" y="1026" width="100" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="430" y="1060" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">00</text>
+<rect x="520" y="1026" width="100" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="530" y="1060" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">01</text>
+<rect x="620" y="1026" width="160" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="630" y="1060" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">00</text>
+<rect x="780" y="1026" width="110" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="790" y="1060" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">87</text>
+<rect x="890" y="1026" width="290" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="900" y="1060" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">Paquete DSI</text>
+<rect x="1180" y="1026" width="200" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="1190" y="1060" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">Salida</text>
+<text x="220" y="1116" font-family="monospace" font-size="19" fill="#17212b" font-weight="normal">reposo   100 ns   100 ns   100 ns   ~500 ns      LPDT: 0x87, LSB primero</text>
+<text x="48" y="1156" font-family="monospace" font-size="21" fill="#17212b" font-weight="normal">1 · P</text>
+<path d="M220,1160 L320,1160 L320,1128 L420,1128 L420,1160 L520,1160 L520,1160 L620,1160" fill="none" stroke="#294d6c" stroke-width="3"/>
+<text x="48" y="1192" font-family="monospace" font-size="21" fill="#17212b" font-weight="normal">1 · N</text>
+<path d="M220,1196 L320,1196 L320,1196 L420,1196 L420,1196 L520,1196 L520,1196 L620,1196" fill="none" stroke="#294d6c" stroke-width="3"/>
+<text x="48" y="1260" font-family="monospace" font-size="21" fill="#17212b" font-weight="normal">0 · P</text>
+<path d="M220,1264 L320,1264 L320,1264 L420,1264 L420,1264 L520,1264 L520,1264 L620,1264" fill="none" stroke="#294d6c" stroke-width="3"/>
+<text x="48" y="1296" font-family="monospace" font-size="21" fill="#17212b" font-weight="normal">0 · N</text>
+<path d="M220,1300 L320,1300 L320,1268 L420,1268 L420,1300 L520,1300 L520,1300 L620,1300" fill="none" stroke="#294d6c" stroke-width="3"/>
+<text x="690" y="1161" font-family="sans-serif" font-size="23" fill="#17212b" font-weight="normal">1: LP10 durante ~100 ns + LP00 ~100 ns</text>
+<text x="690" y="1200" font-family="sans-serif" font-size="23" fill="#17212b" font-weight="normal">0: LP01 durante ~100 ns + LP00 ~100 ns</text>
+<text x="690" y="1243" font-family="sans-serif" font-size="23" fill="#17212b" font-weight="bold">Tbit ≈ 200 ns → tasa LP ≈ 5 Mbit/s</text>
+<text x="690" y="1284" font-family="monospace" font-size="22" fill="#17212b" font-weight="normal">0x87 en el cable: 1 1 1 0 0 0 0 1</text>
+<text x="48" y="1340" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">Final LP observado: último pulso ~200 ns → 00 ~300 ns → 10 ~100 ns → 11. No truncar el último bit.</text>
+<rect x="30" y="1367" width="1540" height="48" fill="#eaf0f4" stroke="#b6c0ca"/>
+<text x="48" y="1400" font-family="sans-serif" font-size="25" fill="#17212b" font-weight="bold">4. Formato del paquete DSI dentro de LPDT</text>
+<text x="48" y="1445" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">ESTÁNDAR; comprobado contra los paquetes LP de esta captura. 0x87 es escape PHY: NO pertenece al header DSI.</text>
+<rect x="220" y="1465" width="120" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="230" y="1499" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">DI</text>
+<rect x="340" y="1465" width="180" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="350" y="1499" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">D0/WC_L</text>
+<rect x="520" y="1465" width="180" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="530" y="1499" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">D1/WC_H</text>
+<rect x="700" y="1465" width="130" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="710" y="1499" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">ECC</text>
+<rect x="830" y="1465" width="400" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="840" y="1499" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">Payload: WC bytes</text>
+<rect x="1230" y="1465" width="260" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="1240" y="1499" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">CRC_L CRC_H</text>
+<text x="220" y="1552" font-family="sans-serif" font-size="23" fill="#17212b" font-weight="bold">Header: 4 bytes</text>
+<text x="820" y="1552" font-family="sans-serif" font-size="22" fill="#17212b" font-weight="normal">Solo paquetes largos: payload + CRC16</text>
+<text x="48" y="1595" font-family="sans-serif" font-size="21" fill="#17212b" font-weight="normal">DI[7:6] = canal virtual; DI[5:0] = tipo. WC cuenta solo payload; WC y CRC se envían byte bajo primero.</text>
+<text x="48" y="1630" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">ECC: 6 bits de paridad sobre los 24 bits DI/D0/D1. CRC16 sobre payload: init FFFF, polinomio reflejado 8408.</text>
+<rect x="220" y="1660" width="80" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="230" y="1694" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">87</text>
+<rect x="300" y="1660" width="80" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="310" y="1694" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">29</text>
+<rect x="380" y="1660" width="80" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="390" y="1694" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">02</text>
+<rect x="460" y="1660" width="80" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="470" y="1694" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">00</text>
+<rect x="540" y="1660" width="80" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="550" y="1694" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">00</text>
+<rect x="620" y="1660" width="200" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="630" y="1694" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">B0 00</text>
+<rect x="820" y="1660" width="200" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="830" y="1694" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">D6 CA</text>
+<text x="220" y="1751" font-family="sans-serif" font-size="21" fill="#17212b" font-weight="normal">Ejemplo real: Generic Long Write, WC=2, ECC=00, payload=B0 00, CRC=CAD6.</text>
+<text x="48" y="1791" font-family="sans-serif" font-size="21" fill="#17212b" font-weight="normal">Paquete corto: DI + dato0 + dato1 + ECC; no lleva CRC. Ejemplos reales:</text>
+<text x="220" y="1829" font-family="monospace" font-size="21" fill="#17212b" font-weight="normal">87 05 11 45 04   → DCS Sleep Out       87 05 29 03 1F   → DCS Display On</text>
+<text x="48" y="1871" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">Conservar 45 y 03 si se reproduce la captura literalmente: son bytes transmitidos del header, no comandos.</text>
+<text x="48" y="1904" font-family="sans-serif" font-size="21" fill="#17212b" font-weight="bold">ATENCIÓN: DI=29 es Generic Long Write; el comando DCS 29 (Display On) aquí viaja con DI=05.</text>
+<rect x="30" y="1931" width="1540" height="48" fill="#eaf0f4" stroke="#b6c0ca"/>
+<text x="48" y="1964" font-family="sans-serif" font-size="25" fill="#17212b" font-weight="bold">5. Trama de píxeles HS y reparto entre dos lanes</text>
+<text x="48" y="2009" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">ESTÁNDAR / CONDICIONAL. No se han validado los headers HS ni el formato RGB de la consola.</text>
+<rect x="220" y="2029" width="230" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="230" y="2063" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">SoT: B8/lane</text>
+<rect x="450" y="2029" width="240" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="460" y="2063" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">Header: 4 B</text>
+<rect x="690" y="2029" width="510" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="700" y="2063" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">Datos de píxel: WC bytes</text>
+<rect x="1200" y="2029" width="160" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="1210" y="2063" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">CRC16</text>
+<rect x="1360" y="2029" width="160" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="1370" y="2063" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">Fin HS</text>
+<text x="48" y="2122" font-family="sans-serif" font-size="23" fill="#17212b" font-weight="normal">RGB888, SI se confirma: DT=3E; payload R0 G0 B0 R1 G1 B1 …; 3 bytes/píxel.</text>
+<text x="48" y="2160" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">Para 720 píxeles: WC=2160=0870h. Es un ejemplo de la referencia local, NO un WC leído de la captura.</text>
+<text x="48" y="2210" font-family="monospace" font-size="22" fill="#17212b" font-weight="normal">Lane 0</text>
+<rect x="220" y="2180" width="130" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="230" y="2214" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">DI</text>
+<rect x="350" y="2180" width="150" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="360" y="2214" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">WC_H</text>
+<rect x="500" y="2180" width="130" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="510" y="2214" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">R0</text>
+<rect x="630" y="2180" width="130" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="640" y="2214" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">B0</text>
+<rect x="760" y="2180" width="130" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="770" y="2214" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">G1</text>
+<rect x="890" y="2180" width="160" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="900" y="2214" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">R2 …</text>
+<text x="48" y="2280" font-family="monospace" font-size="22" fill="#17212b" font-weight="normal">Lane 1</text>
+<rect x="220" y="2250" width="130" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="230" y="2284" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">WC_L</text>
+<rect x="350" y="2250" width="150" height="54" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="360" y="2284" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">ECC</text>
+<rect x="500" y="2250" width="130" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="510" y="2284" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">G0</text>
+<rect x="630" y="2250" width="130" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="640" y="2284" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">R1</text>
+<rect x="760" y="2250" width="130" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="770" y="2284" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">B1</text>
+<rect x="890" y="2250" width="160" height="54" fill="#ffffff" stroke="#b6c0ca"/>
+<text x="900" y="2284" font-family="monospace" font-size="20" fill="#17212b" font-weight="normal">G2 …</text>
+<text x="48" y="2353" font-family="sans-serif" font-size="21" fill="#17212b" font-weight="normal">Orden lógico de bytes alternados: lane0 recibe B[0], B[2], B[4]…; lane1 recibe B[1], B[3], B[5]…</text>
+<text x="48" y="2390" font-family="sans-serif" font-size="21" fill="#17212b" font-weight="normal">Ambas lanes envían su SoT. Bits dentro de cada byte: LSB primero. En HS, reloj D-PHY DDR.</text>
+<text x="48" y="2427" font-family="sans-serif" font-size="21" fill="#17212b" font-weight="bold">No intercalar los archivos D0/D1 como si fueran simultáneos: tienen fases de captura diferentes.</text>
+<rect x="30" y="2454" width="1540" height="48" fill="#eaf0f4" stroke="#b6c0ca"/>
+<text x="48" y="2487" font-family="sans-serif" font-size="25" fill="#17212b" font-weight="bold">6. Parámetros para el RTL: separar evidencia de configuración</text>
+<text x="48" y="2532" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">La imagen reconstruida es evidencia espacial; no sustituye una especificación completa de transmisión.</text>
+<text x="48" y="2553" font-family="sans-serif" font-size="22" fill="#17212b" font-weight="normal">MEDIDO: TH ≈ 21,2 µs; 743 H/cuadro; LP ≈ 5 Mbit/s; init LP y sus pausas disponibles en el archivo .md.</text>
+<text x="48" y="2596" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">REFERENCIA local LT031MDZ4000: 720×720, RGB888, 2 lanes, video no-burst con sync pulses, clock no continuo.</text>
+<text x="48" y="2636" font-family="monospace" font-size="22" fill="#17212b" font-weight="normal">Referencia: H=720+21+2+24=767; V=720+25+5+3=753; PCLK=34,653 MHz.</text>
+<text x="48" y="2674" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">Eso da TH≈22,134 µs y F≈60 Hz: NO coincide con TH/743 medidos. No mezclar ambos juegos de tiempos.</text>
+<rect x="48" y="2710" width="1504" height="205" fill="#fff8ec" stroke="#c6a56b"/>
+<text x="70" y="2748" font-family="sans-serif" font-size="23" fill="#17212b" font-weight="bold">AÚN NECESARIO PARA CERRAR EL CONTROLADOR</text>
+<text x="70" y="2788" font-family="sans-serif" font-size="21" fill="#17212b" font-weight="normal">1. Confirmar bitrate HS / UI, reloj de byte, polaridad y número efectivo de lanes.</text>
+<text x="70" y="2825" font-family="sans-serif" font-size="21" fill="#17212b" font-weight="normal">2. Leer DI, WC y ECC HS; fijar resolución activa, formato de píxel y secuencia de paquetes de línea.</text>
+<text x="70" y="2862" font-family="sans-serif" font-size="21" fill="#17212b" font-weight="normal">3. Separar porches/sync y medir T_HS-*, T_CLK-*; definir reset y secuencia de alimentación del panel.</text>
+<text x="70" y="2899" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">La captura actual NO permite asignar valores fiables a esos parámetros. No se presenta como RTL listo para placa.</text>
+<text x="48" y="2965" font-family="sans-serif" font-size="18" fill="#17212b" font-weight="normal">Fuentes: MIPI_VIDEO_025_D0.kvdat / D1.kvdat; driver local RPI-LCD-LT031MDZ4000/panel-jdi-lt031mdz4000.c.</text>
+<text x="48" y="3000" font-family="sans-serif" font-size="20" fill="#17212b" font-weight="normal">Ver mipi_controlador_trama.md: secuencia exacta de bytes, timestamps, pausas y advertencias para reproducción.</text>
+<text x="48" y="3040" font-family="sans-serif" font-size="19" fill="#17212b" font-weight="normal">No se midió CLK: no se dibuja una frecuencia supuesta. LP usa niveles independientes; HS requiere interfaz diferencial D-PHY.</text>
+<text x="48" y="3066" font-family="sans-serif" font-size="18" fill="#17212b" font-weight="normal">Las anchuras de los bloques son esquemáticas; los tiempos válidos son los indicados numéricamente.</text>
+<text x="48" y="3090" font-family="sans-serif" font-size="19" fill="#445c70" font-weight="normal">Diagrama determinista derivado de mediciones. Sin cambios en RTL, firmware ni capturas originales.</text>
+<g id="inicializacion-capturada" font-family="sans-serif" fill="#17212b">
+<rect x="30" y="3160" width="1540" height="48" fill="#eaf0f4" stroke="#b6c0ca"/>
+<text x="48" y="3193" font-size="25" font-family="sans-serif">7. Inicialización completa capturada: comandos, payloads y pausas</text><text x="48" y="3240" font-size="20" font-family="sans-serif">MEDIDO: orden exacto observado en D0. t0 = primera entrada LP a 1,45719352 s; no es encendido ni reset.</text><g stroke="#b6c0ca" fill="#eef3f7"><rect x="220" y="3265" width="690" height="64"/><rect x="910" y="3265" width="240" height="64" fill="#ffffff"/><rect x="1150" y="3265" width="380" height="64"/></g>
+<text x="240" y="3293" font-size="20" font-family="sans-serif">LP: 18 mensajes, desde t0 hasta t0 + 265,3574 ms</text><text x="240" y="3318" font-size="19" font-family="sans-serif">Cada mensaje: escape 87 → paquete DSI → retorno LP11</text><text x="930" y="3293" font-size="20" font-family="sans-serif">LP11 ~7 ms</text><text x="930" y="3318" font-size="19" font-family="sans-serif">después del último</text><text x="1170" y="3293" font-size="20" font-family="sans-serif">Entrada HS → cuadros repetidos</text><text x="1170" y="3318" font-size="19" font-family="sans-serif">Inicio HS ≈ 1,729566 s</text><text x="48" y="3370" font-size="20" font-family="sans-serif">DI=29: escritura genérica larga; DI=05: comando DCS corto; DI=09: paquete nulo (NO comando).</text><rect x="48" y="3391" width="1504" height="42" fill="#eef3f7" stroke="#b6c0ca"/>
+<text x="62" y="3419" font-size="19" font-family="sans-serif">#</text><text x="118" y="3419" font-size="19" font-family="sans-serif">Inicio−t0 (ms)</text><text x="332" y="3419" font-size="19" font-family="sans-serif">DI</text><text x="401" y="3419" font-size="19" font-family="sans-serif">Payload / comando DCS (hexadecimal)</text><text x="1350" y="3419" font-size="18" font-family="sans-serif">Pausa LP11 (ms)</text><rect x="48" y="3440" width="1504" height="31" fill="#f5f7f9"/>
+<text x="62" y="3463" font-size="19" font-family="monospace">1</text><text x="118" y="3463" font-size="19" font-family="monospace">0.00000</text><text x="332" y="3463" font-size="19" font-family="monospace">29</text><text x="401" y="3463" font-size="19" font-family="monospace">B0 00</text><text x="1385" y="3463" font-size="19" font-family="monospace">9.000</text>
+<text x="62" y="3494" font-size="19" font-family="monospace">2</text><text x="118" y="3494" font-size="19" font-family="monospace">9.01539</text><text x="332" y="3494" font-size="19" font-family="monospace">29</text><text x="401" y="3494" font-size="19" font-family="monospace">E4 00 00 00 00 08</text><text x="1385" y="3494" font-size="19" font-family="monospace">9.000</text>
+<rect x="48" y="3502" width="1504" height="31" fill="#f5f7f9"/>
+<text x="62" y="3525" font-size="19" font-family="monospace">3</text><text x="118" y="3525" font-size="19" font-family="monospace">18.03718</text><text x="332" y="3525" font-size="19" font-family="monospace">29</text><text x="401" y="3525" font-size="19" font-family="monospace">D0 45 45 71</text><text x="1385" y="3525" font-size="19" font-family="monospace">9.000</text>
+<text x="62" y="3556" font-size="19" font-family="monospace">4</text><text x="118" y="3556" font-size="19" font-family="monospace">27.05576</text><text x="332" y="3556" font-size="19" font-family="monospace">09</text><text x="401" y="3556" font-size="19" font-family="monospace">00 00  [Null Packet]</text><text x="1385" y="3556" font-size="19" font-family="monospace">9.000</text>
+<rect x="48" y="3564" width="1504" height="31" fill="#f5f7f9"/>
+<text x="62" y="3587" font-size="19" font-family="monospace">5</text><text x="118" y="3587" font-size="19" font-family="monospace">36.07115</text><text x="332" y="3587" font-size="19" font-family="monospace">05</text><text x="401" y="3587" font-size="19" font-family="monospace">11  [Sleep Out; byte header extra = 45]</text><text x="1385" y="3587" font-size="19" font-family="monospace">65.000</text>
+<text x="62" y="3618" font-size="19" font-family="monospace">6</text><text x="118" y="3618" font-size="19" font-family="monospace">101.08005</text><text x="332" y="3618" font-size="19" font-family="monospace">29</text><text x="401" y="3618" font-size="19" font-family="monospace">D0 52 4A</text><text x="1385" y="3618" font-size="19" font-family="monospace">9.000</text>
+<rect x="48" y="3626" width="1504" height="31" fill="#f5f7f9"/>
+<text x="62" y="3649" font-size="19" font-family="monospace">7</text><text x="118" y="3649" font-size="19" font-family="monospace">110.09704</text><text x="332" y="3649" font-size="19" font-family="monospace">29</text><text x="401" y="3649" font-size="19" font-family="monospace">B9 02 00 76 00 BA BB BF CC E3 46 81 31</text><text x="1385" y="3649" font-size="19" font-family="monospace">9.000</text>
+<text x="62" y="3680" font-size="19" font-family="monospace">8</text><text x="118" y="3680" font-size="19" font-family="monospace">119.13002</text><text x="332" y="3680" font-size="19" font-family="monospace">29</text><text x="401" y="3680" font-size="19" font-family="monospace">BD FF FE FE FE FE FE FE 80 20 00 00</text><text x="1385" y="3680" font-size="19" font-family="monospace">9.000</text>
+<rect x="48" y="3688" width="1504" height="31" fill="#f5f7f9"/>
+<text x="62" y="3711" font-size="19" font-family="monospace">9</text><text x="118" y="3711" font-size="19" font-family="monospace">128.16141</text><text x="332" y="3711" font-size="19" font-family="monospace">29</text><text x="401" y="3711" font-size="19" font-family="monospace">BE FF 0F 00 18 04 04 00 5D</text><text x="1385" y="3711" font-size="19" font-family="monospace">9.000</text>
+<text x="62" y="3742" font-size="19" font-family="monospace">10</text><text x="118" y="3742" font-size="19" font-family="monospace">137.18800</text><text x="332" y="3742" font-size="19" font-family="monospace">29</text><text x="401" y="3742" font-size="19" font-family="monospace">B0 03</text><text x="1385" y="3742" font-size="19" font-family="monospace">65.000</text>
+<rect x="48" y="3750" width="1504" height="31" fill="#f5f7f9"/>
+<text x="62" y="3773" font-size="19" font-family="monospace">11</text><text x="118" y="3773" font-size="19" font-family="monospace">202.20330</text><text x="332" y="3773" font-size="19" font-family="monospace">09</text><text x="401" y="3773" font-size="19" font-family="monospace">00 00  [Null Packet]</text><text x="1385" y="3773" font-size="19" font-family="monospace">9.000</text>
+<text x="62" y="3804" font-size="19" font-family="monospace">12</text><text x="118" y="3804" font-size="19" font-family="monospace">211.21868</text><text x="332" y="3804" font-size="19" font-family="monospace">05</text><text x="401" y="3804" font-size="19" font-family="monospace">29  [Display On; byte header extra = 03]</text><text x="1385" y="3804" font-size="19" font-family="monospace">9.000</text>
+<rect x="48" y="3812" width="1504" height="31" fill="#f5f7f9"/>
+<text x="62" y="3835" font-size="19" font-family="monospace">13</text><text x="118" y="3835" font-size="19" font-family="monospace">220.22767</text><text x="332" y="3835" font-size="19" font-family="monospace">29</text><text x="401" y="3835" font-size="19" font-family="monospace">B0 00</text><text x="1385" y="3835" font-size="19" font-family="monospace">9.000</text>
+<text x="62" y="3866" font-size="19" font-family="monospace">14</text><text x="118" y="3866" font-size="19" font-family="monospace">229.24306</text><text x="332" y="3866" font-size="19" font-family="monospace">29</text><text x="401" y="3866" font-size="19" font-family="monospace">BE FF 0F 00 18 04 04 00 5D</text><text x="1385" y="3866" font-size="19" font-family="monospace">9.000</text>
+<rect x="48" y="3874" width="1504" height="31" fill="#f5f7f9"/>
+<text x="62" y="3897" font-size="19" font-family="monospace">15</text><text x="118" y="3897" font-size="19" font-family="monospace">238.26964</text><text x="332" y="3897" font-size="19" font-family="monospace">29</text><text x="401" y="3897" font-size="19" font-family="monospace">B7 18 00 18 18 0C 09 AC 09 5C 09 0C 09 00 10 00</text><text x="1385" y="3897" font-size="19" font-family="monospace">9.000</text>
+<text x="62" y="3928" font-size="19" font-family="monospace">16</text><text x="118" y="3928" font-size="19" font-family="monospace">247.30743</text><text x="332" y="3928" font-size="19" font-family="monospace">29</text><text x="401" y="3928" font-size="19" font-family="monospace">B8 F8 DA 6D FB FF FF 4F 1F 7F 9F BF DF FF</text><text x="1385" y="3928" font-size="19" font-family="monospace">9.000</text>
+<rect x="48" y="3936" width="1504" height="31" fill="#f5f7f9"/>
+<text x="62" y="3959" font-size="19" font-family="monospace">17</text><text x="118" y="3959" font-size="19" font-family="monospace">256.34202</text><text x="332" y="3959" font-size="19" font-family="monospace">29</text><text x="401" y="3959" font-size="19" font-family="monospace">BB 2F</text><text x="1385" y="3959" font-size="19" font-family="monospace">9.000</text>
+<text x="62" y="3990" font-size="19" font-family="monospace">18</text><text x="118" y="3990" font-size="19" font-family="monospace">265.35740</text><text x="332" y="3990" font-size="19" font-family="monospace">29</text><text x="401" y="3990" font-size="19" font-family="monospace">B0 03</text><text x="1385" y="3990" font-size="19" font-family="monospace">7.000</text>
+<text x="48" y="4041" font-size="20" font-family="sans-serif">Pausa = reposo LP11 después del mensaje, no diferencia entre tiempos de inicio. Valores redondeados.</text><text x="48" y="4074" font-size="20" font-family="sans-serif">Los 18 headers incluyen ECC validado; los 16 mensajes largos incluyen CRC validado. Bytes completos en CSV/MD.</text><text x="48" y="4107" font-size="19" font-family="sans-serif">No se afirma que estos registros propietarios tengan el significado de otro driver. Reset y alimentación no fueron capturados.</text></g>
+<g id="cuadro-primer-pixel" transform="translate(0,1000)" font-family="sans-serif" fill="#17212b">
+<rect x="30" y="3160" width="1540" height="48" fill="#eaf0f4" stroke="#b6c0ca"/>
+<text x="48" y="3193" font-size="25" font-weight="bold">8. Un cuadro completo → primera línea activa → primer píxel blanco</text>
+<text x="48" y="3240" font-size="20">Marco temporal MEDIDO. Zoom de bytes CONDICIONAL: RGB888, VC=0, dos lanes y línea de 720 píxeles.</text>
+
+<text x="48" y="3293" font-size="21">Cuadro</text>
+<g stroke="#b6c0ca" fill="#eef3f7">
+<rect x="220" y="3260" width="230" height="68"/>
+<rect x="450" y="3260" width="230" height="68" fill="#e2ebf2"/>
+<rect x="680" y="3260" width="340" height="68"/>
+<rect x="1020" y="3260" width="240" height="68"/>
+<rect x="1260" y="3260" width="260" height="68"/>
+</g>
+<g font-size="20">
+<text x="236" y="3287">Vsync + VBP</text><text x="236" y="3313">duración pendiente</text>
+<text x="466" y="3287">Primera línea activa</text><text x="466" y="3313">y = 0</text>
+<text x="696" y="3287">Resto de líneas activas</text><text x="696" y="3313">y = 1 … Vactivo−1</text>
+<text x="1036" y="3287">VFP / fin de cuadro</text><text x="1036" y="3313">duración pendiente</text>
+<text x="1276" y="3287">Cuadro siguiente</text><text x="1276" y="3313">vuelve a comenzar</text>
+</g>
+<path d="M220,3340 V3352 H1260 V3340" fill="none" stroke="#586776"/>
+<text x="235" y="3380" font-size="21">Un cuadro ≈ 15,751576 ms: 743 periodos H de ≈ 21,2 µs. Anchos de bloques no proporcionales.</text>
+<text x="48" y="3413" font-size="19">Vsync/VBP/VFP son funciones lógicas: pueden compartir periodos H. Su número de paquetes no está medido.</text>
+
+<text x="48" y="3480" font-size="21">Línea y=0</text>
+<g stroke="#b6c0ca" fill="#eef3f7">
+<rect x="220" y="3448" width="200" height="58"/>
+<rect x="420" y="3448" width="250" height="58"/>
+<rect x="670" y="3448" width="540" height="58" fill="#e2ebf2"/>
+<rect x="1210" y="3448" width="310" height="58"/>
+</g>
+<g font-size="20">
+<text x="236" y="3483">Sync horizontal</text><text x="436" y="3483">Blanking / HBP</text>
+<text x="686" y="3483">Paquete largo RGB: x=0 … 719</text><text x="1226" y="3483">HFP / cierre de línea</text>
+</g>
+<text x="220" y="3542" font-size="19">Orden funcional ilustrativo. Faltan DI/WC reales y paquetes exactos de sincronismo/blanking del transmisor.</text>
+
+<text x="48" y="3609" font-size="21">Paquete RGB</text>
+<g stroke="#b6c0ca" fill="#eef3f7">
+<rect x="220" y="3576" width="340" height="64"/>
+<rect x="560" y="3576" width="240" height="64" fill="#e2ebf2"/>
+<rect x="800" y="3576" width="490" height="64" fill="#ffffff"/>
+<rect x="1290" y="3576" width="230" height="64"/>
+</g>
+<g font-size="21" font-family="monospace">
+<text x="234" y="3603">3E 70 08 13</text><text x="234" y="3629">DI WC_L WC_H ECC</text>
+<text x="574" y="3603">FF FF FF</text><text x="574" y="3629">R0 G0 B0</text>
+<text x="814" y="3603">R1 G1 B1 … R719 G719 B719</text><text x="814" y="3629">2157 bytes restantes</text>
+<text x="1304" y="3603">CRC_L CRC_H</text><text x="1304" y="3629">25 34 si todo FF</text>
+</g>
+<text x="220" y="3674" font-size="20">WC=2160 bytes; el primer píxel es el primer triplete del payload, NO del header ni del SoT.</text>
+<text x="220" y="3705" font-size="19">CRC=3425h únicamente para 720 píxeles blancos. Si cambia otro píxel de la línea, recalcular el CRC.</text>
+
+<text x="48" y="3767" font-size="21">Ciclo de byte</text>
+<g font-family="monospace" font-size="20">
+<text x="240" y="3767">SoT</text><text x="415" y="3767">0</text><text x="580" y="3767">1</text><text x="745" y="3767">2</text>
+<text x="910" y="3767">3</text><text x="1075" y="3767">4</text><text x="1240" y="3767">…</text><text x="1395" y="3767">1082</text>
+</g>
+<g stroke="#b6c0ca" fill="#ffffff">
+<rect x="220" y="3785" width="165" height="50"/><rect x="385" y="3785" width="165" height="50"/><rect x="550" y="3785" width="165" height="50"/>
+<rect x="715" y="3785" width="165" height="50" fill="#e2ebf2"/><rect x="880" y="3785" width="165" height="50" fill="#e2ebf2"/>
+<rect x="1045" y="3785" width="165" height="50"/><rect x="1210" y="3785" width="165" height="50"/><rect x="1375" y="3785" width="165" height="50"/>
+<rect x="220" y="3850" width="165" height="50"/><rect x="385" y="3850" width="165" height="50"/><rect x="550" y="3850" width="165" height="50"/>
+<rect x="715" y="3850" width="165" height="50" fill="#e2ebf2"/><rect x="880" y="3850" width="165" height="50"/>
+<rect x="1045" y="3850" width="165" height="50"/><rect x="1210" y="3850" width="165" height="50"/><rect x="1375" y="3850" width="165" height="50"/>
+</g>
+<text x="48" y="3818" font-size="21">Lane 0</text><text x="48" y="3883" font-size="21">Lane 1</text>
+<g font-family="monospace" font-size="20">
+<text x="235" y="3818">B8</text><text x="400" y="3818">DI=3E</text><text x="565" y="3818">WC_H=08</text>
+<text x="730" y="3818">R0=FF</text><text x="895" y="3818">B0=FF</text><text x="1060" y="3818">G1</text><text x="1225" y="3818">…</text><text x="1390" y="3818">CRC_L=25</text>
+<text x="235" y="3883">B8</text><text x="400" y="3883">WC_L=70</text><text x="565" y="3883">ECC=13</text>
+<text x="730" y="3883">G0=FF</text><text x="895" y="3883">R1</text><text x="1060" y="3883">B1</text><text x="1225" y="3883">…</text><text x="1390" y="3883">CRC_H=34</text>
+</g>
+<text x="220" y="3938" font-size="20">Primer píxel completo al terminar B0 en lane 0. R1 del píxel siguiente se transmite simultáneamente.</text>
+
+<text x="48" y="4000" font-size="22" font-weight="bold">Zoom: cómo se transmite el blanco en HS</text>
+<text x="48" y="4034" font-size="19">Se muestran valores lógicos diferenciales ideales; no niveles LP ni una señal CLK medida.</text>
+<g stroke="#b6c0ca" fill="#e2ebf2">
+<rect x="300" y="4052" width="600" height="46"/><rect x="900" y="4052" width="600" height="46"/>
+</g>
+<text x="320" y="4083" font-size="21">Lane 0: R0 = FF, bits 11111111</text>
+<text x="920" y="4083" font-size="21">Lane 0: B0 = FF, bits 11111111</text>
+<path d="M300,4120 H1500 M300,4165 H1500" stroke="#294d6c" stroke-width="3" fill="none"/>
+<text x="48" y="4127" font-size="21">Lane 0: P</text><text x="48" y="4172" font-size="21">Lane 0: N</text>
+<text x="48" y="4222" font-size="21">CLK ideal</text>
+<path d="M300,4208 H375 V4236 H450 V4208 H525 V4236 H600 V4208 H675 V4236 H750 V4208 H825 V4236 H900 V4208 H975 V4236 H1050 V4208 H1125 V4236 H1200 V4208 H1275 V4236 H1350 V4208 H1425 V4236 H1500" fill="none" stroke="#586776" stroke-width="2"/>
+<g font-size="18" font-family="monospace">
+<text x="323" y="4270">b0</text><text x="398" y="4270">b1</text><text x="473" y="4270">b2</text><text x="548" y="4270">b3</text>
+<text x="623" y="4270">b4</text><text x="698" y="4270">b5</text><text x="773" y="4270">b6</text><text x="848" y="4270">b7</text>
+<text x="923" y="4270">b0</text><text x="998" y="4270">b1</text><text x="1073" y="4270">b2</text><text x="1148" y="4270">b3</text>
+<text x="1223" y="4270">b4</text><text x="1298" y="4270">b5</text><text x="1373" y="4270">b6</text><text x="1448" y="4270">b7</text>
+</g>
+<text x="300" y="4310" font-size="20">Lane 1 al mismo tiempo: G0=FF en los primeros 8 UI; R1 en los siguientes 8 UI.</text>
+<text x="300" y="4347" font-size="20">FF no produce flancos internos de datos. CLK sí debe transportar el reloj DDR durante HS.</text>
+<text x="48" y="4394" font-size="21">UI = 1 / Rlane; Tbyte = 8 UI; FCLK = Rlane / 2. No hay valor numérico confirmado de Rlane.</text>
+<text x="48" y="4433" font-size="21">Primer píxel disponible tras 16 UI desde R0/G0; tasa sostenida RGB888 con dos lanes: 12 UI/píxel.</text>
+<text x="48" y="4472" font-size="21">Escritura lógica del receptor: (x,y)=(0,0), R=FF, G=FF, B=FF → blanco; después avanza a x=1.</text>
+<text x="48" y="4511" font-size="20">Esto describe recepción de video: no implica enviar un comando DCS Write Memory Start (2C) por cada píxel.</text>
+<rect x="48" y="4540" width="1504" height="58" fill="#fff8ec" stroke="#c6a56b"/>
+<text x="65" y="4576" font-size="20">No se conocen los bytes exactos del primer píxel en la captura: FF FF FF y el header son un ejemplo calculado.</text>
+</g>
+</svg>

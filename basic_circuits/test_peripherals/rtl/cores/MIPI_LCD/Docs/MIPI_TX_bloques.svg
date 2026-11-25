@@ -1,0 +1,1045 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg2"
+   width="2100"
+   height="1333.3333"
+   viewBox="0 0 2100 1333.3333"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6" />
+  <g
+     id="g8"
+     transform="matrix(1.3333333,0,0,-1.3333333,0,1333.3333)">
+    <g
+       id="g10">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,24,962)"
+         style="font-variant:normal;font-weight:normal;font-size:22px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Bold';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text14"><tspan
+           x="0 21.889999 30.073999 46.178001 54.362 65.362 80.365997 97.306 104.962 118.052 125.576 148.478 164.20799 171.73199 179.256 188.826 196.35001 209.37399 224.202 239.93201 255.04601 262.702 284.702 292.358 307.64801 315.30399 331.034 338.55801 353.672 369.40201 385.04401 399.95999 413.04999 420.70599 435.02802 442.68399 455.70801 470.53601 493.43799 500.96201 516.604 531.71802 539.37402 555.104 570.02002 577.67603 592.966 608.25598 615.91199 631.64203 639.16602 649.68201"
+           y="0"
+           id="tspan12">MIPI_TX simplificado — 4 bloques y camino de 16 bits</tspan></text>
+    </g>
+    <g
+       id="g16">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,24,938)"
+         style="font-variant:normal;font-weight:normal;font-size:11px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text20"><tspan
+           x="0 6.71 11.231 17.962999 23.726999 30.448 33.935001 37.806999 40.854 47.817001 54.537998 58.234001 61.721001 68.717003 72.204002 79.178001 82.224998 86.537003 90.024002 93.511002 100.221 104.742 111.474 117.238 123.959 127.446 134.42 138.94099 145.90401 152.66901 158.38901 165.11 168.806 172.293 179.267 186.23 191.95 195.437 202.158 205.645 212.619 217.14 224.103 231.077 237.798 241.285 248.259 255.024 258.51099 264.23099 270.996 277.95901 284.69101 287.73801 294.50299 300.22299 303.70999 307.19699 313.90701 320.62799 327.60199 334.323 337.81 344.57501 347.62201 351.10901 361.823 368.54401 375.51801 382.48099 385.52802 392.24899 395.73599 401.77499 408.496 413.017 417.53799 424.30301 427.79001 434.522 438.009 445.68701 451.814 459.01901 464.51901 472.065 478.77499 485.48499 492.42599 495.91299 500.203 509.41 512.89697 519.89301 526.88898 530.37598 539.85797 548.11902 553.883 557.37 563.409 570.13 580.84399 587.565 591.052 601.76599 604.81299 611.776 614.823 625.53699 632.258 636.54797 640.24402 643.73102 650.49597 657.45898 660.94598 669.20697 676.18103 679.66803 685.388 692.12 695.16699 701.93201 705.41901 712.38202 719.34497 722.83197 729.80603 736.30701 740.61902 747.38397 750.87097 757.84497 764.56598 769.08698 772.57397 778.61298 785.34497 789.86603 794.38702 797.43402 800.48102 803.96802 810.73297 817.69598 821.18298 827.22198 833.95398 840.92798 847.65997 851.14697 857.18597 860.23297 866.27197 869.31897 876.03998"
+           y="0"
+           id="tspan18">Trazo fino: 1 bit. Trazo grueso: bus o grupo de señales. Todo el módulo corre a CLK_BYTE (≈ 52 MHz como mínimo); en HS sale un byte por carril en cada ciclo.</tspan></text>
+    </g>
+    <g
+       id="g22">
+      <path
+         d="M 560,530 H 880 V 840 H 560 Z"
+         style="fill:#dbebf2;fill-opacity:1;fill-rule:nonzero;stroke:#384c5c;stroke-width:1.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path24" />
+    </g>
+    <g
+       id="g26">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,649.61306,542)"
+         style="font-variant:normal;font-weight:normal;font-size:14px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Bold';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text30"><tspan
+           x="0 8.9180002 14.126 25.83 36.666 43.666 53.228001 63.307999 77.237999 82.110001 93.828003 98.699997 108.248 113.456 127.386 136.948"
+           y="0"
+           id="tspan28">LINK_FSM + TIMER</tspan></text>
+    </g>
+    <g
+       id="g32">
+      <path
+         d="M 160,200 H 440 V 440 H 160 Z"
+         style="fill:#e6f0e3;fill-opacity:1;fill-rule:nonzero;stroke:#384c5c;stroke-width:1.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path34" />
+    </g>
+    <g
+       id="g36">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,277.85917,212)"
+         style="font-variant:normal;font-weight:normal;font-size:14px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Bold';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text40"><tspan
+           x="0 8.9180002 19.166 26.166 35.714001"
+           y="0"
+           id="tspan38">LP_TX</tspan></text>
+    </g>
+    <g
+       id="g42">
+      <path
+         d="M 560,100 H 880 V 440 H 560 Z"
+         style="fill:#e6f0e3;fill-opacity:1;fill-rule:nonzero;stroke:#384c5c;stroke-width:1.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path44" />
+    </g>
+    <g
+       id="g46">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,676.14987,112)"
+         style="font-variant:normal;font-weight:normal;font-size:14px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Bold';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text50"><tspan
+           x="0 11.704 21.784 28.784 39.032001 49.854 60.116001 70.952003 80.514"
+           y="0"
+           id="tspan48">HS_PACKER</tspan></text>
+    </g>
+    <g
+       id="g52">
+      <path
+         d="m 1040,200 h 240 v 470 h -240 z"
+         style="fill:#f5f2db;fill-opacity:1;fill-rule:nonzero;stroke:#384c5c;stroke-width:1.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path54" />
+    </g>
+    <g
+       id="g56">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,1135.0138,212)"
+         style="font-variant:normal;font-weight:normal;font-size:14px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Bold';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text60"><tspan
+           x="0 10.248 21.952 32.088001 39.088001 44.296001"
+           y="0"
+           id="tspan58">PHY_IF</tspan></text>
+    </g>
+    <g
+       id="g62">
+      <path
+         d="m 1500,340 h 55 v 560 h -55 z"
+         style="fill:#f2e3e0;fill-opacity:1;fill-rule:nonzero;stroke:#384c5c;stroke-width:1.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path64" />
+    </g>
+    <g
+       id="g66">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,1512,610)"
+         style="font-variant:normal;font-weight:normal;font-size:13px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Bold';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text70"><tspan
+           x="0 9.5159998 20.384001"
+           y="0"
+           id="tspan68">PHY</tspan></text>
+    </g>
+    <g
+       id="g72">
+      <path
+         d="M 60,800 H 560"
+         style="fill:none;stroke:#bf5919;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path74" />
+    </g>
+    <g
+       id="g76">
+      <path
+         d="m 560,800 -8.28953,-3.50474 v 7.00953 L 560,800"
+         style="fill:#bf5919;fill-opacity:1;fill-rule:nonzero;stroke:#bf5919;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path78" />
+    </g>
+    <g
+       id="g80">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,64,805)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#bf5919;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text84"><tspan
+           x="0 2.9400001 10.42 13.36 19.459999 24.459999 31.4 37.709999"
+           y="0"
+           id="tspan82">INIT_REQ</tspan></text>
+    </g>
+    <g
+       id="g86">
+      <path
+         d="M 60,760 H 560"
+         style="fill:none;stroke:#268c4c;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path88" />
+    </g>
+    <g
+       id="g90">
+      <path
+         d="m 560,760 -8.28953,-3.50474 v 7.00953 L 560,760"
+         style="fill:#268c4c;fill-opacity:1;fill-rule:nonzero;stroke:#268c4c;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path92" />
+    </g>
+    <g
+       id="g94">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,64,765)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#268c4c;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text98"><tspan
+           x="0 6.8400002 9.7799997 17.48 22.48 29.42 35.73 43.599998 46.77 50.669998 57.009998 63.110001 69.949997 76.889999 82.989998"
+           y="0"
+           id="tspan96">VID_REQ (START)</tspan></text>
+    </g>
+    <g
+       id="g100">
+      <path
+         d="M 60,720 H 560"
+         style="fill:none;stroke:#198c99;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path102" />
+    </g>
+    <g
+       id="g104">
+      <path
+         d="m 560,720 -8.28953,-3.50474 v 7.00953 L 560,720"
+         style="fill:#198c99;fill-opacity:1;fill-rule:nonzero;stroke:#198c99;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path106" />
+    </g>
+    <g
+       id="g108">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,64,725)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#198c99;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text112"><tspan
+           x="0 6.8400002 9.7799997 17.48 22.48 28.049999 30.99 38.470001 44.779999 49.779999 56.720001 64.419998"
+           y="0"
+           id="tspan110">VID_LINE_RDY</tspan></text>
+    </g>
+    <g
+       id="g114">
+      <path
+         d="M 560,670 H 60"
+         style="fill:none;stroke:#2659a6;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path116" />
+    </g>
+    <g
+       id="g118">
+      <path
+         d="m 60,670 8.28955,3.50479 v -7.00953 L 60,670"
+         style="fill:#2659a6;fill-opacity:1;fill-rule:nonzero;stroke:#2659a6;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path120" />
+    </g>
+    <g
+       id="g122">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,64,675)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#2659a6;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text126"><tspan
+           x="0 2.9400001 10.42 13.36 19.459999 24.459999 32.16 40.029999 47.509998 53.82 58.82 64.919998"
+           y="0"
+           id="tspan124">INIT_DONE_TX</tspan></text>
+    </g>
+    <g
+       id="g128">
+      <path
+         d="M 560,630 H 60"
+         style="fill:none;stroke:#734ca6;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path130" />
+    </g>
+    <g
+       id="g132">
+      <path
+         d="m 60,630 8.28955,3.50479 v -7.00953 L 60,630"
+         style="fill:#734ca6;fill-opacity:1;fill-rule:nonzero;stroke:#734ca6;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path134" />
+    </g>
+    <g
+       id="g136">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,64,635)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#734ca6;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text140"><tspan
+           x="0 2.9400001 10.42 13.36 19.459999 24.459999 31.4 37.709999 44.549999 52.25"
+           y="0"
+           id="tspan138">INIT_READY</tspan></text>
+    </g>
+    <g
+       id="g142">
+      <path
+         d="M 1500,880 H 700 v -40"
+         style="fill:none;stroke:#268c4c;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path144" />
+    </g>
+    <g
+       id="g146">
+      <path
+         d="m 700,840 -3.50474,8.28958 h 7.00953 L 700,840"
+         style="fill:#268c4c;fill-opacity:1;fill-rule:nonzero;stroke:#268c4c;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path148" />
+    </g>
+    <g
+       id="g150">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,1424.375,886)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#268c4c;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text154"><tspan
+           x="0 6.9400001 13.25 20.09 27.790001 33.889999 37.060001 40.419998 43.59 49.16 57.029999 64.010002"
+           y="0"
+           id="tspan152">READY / LOCK</tspan></text>
+    </g>
+    <g
+       id="g156">
+      <path
+         d="m 880,810 h 620"
+         style="fill:none;stroke:#734ca6;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path158" />
+    </g>
+    <g
+       id="g160">
+      <path
+         d="m 1500,810 -8.2895,-3.50474 v 7.00953 L 1500,810"
+         style="fill:#734ca6;fill-opacity:1;fill-rule:nonzero;stroke:#734ca6;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path162" />
+    </g>
+    <g
+       id="g164">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,890,816)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#734ca6;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text168"><tspan
+           x="0 7.5100002 13.85 18.85 25.790001 32.099998 39.970001 43.139999 46.5 49.669998 56.650002 62.220001 68.769997 73.769997 80.709999 87.019997"
+           y="0"
+           id="tspan166">HS_REQ / CLK_REQ</tspan></text>
+    </g>
+    <g
+       id="g170">
+      <path
+         d="M 880,765 H 990 V 630 h 50"
+         style="fill:none;stroke:#bf5919;stroke-width:3.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path172" />
+    </g>
+    <g
+       id="g174">
+      <path
+         d="m 1040,630 -8.2895,-3.50474 v 7.00953 L 1040,630"
+         style="fill:#bf5919;fill-opacity:1;fill-rule:nonzero;stroke:#bf5919;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path176" />
+    </g>
+    <g
+       id="g178">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,890,771)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#bf5919;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text182"><tspan
+           x="0 6.3400002 12.65 18.219999 23.219999 31.09 38.400002 44.5 48.400002 54.759998 58.119999 64.480003"
+           y="0"
+           id="tspan180">SEL_OUT[1:0]</tspan></text>
+    </g>
+    <g
+       id="g184">
+      <path
+         d="m 880,720 h 125 V 590 h 35"
+         style="fill:none;stroke:#b33340;stroke-width:3.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path186" />
+    </g>
+    <g
+       id="g188">
+      <path
+         d="m 1040,590 -8.2895,-3.50474 v 7.00953 L 1040,590"
+         style="fill:#b33340;fill-opacity:1;fill-rule:nonzero;stroke:#b33340;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path190" />
+    </g>
+    <g
+       id="g192">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,890,726)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#b33340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text196"><tspan
+           x="0 5.5700002 11.6 16.6 22.35 30.219999 37.16 44.139999 50.450001 54.349998 60.709999 64.07 70.43"
+           y="0"
+           id="tspan194">LP_FORCE[1:0]</tspan></text>
+    </g>
+    <g
+       id="g198">
+      <path
+         d="m 880,675 h 140 V 550 h 20"
+         style="fill:none;stroke:#808026;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path200" />
+    </g>
+    <g
+       id="g202">
+      <path
+         d="m 1040,550 -8.2895,-3.50474 v 7.00953 L 1040,550"
+         style="fill:#808026;fill-opacity:1;fill-rule:nonzero;stroke:#808026;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path204" />
+    </g>
+    <g
+       id="g206">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,890,681)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#808026;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text210"><tspan
+           x="0 6.3400002 14.21 20.309999 25.309999 31.620001"
+           y="0"
+           id="tspan208">SOT_EN</tspan></text>
+    </g>
+    <g
+       id="g212">
+      <path
+         d="M 590,530 V 485 H 300 v -45"
+         style="fill:none;stroke:#2659a6;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path214" />
+    </g>
+    <g
+       id="g216">
+      <path
+         d="m 300,440 -3.50475,8.28956 h 7.00952 L 300,440"
+         style="fill:#2659a6;fill-opacity:1;fill-rule:nonzero;stroke:#2659a6;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path218" />
+    </g>
+    <g
+       id="g220">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,330,490)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#2659a6;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text224"><tspan
+           x="0 5.5700002 11.6 16.6 22.940001 29.040001 35.880001 42.82"
+           y="0"
+           id="tspan222">LP_START</tspan></text>
+    </g>
+    <g
+       id="g226">
+      <path
+         d="m 390,440 v 65 h 260 v 25"
+         style="fill:none;stroke:#268c4c;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path228" />
+    </g>
+    <g
+       id="g230">
+      <path
+         d="m 650,530 3.50479,-8.28953 h -7.00953 L 650,530"
+         style="fill:#268c4c;fill-opacity:1;fill-rule:nonzero;stroke:#268c4c;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path232" />
+    </g>
+    <g
+       id="g234">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,400,510)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#268c4c;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text238"><tspan
+           x="0 5.5700002 11.6 16.6 24.299999 32.169998 39.650002"
+           y="0"
+           id="tspan236">LP_DONE</tspan></text>
+    </g>
+    <g
+       id="g240">
+      <path
+         d="M 730,530 V 440"
+         style="fill:none;stroke:#734ca6;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path242" />
+    </g>
+    <g
+       id="g244">
+      <path
+         d="m 730,440 -3.50474,8.28956 h 7.00953 L 730,440"
+         style="fill:#734ca6;fill-opacity:1;fill-rule:nonzero;stroke:#734ca6;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path246" />
+    </g>
+    <g
+       id="g248">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,737,495)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#734ca6;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text252"><tspan
+           x="0 6.0300002 12.58 17.58 23.92 30.02 36.860001 43.799999"
+           y="0"
+           id="tspan250">PK_START</tspan></text>
+    </g>
+    <g
+       id="g254">
+      <path
+         d="m 830,440 v 90"
+         style="fill:none;stroke:#198c99;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path256" />
+    </g>
+    <g
+       id="g258">
+      <path
+         d="m 830,530 3.50479,-8.28953 h -7.00953 L 830,530"
+         style="fill:#198c99;fill-opacity:1;fill-rule:nonzero;stroke:#198c99;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path260" />
+    </g>
+    <g
+       id="g262">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,837,495)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#198c99;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text266"><tspan
+           x="0 6.0300002 12.58 17.58 25.280001 33.150002 40.630001"
+           y="0"
+           id="tspan264">PK_DONE</tspan></text>
+    </g>
+    <g
+       id="g268">
+      <path
+         d="M 60,400 H 160"
+         style="fill:none;stroke:#bf5919;stroke-width:3.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path270" />
+    </g>
+    <g
+       id="g272">
+      <path
+         d="m 160,400 -8.28955,-3.50475 v 7.00952 L 160,400"
+         style="fill:#bf5919;fill-opacity:1;fill-rule:nonzero;stroke:#bf5919;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path274" />
+    </g>
+    <g
+       id="g276">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,64,406)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#bf5919;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text280"><tspan
+           x="0 2.9400001 10.42 13.36 19.459999 24.459999 31.32 37.419998 43.52 49.830002 53.73 60.09 63.450001 69.809998"
+           y="0"
+           id="tspan278">INIT_BYTE[7:0]</tspan></text>
+    </g>
+    <g
+       id="g282">
+      <path
+         d="M 60,360 H 160"
+         style="fill:none;stroke:#b33340;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path284" />
+    </g>
+    <g
+       id="g286">
+      <path
+         d="m 160,360 -8.28955,-3.50475 v 7.00952 L 160,360"
+         style="fill:#b33340;fill-opacity:1;fill-rule:nonzero;stroke:#b33340;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path288" />
+    </g>
+    <g
+       id="g290">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,64,366)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#b33340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text294"><tspan
+           x="0 2.9400001 10.42 13.36 19.459999 24.459999 30.030001 36.869999 43.209999"
+           y="0"
+           id="tspan292">INIT_LAST</tspan></text>
+    </g>
+    <g
+       id="g296">
+      <path
+         d="M 160,320 H 60"
+         style="fill:none;stroke:#73472e;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path298" />
+    </g>
+    <g
+       id="g300">
+      <path
+         d="m 60,320 8.28955,3.50477 v -7.00952 L 60,320"
+         style="fill:#73472e;fill-opacity:1;fill-rule:nonzero;stroke:#73472e;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path302" />
+    </g>
+    <g
+       id="g304">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,64,326)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#73472e;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text308"><tspan
+           x="0 2.9400001 10.42 13.36 19.459999 24.459999 31.940001 38.25 45.099998"
+           y="0"
+           id="tspan306">INIT_NEXT</tspan></text>
+    </g>
+    <g
+       id="g310">
+      <path
+         d="m 440,395 h 40 v 70 h 470 v 35 h 90"
+         style="fill:none;stroke:#2659a6;stroke-width:3.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path312" />
+    </g>
+    <g
+       id="g314">
+      <path
+         d="m 1040,500 -8.2895,-3.50475 v 7.00952 L 1040,500"
+         style="fill:#2659a6;fill-opacity:1;fill-rule:nonzero;stroke:#2659a6;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path316" />
+    </g>
+    <g
+       id="g318">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,500,471)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#2659a6;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text322"><tspan
+           x="0 5.5700002 11.6 16.6 24.299999 30.66 34.560001 40.919998 44.279999 50.639999"
+           y="0"
+           id="tspan320">LP_D0[1:0]</tspan></text>
+    </g>
+    <g
+       id="g324">
+      <path
+         d="M 60,150 H 560"
+         style="fill:none;stroke:#268c4c;stroke-width:3.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path326" />
+    </g>
+    <g
+       id="g328">
+      <path
+         d="m 560,150 -8.28953,-3.50476 v 7.00952 L 560,150"
+         style="fill:#268c4c;fill-opacity:1;fill-rule:nonzero;stroke:#268c4c;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path330" />
+    </g>
+    <g
+       id="g332">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,64,156)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#268c4c;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text336"><tspan
+           x="0 6.8400002 9.7799997 17.48 22.48 32.360001 40.23 47.169998 54.869999 58.77 65.129997 71.489998 74.849998 81.209999"
+           y="0"
+           id="tspan334">VID_WORD[15:0]</tspan></text>
+    </g>
+    <g
+       id="g338">
+      <path
+         d="M 560,120 H 60"
+         style="fill:none;stroke:#198c99;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path340" />
+    </g>
+    <g
+       id="g342">
+      <path
+         d="m 60,120 8.28955,3.50476 v -7.00952 L 60,120"
+         style="fill:#198c99;fill-opacity:1;fill-rule:nonzero;stroke:#198c99;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path344" />
+    </g>
+    <g
+       id="g346">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,64,126)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#198c99;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text350"><tspan
+           x="0 6.8400002 9.7799997 17.48 22.48 29.42"
+           y="0"
+           id="tspan348">VID_RD</tspan></text>
+    </g>
+    <g
+       id="g352">
+      <path
+         d="m 880,300 h 160"
+         style="fill:none;stroke:#734ca6;stroke-width:3.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path354" />
+    </g>
+    <g
+       id="g356">
+      <path
+         d="m 1040,300 -8.2895,-3.50475 v 7.00952 L 1040,300"
+         style="fill:#734ca6;fill-opacity:1;fill-rule:nonzero;stroke:#734ca6;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path358" />
+    </g>
+    <g
+       id="g360">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,890,306)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#734ca6;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text364"><tspan
+           x="0 9.8800001 17.75 24.690001 32.389999 36.290001 42.650002 49.009998 52.369999 58.73"
+           y="0"
+           id="tspan362">WORD[15:0]</tspan></text>
+    </g>
+    <g
+       id="g366">
+      <path
+         d="m 1280,580 h 220"
+         style="fill:none;stroke:#b33340;stroke-width:3.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path368" />
+    </g>
+    <g
+       id="g370">
+      <path
+         d="m 1500,580 -8.2895,-3.50474 v 7.00953 L 1500,580"
+         style="fill:#b33340;fill-opacity:1;fill-rule:nonzero;stroke:#b33340;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path372" />
+    </g>
+    <g
+       id="g374">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,1290,586)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#b33340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text378"><tspan
+           x="0 5.5700002 11.6 16.6 22.629999 25.99 33.470001 37.369999 43.73 47.09 53.450001"
+           y="0"
+           id="tspan376">LP_P/N[2:0]</tspan></text>
+    </g>
+    <g
+       id="g380">
+      <path
+         d="m 1280,440 h 220"
+         style="fill:none;stroke:#73472e;stroke-width:3.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path382" />
+    </g>
+    <g
+       id="g384">
+      <path
+         d="m 1500,440 -8.2895,-3.50475 v 7.00952 L 1500,440"
+         style="fill:#73472e;fill-opacity:1;fill-rule:nonzero;stroke:#73472e;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path386" />
+    </g>
+    <g
+       id="g388">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,1290,446)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#73472e;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text392"><tspan
+           x="0 7.5100002 13.85 18.85 25.709999 31.809999 37.91 44.220001 50.580002 54.48 60.84 64.199997 70.559998"
+           y="0"
+           id="tspan390">HS_BYTE0[7:0]</tspan></text>
+    </g>
+    <g
+       id="g394">
+      <path
+         d="m 1280,380 h 220"
+         style="fill:none;stroke:#bf5919;stroke-width:3.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path396" />
+    </g>
+    <g
+       id="g398">
+      <path
+         d="m 1500,380 -8.2895,-3.50475 v 7.00952 L 1500,380"
+         style="fill:#bf5919;fill-opacity:1;fill-rule:nonzero;stroke:#bf5919;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path400" />
+    </g>
+    <g
+       id="g402">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,1290,386)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#bf5919;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text406"><tspan
+           x="0 7.5100002 13.85 18.85 25.709999 31.809999 37.91 44.220001 50.580002 54.48 60.84 64.199997 70.559998"
+           y="0"
+           id="tspan404">HS_BYTE1[7:0]</tspan></text>
+    </g>
+    <g
+       id="g408">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,1048,626)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text412"><tspan
+           x="0 6.0229998 12.0175 17.309 22.059 29.5355 36.48"
+           y="0"
+           id="tspan410">SEL_OUT</tspan></text>
+    </g>
+    <g
+       id="g414">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,1048,586)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text418"><tspan
+           x="0 5.2915001 11.02 15.77 21.2325 28.709 35.301998 41.932999"
+           y="0"
+           id="tspan416">LP_FORCE</tspan></text>
+    </g>
+    <g
+       id="g420">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,1048,546)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text424"><tspan
+           x="0 6.0229998 13.4995 19.2945 24.0445 30.039"
+           y="0"
+           id="tspan422">SOT_EN</tspan></text>
+    </g>
+    <g
+       id="g426">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,1048,496)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text430"><tspan
+           x="0 5.2915001 11.02 15.77 23.084999"
+           y="0"
+           id="tspan428">LP_D0</tspan></text>
+    </g>
+    <g
+       id="g432">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,1048,296)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text436"><tspan
+           x="0 9.3859997 16.862499 23.4555"
+           y="0"
+           id="tspan434">WORD</tspan></text>
+    </g>
+    <g
+       id="g438">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,578,818)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text442"><tspan
+           x="0 5.9945002 10.9345 14.6585 20.4725 26.495501 32.299999 37.240002 40.251499 46.274502 52.078999 55.983501 58.994999 61.626499 64.258003 70.2715 76.113998 81.928001 85.120003 88.1315 93.422997 96.216003 103.322 109.3165 114.0665 123.4525 129.9505 132.7435 138.5385 141.55 149.5015 152.513 157.8045 163.533 166.953 172.995 179.037 182.04849 190 193.01151 198.30299 204.03149 207.45151 213.4935"
+           y="0"
+           id="tspan440">Estados por línea: LINE_WAIT → LP-01 → LP-00</tspan></text>
+    </g>
+    <g
+       id="g444">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,578,803)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text448"><tspan
+           x="0 7.9514999 10.963 16.986 22.790501 28.585501 31.597 39.5485 42.560001 49.875 56.373001 62.167999 68.666 71.677498 79.628998 82.640503 88.635002 94.439499 100.2345 103.246 111.1975 114.209 119.5005 125.229 128.649 134.69099 140.733 143.74451 151.696 154.7075 159.99899 162.79201 169.89799 175.8925 180.6425 190.0285 196.5265 199.3195"
+           y="0"
+           id="tspan446">→ SoT → DATA → EoT → LP-11 → LINE_WAIT</tspan></text>
+    </g>
+    <g
+       id="g450">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,578,788)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text454"><tspan
+           x="0 5.7284999 11.533 15.4375 18.448999 27.702 33.544498 39.557999 44.498001 50.312 52.943501 58.785999 61.797501 67.820503 73.663002 76.6745 79.306 85.319504 87.950996 91.675003 94.866997 97.878502 103.17 108.8985 112.3185 118.3605 124.4025 127.414 135.36549 138.377 143.6685 149.397 154.147 159.942 166.44949 169.461 177.41251 180.424 185.7155 191.444 194.864 200.90601"
+           y="0"
+           id="tspan452">Por mensaje de init: LP-11 → LP_TX → LP-11</tspan></text>
+    </g>
+    <g
+       id="g456">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,578,773)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text460"><tspan
+           x="0 6.9445 12.958 15.9695 20.9095 26.714001 29.345501 35.150002 38.161499 41.885502 47.728001 56.980999 63.004002 68.808502 72.712997 75.344498 80.322502 86.136497 92.1595 97.963997 101.8685 105.0605 108.072 113.867 118.617 123.9085 129.63699 136.1445 139.15601 142.1675 147.96249 152.71249 158.44099 165.034 171.0285 176.757"
+           y="0"
+           id="tspan458">Un solo temporizador: T_LPX, T_PREP,</tspan></text>
+    </g>
+    <g
+       id="g462">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,578,758)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text466"><tspan
+           x="0 5.7950001 10.545 17.0525 23.047001 29.639999 37.116501 40.127998 43.1395 48.934502 53.684502 59.4795 66.072502 72.570503 75.363503 80.654999 83.666496 87.371498 92.986 98.800003 101.4315 107.236 111.1405 116.983 121.923 124.9345 130.9575 136.8 139.4315 142.44299 148.466 154.28 160.2935 166.136 168.7675"
+           y="0"
+           id="tspan464">T_ZERO, T_TRAIL (valores del panel,</tspan></text>
+    </g>
+    <g
+       id="g468">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,578,743)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text472"><tspan
+           x="0 5.8140001 11.8275 17.841 20.852501 25.7925 28.424 34.4375 37.449001 46.702 52.544498 58.567501 61.199001 65.1035 68.808502 71.82 77.434502 80.445999 83.077499 88.891502 91.903 97.745499 102.6855 108.7085 114.551 118.4555 124.2695 127.281 133.304 139.1465 142.158 144.78951 147.42101 153.43449 159.27699 165.091"
+           y="0"
+           id="tspan470">aún sin medir) y la espera de línea.</tspan></text>
+    </g>
+    <g
+       id="g474">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,172,414)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text478"><tspan
+           x="0 5.8425002 11.856 15.58 19.484501 25.2985 31.321501 37.135502 40.146999 45.438499 51.167 54.359001 57.370499 63.412498 69.454498 77.405998 83.447998 89.489998 97.441498 103.4835 109.5255 117.477 123.519 129.561 137.5125 143.5545 149.5965 152.608 160.55949 163.571 169.61301"
+           y="0"
+           id="tspan476">entrada LP: 11→10→00→01→00 + 87</tspan></text>
+    </g>
+    <g
+       id="g480">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,172,399)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text484"><tspan
+           x="0 6.0229998 8.6545 12.3785 17.318501 20.33 25.6215 31.644501 38.161499 41.173 47.195999 51.100498 53.731998 62.985001 68.827499 72.732002 78.536499 81.547997 84.559502 90.601501 93.612999 96.957001 102.771 107.711 113.5535 118.4935 121.505 127.528 133.3325 137.237 140.2485 146.2715 148.903"
+           y="0"
+           id="tspan482">bits LSB primero, 2 fases por bit</tspan></text>
+    </g>
+    <g
+       id="g486">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,172,384)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text490"><tspan
+           x="0 3.3440001 9.158 14.098 19.9405 22.952 30.9035 33.915001 39.957001 45.999001 52.041 55.052502 61.066002 66.005997 69.017502 72.722504 78.014 83.7425 88.4925 95.807503 98.600502 105.0985 108.11 113.3255 115.957 121.1725 123.804 129.60851 134.54849"
+           y="0"
+           id="tspan488">fase ≈ 100 ns (LP_DIV ciclos)</tspan></text>
+    </g>
+    <g
+       id="g492">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,172,369)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text496"><tspan
+           x="0 5.2154999 7.8470001 13.6895 17.594 21.498501 27.341 30.352501 36.1665 39.178001 44.469501 50.198002 53.618 59.66"
+           y="0"
+           id="tspan494">cierre a LP-11</tspan></text>
+    </g>
+    <g
+       id="g498">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,578,410)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text502"><tspan
+           x="0 7.1345 14.4495 21.0425 25.7925 32.4235 39.900002 47.006001 53.028999 58.824001 62.015999 65.027496 74.413498 80.455498 83.467003 91.418503 94.43 100.472 106.4665 109.478 115.52 121.562 124.5735 127.585 130.5965 139.9825 146.02451 149.036 156.9875 159.99899 166.041 172.08299 175.0945 181.13651"
+           y="0"
+           id="tspan500">HDR_CONST: W0 = 3E 70 · W1 = 08 13</tspan></text>
+    </g>
+    <g
+       id="g504">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,578,395)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text508"><tspan
+           x="0 9.3859997 16.862499 23.4555 30.7705 35.5205 42.151501 49.2575 55.052502 58.244499 61.256001 67.297997 76.797997 82.839996 88.882004 94.924004 100.966 103.9775 107.6825 113.7245 116.736 124.6875 127.699 133.741 139.783 145.825 151.867 154.87849 162.83 165.84151 171.8835 174.895 180.918 186.73199 189.36349 195.17751 201.2005 205.105 210.91901 215.85899"
+           y="0"
+           id="tspan506">WORD_CNT: 0…1082 (2 + 1080 + 1 palabras)</tspan></text>
+    </g>
+    <g
+       id="g510">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,578,380)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text514"><tspan
+           x="0 6.631 13.224 19.855 25.896999 31.938999 34.9505 40.973499 46.816002 49.827499 55.869499 58.881001 64.903999 70.518501 74.2425 80.084999 85.025002 88.036499 94.059502 99.863998 103.7685 106.78 111.9955 114.627 119.8425 122.474 128.2785 131.28999 134.995 139.935 145.7395 148.371 154.17551 157.187 163.21001 165.84151 171.45599 177.29849 179.92999 185.77251 190.71249"
+           y="0"
+           id="tspan512">CRC16 de 2 bytes por ciclo (solo píxeles)</tspan></text>
+    </g>
+    <g
+       id="g516">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,578,365)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text520"><tspan
+           x="0 9.3859997 16.862499 23.4555 30.7705 35.5205 43.709499 50.653999 57.161499 60.3535 63.365002 70.499496 77.814499 84.407501 87.418999 95.370499 98.382004 104.1105 106.9035 113.411 116.4225 124.374 127.3855 134.01649 140.6095"
+           y="0"
+           id="tspan518">WORD_MUX: HDR → PIX → CRC</tspan></text>
+    </g>
+    <g
+       id="g522">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,578,350)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text526"><tspan
+           x="0 4.9400001 7.5714998 13.585 16.5965 23.0945 29.592501 34.883999 37.676998 44.992001 48.183998 51.195499 57.037998 59.669498 62.681 69.815498 75.838501 78.849998 84.863503 90.667999 93.679497 98.619499 104.462 107.4735 113.4965 119.51 125.3525 131.3755 137.218 140.22951 146.2525 152.0665 158.08 163.02 168.834 172.73849"
+           y="0"
+           id="tspan524">sin VALID: el HS no se puede pausar;</tspan></text>
+    </g>
+    <g
+       id="g528">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,578,335)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text532"><tspan
+           x="0 6.4980001 9.2910004 16.606001 21.356001 26.647499 29.4405 36.546501 42.541 47.291 53.883999 61.199001 66.994003 70.005501 76.028503 81.842499 85.747002 91.560997 97.574501 101.2985 103.93 108.908 114.722 117.7335 120.365 126.179 129.19051 131.82201 134.45351 140.467 146.30949 152.1235 155.13499 160.35049 166.155 175.408 181.431 184.0625 189.905 193.629"
+           y="0"
+           id="tspan530">VID_LINE_RDY garantiza la línea completa</tspan></text>
+    </g>
+    <g
+       id="g534">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,1050,275)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text538"><tspan
+           x="0 5.2915001 11.02 18.334999 24.129999 27.1415 30.8465 33.478001 39.491501 42.123001 45.847 49.551998 52.743999 55.755501 60.695499 66.5 69.1315 74.935997 77.947502 85.262497 91.304497 94.316002 99.255997 105.0985 108.11 117.363 123.3765 129.21899 134.8335 140.67599"
+           y="0"
+           id="tspan536">LPDT (init): solo D0 se mueve;</tspan></text>
+    </g>
+    <g
+       id="g540">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,1050,260)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text544"><tspan
+           x="0 7.3150001 13.357 16.3685 21.983 24.994499 31.6255 36.917 43.1395 46.151001 52.174 58.1875 64.029999 70.053001 75.866997 81.880501 84.891998 90.734497 96.748001 99.759499 105.051 110.7795 114.1995 120.2415"
+           y="0"
+           id="tspan542">D1 y CLK quedan en LP-11</tspan></text>
+    </g>
+    <g
+       id="g546">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,1050,245)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text550"><tspan
+           x="0 5.7284999 11.571 15.295 17.9265 23.142 25.7735 31.577999 37.591499 40.603001 47.737499 53.760502 56.952499 59.964001 65.255501 70.984001 75.734001 81.196503 88.672997 95.265999 101.897 107.8915 110.903 116.7455 122.759 125.7705 133.08549 139.1275 142.13901 147.75349 150.765 158.08"
+           y="0"
+           id="tspan548">Petición HS: LP_FORCE en D0 y D1</tspan></text>
+    </g>
+    <g
+       id="g552">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,1050,230)"
+         style="font-variant:normal;font-weight:normal;font-size:9.5px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text556"><tspan
+           x="0 7.1345 13.1575 16.349501 19.361 25.384001 31.188499 36.983501 39.994999 46.512001 52.554001 55.565498 62.0825 68.124496 71.136002 74.147499 76.778999 82.792503 88.635002 94.657997 100.4625 103.474 112.86 120.3365 126.9295"
+           y="0"
+           id="tspan554">HS: SoT B8 B8, luego WORD</tspan></text>
+    </g>
+    <g
+       id="g558">
+      <path
+         d="M 22,15 H 1553 V 80 H 22 Z"
+         style="fill:#f7fafc;fill-opacity:1;fill-rule:nonzero;stroke:#a1b0bd;stroke-width:1.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path560" />
+    </g>
+    <g
+       id="g562">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,38,58)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text566"><tspan
+           x="0 6.9400001 13.09 18.290001 24.629999 30.780001 36.27 40.189999 46.299999 49.470001 55.59 58.360001 61.529999 70.150002 73.089996 79.120003 82.059998 87.059998 93.160004 100.01 103.18 109.3 115.63 119.55 125.7 129.81 132.58 138.69 142.8 146.16 149.33 154.53 157.3 163.63 166.8 174.31 180.62 187.46001 195.16 201.47 208.41 213.41 220.35001 226.66 234.39999 240.74001 243.91 247.08 253.39 260.37 267.35001 272.35001 279.19 282.13 289.82999 296.14001 304.01001 307.17999 310.35001 317.19 320.13 327.82999 332.82999 340.34 348.04001 354.98001 358.14999 361.32001 367.35001 374.19 380.29001 385.85999 393.73001 400.57001 408.26999 413.26999 420.25 428.12 435.42999 442.91 449.01001 452.17999 455.35001 460.92001 467.76001 475.23999 481.54999 486.54999 492.89001 498.92001 504.48999 507.42999 513.53003 516.70001 519.87 526.21002 534.08002 541.39001 548.33002 555.31 561.62 566.62 575.23999 582.54999 589.40002 592.57001 598.90002 601.66998 604.84003 610.87 617.71002 624.69 631.23999 637.54999 643.65002 648.65002 657.27002 664.58002 671.42999 674.59998 677.77002 684.10999 690.26001 693.42999 698.91998 705.03003 711.35999 716.56 722.71002 726.82001 732.72998 738.84998 745.17999 748.34998 751.12 757.23999 760.40997 767.34998 775.21997 783.84003 787.01001 793.34998 799.5 802.66998 805.44 811.77002 814.53998 818.46002 821.63 827.12 833.22998 839.56 842.72998 849.03998 856.02002 863 866.35999 873.34003 880.28003 887.26001 890.42999 896.34003 899.51001 905.65997 908.42999 911.59998 918.58002 925.52002 932.5 938.85999 945.21997"
+           y="0"
+           id="tspan564">Respecto al MIPI_TX anterior: sin HEADER_REGS, ECC_VIDEO, VID_HDR, PAYLOAD_COUNT, LANE_SPLIT, SOURCE_MUX ni PACKET_MUX. Se conservan la ROM de init con ECC/CRC y el CRC16.</tspan></text>
+    </g>
+    <g
+       id="g568">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,38,40)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#213340;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text572"><tspan
+           x="0 5.5700002 11.69 16.889999 20.059999 25.26 31.41 37.740002 43.860001 46.630001 52.779999 57.98 61.150002 66.639999 72.75 79.080002 82.25 88.400002 91.169998 94.339996 100.37 107.88 113.98 117.15 121.05 126.62 132.64999 137.64999 143.67999 147.03999 154.52 157.69 160.86 168.37 174.71001 179.71001 186.57001 192.67 198.77 205.08 211.44 214.8 221.16 224.33 227.5 235.00999 241.35001 246.35001 253.28999 259.60001 267.47 270.82999 277.81 283.38 289.92999 294.92999 301.87 308.17999 316.04999 319.22 322.39001 329.32999 335.64001 342.48001 350.17999 356.28 359.64001 365.20999 373.07999 380.06 386.60999 390.51001 393.67999 400.01001 406.12 409.29001 414.78 420.89999 430.64001 436.98001 439.75 445.87 452.20001 455.37 458.54001 465.51999 471.64001 481.38 487.72 490.48999 496.60999 499.78 506.62 509.56 517.26001 522.26001 529.12 535.21997 541.32001 547.63 551.53003 557.89001 561.25 567.60999 571.51001 574.67999 583.04999 586.21997 593.06 596 603.70001 608.70001 618.58002 626.45001 633.39001 641.09003 644.98999 651.34998 657.71002 661.07001 667.42999 671.33002 674.5 680.40997 683.58002 689.91998 696.07001 701.27002 707.39001 713.72998 719.84998 723.96002 730.10999 735.59998 741.75 744.91998 751.76001 754.70001 762.40002 767.40002 774.90997 782.60999 789.54999"
+           y="0"
+           id="tspan570">Las señales con el PHY (LP_P/N, HS_BYTE0/1, HS_REQ/CLK_REQ, READY/LOCK) no cambian. Cambia VID_BYTE[7:0] → VID_WORD[15:0] y desaparece VID_HDR.</tspan></text>
+    </g>
+    <g
+       id="g574">
+      <text
+         xml:space="preserve"
+         transform="matrix(1,0,0,-1,38,22)"
+         style="font-variant:normal;font-weight:normal;font-size:10px;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Book';writing-mode:lr-tb;fill:#bd4500;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text578"><tspan
+           x="0 5.75 11.87 14.64 18.559999 24.68 27.85 33.759998 39.91 44.02 46.790001 50.310001 53.080002 58.57 64.690002 68.800003 72.160004 75.330002 79.440002 85.589996 88.360001 94.470001 97.239998 100.41 104.52 110.67 116.79 119.56 122.73 129.07001 135.22 138.39 147.00999 149.95 155.98 158.92 163.92 170.02 176.87 180.03999 183.21001 188.78 194.81 199.81 207.50999 210.45 217.28999 220.46001 226.37 229.53999 232.31 238.42 243.62 246.78999 250.71001 253.48 259.63 269.37 275.70999 281.82001 287.01999 290.19 295.76001 301.79001 310.16 317.67001 324.01001 327.17999 331.07999 337.17999 342.17999 347.75 353.78 360.63 363.79999 366.97 373.07001 378.07001 384.10001 391.04001 397.35001 403.38 406.54999 409.72 415.82001 420.82001 427.67001 433.98001 440.92001 448.79001 451.95999 455.13 461.23001 466.23001 472.32999 479.26999 486.10999 489.04999 494.62 498.51999 501.69 504.85999 511.20001 517.53003 523.67999 526.84998 533.17999 539.28998 542.46002 548.60999 553.81 557.72998 563.84998 570.17999 573.34998 583.09003 589.23999 595.58002 598.34998 604.69 610.79999 616"
+           y="0"
+           id="tspan576">Falta verificar: reloj real de MIPI_TX, LP_DIV y los tiempos LP→HS (T_LPX, T_PREP, T_ZERO, T_TRAIL), que no están medidos.</tspan></text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="4630" viewBox="0 0 1600 4630">
+<rect width="1600" height="4630" fill="white"/>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#384d5c"/></marker></defs>
+<text x="35" y="43" font-family="sans-serif" font-size="29" font-weight="bold" fill="#1a2933" text-anchor="start">CTRL</text>
+<text x="500" y="85" font-family="sans-serif" font-size="23" font-weight="bold" fill="#1a2933" text-anchor="middle">RESET</text>
+<path d="M500,95 L500,120" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<g id="S_INIT">
+<rect x="200" y="120" width="600" height="230" fill="#edf4f7" stroke="#526d7e" stroke-width="1.5"/>
+<text x="250" y="163" font-family="sans-serif" font-size="25" font-weight="normal" fill="#6e8626" text-anchor="start">RST_ALL = 1</text>
+<text x="250" y="201" font-family="sans-serif" font-size="25" font-weight="normal" fill="#27834a" text-anchor="start">INC_A = 0</text>
+<text x="250" y="239" font-family="sans-serif" font-size="25" font-weight="normal" fill="#c05a23" text-anchor="start">START_DELAY = 0</text>
+<text x="250" y="277" font-family="sans-serif" font-size="25" font-weight="normal" fill="#287d8e" text-anchor="start">INIT_REQ = 0</text>
+<text x="250" y="315" font-family="sans-serif" font-size="25" font-weight="normal" fill="#2b9b82" text-anchor="start">INIT_DONE = 0</text>
+</g>
+<path d="M500,350 L500,390" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<polygon points="500,390 660,450 500,510 340,450" fill="#fff7e9" stroke="#526d7e" stroke-width="1.5"/>
+<text x="500" y="457" font-family="sans-serif" font-size="23" font-weight="bold" fill="#1a2933" text-anchor="middle">RESET = 1?</text>
+<path d="M660,450 L900,450 L900,235 L800,235" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="685" y="438" font-family="sans-serif" font-size="20" font-weight="normal" fill="#1a2933" text-anchor="start">Sí</text>
+<path d="M500,510 L500,570" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="520" y="550" font-family="sans-serif" font-size="20" font-weight="normal" fill="#1a2933" text-anchor="start">No</text>
+<g id="S_READ">
+<rect x="200" y="570" width="600" height="230" fill="#edf4f7" stroke="#526d7e" stroke-width="1.5"/>
+<text x="250" y="613" font-family="sans-serif" font-size="25" font-weight="normal" fill="#6e8626" text-anchor="start">RST_ALL = 0</text>
+<text x="250" y="651" font-family="sans-serif" font-size="25" font-weight="normal" fill="#27834a" text-anchor="start">INC_A = 0</text>
+<text x="250" y="689" font-family="sans-serif" font-size="25" font-weight="normal" fill="#c05a23" text-anchor="start">START_DELAY = 0</text>
+<text x="250" y="727" font-family="sans-serif" font-size="25" font-weight="normal" fill="#287d8e" text-anchor="start">INIT_REQ = 0</text>
+<text x="250" y="765" font-family="sans-serif" font-size="25" font-weight="normal" fill="#2b9b82" text-anchor="start">INIT_DONE = 0</text>
+</g>
+<path d="M500,800 L500,860" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<g id="S_SEND">
+<rect x="200" y="860" width="600" height="230" fill="#edf4f7" stroke="#526d7e" stroke-width="1.5"/>
+<text x="250" y="903" font-family="sans-serif" font-size="25" font-weight="normal" fill="#6e8626" text-anchor="start">RST_ALL = 0</text>
+<text x="250" y="941" font-family="sans-serif" font-size="25" font-weight="normal" fill="#27834a" text-anchor="start">INC_A = 0</text>
+<text x="250" y="979" font-family="sans-serif" font-size="25" font-weight="normal" fill="#c05a23" text-anchor="start">START_DELAY = 0</text>
+<text x="250" y="1017" font-family="sans-serif" font-size="25" font-weight="normal" fill="#287d8e" text-anchor="start">INIT_REQ = 1</text>
+<text x="250" y="1055" font-family="sans-serif" font-size="25" font-weight="normal" fill="#2b9b82" text-anchor="start">INIT_DONE = 0</text>
+</g>
+<path d="M500,1090 L500,1150" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<g id="S_WAIT_READY">
+<rect x="200" y="1150" width="600" height="230" fill="#edf4f7" stroke="#526d7e" stroke-width="1.5"/>
+<text x="250" y="1193" font-family="sans-serif" font-size="25" font-weight="normal" fill="#6e8626" text-anchor="start">RST_ALL = 0</text>
+<text x="250" y="1231" font-family="sans-serif" font-size="25" font-weight="normal" fill="#27834a" text-anchor="start">INC_A = 0</text>
+<text x="250" y="1269" font-family="sans-serif" font-size="25" font-weight="normal" fill="#c05a23" text-anchor="start">START_DELAY = 0</text>
+<text x="250" y="1307" font-family="sans-serif" font-size="25" font-weight="normal" fill="#287d8e" text-anchor="start">INIT_REQ = 0</text>
+<text x="250" y="1345" font-family="sans-serif" font-size="25" font-weight="normal" fill="#2b9b82" text-anchor="start">INIT_DONE = 0</text>
+</g>
+<path d="M500,1380 L500,1440" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<polygon points="500,1440 660,1500 500,1560 340,1500" fill="#fff7e9" stroke="#526d7e" stroke-width="1.5"/>
+<text x="500" y="1507" font-family="sans-serif" font-size="23" font-weight="bold" fill="#1a2933" text-anchor="middle">INIT_READY = 1?</text>
+<path d="M660,1500 L900,1500 L900,1265 L800,1265" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="685" y="1488" font-family="sans-serif" font-size="20" font-weight="normal" fill="#1a2933" text-anchor="start">No</text>
+<path d="M500,1560 L500,1620" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="520" y="1600" font-family="sans-serif" font-size="20" font-weight="normal" fill="#1a2933" text-anchor="start">Sí</text>
+<g id="S_INC_A">
+<rect x="200" y="1620" width="600" height="230" fill="#edf4f7" stroke="#526d7e" stroke-width="1.5"/>
+<text x="250" y="1663" font-family="sans-serif" font-size="25" font-weight="normal" fill="#6e8626" text-anchor="start">RST_ALL = 0</text>
+<text x="250" y="1701" font-family="sans-serif" font-size="25" font-weight="normal" fill="#27834a" text-anchor="start">INC_A = 1</text>
+<text x="250" y="1739" font-family="sans-serif" font-size="25" font-weight="normal" fill="#c05a23" text-anchor="start">START_DELAY = 0</text>
+<text x="250" y="1777" font-family="sans-serif" font-size="25" font-weight="normal" fill="#287d8e" text-anchor="start">INIT_REQ = 0</text>
+<text x="250" y="1815" font-family="sans-serif" font-size="25" font-weight="normal" fill="#2b9b82" text-anchor="start">INIT_DONE = 0</text>
+</g>
+<path d="M500,1850 L500,1910" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<g id="S_CHECK_LAST">
+<rect x="200" y="1910" width="600" height="230" fill="#edf4f7" stroke="#526d7e" stroke-width="1.5"/>
+<text x="250" y="1953" font-family="sans-serif" font-size="25" font-weight="normal" fill="#6e8626" text-anchor="start">RST_ALL = 0</text>
+<text x="250" y="1991" font-family="sans-serif" font-size="25" font-weight="normal" fill="#27834a" text-anchor="start">INC_A = 0</text>
+<text x="250" y="2029" font-family="sans-serif" font-size="25" font-weight="normal" fill="#c05a23" text-anchor="start">START_DELAY = 0</text>
+<text x="250" y="2067" font-family="sans-serif" font-size="25" font-weight="normal" fill="#287d8e" text-anchor="start">INIT_REQ = 0</text>
+<text x="250" y="2105" font-family="sans-serif" font-size="25" font-weight="normal" fill="#2b9b82" text-anchor="start">INIT_DONE = 0</text>
+</g>
+<path d="M500,2140 L500,2200" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<polygon points="500,2200 660,2260 500,2320 340,2260" fill="#fff7e9" stroke="#526d7e" stroke-width="1.5"/>
+<text x="500" y="2267" font-family="sans-serif" font-size="23" font-weight="bold" fill="#1a2933" text-anchor="middle">LAST = 1?</text>
+<path d="M340,2260 L50,2260 L50,975 L200,975" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="310" y="2248" font-family="sans-serif" font-size="20" font-weight="normal" fill="#1a2933" text-anchor="start">No</text>
+<path d="M660,2260 L1230,2260 L1230,2320" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="685" y="2248" font-family="sans-serif" font-size="20" font-weight="normal" fill="#1a2933" text-anchor="start">Sí</text>
+<g id="S_WAIT_TX">
+<rect x="950" y="2320" width="560" height="230" fill="#edf4f7" stroke="#526d7e" stroke-width="1.5"/>
+<text x="1000" y="2363" font-family="sans-serif" font-size="25" font-weight="normal" fill="#6e8626" text-anchor="start">RST_ALL = 0</text>
+<text x="1000" y="2401" font-family="sans-serif" font-size="25" font-weight="normal" fill="#27834a" text-anchor="start">INC_A = 0</text>
+<text x="1000" y="2439" font-family="sans-serif" font-size="25" font-weight="normal" fill="#c05a23" text-anchor="start">START_DELAY = 0</text>
+<text x="1000" y="2477" font-family="sans-serif" font-size="25" font-weight="normal" fill="#287d8e" text-anchor="start">INIT_REQ = 0</text>
+<text x="1000" y="2515" font-family="sans-serif" font-size="25" font-weight="normal" fill="#2b9b82" text-anchor="start">INIT_DONE = 0</text>
+</g>
+<path d="M1230,2550 L1230,2600" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<polygon points="1230,2600 1400,2660 1230,2720 1060,2660" fill="#fff7e9" stroke="#526d7e" stroke-width="1.5"/>
+<text x="1230" y="2667" font-family="sans-serif" font-size="23" font-weight="bold" fill="#1a2933" text-anchor="middle">INIT_DONE_TX = 1?</text>
+<path d="M1400,2660 L1550,2660 L1550,2435 L1510,2435" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="1420" y="2648" font-family="sans-serif" font-size="20" font-weight="normal" fill="#1a2933" text-anchor="start">No</text>
+<path d="M1230,2720 L1230,2780" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="1250" y="2760" font-family="sans-serif" font-size="20" font-weight="normal" fill="#1a2933" text-anchor="start">Sí</text>
+<g id="S_START_DELAY">
+<rect x="950" y="2780" width="560" height="230" fill="#edf4f7" stroke="#526d7e" stroke-width="1.5"/>
+<text x="1000" y="2823" font-family="sans-serif" font-size="25" font-weight="normal" fill="#6e8626" text-anchor="start">RST_ALL = 0</text>
+<text x="1000" y="2861" font-family="sans-serif" font-size="25" font-weight="normal" fill="#27834a" text-anchor="start">INC_A = 0</text>
+<text x="1000" y="2899" font-family="sans-serif" font-size="25" font-weight="normal" fill="#c05a23" text-anchor="start">START_DELAY = 1</text>
+<text x="1000" y="2937" font-family="sans-serif" font-size="25" font-weight="normal" fill="#287d8e" text-anchor="start">INIT_REQ = 0</text>
+<text x="1000" y="2975" font-family="sans-serif" font-size="25" font-weight="normal" fill="#2b9b82" text-anchor="start">INIT_DONE = 0</text>
+</g>
+<path d="M1230,3010 L1230,3070" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<g id="S_WAIT_DELAY">
+<rect x="950" y="3070" width="560" height="230" fill="#edf4f7" stroke="#526d7e" stroke-width="1.5"/>
+<text x="1000" y="3113" font-family="sans-serif" font-size="25" font-weight="normal" fill="#6e8626" text-anchor="start">RST_ALL = 0</text>
+<text x="1000" y="3151" font-family="sans-serif" font-size="25" font-weight="normal" fill="#27834a" text-anchor="start">INC_A = 0</text>
+<text x="1000" y="3189" font-family="sans-serif" font-size="25" font-weight="normal" fill="#c05a23" text-anchor="start">START_DELAY = 0</text>
+<text x="1000" y="3227" font-family="sans-serif" font-size="25" font-weight="normal" fill="#287d8e" text-anchor="start">INIT_REQ = 0</text>
+<text x="1000" y="3265" font-family="sans-serif" font-size="25" font-weight="normal" fill="#2b9b82" text-anchor="start">INIT_DONE = 0</text>
+</g>
+<path d="M1230,3300 L1230,3350" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<polygon points="1230,3350 1400,3410 1230,3470 1060,3410" fill="#fff7e9" stroke="#526d7e" stroke-width="1.5"/>
+<text x="1230" y="3417" font-family="sans-serif" font-size="23" font-weight="bold" fill="#1a2933" text-anchor="middle">DONE_DELAY = 1?</text>
+<path d="M1400,3410 L1550,3410 L1550,3185 L1510,3185" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="1420" y="3398" font-family="sans-serif" font-size="20" font-weight="normal" fill="#1a2933" text-anchor="start">No</text>
+<path d="M1230,3470 L1230,3530" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="1250" y="3510" font-family="sans-serif" font-size="20" font-weight="normal" fill="#1a2933" text-anchor="start">Sí</text>
+<g id="S_INC_NEXT">
+<rect x="950" y="3530" width="560" height="230" fill="#edf4f7" stroke="#526d7e" stroke-width="1.5"/>
+<text x="1000" y="3573" font-family="sans-serif" font-size="25" font-weight="normal" fill="#6e8626" text-anchor="start">RST_ALL = 0</text>
+<text x="1000" y="3611" font-family="sans-serif" font-size="25" font-weight="normal" fill="#27834a" text-anchor="start">INC_A = 1</text>
+<text x="1000" y="3649" font-family="sans-serif" font-size="25" font-weight="normal" fill="#c05a23" text-anchor="start">START_DELAY = 0</text>
+<text x="1000" y="3687" font-family="sans-serif" font-size="25" font-weight="normal" fill="#287d8e" text-anchor="start">INIT_REQ = 0</text>
+<text x="1000" y="3725" font-family="sans-serif" font-size="25" font-weight="normal" fill="#2b9b82" text-anchor="start">INIT_DONE = 0</text>
+</g>
+<path d="M1230,3760 L1230,3820" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<g id="S_READ_NEXT">
+<rect x="950" y="3820" width="560" height="230" fill="#edf4f7" stroke="#526d7e" stroke-width="1.5"/>
+<text x="1000" y="3863" font-family="sans-serif" font-size="25" font-weight="normal" fill="#6e8626" text-anchor="start">RST_ALL = 0</text>
+<text x="1000" y="3901" font-family="sans-serif" font-size="25" font-weight="normal" fill="#27834a" text-anchor="start">INC_A = 0</text>
+<text x="1000" y="3939" font-family="sans-serif" font-size="25" font-weight="normal" fill="#c05a23" text-anchor="start">START_DELAY = 0</text>
+<text x="1000" y="3977" font-family="sans-serif" font-size="25" font-weight="normal" fill="#287d8e" text-anchor="start">INIT_REQ = 0</text>
+<text x="1000" y="4015" font-family="sans-serif" font-size="25" font-weight="normal" fill="#2b9b82" text-anchor="start">INIT_DONE = 0</text>
+</g>
+<path d="M1230,4050 L1230,4110" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<polygon points="1230,4110 1400,4170 1230,4230 1060,4170" fill="#fff7e9" stroke="#526d7e" stroke-width="1.5"/>
+<text x="1230" y="4177" font-family="sans-serif" font-size="23" font-weight="bold" fill="#1a2933" text-anchor="middle">OP = 2&#x27;b10?</text>
+<path d="M1060,4170 L25,4170 L25,975 L200,975" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="1035" y="4158" font-family="sans-serif" font-size="20" font-weight="normal" fill="#1a2933" text-anchor="end">No</text>
+<path d="M1230,4230 L1230,4290" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="1250" y="4270" font-family="sans-serif" font-size="20" font-weight="normal" fill="#1a2933" text-anchor="start">Sí</text>
+<g id="S_END">
+<rect x="950" y="4290" width="560" height="230" fill="#edf4f7" stroke="#526d7e" stroke-width="1.5"/>
+<text x="1000" y="4333" font-family="sans-serif" font-size="25" font-weight="normal" fill="#6e8626" text-anchor="start">RST_ALL = 0</text>
+<text x="1000" y="4371" font-family="sans-serif" font-size="25" font-weight="normal" fill="#27834a" text-anchor="start">INC_A = 0</text>
+<text x="1000" y="4409" font-family="sans-serif" font-size="25" font-weight="normal" fill="#c05a23" text-anchor="start">START_DELAY = 0</text>
+<text x="1000" y="4447" font-family="sans-serif" font-size="25" font-weight="normal" fill="#287d8e" text-anchor="start">INIT_REQ = 0</text>
+<text x="1000" y="4485" font-family="sans-serif" font-size="25" font-weight="normal" fill="#2b9b82" text-anchor="start">INIT_DONE = 1</text>
+</g>
+<path d="M1510,4405 L1570,4405 L1570,4570 L1230,4570 L1230,4520" fill="none" stroke="#384d5c" stroke-width="2.2" marker-end="url(#a)"/>
+</svg>

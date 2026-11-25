@@ -1,0 +1,102 @@
+{
+  "file": "MIPI_VIDEO_025_D1.kvdat",
+  "bytes": 1068014249,
+  "samples": 500000000,
+  "sample_rate_hz": 100000000,
+  "channels": [
+    {
+      "channel": 0,
+      "initial": 1,
+      "transitions": 83160538
+    },
+    {
+      "channel": 1,
+      "initial": 1,
+      "transitions": 130442047
+    }
+  ],
+  "source_sha256": "c40815f987ecba5c77db8d93a95b0f8f2f327d7c534705fe750d4c5fc377c04b",
+  "input_policy": "Solo el archivo kvdat especificado; ninguna fotograf\u00eda ni imagen previa.",
+  "method": "Media de actividad digital P, alineada por LP11 y periodicidad de cuadro. No decodificaci\u00f3n RGB.",
+  "sample_window": [
+    450000000,
+    498000000
+  ],
+  "frame_count": 30,
+  "line_period_samples": 2119.997267166006,
+  "frame_period_samples": 1575157.9695043426,
+  "frame_rate_hz": 63.48569599750503,
+  "frame_period_lines": 743,
+  "fit_quality": {
+    "initial_period_samples": 2120,
+    "lp11_candidates": 3658,
+    "fitted_candidates": 3658,
+    "residual_rms_samples": 0.2965292539410795
+  },
+  "periodicity_peaks": [
+    [
+      743,
+      0.9978346088616638
+    ],
+    [
+      1486,
+      0.9977301294241506
+    ],
+    [
+      1115,
+      0.04594766681559716
+    ],
+    [
+      372,
+      0.045864493605987794
+    ],
+    [
+      1117,
+      0.0457985044254532
+    ],
+    [
+      1123,
+      0.04570466543766593
+    ],
+    [
+      1121,
+      0.04566317612663338
+    ],
+    [
+      366,
+      0.04563450754281827
+    ]
+  ],
+  "crop_sample_columns": [
+    76,
+    2049
+  ],
+  "crop_period_rows": [
+    624,
+    1271
+  ],
+  "output_array_shape": [
+    647,
+    493
+  ],
+  "samples_pooled_per_column": 4,
+  "native_pixel_resolution": "no establecida",
+  "rgb_pixels_decoded": false,
+  "contrast_mapping": {
+    "offset": 0,
+    "upper_level": 0.25,
+    "percentile": 99.5
+  },
+  "binary_mapping": {
+    "method": "Otsu, umbral global calculado exclusivamente desde las muestras",
+    "threshold_8bit": 23,
+    "morphological_edits": false,
+    "color_assignment": false
+  },
+  "digital_state_counts": {
+    "00": 3983181,
+    "01": 2755889,
+    "10": 941519,
+    "11": 319411
+  }
+}
