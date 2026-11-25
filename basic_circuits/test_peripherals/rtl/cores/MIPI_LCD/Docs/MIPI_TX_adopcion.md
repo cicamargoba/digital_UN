@@ -1,7 +1,12 @@
 # MIPI_TX simplificado: nueva base
 
-Fuente aportada por Carlos: `MIPI_TX_simplificado-1.pdf`, dos páginas.
-El PDF activo `MIPI_TX_bloques.pdf` conserva exactamente ese archivo.
+Referencia actual aportada por Carlos: `MIPI_TX_componentes.pdf`, una página,
+con los componentes internos de los cuatro bloques simplificados. El archivo
+conserva el PDF original sin modificaciones.
+
+`MIPI_TX_bloques.pdf` conserva la vista general anterior aportada como
+`MIPI_TX_simplificado-1.pdf`, de dos páginas. Se mantiene como complemento,
+no como sustituto del nuevo diagrama de componentes.
 
 - `MIPI_TX_bloques.svg` / PNG: primera página, arquitectura de cuatro bloques.
 - `MIPI_TX_secuencia.svg` / PNG: segunda página, secuencia y distribución de palabras.

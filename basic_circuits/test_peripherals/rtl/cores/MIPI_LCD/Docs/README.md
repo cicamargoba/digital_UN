@@ -2,8 +2,9 @@
 
 ## Arquitectura
 
-- [MIPI_TX simplificado, base actual aportada por Carlos](MIPI_TX_bloques.pdf):
-  dos páginas, cuatro bloques y camino HS de 16 bits.
+- [MIPI_TX: componentes internos, referencia actual aportada por Carlos](MIPI_TX_componentes.pdf).
+- [MIPI_TX simplificado: vista general](MIPI_TX_bloques.pdf): dos páginas,
+  cuatro bloques y camino HS de 16 bits; complementa el diagrama de componentes.
 - [Secuencia del MIPI_TX simplificado](MIPI_TX_secuencia.svg).
 - [Adopción y cambios de interfaz pendientes](MIPI_TX_adopcion.md).
 - [TOP de trabajo](MIPI_LCD_vid_mem_bloques.svg).
