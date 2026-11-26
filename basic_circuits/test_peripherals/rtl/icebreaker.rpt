@@ -10699,7 +10699,7 @@ ABC: P:  Del = 10484.00.  Ar =    2890.0.  Edge =    10360.  Cut =    72664.  T 
 ABC: F:  Del = 10484.00.  Ar =    2665.0.  Edge =     9560.  Cut =    63685.  T =     0.01 sec
 ABC: A:  Del = 10484.00.  Ar =    2616.0.  Edge =     8738.  Cut =    63717.  T =     0.01 sec
 ABC: A:  Del = 10484.00.  Ar =    2601.0.  Edge =     8700.  Cut =    62720.  T =     0.01 sec
-ABC: Total time =     0.07 sec
+ABC: Total time =     0.06 sec
 ABC: + &write -n <abc-temp-dir>/output.aig 
 ABC: + &mfs 
 ABC: + &ps -l 
@@ -10709,7 +10709,7 @@ ABC: levB =   31  mem = 0.13 MB
 ABC: LUT = 2576 : 2=511 19.8 %  3=671 26.0 %  4=1394 54.1 %  Ave = 3.34
 ABC: + &write -n <abc-temp-dir>/output.aig 
 ABC: + time 
-ABC: elapse: 1.87 seconds, total: 1.87 seconds
+ABC: elapse: 1.71 seconds, total: 1.71 seconds
 
 48.48.15.6. Executing AIGER frontend.
 <suppressed ~7721 debug messages>
@@ -11419,6 +11419,6 @@ Found and reported 0 problems.
 49. Executing JSON backend.
 
 Warnings: 166 unique messages, 1689 total
-End of script. Logfile hash: 30776b0a69, CPU: user 6.41s system 0.12s, MEM: 282.40 MB peak
+End of script. Logfile hash: 49e8793ddf, CPU: user 5.91s system 0.12s, MEM: 281.80 MB peak
 Yosys 0.59+62 (git sha1 9aa2dde7e, g++ 14.2.0-19ubuntu2 -fPIC -O3)
 Time spent: 33% 12x techmap (2 sec), 22% 1x abc9_exe (1 sec), ...

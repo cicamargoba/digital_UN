@@ -137,9 +137,9 @@ sim_post_syn_quark_efx:  $(OBJS)
   	
 svg: $(OBJS)
 	yosys -p "prep -top ${TARGET}; write_json ${TARGET}.json" -DPASSTHROUGH_PLL -DBOARD_FREQ=27 -DCPU_FREQ=27  ${OBJS}
-	netlistsvg ${TARGET}.json -o ${TARGET}.svg  #--skin default.svg
+	netlist2svg ${TARGET}.json -o ${TARGET}.svg  #--skin default.svg
 	yosys -p "prep -top ${TARGET} -flatten; write_json ${TARGET}_flat.json" ${OBJS}
-	netlistsvg ${TARGET}_flat.json -o ${TARGET}_flat.svg  #--skin default.svg
+	netlist2svg ${TARGET}_flat.json -o ${TARGET}_flat.svg  #--skin default.svg
 
 
 
